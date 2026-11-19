@@ -170,8 +170,10 @@ func _ready() -> void:
 	field.edit_seed.connect(func(id): popup.open_edit(id))
 	panel.clear_void_requested.connect(field.clear)
 	panel.add_seed_requested.connect(popup.open_add)
-	settings_hub.export_list_requested.connect(_export_dialog.popup_centered_ratio)
-	settings_hub.import_list_requested.connect(_import_dialog.popup_centered_ratio)
+	settings_hub.export_list_requested.connect(_request_export)
+	settings_hub.import_list_requested.connect(func():
+		if DevMode.on():
+			_import_dialog.popup_centered_ratio())
 	settings_hub.export_sheet_requested.connect(_sheet_export_dialog.popup_centered_ratio)
 	settings_hub.import_sheet_requested.connect(_sheet_import_dialog.popup_centered_ratio)
 	settings_hub.display_requested.connect(settings_dialog.open)
@@ -213,6 +215,10 @@ func _ready() -> void:
 	if not Game.crop_report.is_empty():  # seeds from before crop types just got a random one each
 		field.show_toast("Gave %d seeds a random crop type. Double-click a seed to pick another." % Game.crop_report.total, Color("#a6ff6e"), 8.0)
 		Game.crop_report = {}
+	if int(Game.official_report.get("seeds_added", 0)) > 0:  # this update brought new official seeds
+		field.show_toast("Update v%s: %d new official seeds and %d splices were added to your game!" % [
+			Game.official_report.version, Game.official_report.seeds_added, Game.official_report.recipes_added], Color("#a6ff6e"), 8.0)
+		Game.official_report = {}
 
 
 func _notification(what: int) -> void:
@@ -260,6 +266,16 @@ func _file_dialog(file_mode: FileDialog.FileMode, dialog_title: String) -> FileD
 	d.current_dir = OS.get_system_dir(OS.SYSTEM_DIR_DOCUMENTS)
 	add_child(d)
 	return d
+
+
+## Export List needs a username (Settings > You): it's written on the list and your seeds.
+func _request_export() -> void:
+	if Game.player_name() == "":
+		Audio.play(&"error")
+		field.show_toast("Pick a username first (Settings > You): it goes on your export and every seed you made.", Color("#ffc94a"), 6.0)
+		settings_hub.open()
+		return
+	_export_dialog.popup_centered_ratio()
 
 
 func _on_export_path(path: String) -> void:
@@ -320,6 +336,8 @@ func _on_sheet_import_path(path: String) -> void:
 
 ## Import List, step 1: read the file and let you say yes or no to each new seed.
 func _on_import_path(path: String) -> void:
+	if not DevMode.on():
+		return
 	var preview := Game.read_import(path)
 	if not preview.ok:
 		Audio.play(&"error")

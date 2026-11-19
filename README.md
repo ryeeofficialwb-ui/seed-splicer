@@ -282,3 +282,18 @@ The export presets are set up (`export_presets.cfg`) and the Steam version of Go
   - *Shortest route (farm Farmable seeds)*: a Farmable or Bountiful seed in the tree is grown for more
     seeds instead of being spliced again, so its branch stops there, and seeds with several recipes
     use the one with the fewest splices. The side text counts the farmed seeds separately.
+
+## Usernames, developer-only import, official seeds for everyone (2026-11-20)
+
+- **Username** (Settings > You). Players need one to Export List; it's written on the export and on
+  every seed they made. RyeeRue, KeepUpp, KeepUp and look-alikes (`Ry33_Rue`, `K33p-Upp`, `xKeepUpx`...)
+  are refused in players' games (`scripts/dev_mode.gd`).
+- **Developer mode** = running from the Godot editor, or `build/dev/SeedSplicer-Developer.exe`
+  (export preset "Windows Developer", feature tag `developer`, built by `publish_update.py --full`, never
+  uploaded). Only there: Import List, the reserved names, no auto-update.
+- **Importing credits the creator:** a seed's own `made_by`, else the file's username, else
+  "unknown". A player's file can't claim a reserved name. The import window shows who made each seed.
+- **Official seeds for everyone:** publishing writes `data/official_list.json` (every approved seed,
+  its recipes, who made it and its block art). When a player's game starts on the new version it adds
+  every official seed it doesn't have (`scripts/official.gd`); seeds they already have stay theirs.
+- Dev: `--test20`.

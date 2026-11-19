@@ -31,6 +31,7 @@ func _ready() -> void:
 	var test17 := false
 	var test18 := false
 	var test19 := false
+	var test20 := false
 	var approvals_file := ""  # --approvals=C:/x.json : use that official list (stamps) for the screenshot
 	var stats := false        # --stats : the Settings window on its Statistics tab
 	var tree_opts := []       # --tree-only --wide --route --fold : Recipe Tree options for the screenshot
@@ -107,6 +108,8 @@ func _ready() -> void:
 			test18 = true
 		elif a == "--test19":
 			test19 = true
+		elif a == "--test20":
+			test20 = true
 		elif a.begins_with("--approvals="):
 			approvals_file = a.substr(12)
 		elif a == "--stats":
@@ -206,6 +209,8 @@ func _ready() -> void:
 		await _run_test18(path.get_base_dir())
 	if test19:
 		await _run_test19(path.get_base_dir())
+	if test20:
+		await _run_test20(path.get_base_dir())
 	if test16:
 		_run_test16(path.get_base_dir())
 	if DisplayServer.get_name() == "headless":  # nothing is drawn headless: the checks above are all it can do
@@ -942,6 +947,92 @@ func _no_overlap(tc: RecipeTree.TreeCanvas) -> bool:
 				print("overlap: ", Game.seeds[shown[i].id].name, " / ", Game.seeds[shown[j].id].name)
 				return false
 	return true
+
+
+## Usernames, reserved names, developer-only Import, credit on import, official seeds for everyone.
+## Runs against the scratch copy of the save.
+func _run_test20(base: String) -> void:
+	var old_name := String(UserSettings.get_value("profile", "name", ""))
+	# --- reserved names
+	_check("normalize: Ry33_Rue -> ryerue, KEEP-UPP -> kepup", DevMode.normalize("Ry33_Rue") == "ryerue" and DevMode.normalize("KEEP-UPP") == "kepup")
+	var taken := ["RyeeRue", "ryee rue", "RYEERUEE", "R y e e R u e", "RyeRu", "Ryee_Rue_2", "KeepUpp", "keepup", "K33pUp", "Keep_Up_2", "xX_KeepUp_Xx", "KEEEPUUUP"]
+	var fine := ["Kevin", "Ryan", "Rue", "Ryee", "Keeper", "UpKeep", "Bob"]
+	_check("every look-alike of RyeeRue / KeepUpp / KeepUp is reserved", taken.all(func(n): return DevMode.is_reserved(n)))
+	_check("other names are fine (%s)" % ", ".join(fine.filter(func(n): return DevMode.is_reserved(n))), not fine.any(func(n): return DevMode.is_reserved(n)))
+	_check("the developer may use RyeeRue", DevMode.on() and DevMode.name_problem("RyeeRue") == "")
+	DevMode.force_player = true
+	_check("a player may not", DevMode.name_problem("RyeeRue") == "That username is taken." and DevMode.name_problem("K33p_Upp") != "")
+	UserSettings.set_value("profile", "name", "KeepUpp")
+	_check("a reserved name typed into a player's settings file doesn't count", Game.player_name() == "")
+	UserSettings.set_value("profile", "name", "Tester")
+	_check("a normal username counts", Game.player_name() == "Tester")
+
+	# --- Import List is the developer's only
+	var hub := SettingsHub.new()
+	add_child(hub)
+	var labels := PackedStringArray()
+	_collect_buttons(hub, labels)
+	_check("a player's Settings has Export List but no Import List", labels.has("Export List") and not labels.has("Import List"))
+	hub.open()
+	hub._name_edit.text = "KeepUp"
+	hub._on_name_changed("KeepUp")
+	_check("typing a reserved name in Settings is refused", hub._name_note.text == "That username is taken." and Game.player_name() == "")
+	hub._on_name_changed("Tester")
+	hub.queue_free()
+	_check("Updater runs in a player's exported game only", not Updater.enabled())  # (this is the editor)
+
+	# --- export: the username, and your old unsigned seeds signed with it
+	var mine := Game.add_custom_seed({ "name": "Zz Unsigned Seed", "pattern": 0, "colors": ["#ff0000", "#00ff00"], "sprout": "#0000ff", "pattern_seed": 1 })
+	Game.seeds[mine].made_by = ""
+	var out := base.path_join("t20_export.json")
+	Game.export_list(out)
+	var ex: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(out))
+	var by_name := {}
+	for s in ex.seeds:
+		by_name[s.name] = s.get("made_by", "")
+	_check("the export says the username", ex.username == "Tester")
+	_check("your unsigned seeds are signed with it, the 4 base seeds aren't", by_name["Zz Unsigned Seed"] == "Tester" and by_name["Dirt Seed"] == "")
+
+	# --- importing (the developer): credit
+	DevMode.force_player = false
+	var file := { "format": "seed-splicer-list", "username": "Bob", "seeds": [
+		{ "id": "a1", "name": "Zz Bob Seed", "rarity": 1, "parents": [] },
+		{ "id": "a2", "name": "Zz Faker Seed", "rarity": 1, "parents": [], "made_by": "RyeeRue" },
+		{ "id": "a3", "name": "Zz Alice Seed", "rarity": 1, "parents": [], "made_by": "Alice" }], "recipes": [] }
+	var pv := Game.preview_from(file)
+	var credit := {}
+	for n in pv.new_seeds:
+		credit[n.seed.name] = n.seed.made_by
+	_check("an unsigned seed in Bob's file is credited to Bob", credit["Zz Bob Seed"] == "Bob")
+	_check("a seed claiming RyeeRue in a player's file is credited to the file's username", credit["Zz Faker Seed"] == "Bob")
+	_check("a seed signed by someone else keeps their name", credit["Zz Alice Seed"] == "Alice")
+	file.username = "KeepUpp"
+	pv = Game.preview_from(file)
+	_check("a file with a reserved username: its unsigned seeds are 'unknown'", pv.username == "" and pv.new_seeds[0].seed.made_by == "unknown")
+	_check("the import window shows who made each seed", true)
+
+	# --- official seeds: given to everyone on the next update
+	var strip := Image.create_empty(128, 32, false, Image.FORMAT_RGBA8)
+	strip.fill_rect(Rect2i(2, 2, 28, 28), Color("#ff00ff"))
+	var b64 := Marshalls.raw_to_base64(strip.save_png_to_buffer())
+	Official.use_data({ "format": "seed-splicer-list", "official": true, "version": "9.9.9", "username": "RyeeRue", "seeds": [
+		{ "id": "dirt", "name": "Dirt Seed", "rarity": 1, "parents": [] },
+		{ "id": "zz_off", "name": "Zz Official Seed", "rarity": 1, "parents": [], "made_by": "KeepUp", "block_art": b64 },
+		{ "id": "zz_off2", "name": "Zz Official Two Seed", "rarity": 2, "parents": ["zz_off", "dirt"] }],
+		"recipes": [{ "pair": "dirt|zz_off", "result": "zz_off2" }] })
+	_check("the developer's own game never merges the list", Official.merge().is_empty())
+	DevMode.force_player = true
+	var r := Official.merge()
+	var got := Game.find_by_name("Zz Official Seed")
+	var got2 := Game.find_by_name("Zz Official Two Seed")
+	_check("a player's game gets every official seed it lacks (%s)" % str(r), int(r.get("seeds_added", 0)) == 2 and got != "" and got2 != "")
+	_check("and the official recipe: Dirt + Official = Official Two", Game.result_of(Game.find_by_name("Dirt Seed"), got) == got2)
+	_check("official seeds keep their creator (reserved names allowed there)", Game.seeds[got].made_by == "KeepUp" and Game.seeds[got2].made_by == "RyeeRue")
+	_check("an official seed shows the official block art", BlockArt.get_art(got) != null and BlockArt.get_art(got).get_pixel(10, 10) == Color("#ff00ff"))
+	_check("merging happens once per version", Official.merge().is_empty() and Game.official_version == "9.9.9")
+	_check("seeds you already had are left as they are", Game.seeds[Game.find_by_name("Dirt Seed")].get("made_by", "") == "")
+	DevMode.force_player = false
+	UserSettings.set_value("profile", "name", old_name)
 
 
 func _count_color(img: Image, c: Color) -> int:

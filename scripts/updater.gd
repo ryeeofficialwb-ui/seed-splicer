@@ -25,7 +25,7 @@ var _http: HTTPRequest
 
 ## Should this run check for updates? Only exported games, and not with --no-update.
 static func enabled() -> bool:
-	return not OS.has_feature("editor") and not "--no-update" in OS.get_cmdline_user_args() \
+	return not OS.has_feature("editor") and not DevMode.on() and not "--no-update" in OS.get_cmdline_user_args() \
 		and not "--no-update" in OS.get_cmdline_args()
 
 

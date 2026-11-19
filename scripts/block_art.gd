@@ -27,6 +27,11 @@ static func get_art(id: String) -> Image:
 		img = Image.load_from_file(path)
 		if img != null:
 			img.convert(Image.FORMAT_RGBA8)
+	if img == null and Engine.get_main_loop() != null:  # no art of your own: the official drawing, if any
+		var s: Dictionary = Game.get_seed(id)
+		if not s.is_empty():
+			var off := Official.art_for(String(s.name))
+			img = off.duplicate() if off != null else null
 	_cache[id] = img
 	return img
 

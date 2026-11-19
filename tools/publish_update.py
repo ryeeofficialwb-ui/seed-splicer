@@ -4,7 +4,9 @@
     python tools/publish_update.py 1.0.1 "What changed" --full     (also a full Windows download)
     python tools/publish_update.py 1.0.1 --approvals-only           (only write data/approvals.json)
 
-0. Writes the official seed list, data/approvals.json, from YOUR save: every seed you have is
+0. Writes data/official_list.json: every seed below, with its recipes and block art. Every
+   player's game adds the ones they don't have when it starts on the new version.
+   Also writes the official seed list, data/approvals.json, from YOUR save: every seed you have is
    approved (players with a seed of the same name see the approval stamp + who made it), and the
    seeds you sent to the graveyard (Dictionary > Send to graveyard) are listed as denied. Your name
    comes from Settings > You (the contributor on old seeds that were made before names existed).
@@ -19,6 +21,7 @@ build/SeedSplicer-<version>-windows.zip: the complete game for new players.
 Needs: git, the GitHub CLI (gh, logged in), and Godot (set GODOT to its exe if it isn't the Steam one).
 Only content updates go over the air: a new Godot version needs players to download the full game.
 """
+import base64
 import configparser
 import hashlib
 import json
@@ -36,6 +39,7 @@ GODOT = os.environ.get("GODOT", r"E:\SteamLibrary\steamapps\common\Godot Engine\
 PRESET = "Windows"
 GH = r"C:\Program Files\GitHub CLI\gh.exe"
 APPROVALS = os.path.join(ROOT, "data", "approvals.json")
+OFFICIAL = os.path.join(ROOT, "data", "official_list.json")
 USER_DIR = os.environ.get("SEED_SPLICER_USER_DIR",
     os.path.join(os.environ.get("APPDATA", ""), "Godot", "app_userdata", "Seed Splicer"))
 DRAW_FIELDS = ["rarity", "pattern", "colors", "sprout", "pattern_seed", "crop", "tag", "category", "drop", "fruit_count"]
@@ -82,7 +86,38 @@ def bake_approvals(version):
     with open(APPROVALS, "w", encoding="utf-8", newline="\n") as f:
         json.dump(data, f, indent="\t", ensure_ascii=False)
     print("Official list: %d approved seeds, %d in the graveyard (publisher: %s)" % (len(approved), len(denied), me))
+    bake_official(version, save, me)
     return len(approved), len(denied)
+
+
+def bake_official(version, save, me):
+    """data/official_list.json: every approved seed with its recipes and block art. Players' games
+    add the ones they don't have when they start on this version (see scripts/official.gd)."""
+    keep = {s["id"] for s in save["seeds"] if not s.get("denied")}
+    seeds = []
+    art_dir = os.path.join(USER_DIR, "block_art")
+    with_art = 0
+    for s in save["seeds"]:
+        if s["id"] not in keep:
+            continue
+        o = dict(s)
+        o.pop("denied", None)
+        o["made_by"] = (s.get("made_by") or "").strip() or me
+        art = os.path.join(art_dir, s["id"] + ".png")
+        if os.path.exists(art):
+            o["block_art"] = base64.b64encode(open(art, "rb").read()).decode("ascii")
+            with_art += 1
+        seeds.append(o)
+    recipes = []
+    for r in save.get("recipes", []):
+        pair = r["pair"].split("|")
+        if len(pair) == 2 and pair[0] in keep and pair[1] in keep and r["result"] in keep:
+            recipes.append(r)
+    data = {"format": "seed-splicer-list", "official": True, "version": version, "username": me,
+            "seeds": seeds, "recipes": recipes}
+    with open(OFFICIAL, "w", encoding="utf-8", newline="\n") as f:
+        json.dump(data, f, indent="\t", ensure_ascii=False)
+    print("Shipped to every player: %d seeds (%d with block art), %d splices" % (len(seeds), with_art, len(recipes)))
 
 
 def run(*cmd, **kw):
@@ -125,6 +160,10 @@ def main():
         with zipfile.ZipFile(bundle, "w", zipfile.ZIP_DEFLATED) as z:
             z.write(exe, "SeedSplicer.exe")
         assets.append(bundle)
+        # your own Developer build (Import List, reserved names, no auto-update): never uploaded
+        dev_exe = os.path.join(BUILD, "dev", "SeedSplicer-Developer.exe")
+        os.makedirs(os.path.dirname(dev_exe), exist_ok=True)
+        run(GODOT, "--headless", "--path", ROOT, "--export-release", "Windows Developer", dev_exe)
 
     run("git", "add", "-A")
     run("git", "commit", "-m", "Release v%s" % version + ("\n\n" + notes if notes else ""))

@@ -1323,24 +1323,6 @@
 			"name": "Gray Background Seed",
 			"row": 146,
 			"y": 4672
-		},
-		{
-			"block_frames": 0,
-			"crop": "twisted_tree",
-			"crop_fruit": 0,
-			"id": "zz_test",
-			"name": "Zz Test Seed",
-			"row": 147,
-			"y": 4704
-		},
-		{
-			"block_frames": 0,
-			"crop": "pine",
-			"crop_fruit": 0,
-			"id": "zz_test_2",
-			"name": "Zz Test Seed",
-			"row": 148,
-			"y": 4736
 		}
 	],
 	"column_names": [
@@ -1355,8 +1337,8 @@
 		"planted"
 	],
 	"columns": 9,
-	"height": 4768,
+	"height": 4704,
 	"padding": 0,
-	"rows": 149,
+	"rows": 147,
 	"width": 288
 }

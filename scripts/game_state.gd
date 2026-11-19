@@ -106,10 +106,16 @@ const BASE_SEEDS := [
 ]
 
 
+## The official list version this save has merged (see official.gd), and what the last merge added.
+var official_version := ""
+var official_report := {}
+
+
 func _ready() -> void:
 	if not load_game():
 		reset()
 	_load_stats()
+	official_report = Official.merge()
 
 
 # --- rarity / recipes -------------------------------------------------------
@@ -219,7 +225,8 @@ func add_custom_seed(look: Dictionary) -> String:
 
 ## Your name (Settings > You): written on every seed you make, shown next to the approval stamp.
 static func player_name() -> String:
-	return String(UserSettings.get_value("profile", "name", "")).strip_edges().left(32)
+	var n := String(UserSettings.get_value("profile", "name", "")).strip_edges().left(32)
+	return "" if DevMode.name_problem(n) != "" else n
 
 
 static func set_player_name(n: String) -> void:
@@ -533,6 +540,7 @@ func reset() -> void:
 	recipe_order.clear()
 	void_tokens.clear()
 	pending_rolls.clear()
+	official_version = ""
 	for b in BASE_SEEDS:
 		var s: Dictionary = b.duplicate(true)
 		s.rarity = 1
@@ -557,6 +565,7 @@ func save_game() -> void:
 		"recipes": recipe_order.map(func(k): return { "pair": k, "result": recipes[k] }),
 		"void": void_tokens,
 		"rolls": pending_rolls,
+		"official_version": official_version,
 	}
 	var f := FileAccess.open(SAVE_PATH, FileAccess.WRITE)
 	if f:
@@ -612,6 +621,7 @@ func load_game() -> bool:
 			recipes[r.pair] = r.result
 			recipe_order.append(r.pair)
 	void_tokens = parsed.get("void", [])
+	official_version = String(parsed.get("official_version", ""))
 	pending_rolls.clear()
 	var saved_rolls: Variant = parsed.get("rolls", {})
 	if typeof(saved_rolls) == TYPE_DICTIONARY:
@@ -666,9 +676,10 @@ func export_list(path: String) -> Error:
 		"format": EXPORT_FORMAT,
 		"version": SAVE_VERSION,
 		"exported": Time.get_datetime_string_from_system(false, true),
+		"username": player_name(),
 		"reference": reference_notes(),
 		"sprite_sheet": sheet.info.merged({ "file": sheet_path.get_file() }),
-		"seeds": order.map(func(id): return seeds[id]),
+		"seeds": order.map(func(id): return _signed(seeds[id])),
 		"recipes": recipe_order.map(func(k): return { "pair": k, "result": recipes[k] }),
 	}
 	var f := FileAccess.open(path, FileAccess.WRITE)
@@ -677,6 +688,16 @@ func export_list(path: String) -> Error:
 	f.store_string(JSON.stringify(data, "\t"))
 	f.close()
 	return sheet.image.save_png(sheet_path)
+
+
+## A seed for an export: one of yours that was made before you had a username is signed with it
+## (the 4 base seeds stay unsigned).
+func _signed(s: Dictionary) -> Dictionary:
+	if String(s.get("made_by", "")) != "" or BASE_SEEDS.any(func(b): return b.id == s.id):
+		return s
+	var out := s.duplicate()
+	out.made_by = player_name()
+	return out
 
 
 ## The sprite sheet sits next to the list: seed_splicer_list.json -> seed_splicer_list_seeds.png
@@ -921,17 +942,27 @@ static func reference_notes() -> Dictionary:
 ##            recipes: [ { pair: [their a, their b], result: their id } ] }
 ## `seed` is the cleaned seed as it would be added (without an id yet); `parents` are their ids.
 func read_import(path: String) -> Dictionary:
-	var out := { "ok": false, "error": "", "known": {}, "new_seeds": [], "recipes": [] }
 	if not FileAccess.file_exists(path):
-		out.error = "File not found."
-		return out
-	var parsed: Variant = JSON.parse_string(FileAccess.get_file_as_string(path))
+		return { "ok": false, "error": "File not found.", "known": {}, "new_seeds": [], "recipes": [] }
+	return preview_from(JSON.parse_string(FileAccess.get_file_as_string(path)))
+
+
+## The import preview of a parsed list (a file, or the official list). Who made each new seed:
+## its own made_by, else the list's username, else "unknown". A reserved name (RyeeRue...) in a
+## player's file is never believed: those seeds count as unknown.
+func preview_from(parsed: Variant) -> Dictionary:
+	var out := { "ok": false, "error": "", "known": {}, "new_seeds": [], "recipes": [], "username": "" }
 	if typeof(parsed) != TYPE_DICTIONARY or typeof(parsed.get("seeds")) != TYPE_ARRAY:
 		out.error = "That file isn't a Seed Splicer list."
 		return out
 	if parsed.has("format") and parsed.format != EXPORT_FORMAT:
 		out.error = "That file isn't a Seed Splicer list."
 		return out
+	var official: bool = parsed.get("official", false)
+	var uname := String(parsed.get("username", "")).strip_edges().left(32)
+	if not official and DevMode.is_reserved(uname):
+		uname = ""
+	out.username = uname
 	var names_seen := {}  # lowercase name -> their id, so a name listed twice is offered once
 	for s in parsed.seeds:
 		if typeof(s) != TYPE_DICTIONARY or String(s.get("name", "")).strip_edges() == "":
@@ -967,7 +998,7 @@ func read_import(path: String) -> Dictionary:
 				"drop": DropLogic.sanitize(s.get("drop"), String(s.name)),
 			"category": CategoryLogic.sanitize(s.get("category"), String(s.name), DropLogic.sanitize(s.get("drop"), String(s.name))),
 				"custom": bool(s.get("custom", false)),
-				"made_by": String(s.get("made_by", "")).strip_edges().left(32),
+				"made_by": _credit(String(s.get("made_by", "")), uname, official),
 			},
 		})
 	for r in parsed.get("recipes", []):
@@ -986,6 +1017,13 @@ func read_import(path: String) -> Dictionary:
 				n.clash = recipes[key]
 	out.ok = true
 	return out
+
+
+func _credit(made_by: String, uname: String, official: bool) -> String:
+	var by := made_by.strip_edges().left(32)
+	if by != "" and (official or not DevMode.is_reserved(by)):
+		return by
+	return uname if uname != "" else "unknown"
 
 
 ## Their ids of the new seeds a preview offers.

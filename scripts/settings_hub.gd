@@ -20,6 +20,7 @@ var _tabs: TabBar
 var _settings_page: VBoxContainer
 var _stats_page: VBoxContainer
 var _name_edit: LineEdit
+var _name_note: Label
 var _time_label: Label
 var _stats_text: RichTextLabel
 
@@ -64,20 +65,24 @@ func _ready() -> void:
 	_heading(_settings_page, "You")
 	var you := _row(_settings_page)
 	var nl := Label.new()
-	nl.text = "Your name"
+	nl.text = "Username"
 	you.add_child(nl)
 	_name_edit = LineEdit.new()
-	_name_edit.placeholder_text = "Shown next to the approval stamp on seeds you make"
+	_name_edit.placeholder_text = "Needed to export: it's on every seed you make"
 	_name_edit.max_length = 32
 	_name_edit.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	_name_edit.tooltip_text = "Every seed you make from now on is signed with this name (the contributor).\nIt shows next to the approval stamp once the seed is on the official list."
-	_name_edit.text_changed.connect(func(t): Game.set_player_name(t))
+	_name_edit.tooltip_text = "Every seed you make is signed with this name (the contributor), and so is your export.\nIf your seed makes it into the game, it shows next to the approval stamp."
+	_name_edit.text_changed.connect(_on_name_changed)
 	you.add_child(_name_edit)
+	_name_note = Label.new()
+	_name_note.add_theme_font_size_override("font_size", 12)
+	_settings_page.add_child(_name_note)
 
 	_heading(_settings_page, "Seed lists")
 	var lists := _row(_settings_page)
-	_button(lists, "Import List", "Merge a friend's splicing list into yours", import_list_requested)
-	_button(lists, "Export List", "Save your splicing list (and its sprite sheet) to a file to share", export_list_requested)
+	if DevMode.on():  # only the developer brings in players' creations; players get them in updates
+		_button(lists, "Import List", "Merge a player's splicing list into yours (developer only)", import_list_requested)
+	_button(lists, "Export List", "Save your splicing list (and its sprite sheet) to a file: send it to the developer.\nNew official seeds from everyone come to you in game updates.", export_list_requested)
 
 	_heading(_settings_page, "Sprites")
 	var sheets := _row(_settings_page)
@@ -118,7 +123,8 @@ func _ready() -> void:
 
 
 func open() -> void:
-	_name_edit.text = Game.player_name()
+	_name_edit.text = String(UserSettings.get_value("profile", "name", "")).strip_edges()
+	_on_name_changed(_name_edit.text)
 	_refresh_stats()
 	visible = true
 	Audio.play(&"open")
@@ -127,6 +133,19 @@ func open() -> void:
 func open_stats() -> void:
 	open()
 	_tabs.current_tab = 1
+
+
+## A name is only kept when it's allowed (RyeeRue, KeepUpp and look-alikes are the developer's).
+func _on_name_changed(t: String) -> void:
+	var problem := DevMode.name_problem(t)
+	if problem == "":
+		Game.set_player_name(t)
+		_name_note.text = "Signed as %s%s" % [t.strip_edges(), "  (developer)" if DevMode.on() else ""]
+		_name_note.add_theme_color_override("font_color", Color("#a6ff6e"))
+	else:
+		Game.set_player_name("")
+		_name_note.text = problem
+		_name_note.add_theme_color_override("font_color", Color("#ff8a8a") if t.strip_edges() != "" else Color("#c4c0d4"))
 
 
 func close_dialog() -> void:

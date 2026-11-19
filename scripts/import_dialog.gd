@@ -109,8 +109,8 @@ func open(p: Dictionary, file_name: String) -> void:
 	for n in list:
 		_box.add_child(_row(n))
 	var clashes: int = preview.new_seeds.filter(func(n): return String(n.get("clash", "")) != "").size()
-	_sub.text = "From %s:  %d new seed%s.  %d you already have are skipped (yours stay as they are).%s\nSay yes or no to each one." % [
-		file_name, preview.new_seeds.size(), "" if preview.new_seeds.size() == 1 else "s", preview.known.size(),
+	_sub.text = "From %s%s:  %d new seed%s.  %d you already have are skipped (yours stay as they are).%s\nSay yes or no to each one." % [
+		file_name, "  by %s" % preview.username if String(preview.get("username", "")) != "" else "  (no username)", preview.new_seeds.size(), "" if preview.new_seeds.size() == 1 else "s", preview.known.size(),
 		"\n%d use a recipe you already have under another name: they start unticked." % clashes if clashes > 0 else ""]
 	visible = true
 	Audio.play(&"open")
@@ -163,7 +163,7 @@ func _row(n: Dictionary) -> Control:
 	text.add_child(name_l)
 	var detail := Label.new()
 	var made := "Tier 1" if n.parents.is_empty() else "made from %s + %s" % [_name_of(n.parents[0]), _name_of(n.parents[1])] if n.parents.size() == 2 else ""
-	detail.text = "R%d  ·  %s  ·  %s  ·  %s" % [int(s.rarity), Game.tag_name(s.tag), DropLogic.describe(s.drop), made]
+	detail.text = "R%d  ·  by %s  ·  %s  ·  %s  ·  %s" % [int(s.rarity), s.get("made_by", "unknown"), Game.tag_name(s.tag), DropLogic.describe(s.drop), made]
 	detail.add_theme_font_size_override("font_size", 12)
 	detail.add_theme_color_override("font_color", Color(0.72, 0.69, 0.82))
 	detail.clip_text = true

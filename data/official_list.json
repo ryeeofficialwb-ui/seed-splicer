@@ -1,0 +1,5594 @@
+{
+	"format": "seed-splicer-list",
+	"official": true,
+	"version": "1.0.2",
+	"username": "RyeeRue",
+	"seeds": [
+		{
+			"category": {
+				"hardness": 2,
+				"material": "soil",
+				"status": "auto"
+			},
+			"colors": [
+				"#8b5a34",
+				"#5c3a22"
+			],
+			"crop": "mushroom",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": true,
+				"damage": false,
+				"kind": "block",
+				"light": false
+			},
+			"found": 0.0,
+			"fruit_count": 0.0,
+			"id": "dirt",
+			"made_by": "RyeeRue",
+			"name": "Dirt Seed",
+			"parents": [],
+			"pattern": 5,
+			"pattern_seed": 2,
+			"rarity": 1,
+			"sprout": "#7ccf4e",
+			"tag": "bountiful",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAAZ1JREFUeJztmz1Lw1AUht9YvyahjgGhblKETi76A/wnbv4LZxcnHfsT3MS9i1NBqpsiGBFEpZMiRYd4Iznx5kOTk+G8z9LmJuW5w+E9OWkbbK6tf4KYZa7tDZB2mZcLhwc7uR+4uXv5l/DoZJJ7nn5dPxPAOEkC7O/1UyfGZ9eNCLc67wCAi9lSap3+dvxMAONk7gF8lTfY3QDw04OmV4+NbIh+XT8TwDiZBPDhKnN8+wwAWIjecq//CJcBAIPe6l/3Rr+CnwlgnNIJ4Egqqhe/RNNZjduhX9vPBDBO5QSQvF7Gd6N19zz6dfxMAON4E0DOnQ45f/a3QwD190L6dfxMAOMkCSArS86dEtlrwpVOKeH9UxC/6abX6W/HzwQwTuEUoH1XS7+unwlgnOy3gd89R1beZBSljpuae+nX9TMBjJNJAF9FFc2bvsqtCv26fiaAcUo/CXRzqm/erLsX0q/jZwIYx5sAw+PRr+uu0mTPKTo+P32otDH6dfxMAOME8r+B7nfjdeOeQUfdxdzr6Nf1MwGMk0kAYgsmgHG+ADZrfmIU1wYBAAAAAElFTkSuQmCC"
+		},
+		{
+			"category": {
+				"hardness": 1,
+				"material": "mushroom",
+				"status": "auto"
+			},
+			"colors": [
+				"#27b3c4",
+				"#c9fff3"
+			],
+			"crop": "round_tree",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": false,
+				"damage": false,
+				"kind": "decoration",
+				"light": true
+			},
+			"found": 0.0,
+			"id": "glowing_mushroom",
+			"made_by": "RyeeRue",
+			"name": "Glowing Mushroom Seed",
+			"parents": [],
+			"pattern": 3,
+			"pattern_seed": 4,
+			"rarity": 1,
+			"sprout": "#a6ff6e",
+			"tag": "bountiful",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAAXVJREFUeJztmD1Ow0AQRj9+mgASVJZSOHewC4rQuE1FQ8cRkiOAconkLBYdlZFcGPkESHERhQpLTqIUkWnYYCcUu16vVgrf68brnTeyRqP1AoQQQgghhBBCCCGEEEIIIYQQQggh5Kg4abrR8YKyGn++vzbORb89v/ImIR4lQwBAlHUBAMn9k1Yh9NvxK73seEEpxEIeuneIUWCcpei7c0z8qbGPQH/7/lMdOQDEKHCLq93zUTI8GE9tQL8Z/7lqIc94QIwCEVIAwDhLa0X13blqSvot+qUaoNp9+x1XRYwjJMDER9nWKKTfnF96AoiRIzrvL0RxL7JJFaDfjF+6AT5SYLtaAgDOLi4P1rerJR7fop+1rkIJ9Nv0S4+o/YPFujeorXdmYS1u+yRMvxm/1kWQKKIzC61chNCv75f+DSTHCRvgn9OoARwvKL+u/V287g2MXH7Qb96vNQE2+QKbfKGTQgv69f3KN4GCmzz5DXKtGui36P8GKGehG0ngeL0AAAAASUVORK5CYII="
+		},
+		{
+			"category": {
+				"hardness": 4,
+				"material": "stone",
+				"status": "auto"
+			},
+			"colors": [
+				"#9a9cab",
+				"#686a7c"
+			],
+			"crop": "round_tree",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": true,
+				"damage": false,
+				"kind": "block",
+				"light": false
+			},
+			"found": 0.0,
+			"id": "stone",
+			"made_by": "RyeeRue",
+			"name": "Stone Seed",
+			"parents": [],
+			"pattern": 0,
+			"pattern_seed": 1,
+			"rarity": 1,
+			"sprout": "#8fc46a",
+			"tag": "bountiful",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAAWRJREFUeJztmzFqwzAYheXQixSaOdSUnKBLyNobhBylGXqFUnoBQ6aSJScIweClQwyGnCQdggySLFtyLWl471uCgpwvw+PpT+JkT4/PN0FgmaV+AyQtD/oTdVMq66qqlPXpXHsJylK9/nj46d1Pf1w/GwCcTM4Axf67c4Nv4lz5eN8pa/rT+NkA4BgzgGvili9zr/2u0B/XzwYAp20A3yTJ/bYk+iaU/jR+NgA4xgyw3bwp68+vovcFbAkbSqgN+uP62QDgGA0wNaE+x9I/jZ8NAI7RAENnjiTU52D64/rZAOCMngHGTrlTQf80fjYAONYGcE3Wf78Boz+tnw0AjrUBxp4xQ9fpd6jQn9bPBgCnvSPodbUWQgiR54sgIpm85vdyf7yqyaQ/jZ8NAI4xA7ieUaGgP66fDQBO8F8DJfLsSQX93X42ADiZ/t9AOY0OMTbR+vSrQ39cPxsAHKMBCBZsAHD+AAdxloKPu+TgAAAAAElFTkSuQmCC"
+		},
+		{
+			"category": {
+				"hardness": 2,
+				"material": "fire",
+				"status": "auto"
+			},
+			"colors": [
+				"#3b2a33",
+				"#ff6a1c"
+			],
+			"crop": "mushroom",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": true,
+				"damage": true,
+				"kind": "block",
+				"light": true
+			},
+			"found": 0.0,
+			"id": "magma_rock",
+			"made_by": "RyeeRue",
+			"name": "Magma Rock Seed",
+			"parents": [],
+			"pattern": 2,
+			"pattern_seed": 5,
+			"rarity": 1,
+			"sprout": "#e6c440",
+			"tag": "bountiful",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAAapJREFUeJztmz1KBEEQhWf8QRYWRUUwURAxEFzMjD2AHsMzCHsAYSPDDUy8gmjgAfYGgpkImqwIirJgIP5EM9I121PVK0wF772sZ7r726Dm9dQbNt9Z3/rJKFhNef8Aylcz8sLXZ1gTS4vtpA1fXke196dnv2vvk98snw4Arrx4Bzh5vDct6G3vmualViL5Pnw6ALhKB7g5+KideNkfTgQoKlZWpHwCyPfh0wHA9ecAZyvjZ1w8TLSxVrHdtY1gTL4Pnw4ArtIB/tt/FhrsP5nmda5awZh8Hz4dAFylAyy057Ms0/tHqVilDk7natd1jp6DMfk+fDoAuNQkMJY8aZWqnWFvo/dgTL4Pnw4ArmgSGOsjtSzaeoZpSRj5zfDpAOCqJoGR5Ck1i9bOrsoTQL4Lnw4ArkoOIGVNlgpZK1Vm4eT78OkA4Ip+C5DS+srUStWycPKb4dMBwBVNAo9XN00byMqUfejt+fLYdTILJ9+HTwcAV3ISaK3M3vAuHIu+VGbh5Pvw6QDgyuV/A2OJlLW/PLzeC9bLdbL/lSK/WT4dAFwVB6CwRAcA1y+tr8W1v5i5pwAAAABJRU5ErkJggg=="
+		},
+		{
+			"category": {
+				"hardness": 1,
+				"material": "background",
+				"status": "auto"
+			},
+			"colors": [
+				"#492c1d",
+				"#3a2715"
+			],
+			"crop": "twisted_tree",
+			"custom": true,
+			"drop": {
+				"auto": false,
+				"bg_tags": [],
+				"collision": false,
+				"damage": false,
+				"kind": "decoration",
+				"light": false
+			},
+			"found": 1794991093.0,
+			"id": "cave_background",
+			"made_by": "RyeeRue",
+			"name": "Cave Background Seed",
+			"parents": [],
+			"pattern": 0,
+			"pattern_seed": 66789,
+			"rarity": 1,
+			"sprout": "#9dae4e",
+			"tag": "bountiful",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAATlJREFUeJztm8sOgjAURC8Uoo1x49b//z23xPDQjaDeUlojbRczZ0mgh8VkWqBUZ1M/hMBSl74BUpZGH7gcWhERsY35a+BuGFeP3+795nX05/WzAcCp5jXA9XQUkXdydAK7ftgcyLZOmXyNp9FJpL+Mnw0AjhObOXmhxGl85+tk+hJJfxk/GwAcpwF8SerGaXMga9azNI83J3GZ2zyrYfrz+tkA4KwvHT8IJc93nk6kTmIs9Kf1swHASRaAbpyi00t/OT8bABwGABwGABwnALZtfl6p7gn9ef1sAHCCAbCm9r5lygH9af1sAHCivwXkgv68fjYAONHLzZLzIP3p/GwAcNwdQa9n0L3nothnW/rz+tkA4Cyx0LtR934bFdoLR38ZPxsAnEr/G4j2Zwy6nw0AjtMABAs2ADhP9OAguJzNfvAAAAAASUVORK5CYII="
+		},
+		{
+			"category": {
+				"hardness": 2,
+				"material": "stone",
+				"status": "auto"
+			},
+			"colors": [
+				"#a49ba0",
+				"#8b8a9e"
+			],
+			"crop": "round_tree",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": true,
+				"damage": false,
+				"kind": "block",
+				"light": false
+			},
+			"found": 1794991451.0,
+			"id": "gravel",
+			"made_by": "RyeeRue",
+			"name": "Gravel Seed",
+			"parents": [
+				"magma_rock",
+				"stone"
+			],
+			"pattern": 2,
+			"pattern_seed": 60093,
+			"rarity": 2,
+			"sprout": "#9da824",
+			"tag": "farmable",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAAdxJREFUeJztm7tKA1EURfeo2AdtBgQ7MRAR0+l32Fn4KOxsfHyFj8bOwkdh53fYCIooKHYBIY3B3kIt4hm45+ZmJtGZK5y9mjAPZqXY7LlzJkmajcUvELOM6R0n58elCjfXtvoep79a/0ipNvLvSeQWEEre893jn4hmFxrOtk4i/XH8bADjZGuAUNLa75/OdlobLjN5SaY/jp8NYJysATpvHQDAx2jNOWF3b93ZPtg/AwC0nx6c/c2leQDA7fU9ACCtz3U/CyaW/jh+NoBxvDmAJEsSJInTxwVJnnB4egQA2NnY7l5HHZeEhqC/Wj8bwDheA0zPTAEAWippgk6cIKtVSawkeFDor9bPBjCO1wCyCk3r7mo0bzU57PMp/XH9bADjZA1Q9PkzlLTfTqzoj+NnAxiHATBOdguQytCPE3rwIIMFXTmhyioK/XH8bADjeC+D0skJAP7IUA8gQokVvOTmDCboj+NnAxjHGwRJEkMjxxA6cYK+zvjPqBM3va9Df7V+NoBxvAYIIfek0L1Iv3bUSLKHhf5y/GwA4wQbQP9ESX5oEBpJyvmtl1dnv7zeHBT6q/GzAYyT6P8Grq4s9zxRkhVKVNHkXVxe9f1C9FfrZwMYx2sAYgs2gHG+Aa/W+gwpF86cAAAAAElFTkSuQmCC"
+		},
+		{
+			"category": {
+				"hardness": 2,
+				"material": "soil",
+				"status": "auto"
+			},
+			"colors": [
+				"#6b4c13",
+				"#816130"
+			],
+			"crop": "round_tree",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": true,
+				"damage": false,
+				"kind": "block",
+				"light": false
+			},
+			"found": 1794991515.0,
+			"id": "soil",
+			"made_by": "RyeeRue",
+			"name": "Soil Seed",
+			"parents": [
+				"magma_rock",
+				"dirt"
+			],
+			"pattern": 2,
+			"pattern_seed": 26051,
+			"rarity": 2,
+			"sprout": "#b3ce4a",
+			"tag": "not_farmable",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAAahJREFUeJztm7tKA0EUhv/1hk1ExCguSAoNCJYpxEqwySsI+gjxbfIIFlpbbSNYWqSSgIUWElB0xYhpxAuxCDsys7cwxJni/F83Oyf5tjj8M5PdBPUwHIKIZcr3DRC/zJgXdiqP2nhzaVQS3Y+CYqPyAwC4G0xr47L6hKvBWuEN0e/WzwQQTpDsAQ5rMYC/zpk0zVoAALh9/QaQ7kT6/fiZAMJRCbCMZ6fiF6xoY/r9+JkAwkmdAhIOGqsTEZx2nqw+R78bPxNAOGoP0GoETsXtjr7bpd+PnwkgHDaAcNgAwlGngJPuJwBgfz17LbroDbX5cGFWm394/yoUmfUm9PvxMwGEoxIgr/Py5ss61iSpP9qeG+v76XfjZwIIJ/eXwDLG7Tzbevrd+JkAwrFOAFuibvLUq+paTX+GnwkgHJUA172+NhFjEYD92pWcW6t40673P7LfeKHfj58JIBz1NLA+H/+ryOw8840Y+v34mQDCUXuArb0WAODmsj1RQd6aZ0K/Hz8TQDiB+d9A27WorNN2m8cAgPPorLCOfrd+JoBwUglAZMEEEM4vXAlDBe2uPDYAAAAASUVORK5CYII="
+		},
+		{
+			"category": {
+				"hardness": 1,
+				"material": "plant",
+				"status": "auto"
+			},
+			"colors": [
+				"#57c524",
+				"#98ff01"
+			],
+			"crop": "twisted_tree",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": false,
+				"damage": false,
+				"kind": "decoration",
+				"light": false
+			},
+			"found": 1794991553.0,
+			"id": "grass",
+			"made_by": "RyeeRue",
+			"name": "Grass Seed",
+			"parents": [
+				"glowing_mushroom",
+				"soil"
+			],
+			"pattern": 2,
+			"pattern_seed": 848,
+			"rarity": 3,
+			"sprout": "#cef469",
+			"tag": "farmable",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAAZJJREFUeJztmbFOg1AUhk+JiRMrkx2Iz9AO3foOPogbz+DmgzB2d2kc8BkaB5mMm5MTTodeDueiGOXG5PsWygXOd27z9wKpCAAAAAAAAAAAAAAAAAAAAECEcrPuwi3+/+HP/qadM+Vm3aX6UvB/7XcDMLfhcrPuqqb9tV8B/uX80RUgViQc986pmnZWPfxp/dEAhImaUzBWay74l/HPegYIl5iqaQdNPjxe/7hB/On8mfeQ8Pz0srrbXrkpjKVpvzv1n7f3l30T+nlqUvjT+TMt6iXGpso7bgX2mv3uJLHJKPjT+bOptIWpskuNFel+c/shIucUektT6MGf1p/ZAlNUTTtoyvJ68y4iIofj2+iYl1ZvAviX9fcB8Ap7Tdmk6TakqPO+CbtVptKOfzn/6C3Au0/Y5ccmKdzXFE4x9VqCf1n/4BbgLRHemLfEWIo6HzWj1+lEwsniT+PPwib0BB3zROGYt/yIfC+F4asK/nT+C73gcBxeFD5QFJKP5LZQLJVFnY/G9Fytiz+df5XynypIzyeQTt6EL4rhSgAAAABJRU5ErkJggg=="
+		},
+		{
+			"category": {
+				"hardness": 1,
+				"material": "background",
+				"status": "auto"
+			},
+			"colors": [
+				"#b2b2b2",
+				"#9494a1"
+			],
+			"crop": "round_tree",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": false,
+				"damage": false,
+				"kind": "background",
+				"light": false
+			},
+			"found": 1794991605.0,
+			"id": "stone_background",
+			"made_by": "RyeeRue",
+			"name": "Stone Background Seed",
+			"parents": [
+				"cave_background",
+				"stone"
+			],
+			"pattern": 0,
+			"pattern_seed": 96447,
+			"rarity": 2,
+			"sprout": "#96b35b",
+			"tag": "bountiful",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAAVpJREFUeJztm71uwjAUhRNKV6aoVcRUCdGBidfo2KFvWnXhUWBBQkgIUQkWUFuVATmDnWvf/GAP53yjif1lODq2I5FPXub/GYFlkPoFSFqG9sD7x5t3wvfhpFr44XFUO774+vTOoz+unw0ATm7OAFLytIkLYSfSTiL9afxsAHCcM4BBSt5+v/MuWBRPteN/P8csy+S9if40fjYAOE4DtE1e6DkpmfSn9bMBwKkaoGvyQph1nsv6PZD+NH42ADjiLaCv5LWF/jh+NgA4DAA4DAA41Rlgs73tOeNSd19tSugeTH8aPxsAHPEW0Bd28sw36VjQ7/ezAcDpvQG037zvBf3N/GwAcMQGkJJkf6HSJs6cctfLlep5+uP42QDgOA0Quo9q77NtoT+unw0AjngG6JpkG+3eR39cPxsAnNz+b+B09qqa2DTRhvPl1/s7/XH9bABwnAYgWLABwLkCLCwq7oPWyS8AAAAASUVORK5CYII="
+		},
+		{
+			"category": {
+				"hardness": 2,
+				"material": "fire",
+				"status": "auto"
+			},
+			"colors": [
+				"#eb550b",
+				"#c07b1a"
+			],
+			"crop": "flower",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": true,
+				"damage": true,
+				"kind": "block",
+				"light": true
+			},
+			"found": 1794991783.0,
+			"id": "lava",
+			"made_by": "RyeeRue",
+			"name": "Lava Seed",
+			"parents": [
+				"cave_background",
+				"magma_rock"
+			],
+			"pattern": 2,
+			"pattern_seed": 57028,
+			"rarity": 2,
+			"sprout": "#810000",
+			"tag": "bountiful",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAAVtJREFUeJztmjtuwlAQRWcCEpGMRJGUFFmGd8AKWA4dS6GjpsgOWAYFnaFASqRQmQJsyQMTm4T3ntC9p/OP01wdELKKQ7mX0rv2F/RN9J776Y/jf3mkhDwf9SoevbhWsVkk/Wn8LAA46i1vt86aJ9bmhrx5+J5/33zenu8K/XH8LAA4VwWol2cX15X898tti6Q/rp8FAEeLVXYuwGVxh6+fIKLR8PX2hWqx9CfxswDgaDE7F+De5bmLNnifa5+nP42fBQCnbxfSdVldqT7PWyL9af0sADhaTLPG/wCHcZhfoR6jrfkupD+qnwUA56oABAsWABxdSL8UEZlMB1HFn8tj45j+NH4WAJy6ABWhl2iXb6E/rp8FAEfn0itFRD7MS6P/XWLb0is2l9cR6E/jZwHAcQsQmo15FZH+NH4WAJy6AJZQi7TL96A/jp8FAMctAMGABQCHAwCHAwDnBKDx4g/3XGTxAAAAAElFTkSuQmCC"
+		},
+		{
+			"category": {
+				"hardness": 4,
+				"material": "stone",
+				"status": "auto"
+			},
+			"colors": [
+				"#2d937b",
+				"#536960"
+			],
+			"crop": "mushroom",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": true,
+				"damage": false,
+				"kind": "block",
+				"light": true
+			},
+			"found": 1794991995.0,
+			"id": "glowstone_stone",
+			"made_by": "RyeeRue",
+			"name": "Glowstone  Seed",
+			"parents": [
+				"stone",
+				"glowing_mushroom"
+			],
+			"pattern": 0,
+			"pattern_seed": 56426,
+			"rarity": 2,
+			"sprout": "#242424",
+			"tag": "not_farmable",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAAiRJREFUeJztm8FqU0EUhr+ItFaoMUaS0LqwtIgGCtllE+gD+CR9TCEgoRtB0BIS6sKWKtq0FmyFQLu4nin33Du90UVmcc63GZjM5L+Ln3/mzJ1ba3d7NzhmeZD6AZy0PNQdO/2t0oGdR/V/+uPT64vS+cN3H+6d5/rL1fcEME5N9gCDvV7pgJiThMZmG4CfgycATD7+BqB79AOA+dWf0v+bjI5y/a6fRt8TwDhhDzDubgKws/sYgObwFwANMod9no5zE8V5gjivILC2CsDX2fd7H8T10+h7AhinUAWIk5qRCWFNOs4acaKsOVXIGjaJ/O76y9X3BDBOSID+xRyAy7PzrP3br3eR52czADobmZNmx9+AO2fG6tWqOtb10+h7AhgnJIA4TxDnibPEea83XubG6TpVkLVpVM8k9O5W4/pp9D0BjBMSIHZiJM7TxJyp61NBdrcryumun1bfE8A4IQH0WhJz3uHJl9J+mX86zdo326+AxetT10+j7wlgnJAALxotANafPc06trPm/cEoN0HvQmNIfboorp9G3xPAOCEBPm09B4r1ojguVm8KsbdZQpUjXT+NvieAcf77baCcLcfeS8t8fcJV5WTXX66+J4BxQgLoevFSDRTHxRxc9Taryvmun0bfE8A4lVWAoHeR+mZKjNitVn0jxvXT6HsCGKemvw1s7b8FimuSnFBV3UCJrTWLfhnj+svV9wQwTiEBHFt4AhjnFjNsD45+IfpbAAAAAElFTkSuQmCC"
+		},
+		{
+			"category": {
+				"hardness": 3,
+				"material": "wood",
+				"status": "auto"
+			},
+			"colors": [
+				"#c38525",
+				"#ae680e"
+			],
+			"crop": "flower",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": true,
+				"damage": false,
+				"kind": "block",
+				"light": false
+			},
+			"found": 1794992097.0,
+			"id": "wood",
+			"made_by": "RyeeRue",
+			"name": "Wood Seed",
+			"parents": [
+				"grass",
+				"stone_background"
+			],
+			"pattern": 1,
+			"pattern_seed": 36006,
+			"rarity": 5,
+			"sprout": "#b2cb54",
+			"tag": "not_farmable",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAAcRJREFUeJztm01KxEAQhd+I4g86iLoQERFcjHgA8QDuPYfgIeYQgudw7wk8gOhCcDW4EJFRRHGhq+ohNVRSE5P0ot63m0x3XhaPV9WdTu9ksPcLEpa53A9A8jKvL1wPTwu/Hx/uAAAHgyMAwOhlDADY2eqX3tgadza8KZ1H/W71mQDBSQkgzvM6TJjVkVcXxwCA88vbwv/Uz6PPBAjOVA+gkdrjRWrW8uZu4bo4VJzohfrt6jMBglOZABb3T88AgMP97ZnmeWsb9bvRZwIEZyoBxCFSS34WNwBUO01qi1WzvN0q9bvVZwIEJyXArA4df3yWjrNqlDhbQ/08+kyA4JirAKkl4iSNOMtad/4X6nejzwQITuU+gK4hVq3yrm8nXerINZ767eozAYKTEkA7yNuVyjpVz9PO9Xa31O9WnwkQHPe7AOlG+6srtYTq7l1Tv119JkBwUgKIQxa+XwH430PXdbSG+nn0mQDBcfcA4jR9okTXFqvbtOZTP68+EyA4KQEmDil2mfpcuhe9R121nqV+Hn0mQHBSAsgXI3Ju3EI7qaoL1eP1eXjq59VnAgSnx6+DY2MuA9/evxoVWl9bavR+pBn+AEVHvgzoD3HoAAAAAElFTkSuQmCC"
+		},
+		{
+			"category": {
+				"hardness": 4,
+				"material": "stone",
+				"status": "auto"
+			},
+			"colors": [
+				"#7b4904",
+				"#573723"
+			],
+			"crop": "pine",
+			"custom": false,
+			"drop": {
+				"auto": false,
+				"bg_tags": [],
+				"collision": false,
+				"damage": false,
+				"kind": "block",
+				"light": false
+			},
+			"found": 1794992128.0,
+			"id": "cavern",
+			"made_by": "RyeeRue",
+			"name": "Cavern Seed",
+			"parents": [
+				"dirt",
+				"cave_background"
+			],
+			"pattern": 3,
+			"pattern_seed": 82850,
+			"rarity": 2,
+			"sprout": "#81c954",
+			"tag": "farmable",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAAPtJREFUeJztm70OgjAYRUW7arQDg0/g+z+NT+DAUI2u+DNoSShBKBAacs/ZsKWX4eS7XcxWLZyO+bttbQjnS5HF7Cd/nvzGj2GwuRWjgst93utDyE+Tvx51OiyeyoYu81wZd7A19ecuE8lPk88EEMfEXjbc0/5dtxvX65yhlxzyp81nAohTNcXh/u2cx6u+IbZ7wvd8F/lO2/6Uu+7qnUR+mnwmgDgIIA4CiGPaFsLu6bp9hvv8bTTsor6QP08+E0AcBBAHAcRBAHEQQBwEEAcBxEEAcRBAHAQQBwHEQQBxEEAcBBAHAcRBAHEQQBwEECeb+l+osCyYAOJ8AO1+swkLch7/AAAAAElFTkSuQmCC"
+		},
+		{
+			"category": {
+				"hardness": 3,
+				"material": "wood",
+				"status": "auto"
+			},
+			"colors": [
+				"#7e4e0b",
+				"#ca9b31"
+			],
+			"crop": "mushroom",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": false,
+				"damage": false,
+				"kind": "decoration",
+				"light": false
+			},
+			"found": 1794992137.0,
+			"id": "door",
+			"made_by": "RyeeRue",
+			"name": "Door Seed",
+			"parents": [
+				"cavern",
+				"wood"
+			],
+			"pattern": 2,
+			"pattern_seed": 95010,
+			"rarity": 7,
+			"sprout": "#a7d75c",
+			"tag": "bountiful",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAAWhJREFUeJztmz8OAUEYxR/RaDRUIhqFxAlcQa1yDQdxDZXaTSQKnWxFYRs6CnbEbHbMMrtTvPermEy+n+LzZmb/NKbj4R2ClmbsHyDi0rIHVos+AGA0ngAAklMKAOj3Os5C3+Yd9jsAwHKdOOvIX69fCUCOSQC780KRdWZWd7V4jtudKH8cvxKAHJMAvp1XtNZcz8fnh567ztuTFIzLX6dfCUCOSQDf3WZZfOvJH8evBCCnsgY47Hfm7BkD+f38SgByzB7Ad+3J5mXdFercKn8cvxKAnNy9ABvf86VNqH+G/NX6lQDk5BIg9Nq2uc4+vs/bW+d8+ev1KwHI+boHKMLu0HZ34Jx/vtxeE381yl+FXwlATukEKHvN2qw5gTpf/rB+JQA5uQQI/URKWeSv168EIKfyBkhOqVm3YiC/268EIMfsAXyvQP37xErRPWr54/iVAOQ07HcD2d6MYfcrAcjJJYDgQglAzgNX1UU37JlqoAAAAABJRU5ErkJggg=="
+		},
+		{
+			"category": {
+				"hardness": 5,
+				"material": "stone",
+				"status": "auto"
+			},
+			"colors": [
+				"#600b7c",
+				"#41104d"
+			],
+			"crop": "flower",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": true,
+				"damage": false,
+				"kind": "block",
+				"light": false
+			},
+			"found": 1794992183.0,
+			"id": "obsidian",
+			"made_by": "RyeeRue",
+			"name": "Obsidian Seed",
+			"parents": [
+				"lava",
+				"glowstone_stone"
+			],
+			"pattern": 3,
+			"pattern_seed": 55071,
+			"rarity": 4,
+			"sprout": "#571815",
+			"tag": "not_farmable",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAAeFJREFUeJztmy1Pw1AYhU+XQWlGCAJQDMQEAkFIkEPhMDh+BT+HX4EHhxoSM4FADlCAICTLGBBAjLfLfdtLu2VtSd7zGNK7Zs/E4dyPdUFrcfcbxCx1PRANFwoVDsK3P1+nv1x/rVAb+ffEDeBL3t78wUxE1++Xjkcnkf5q/GwA4wSyCNyor6fe0B4eO9f3tduZiDvBuXNNfzV+NoBxxruAQQgAaNeOnBuWBmvOdTMa/b0Kz5zxzY8dAEBvrgsAOHw5AQDcNDr5Pgn9lfjZAMYZrwE+WqORaAggOfcIvuQJ2/19AMDF8mnq65LQu88HZ5z+avxsAOMkG0D4TaJGJ0pofm2ljutVa+Z/AP2l+tkAxkl8FxCvQlUAs/afs9qf0l+unw1gnLgB8u4/fUnTc9CkiaS/Gj8bwDgMgHHiKUAOGOQA4jV6dMYF2YboyvFVlqaHbuo4/dX42QDGiQ+C5EGB1cZK6o2THkDo5EqyZVwfhNBfjZ8NYJzEQdBT/xnA5I8i6cQJklzZlsj7I0x/H/rL9bMBjJNoAB/yJYKeiyRZvjlKkIcSp4X+YvxsAOMkdgGavKtSSWg8x2SQ97Fo+ov1swGME+jfBmYlMW/CfEz70yj6i/GzAYyTaABiCzaAcX4AD9/rwC0hIHMAAAAASUVORK5CYII="
+		},
+		{
+			"category": {
+				"hardness": 2,
+				"material": "soil",
+				"status": "auto"
+			},
+			"colors": [
+				"#ffeb91",
+				"#ffce89"
+			],
+			"crop": "pine",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": true,
+				"damage": false,
+				"kind": "block",
+				"light": false
+			},
+			"found": 1794992285.0,
+			"id": "sand",
+			"made_by": "RyeeRue",
+			"name": "Sand Seed",
+			"parents": [
+				"obsidian",
+				"gravel"
+			],
+			"pattern": 0,
+			"pattern_seed": 30516,
+			"rarity": 6,
+			"sprout": "#764f1c",
+			"tag": "farmable",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAAWZJREFUeJztmzEOgjAUhh/GwcULmBhP4Gb0BupiOIEHMGHzKt7CyYSFc3gDSRxcXdx0ECQWa0kL7fD/30Kogc/h5e+jhWi5mD2FwNIL/QdIWPrqQJbu/1+RX5yEq93x7+/0+/UzAcD5JEC98m6/rxgPnITJdCQiIofz9Wuc/jB+JgA4tR5AW3lNGcbv4/1keQP6ffqZAOD8SIACUyXlj/dRnZOsK5/+EH4mADj6BDBVkmM3aoR+L34mADjuBTCMq/mqyXjb0O/kZwKAo+8BSnTdZolurmqrG6a/Uz8TAJyofB8gS7d+jEVFq7tS9IfxMwHA0ReAbRebP6p5ywX6vfiZAOBUTwFqt6nrIk1r1LYrVPQH8TMBwKkSoGnlmJ4vbffD6Q/iZwKAo18JVDvJtiq0KfR78TMBwDHvBZSoXartuS30d+JnAoATqd8GJutJJ6JNPBcR85cx9Pv1MwHAqSUAwYIJAM4L/EoFFHs9QFEAAAAASUVORK5CYII="
+		},
+		{
+			"category": {
+				"hardness": 2,
+				"material": "crystal",
+				"status": "auto"
+			},
+			"colors": [
+				"#c2c2c2",
+				"#a1cbc9"
+			],
+			"crop": "round_tree",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": true,
+				"damage": false,
+				"kind": "block",
+				"light": false
+			},
+			"found": 1794992357.0,
+			"id": "glass",
+			"made_by": "RyeeRue",
+			"name": "Glass Seed",
+			"parents": [
+				"sand",
+				"lava"
+			],
+			"pattern": 2,
+			"pattern_seed": 45673,
+			"rarity": 8,
+			"sprout": "#812608",
+			"tag": "not_farmable",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAAOdJREFUeJztmzEOwyAQBO+ifIn/9/hRlyY0WMiSYw6RnSndzBWrxRjsEREGsrxWDwBrefcP3N1nCq8aB3+unwYQx1siZievp08i/jX+0xLQqLWGmVkpxczyB8Sf42cJEGfYAC15x3GkDYM/308DiDNsgOw1D/8aPw0gDgEQhwCIQwDEuR2A+PLkMPjz/TSAOMNt4BVtm7LqLAH/M34aQJzbDdBQ+WDyr34aQBwCIA4BEOfnd4ARKhcqdvfTAOJMawCVCxW7+2kAcaY1wO77YxU/DSCO9ydKan/GqPtpAHFODQBa0ADifABLLahfH1yO1wAAAABJRU5ErkJggg=="
+		},
+		{
+			"category": {
+				"hardness": 4,
+				"material": "stone",
+				"status": "auto"
+			},
+			"colors": [
+				"#65460b",
+				"#a39ca1"
+			],
+			"crop": "round_tree",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": true,
+				"damage": false,
+				"kind": "block",
+				"light": false
+			},
+			"found": 1794993394.0,
+			"id": "cobblestone",
+			"made_by": "RyeeRue",
+			"name": "Cobblestone Seed",
+			"parents": [
+				"soil",
+				"gravel"
+			],
+			"pattern": 0,
+			"pattern_seed": 31108,
+			"rarity": 4,
+			"sprout": "#9bc43c",
+			"tag": "not_farmable",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAAb5JREFUeJztmzFLA0EUhOdEBA3YJFhGENHGwv//O0QQRDB2kjSBKNjEag5u1pe7FO4Wb77mSLJ7k2KY93b3rru7f9zDpOWk9R8wbTnVL65vHgAAy+XtnxNWq9fBZ47bbD4BALvd9qDg+9vTwd+tX1ffCZCcjj0AnUfUgXQYodNms8vB91/rNQBgf352UFidaP02+k6A5BQ9gKLOU+hEOnY+vwIAfLw8AwAuFovBuGOx/v/qOwGSUyRA9/0DYHpXGUHn0ZFT72P9uvpOgOQUCUDnEHaZY07k+lS7UqLr1Qjr19V3AiSnSABdX7KG8Bo5mPN4ZS3jvKlYv66+EyA5fQJoreFVHTTmRMKdKNYmXacq1m+j7wRITtEDqBPVQcpYd8p5eooVYf26+k6A5IyeBZDIQZEzWaPGapX12+o7AZLTJ4DWEtaiqefLJDq3JnSsnodbv42+EyA5RQ+ge8a6N62OirpUOhfi3LGaZP26+k6A5PQJoA7SHaepp1E9Qc2K7mP9NvpOgOSE+wDqKD2disbpeHLsky3Wr6PvBEhOp+8G6vPp6qToNEu7y8ipU9+MsX4dfSdAcooEMLlwAiTnF5FVl+/zx7+JAAAAAElFTkSuQmCC"
+		},
+		{
+			"category": {
+				"hardness": 2,
+				"material": "stone",
+				"status": "auto"
+			},
+			"colors": [
+				"#866e88",
+				"#55485e"
+			],
+			"crop": "mushroom",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": true,
+				"damage": false,
+				"kind": "block",
+				"light": false
+			},
+			"found": 1794993500.0,
+			"id": "pumice",
+			"made_by": "RyeeRue",
+			"name": "Pumice Seed",
+			"parents": [
+				"obsidian",
+				"cobblestone"
+			],
+			"pattern": 0,
+			"pattern_seed": 51331,
+			"rarity": 8,
+			"sprout": "#76732a",
+			"tag": "not_farmable",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAAbFJREFUeJztm71KBDEUhc+IbyCMYCl2oij7EIvYaSc2go2tnT6ApVvaCDbbbiniQ4hibS044DNolSx7400yC84t7vm6mfycLQ4nN9lMs705+gFxy4r1DyC2rMoXt3c3C88vj68AgIOzca+Ju6778/3lxXV2HPWH1WcCOKcJNYB0Xtu22YFfH58AgPWtjWy/WidS30afCeCcpAYIzis5rOQ8OV9AcyT1bfSZAM6JCSCdUuuwgObYvd01AMDb+zeAeVUrob6NPhPAOXEXMJ3dVw2QjlqW0+PzhWfq2+gzAZyT7AKeHp4BzE+e5NoinVe7H63tR/1h9ZkAzkkSQJ45l5yltUvH1Va11B9WnwngnJgAWnUp39euOX33sdS30WcCOCcmgOYw6cjaNaevc6lvo88EcE6yCyidJWvIcbXOpb6tPhPAOTEB5AlUQHOe1l+2X01OsvNQ31afCeCcmACjw/1sR1lFlm6phnbpPO1GDPVt9JkAzkl2AcEh8obK+GgHwPL/Q5fuwlHfRp8J4JxGfhso76cHtHvq2glTqELl2tb3yxjq/68+E8A5SQIQXzABnPML0zsnO3jqUS0AAAAASUVORK5CYII="
+		},
+		{
+			"category": {
+				"hardness": 1,
+				"material": "plant",
+				"status": "auto"
+			},
+			"colors": [
+				"#d4c232",
+				"#f1d389"
+			],
+			"crop": "pine",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": false,
+				"damage": false,
+				"kind": "decoration",
+				"light": false
+			},
+			"found": 1794993576.0,
+			"id": "wheat",
+			"made_by": "RyeeRue",
+			"name": "Wheat Seed",
+			"parents": [
+				"grass",
+				"sand"
+			],
+			"pattern": 4,
+			"pattern_seed": 95088,
+			"rarity": 9,
+			"sprout": "#f8fbb5",
+			"tag": "not_farmable",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAAuZJREFUeJztmbGK20AQhv8Vbq65woYDi+BCKn0poze4BzBcEfBD+Amucl7gHsKQIuAmTXB3TUAuY5USvmBkCCcXaS7dpjCjG61WjnLktJCbH47VrnbnG8Ews54DRCKRSCQSiUSvTopPdLHUlZeDiUKHEn73fM+EH7IF+NiVhO+WD10sdbG+1jR2Sxe+K74i+MlNL5CKiKkGEyV8d/zet4+jMvX0gyno+SXFI1z4bvk9ANisZvDDCJvVDJdXtwCAfjAtndLFtBahp6KyKaKbzgjfHd/zw6iyYLuE8DU1mKg2KSlJ5kiSefnMRR8HAMJ3y+/ZDu8fM4zHN9isZjUn2og7uLmba7L1p1on/O75nrkAoAbfP2YAgMG7T7XI08VS8z/zHXeef0Sexo1pTPjd8RXwdBEBjimpH0zLupSncbnGRfWKHKXaxUU1jH8MMfI0xtv334XvmF/JADYjwDFayCDBaaQatlnNynUzXflhhMur21q9MyX87vnWEkCGCMyNHrJFzRDN+Tq/gJjRS2pqeAi/O741AMgYRSQZztO4dIqv2Zznes7vWuF3w/ee03bM09gaVdyZ4VlQeUcRaaY54bvlVzKALXpINiA3xtMQRWo/mGI8vgGAcmyyJXw3fM80wEWpgw7wPYdsUd5EzTTEZTYjeFOCnxO+G37jHaDJmVPiDvphhEO2sEaguVf47vgeNRea0hLBm6LMTFtNlxIeefxjhO+W36oPYMrWmACOHSv+zwy+hy4l5uVE+G75ZQCY9QaoR9Mph2xzskl2qKVpk/Dd8CsZIEnmrWpNnsbWhsTwLLCmnCYbpoTfPb9XrK81TbZ3D8Ab4H4HqF8Z7nfHzfTM1/ywanD/mJ1Mbzb5YYRiHQnfIb/39UtcQgBgu3todXifHPeTY9td1Xk+J/u0VjsnfGd89fnD6K87UaL/Ryoc9TUADC/Osf/xs7PRlPDd8FU46uvhxfm/DKrWIkeE745fZgDR69Rv3suZ46/sfR0AAAAASUVORK5CYII="
+		},
+		{
+			"category": {
+				"hardness": 4,
+				"material": "crystal",
+				"status": "auto"
+			},
+			"colors": [
+				"#ffffff",
+				"#8c6f8b"
+			],
+			"crop": "twisted_tree",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": true,
+				"damage": false,
+				"kind": "block",
+				"light": false
+			},
+			"found": 1794993634.0,
+			"id": "quartz_",
+			"made_by": "RyeeRue",
+			"name": "Quartz  Seed",
+			"parents": [
+				"glass",
+				"pumice"
+			],
+			"pattern": 1,
+			"pattern_seed": 61080,
+			"rarity": 16,
+			"sprout": "#76491b",
+			"tag": "farmable",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAAShJREFUeJztmz0SwUAARjdG4xq0dBTpVXoHolKYURnu4RBbKNXOoaQwSZFMkk2yP8X3XonMU3xelhnZcr7+GpBlkvoNQFqm1Qcup4PThdv9bpBwtdi0Po8/rp8CiJMVZ4Cu5Q1dXBPVJeJP46cA4tTOAAW+F/ex1hhjzCzPnV6PP46fAohTK4DK8vH/oQDiNJ4BfOG6fPxp/BRAnMED+Fhb3l9SgN+PnwKIU54BXE+ffU+1ruBP46cA4vT+FuC6vFCfFPx+/RRAHO+/A4RaPv4wfgogjvcCdC3vfn74VuIf4acA4jgXYOy9bezy8YfxUwBxOgvQd3m+73H4w/opgDidBUi1fPxx/BRAnKz638DX++l04dDFXW/H1ufxx/VTAHFqBQAtKIA4P+9NzkNArIsdAAAAAElFTkSuQmCC"
+		},
+		{
+			"category": {
+				"hardness": 2,
+				"material": "soil",
+				"status": "auto"
+			},
+			"colors": [
+				"#b7b6ad",
+				"#817a7a"
+			],
+			"crop": "round_tree",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": true,
+				"damage": false,
+				"kind": "block",
+				"light": false
+			},
+			"found": 1794996256.0,
+			"id": "clay",
+			"made_by": "RyeeRue",
+			"name": "Clay Seed",
+			"parents": [
+				"sand",
+				"stone_background"
+			],
+			"pattern": 3,
+			"pattern_seed": 45248,
+			"rarity": 8,
+			"sprout": "#1daea2",
+			"tag": "farmable",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAAalJREFUeJztmzFLAzEYht+zN/sHxEEFB+nuqrOri6B/oIOLi45O7hW6dVLooqPgIFRwchBUpENAN/+Aowh1kK/lkuau8a45yvc+W5PcPRk+3uRy16S5vDIEUctC3RMg9ZLaDdd3t7kXGGNKCU9ah7n99Mf1MwGUM0qAs0470/Hx/jb5gkY54e7eDgDgqneTaae/Hj8TQDnOHsBXeatrTQDjNShtfM9kQvTH9TMBlOMkgA+pzKeHPgAgSRdzxw9/vgAAm1vb/50b/RH8TADlTJ0Agl1RF53LgvGhBvpj+pkAyglOgCIOWvtV35L+GfqZAMrxJoA8d/a655l2ew2Siitai0KhP46fCaCcUQLYJ0vy3GkGn5l2M/irNHutmXbtse9Hf71+JoByCp8C5m1XS38YTADlOAkgu0m78ny7zKorlP64fiaAcpwE8FWUtD/e9yf2S3vZt1/0x/UzAZRTeBJ4enQMYFyBvgqr6r03/XH9TADleBNAzqDXN5YAuGtM6O/Qs2r64/iZAMpJ7P8GynfjVSNn0K8vz7nj6I/rZwIox0kAogsmgHJ+AZYOeVZsvRI2AAAAAElFTkSuQmCC"
+		},
+		{
+			"category": {
+				"hardness": 4,
+				"material": "stone",
+				"status": "auto"
+			},
+			"colors": [
+				"#ffdd95",
+				"#c2beae"
+			],
+			"crop": "mushroom",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": true,
+				"damage": false,
+				"kind": "block",
+				"light": false
+			},
+			"found": 1794996962.0,
+			"id": "sandstone",
+			"made_by": "RyeeRue",
+			"name": "Sandstone Seed",
+			"parents": [
+				"sand",
+				"clay"
+			],
+			"pattern": 2,
+			"pattern_seed": 9438,
+			"rarity": 14,
+			"sprout": "#4a8362",
+			"tag": "not_farmable",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAAWdJREFUeJztmzFuwjAYhf8UpF6iA+IQlejSrZ0qTsAFEFfgFig7R6jKkq0doqpTTwBCVfceoQzUINsxcVzHHt77FuQQ+DI8Pf9AKB7ubn+FwHKV+wJIXobmgar+0A/8bIz1VyfBS/mmrVfv+4vn05/WzwYAp1AzQLVZNp/RMXG+PM7W2pr+PH42ADjWDOCduJvp8fH7OeLl0J/azwYA59wAXfcalTxXErsmlP4sfjYAOPYMMJ7r6115+R1cCWtLqAv6k/rZAODYDRCb2FMy/VH9bABw7AZo23MUfX0Opj+pnw0ATvgMEDrlxoL+KH42ADjuBvBN1n+/AaM/q58NAI67AUL3mJbXmXeo0J/XzwYA53RH0GIyEhGRp/l9LyKVvM/XrYiI1NcD7Xn68/jZAOBYM4D3HtUT9Kf1swHA6f/XwD/U3pML+pv9bABwCvO/gWoabSM00eb0a0J/Wj8bAByrAQgWbABwDrnmKeIqcmLoAAAAAElFTkSuQmCC"
+		},
+		{
+			"category": {
+				"hardness": 4,
+				"material": "metal",
+				"status": "auto"
+			},
+			"colors": [
+				"#bebebe",
+				"#615f5a"
+			],
+			"crop": "pine",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": false,
+				"damage": false,
+				"kind": "decoration",
+				"light": false
+			},
+			"found": 1794997005.0,
+			"id": "bucket",
+			"made_by": "RyeeRue",
+			"name": "Bucket Seed",
+			"parents": [
+				"glass",
+				"wood"
+			],
+			"pattern": 4,
+			"pattern_seed": 35842,
+			"rarity": 13,
+			"sprout": "#98ff8c",
+			"tag": "not_farmable",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAAVJJREFUeJztmTFLw1AQgK/ivxBCQrrkX7g4ZenU2cXJSXASQV2cXJ1cXHUSpJOD4uLoVLq0EAruXQLd4lTB0ti75r08qN83JXDvvks4LsmLCAAAAAAAAAAAAAAAAAAAAGwbHUtwGmWVJm4yHZny4g/nVwUuxC9vA1XSg/3cXAj+MP61AWmUVVqxiEhZlj/Hvbzf+Cbg9+vf2by0v+UhwG/372qCFiPlafCoStrL++ZC8Ifxqxrg7OLUlPju/lZERI4Oj9WF4A/jVzXAciFJkliWOQO/e7+pASzi54cPczH42/erXwK38eLxN/wKiOO4Vj6bD5ukxt+Sf20DTKajzvXVzUp5URQr18zmQ3l//XSyEYLfr189Ab7G41/ndXJf4Pfjd7oR5OPZh9+vXz2i0iirLs9PRERkr9utlbscf/j9+zeaAMvjqO3Ox+/Oz+/gf+7/Br6lZI+5kh5QAAAAAElFTkSuQmCC"
+		},
+		{
+			"category": {
+				"hardness": 2,
+				"material": "object",
+				"status": "auto"
+			},
+			"colors": [
+				"#abaa98",
+				"#c0c0c0"
+			],
+			"crop": "twisted_tree",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": false,
+				"damage": false,
+				"kind": "decoration",
+				"light": false
+			},
+			"found": 1794997034.0,
+			"id": "well",
+			"made_by": "RyeeRue",
+			"name": "Well Seed",
+			"parents": [
+				"clay",
+				"bucket"
+			],
+			"pattern": 4,
+			"pattern_seed": 72482,
+			"rarity": 21,
+			"sprout": "#57d1a7",
+			"tag": "not_farmable"
+		},
+		{
+			"category": {
+				"hardness": 3,
+				"material": "building",
+				"status": "auto"
+			},
+			"colors": [
+				"#4b1657",
+				"#660b84"
+			],
+			"crop": "flower",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": true,
+				"damage": false,
+				"kind": "block",
+				"light": false
+			},
+			"found": 1794997075.0,
+			"id": "purple_block",
+			"made_by": "RyeeRue",
+			"name": "Purple Block Seed",
+			"parents": [
+				"clay",
+				"obsidian"
+			],
+			"pattern": 3,
+			"pattern_seed": 23143,
+			"rarity": 12,
+			"sprout": "#593663",
+			"tag": "not_farmable",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAAPhJREFUeJztm70NwjAYBb8gFuFnA6jpmYABWIKCkoIl6INETx86xAhIjAJFMFJsBQSRbYl315kUl+L0lMIUZnY3kKWX+wUgL33/h+viElU43k/fPsef1s8CiFPY8xsgdnnl+dA4r2/bxhl/Hj8LIE7wDeAYlZPGuVoeo78M/vR+FkCc1gVwpC4ff1o/CyBO6wL8e/n4a1gAcQhAHAIQhwDEIQBxCEAcAhCHAMQhAHEIQBwCEIcAxCEAcT7eB+jKbDc3M7PTsIqtwv+DnwUQJ1gA//ZoV74tH39aPwsgzut/AY7NYBVV6N+H98Gf1s8CiBMsAGjBAojzAArFaM19ofKTAAAAAElFTkSuQmCC"
+		},
+		{
+			"category": {
+				"hardness": 3,
+				"material": "building",
+				"status": "auto"
+			},
+			"colors": [
+				"#5ecb2c",
+				"#8ccf07"
+			],
+			"crop": "round_tree",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": true,
+				"damage": false,
+				"kind": "block",
+				"light": false
+			},
+			"found": 1795000125.0,
+			"id": "green_block",
+			"made_by": "RyeeRue",
+			"name": "Green Block Seed",
+			"parents": [
+				"grass",
+				"clay"
+			],
+			"pattern": 3,
+			"pattern_seed": 15084,
+			"rarity": 11,
+			"sprout": "#72cc76",
+			"tag": "not_farmable",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAAPhJREFUeJztmz8OAUEcRn8rLuJPyxFcwwEUOidQOoGKQr+uQaLQaiWOYgtGMjNZwmZmE9973djibfHyZYtRmNndQJZO2y8A7dINf5he50mF++H27XP8ef0sgDiFPb8BUpd3Lk/e+ba8eGf87fhZAHGibwBHOdh459lhkfxl8Of3swDi1C6AI3f5+PP6WQBxahfg38vH/4AFEIcAxCEAcQhAHAIQhwDEIQBxCEAcAhCHAMQhAHEIQBwCEOfjfYCm7CZrMzPrH8epVfh/8LMA4kQLEN4ebcq35ePP62cBxHn9L8DRW42SCsP78CH48/pZAHGiBQAtWABxKqAGY+Eib0xHAAAAAElFTkSuQmCC"
+		},
+		{
+			"category": {
+				"hardness": 1,
+				"material": "plant",
+				"status": "auto"
+			},
+			"colors": [
+				"#29aabf",
+				"#1f5fc7"
+			],
+			"crop": "twisted_tree",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": false,
+				"damage": false,
+				"kind": "decoration",
+				"light": false
+			},
+			"found": 1795000174.0,
+			"id": "blueberry",
+			"made_by": "RyeeRue",
+			"name": "Blueberry Seed",
+			"parents": [
+				"glowing_mushroom",
+				"grass"
+			],
+			"pattern": 0,
+			"pattern_seed": 17752,
+			"rarity": 4,
+			"sprout": "#a5ff67",
+			"tag": "not_farmable",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAAfZJREFUeJztmDFuAjEQRb+jFBwCulyAIqki5QRJQ4NEs12UioqGGqXJARBNRIMUabsgDhCJKg0XSJmCC4R2U4RdeW1jrw3YUvR/B56d93c1GnsMUBRFURRFURRFURRFURRFUf9c4sjnixPnIz8yP9RwAQDfxUv1xwe+MBCzY/OSH5kfYrRQwar2Rs71Ecg/Id/XpBMeYoL8dPzLEBcleJL3sVu18Dyfh6QJFvmn4194xNaqDwB2qxa2+br6Pcn7GGcZAGBRPAL6IeUYkX8GvlcHUFtOpzdEpwcA3bqhuU9W8lPybQVgrB657Tzdd62GDHl89kTyI/BNBaCNGADQFiMAepXZDKl52mJUmrF9CPIj8lUjzlPmdLkBgAo2zjJs8zVef/TYO1wZ81hOqORH5ssmGo8YqhnZUFMZPgL5CfjaFuAzYpigcoWGjCnkx+WXY6BzxJguN7WKU6EyuDTmMaaQn4hfdQDXiGFrMYfWfMYU8tPwa1uA60TZpKUEjCnkJ+TXbgJtLaPJuitGbk8mkR+fXxaAGIgZOr0hrt9yYzJ5vdxvVBjwV2XySGKKmS436imY/ET82hhy+36DQ1o/fMK23jRGjoUyBpEfn69dBMUwYXh58hPxjSYAaEn2D1WyrIsGOZxXoeTH4TuNSNK6hWO9aQz5Cfm/mPMCX4uLfaAAAAAASUVORK5CYII="
+		},
+		{
+			"category": {
+				"hardness": 3,
+				"material": "building",
+				"status": "auto"
+			},
+			"colors": [
+				"#36a1c5",
+				"#4773a2"
+			],
+			"crop": "round_tree",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": true,
+				"damage": false,
+				"kind": "block",
+				"light": false
+			},
+			"found": 1795000181.0,
+			"id": "blue_block",
+			"made_by": "RyeeRue",
+			"name": "Blue Block Seed",
+			"parents": [
+				"blueberry",
+				"clay"
+			],
+			"pattern": 0,
+			"pattern_seed": 17886,
+			"rarity": 12,
+			"sprout": "#00ffe0",
+			"tag": "not_farmable",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAAPNJREFUeJztm7ENgkAYRn+Mi8AKuoQTMABLOIJL0ENib29J3IFRtNAzuSNglNxd4vded1I8ipcvFGdhZncDWTa5XwDysg1/qOtbVGHf7xef40/rZwHEKez1DRC7vGE4e+dxPHln/Hn8LIA4k28AR9ftvHPTXKK/DP70fhZAnNkFcKQuH39aPwsgzuwC/Hv5+J+wAOIQgDgEIA4BiEMA4hCAOAQgDgGIQwDiEIA4BCAOAYhDAOJ8vA+wlrY9mJlZVV1jq/D/4GcBxJksQHh7dC3flo8/rZ8FEOf9vwBHWR6jCsP78CH40/pZAHEmCwBasADiPABKSGNpTd6pegAAAABJRU5ErkJggg=="
+		},
+		{
+			"category": {
+				"hardness": 2,
+				"material": "soil",
+				"status": "auto"
+			},
+			"colors": [
+				"#525252",
+				"#c1bebc"
+			],
+			"crop": "flower",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": true,
+				"damage": false,
+				"kind": "block",
+				"light": false
+			},
+			"found": 1795000274.0,
+			"id": "ash",
+			"made_by": "RyeeRue",
+			"name": "Ash Seed",
+			"parents": [
+				"wood",
+				"lava"
+			],
+			"pattern": 3,
+			"pattern_seed": 9531,
+			"rarity": 7,
+			"sprout": "#1a1420",
+			"tag": "farmable",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAAZ1JREFUeJztmzFLhVAYhl+tuASFQ8UlaDBbIxBCgqCloYagfys0tARBSCFBtOUURFSDBN2isIY4xtHUi8g5w/c+2znnu/dx+Hz1KDq+73+DiMW1fQDELrPVidVFfWpleQkAcHN3DwAYe/MAgMd8oo276hUPr1+tB0S/WT8TQDiOugfYWh8D+OucodncWAMAPD2/AKh3Iv12/EwA4ZQJ4BafRsWFO6eN6bfjZwIIp7YLUGzv7A4iuLw47/U7+s34mQDCKe8BoigyKk6SRBvTb8fPBBAOG0A4bADhlLuANE0BAEEQ/FuYZZm27nmetp7neauoWl+Ffjt+JoBwygRo6rym9a6OraLqwzCc6v/pN+NnAgin8UlgF9N2Xt96+s34mQDC6Z0Afbm9vjKtpL/FzwQQTvkuYGE0oy18FL+90ffapfatI7fQ5t8m7wDq78Ppt+NnAginMQGGRnWeousMoN+MnwkgnHIXsLd/AAA4Oz0ZVFDtvCbot+NnAgjHqX4b2Pda1NVph0fHAIA4jlvr6DfrZwIIp5YARBZMAOH8APGdNl52FFqOAAAAAElFTkSuQmCC"
+		},
+		{
+			"category": {
+				"hardness": 2,
+				"material": "soil",
+				"status": "auto"
+			},
+			"colors": [
+				"#e59220",
+				"#c64b4b"
+			],
+			"crop": "flower",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": true,
+				"damage": false,
+				"kind": "block",
+				"light": false
+			},
+			"found": 1795000317.0,
+			"id": "cinder_soil",
+			"made_by": "RyeeRue",
+			"name": "Cinder Soil Seed",
+			"parents": [
+				"soil",
+				"ash"
+			],
+			"pattern": 0,
+			"pattern_seed": 78906,
+			"rarity": 9,
+			"sprout": "#61632a",
+			"tag": "bountiful",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAAYdJREFUeJztmz1uwkAQhZ+jUFOTDiSaEIkqx+AadLlKGm6QK0CXG5CKgpS4CjSAQloX0GRBzLL+SdbjYt7XeQ36thi98Swmeer3jyBmuWt6A6RZ7uXC63ic+4V0s/mXcDKd5t6nX9fPBDDOOQFeRqOrG4vlshbhc6cDAPgQlUx/M34mgHG8Z4BQ5Q0HAwCXHvSz39eyIfp1/UwA43gJEMJV5iJNAQCtY/7xQZYkAIBht/vXvdGv4GcCGKd0AjhkRa0Ph2iboV/fzwQwTuUEkHzvdgDi9zz6dfxMAOMEE0DOnQ45fz72egDi90L6dfxMAOOcE0BWlpw7JbLXPLTbpYRf2+3Ndfqb8TMBjFM4BWg/1dKv62cCGMf/NfC358jK+1ytrq7rmnvp1/UzAYzjJUCooormzVDlVoV+XT8TwDilTwLdnBqaN2P3Qvp1/EwA4wQT4G02u7nuKk32nKLr9/m80sbo1/EzAYyTyP8GuvfGY+POoNdZlvs5+nX9TADjeAlAbMEEMM4J7NuMZlmxwcsAAAAASUVORK5CYII="
+		},
+		{
+			"category": {
+				"hardness": 1,
+				"material": "plant",
+				"status": "auto"
+			},
+			"colors": [
+				"#c7821b",
+				"#efb92e"
+			],
+			"crop": "round_tree",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": false,
+				"damage": false,
+				"kind": "decoration",
+				"light": false
+			},
+			"found": 1795000678.0,
+			"id": "yam",
+			"made_by": "RyeeRue",
+			"name": "Yam Seed",
+			"parents": [
+				"grass",
+				"cinder_soil"
+			],
+			"pattern": 5,
+			"pattern_seed": 40594,
+			"rarity": 12,
+			"sprout": "#8a9d41",
+			"tag": "not_farmable",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAAX1JREFUeJztmjFOw0AQRQdEyQmogRZRIo5ARYOUc1BxAirOgURDhUSNiCgRbUKXKCdA6VAo0EbyrCfrDd410rzXObb8XHz/WTsWAQAAAI/slBacHRyv2n5/W0yKu/Gn/bs1LgL+L3ulTqyTd39+0tg/GstKpNydgL+bnwZwTm8NkEpcafBv56cBnNO5AazVpCYkbzT+aGwvlsvsi8Nf3k8DOMdsACtxDzcXG0/4/TIXkTiJd6dHWReGv46fBnBO1AC5yZs9TzYKSicf/9/8NIBz1g2gk6cTd3X7JCL5iQ68Tn9P//j12bof/zB+GsA50RrAmjUhedfv08a2RTjucv+wdb/1Dhx/XT8N4Jx1Cq0ZlFplWqRmnr4D8A/jpwGcY64Bcled1mwKMygkMfX/N/66fhrAOVEDhJmT+7ypV6nW6jMF/rp+GsA52V8EpRKmZ07f4O/XTwM4x3wPkJohIWH6uK7PvRr8w/hpAOdEqej67VmKbb93x1/XTwM45wdmgbgEPoq/egAAAABJRU5ErkJggg=="
+		},
+		{
+			"category": {
+				"hardness": 1,
+				"material": "mushroom",
+				"status": "auto"
+			},
+			"colors": [
+				"#630f81",
+				"#22a2c0"
+			],
+			"crop": "round_tree",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": true,
+				"damage": true,
+				"kind": "decoration",
+				"light": false
+			},
+			"found": 1795000706.0,
+			"id": "deathcap",
+			"made_by": "RyeeRue",
+			"name": "Deathcap Seed",
+			"parents": [
+				"obsidian",
+				"glowing_mushroom"
+			],
+			"pattern": 2,
+			"pattern_seed": 50395,
+			"rarity": 5,
+			"sprout": "#75873a",
+			"tag": "bountiful"
+		},
+		{
+			"category": {
+				"hardness": 1,
+				"material": "background",
+				"status": "auto"
+			},
+			"colors": [
+				"#23b6ba",
+				"#552d22"
+			],
+			"crop": "round_tree",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": false,
+				"damage": false,
+				"kind": "background",
+				"light": false
+			},
+			"found": 1795000794.0,
+			"id": "spore_background",
+			"made_by": "RyeeRue",
+			"name": "Spore Background Seed",
+			"parents": [
+				"glowing_mushroom",
+				"cave_background"
+			],
+			"pattern": 4,
+			"pattern_seed": 76971,
+			"rarity": 2,
+			"sprout": "#abdb58",
+			"tag": "farmable"
+		},
+		{
+			"category": {
+				"hardness": 2,
+				"material": "soil",
+				"status": "auto"
+			},
+			"colors": [
+				"#494946",
+				"#969495"
+			],
+			"crop": "twisted_tree",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": true,
+				"damage": false,
+				"kind": "block",
+				"light": false
+			},
+			"found": 1795000842.0,
+			"id": "dust",
+			"made_by": "RyeeRue",
+			"name": "Dust Seed",
+			"parents": [
+				"sand",
+				"gravel"
+			],
+			"pattern": 3,
+			"pattern_seed": 58832,
+			"rarity": 8,
+			"sprout": "#ffcccc",
+			"tag": "bountiful"
+		},
+		{
+			"category": {
+				"hardness": 1,
+				"material": "plant",
+				"status": "auto"
+			},
+			"colors": [
+				"#67b926",
+				"#c17c2f"
+			],
+			"crop": "pine",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": false,
+				"damage": false,
+				"kind": "decoration",
+				"light": false
+			},
+			"found": 1795000864.0,
+			"id": "bush",
+			"made_by": "RyeeRue",
+			"name": "Bush Seed",
+			"parents": [
+				"grass",
+				"wood"
+			],
+			"pattern": 1,
+			"pattern_seed": 91293,
+			"rarity": 8,
+			"sprout": "#afd563",
+			"tag": "not_farmable"
+		},
+		{
+			"category": {
+				"hardness": 1,
+				"material": "plant",
+				"status": "auto"
+			},
+			"colors": [
+				"#39d41a",
+				"#804e0e"
+			],
+			"crop": "mushroom",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": true,
+				"damage": false,
+				"kind": "block",
+				"light": false
+			},
+			"found": 1795000925.0,
+			"id": "hedge",
+			"made_by": "RyeeRue",
+			"name": "Hedge Seed",
+			"parents": [
+				"grass",
+				"door"
+			],
+			"pattern": 3,
+			"pattern_seed": 47776,
+			"rarity": 10,
+			"sprout": "#bce65f",
+			"tag": "not_farmable"
+		},
+		{
+			"category": {
+				"hardness": 1,
+				"material": "plant",
+				"status": "auto"
+			},
+			"colors": [
+				"#34de24",
+				"#53ae26"
+			],
+			"crop": "mushroom",
+			"custom": false,
+			"drop": {
+				"auto": false,
+				"bg_tags": [],
+				"collision": true,
+				"damage": false,
+				"kind": "block",
+				"light": false
+			},
+			"found": 1795002207.0,
+			"id": "leaves",
+			"made_by": "RyeeRue",
+			"name": "Leaves Seed",
+			"parents": [
+				"hedge",
+				"bush"
+			],
+			"pattern": 4,
+			"pattern_seed": 79723,
+			"rarity": 18,
+			"sprout": "#b8e86b",
+			"tag": "not_farmable"
+		},
+		{
+			"category": {
+				"hardness": 3,
+				"material": "building",
+				"status": "auto"
+			},
+			"colors": [
+				"#e4e4e4",
+				"#fafafa"
+			],
+			"crop": "mushroom",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": true,
+				"damage": false,
+				"kind": "block",
+				"light": false
+			},
+			"found": 1795002255.0,
+			"id": "white_block",
+			"made_by": "RyeeRue",
+			"name": "White Block Seed",
+			"parents": [
+				"clay",
+				"quartz_"
+			],
+			"pattern": 3,
+			"pattern_seed": 35275,
+			"rarity": 24,
+			"sprout": "#e0e8e4",
+			"tag": "not_farmable"
+		},
+		{
+			"category": {
+				"hardness": 1,
+				"material": "mushroom",
+				"status": "auto"
+			},
+			"colors": [
+				"#5e770b",
+				"#4be123"
+			],
+			"crop": "flower",
+			"custom": false,
+			"drop": {
+				"auto": false,
+				"bg_tags": [],
+				"collision": true,
+				"damage": false,
+				"kind": "decoration",
+				"light": false
+			},
+			"found": 1795002304.0,
+			"id": "bouncy_shroom",
+			"made_by": "RyeeRue",
+			"name": "Bouncy Shroom Seed",
+			"parents": [
+				"deathcap",
+				"leaves"
+			],
+			"pattern": 2,
+			"pattern_seed": 31656,
+			"rarity": 23,
+			"sprout": "#a5b650",
+			"tag": "farmable"
+		},
+		{
+			"category": {
+				"hardness": 3,
+				"material": "crystal",
+				"status": "auto"
+			},
+			"colors": [
+				"#c1bcbc",
+				"#77580f"
+			],
+			"crop": "mushroom",
+			"custom": false,
+			"drop": {
+				"auto": false,
+				"bg_tags": [],
+				"collision": false,
+				"damage": false,
+				"kind": "decoration",
+				"light": false
+			},
+			"found": 1795002339.0,
+			"id": "window",
+			"made_by": "RyeeRue",
+			"name": "Window Seed",
+			"parents": [
+				"glass",
+				"door"
+			],
+			"pattern": 2,
+			"pattern_seed": 59606,
+			"rarity": 15,
+			"sprout": "#a2983d",
+			"tag": "not_farmable"
+		},
+		{
+			"category": {
+				"hardness": 3,
+				"material": "crystal",
+				"status": "auto"
+			},
+			"colors": [
+				"#fff5f3",
+				"#33abbb"
+			],
+			"crop": "flower",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": true,
+				"damage": false,
+				"kind": "block",
+				"light": false
+			},
+			"found": 1795002391.0,
+			"id": "lapis_lazuli",
+			"made_by": "RyeeRue",
+			"name": "Lapis Lazuli Seed",
+			"parents": [
+				"quartz_",
+				"blue_block"
+			],
+			"pattern": 2,
+			"pattern_seed": 72643,
+			"rarity": 28,
+			"sprout": "#7a915c",
+			"tag": "not_farmable"
+		},
+		{
+			"category": {
+				"hardness": 3,
+				"material": "crystal",
+				"status": "auto"
+			},
+			"colors": [
+				"#cca02d",
+				"#bfbdbd"
+			],
+			"crop": "pine",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": true,
+				"damage": false,
+				"kind": "block",
+				"light": false
+			},
+			"found": 1795002411.0,
+			"id": "wooden_window",
+			"made_by": "RyeeRue",
+			"name": "Wooden Window Seed",
+			"parents": [
+				"wood",
+				"window"
+			],
+			"pattern": 3,
+			"pattern_seed": 63695,
+			"rarity": 20,
+			"sprout": "#a5bf48",
+			"tag": "not_farmable"
+		},
+		{
+			"category": {
+				"hardness": 4,
+				"material": "stone",
+				"status": "auto"
+			},
+			"colors": [
+				"#000000",
+				"#1d1b1b"
+			],
+			"crop": "mushroom",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": true,
+				"damage": false,
+				"kind": "block",
+				"light": false
+			},
+			"found": 1795002534.0,
+			"id": "coal",
+			"made_by": "RyeeRue",
+			"name": "Coal Seed",
+			"parents": [
+				"stone_background",
+				"lava"
+			],
+			"pattern": 2,
+			"pattern_seed": 41549,
+			"rarity": 4,
+			"sprout": "#814a2b",
+			"tag": "not_farmable"
+		},
+		{
+			"category": {
+				"hardness": 3,
+				"material": "building",
+				"status": "auto"
+			},
+			"colors": [
+				"#000000",
+				"#0d0d0d"
+			],
+			"crop": "pine",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": true,
+				"damage": false,
+				"kind": "block",
+				"light": false
+			},
+			"found": 1795002555.0,
+			"id": "black_block",
+			"made_by": "RyeeRue",
+			"name": "Black Block Seed",
+			"parents": [
+				"clay",
+				"coal"
+			],
+			"pattern": 1,
+			"pattern_seed": 78695,
+			"rarity": 12,
+			"sprout": "#191a19",
+			"tag": "farmable"
+		},
+		{
+			"category": {
+				"hardness": 1,
+				"material": "plant",
+				"status": "auto"
+			},
+			"colors": [
+				"#290733",
+				"#872bbe"
+			],
+			"crop": "mushroom",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": false,
+				"damage": false,
+				"kind": "decoration",
+				"light": false
+			},
+			"found": 1795002585.0,
+			"id": "blackberry",
+			"made_by": "RyeeRue",
+			"name": "Blackberry Seed",
+			"parents": [
+				"black_block",
+				"blueberry"
+			],
+			"pattern": 0,
+			"pattern_seed": 83240,
+			"rarity": 16,
+			"sprout": "#6a8842",
+			"tag": "not_farmable"
+		},
+		{
+			"category": {
+				"hardness": 3,
+				"material": "wood",
+				"status": "auto"
+			},
+			"colors": [
+				"#b9681c",
+				"#0d0d0d"
+			],
+			"crop": "pine",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": true,
+				"damage": false,
+				"kind": "block",
+				"light": false
+			},
+			"found": 1795002638.0,
+			"id": "charcoal",
+			"made_by": "RyeeRue",
+			"name": "Charcoal Seed",
+			"parents": [
+				"wood",
+				"coal"
+			],
+			"pattern": 3,
+			"pattern_seed": 38165,
+			"rarity": 9,
+			"sprout": "#998745",
+			"tag": "not_farmable"
+		},
+		{
+			"category": {
+				"hardness": 4,
+				"material": "metal",
+				"status": "auto"
+			},
+			"colors": [
+				"#b7b5b6",
+				"#594d4d"
+			],
+			"crop": "pine",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": true,
+				"damage": false,
+				"kind": "block",
+				"light": false
+			},
+			"found": 1795002664.0,
+			"id": "iron_block",
+			"made_by": "RyeeRue",
+			"name": "Iron Block Seed",
+			"parents": [
+				"bucket",
+				"charcoal"
+			],
+			"pattern": 5,
+			"pattern_seed": 10462,
+			"rarity": 22,
+			"sprout": "#a1c36f",
+			"tag": "not_farmable"
+		},
+		{
+			"category": {
+				"hardness": 3,
+				"material": "crystal",
+				"status": "auto"
+			},
+			"colors": [
+				"#ffe990",
+				"#c78225"
+			],
+			"crop": "twisted_tree",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": true,
+				"damage": false,
+				"kind": "block",
+				"light": false
+			},
+			"found": 1795002681.0,
+			"id": "amber",
+			"made_by": "RyeeRue",
+			"name": "Amber Seed",
+			"parents": [
+				"sandstone",
+				"yam"
+			],
+			"pattern": 1,
+			"pattern_seed": 97728,
+			"rarity": 26,
+			"sprout": "#6a844d",
+			"tag": "farmable"
+		},
+		{
+			"category": {
+				"hardness": 4,
+				"material": "metal",
+				"status": "auto"
+			},
+			"colors": [
+				"#d4e47e",
+				"#ffc80d"
+			],
+			"crop": "twisted_tree",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": true,
+				"damage": false,
+				"kind": "block",
+				"light": false
+			},
+			"found": 1795002730.0,
+			"id": "gold",
+			"made_by": "RyeeRue",
+			"name": "Gold Seed",
+			"parents": [
+				"amber",
+				"iron_block"
+			],
+			"pattern": 2,
+			"pattern_seed": 43125,
+			"rarity": 48,
+			"sprout": "#f6ff00",
+			"tag": "not_farmable"
+		},
+		{
+			"category": {
+				"hardness": 1,
+				"material": "liquid",
+				"status": "auto"
+			},
+			"colors": [
+				"#29abb6",
+				"#cdcdcd"
+			],
+			"crop": "twisted_tree",
+			"custom": false,
+			"drop": {
+				"auto": false,
+				"bg_tags": [],
+				"collision": false,
+				"damage": false,
+				"kind": "decoration",
+				"light": false
+			},
+			"found": 1795002806.0,
+			"id": "water",
+			"made_by": "RyeeRue",
+			"name": "Water Seed",
+			"parents": [
+				"blue_block",
+				"bucket"
+			],
+			"pattern": 2,
+			"pattern_seed": 42189,
+			"rarity": 25,
+			"sprout": "#77ec81",
+			"tag": "not_farmable"
+		},
+		{
+			"category": {
+				"hardness": 3,
+				"material": "wood",
+				"status": "auto"
+			},
+			"colors": [
+				"#6a5832",
+				"#cd821c"
+			],
+			"crop": "round_tree",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": true,
+				"damage": false,
+				"kind": "block",
+				"light": false
+			},
+			"found": 1795002959.0,
+			"id": "wooden_platform",
+			"made_by": "RyeeRue",
+			"name": "Wooden Platform Seed",
+			"parents": [
+				"stone",
+				"wood"
+			],
+			"pattern": 1,
+			"pattern_seed": 6090,
+			"rarity": 6,
+			"sprout": "#94d75b",
+			"tag": "farmable"
+		},
+		{
+			"category": {
+				"hardness": 3,
+				"material": "building",
+				"status": "auto"
+			},
+			"colors": [
+				"#c65634",
+				"#ffffff"
+			],
+			"crop": "twisted_tree",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": true,
+				"damage": false,
+				"kind": "block",
+				"light": false
+			},
+			"found": 1795002986.0,
+			"id": "bricksw",
+			"made_by": "RyeeRue",
+			"name": "Bricks Seed",
+			"parents": [
+				"clay",
+				"stone_background"
+			],
+			"pattern": 5,
+			"pattern_seed": 21317,
+			"rarity": 10,
+			"sprout": "#56b38d",
+			"tag": "bountiful"
+		},
+		{
+			"category": {
+				"hardness": 1,
+				"material": "plant",
+				"status": "auto"
+			},
+			"colors": [
+				"#eb3b3b",
+				"#9fe45e"
+			],
+			"crop": "round_tree",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": false,
+				"damage": false,
+				"kind": "decoration",
+				"light": false
+			},
+			"found": 1795003016.0,
+			"id": "strawberry",
+			"made_by": "RyeeRue",
+			"name": "Strawberry Seed",
+			"parents": [
+				"bricksw",
+				"bush"
+			],
+			"pattern": 3,
+			"pattern_seed": 18709,
+			"rarity": 18,
+			"sprout": "#2cb429",
+			"tag": "not_farmable"
+		},
+		{
+			"category": {
+				"hardness": 3,
+				"material": "building",
+				"status": "auto"
+			},
+			"colors": [
+				"#a42f2f",
+				"#e33d3a"
+			],
+			"crop": "pine",
+			"custom": false,
+			"drop": {
+				"auto": false,
+				"bg_tags": [],
+				"collision": true,
+				"damage": false,
+				"kind": "block",
+				"light": false
+			},
+			"found": 1795003046.0,
+			"id": "red_blockseed",
+			"made_by": "RyeeRue",
+			"name": "Red Block Seed",
+			"parents": [
+				"clay",
+				"strawberry"
+			],
+			"pattern": 2,
+			"pattern_seed": 83510,
+			"rarity": 26,
+			"sprout": "#f35800",
+			"tag": "not_farmable"
+		},
+		{
+			"category": {
+				"hardness": 1,
+				"material": "plant",
+				"status": "auto"
+			},
+			"colors": [
+				"#e21111",
+				"#c05c32"
+			],
+			"crop": "pine",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": false,
+				"damage": false,
+				"kind": "decoration",
+				"light": false
+			},
+			"found": 1795003094.0,
+			"id": "rose",
+			"made_by": "RyeeRue",
+			"name": "Rose Seed",
+			"parents": [
+				"lava",
+				"glowing_mushroom"
+			],
+			"pattern": 1,
+			"pattern_seed": 47652,
+			"rarity": 3,
+			"sprout": "#468731",
+			"tag": "not_farmable"
+		},
+		{
+			"category": {
+				"hardness": 1,
+				"material": "plant",
+				"status": "auto"
+			},
+			"colors": [
+				"#ffee01",
+				"#fffdb6"
+			],
+			"crop": "mushroom",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": false,
+				"damage": false,
+				"kind": "decoration",
+				"light": false
+			},
+			"found": 1795003123.0,
+			"id": "daffodil",
+			"made_by": "RyeeRue",
+			"name": "Daffodil Seed",
+			"parents": [
+				"sand",
+				"rose"
+			],
+			"pattern": 2,
+			"pattern_seed": 45462,
+			"rarity": 9,
+			"sprout": "#647a25",
+			"tag": "bountiful"
+		},
+		{
+			"category": {
+				"hardness": 3,
+				"material": "building",
+				"status": "auto"
+			},
+			"colors": [
+				"#e6cf07",
+				"#e2fd0c"
+			],
+			"crop": "mushroom",
+			"custom": false,
+			"drop": {
+				"auto": false,
+				"bg_tags": [],
+				"collision": true,
+				"damage": false,
+				"kind": "block",
+				"light": false
+			},
+			"found": 1795003149.0,
+			"id": "yellow_block",
+			"made_by": "RyeeRue",
+			"name": "Yellow Block Seed",
+			"parents": [
+				"clay",
+				"daffodil"
+			],
+			"pattern": 4,
+			"pattern_seed": 1174,
+			"rarity": 17,
+			"sprout": "#ffff00",
+			"tag": "farmable"
+		},
+		{
+			"category": {
+				"hardness": 1,
+				"material": "plant",
+				"status": "auto"
+			},
+			"colors": [
+				"#3dd31e",
+				"#dd423a"
+			],
+			"crop": "twisted_tree",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": true,
+				"damage": false,
+				"kind": "block",
+				"light": false
+			},
+			"found": 1795003266.0,
+			"id": "apple",
+			"made_by": "RyeeRue",
+			"name": "Apple Seed",
+			"parents": [
+				"leaves",
+				"strawberry"
+			],
+			"pattern": 2,
+			"pattern_seed": 71542,
+			"rarity": 36,
+			"sprout": "#67c652",
+			"tag": "not_farmable"
+		},
+		{
+			"category": {
+				"hardness": 4,
+				"material": "metal",
+				"status": "auto"
+			},
+			"colors": [
+				"#aeaeae",
+				"#433a3a"
+			],
+			"crop": "round_tree",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": true,
+				"damage": false,
+				"kind": "block",
+				"light": false
+			},
+			"found": 1795003299.0,
+			"id": "steel",
+			"made_by": "RyeeRue",
+			"name": "Steel Seed",
+			"parents": [
+				"iron_block",
+				"coal"
+			],
+			"pattern": 3,
+			"pattern_seed": 22276,
+			"rarity": 26,
+			"sprout": "#333331",
+			"tag": "not_farmable"
+		},
+		{
+			"category": {
+				"hardness": 4,
+				"material": "metal",
+				"status": "auto"
+			},
+			"colors": [
+				"#635731",
+				"#a59fa0"
+			],
+			"crop": "mushroom",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": true,
+				"damage": false,
+				"kind": "block",
+				"light": false
+			},
+			"found": 1795003318.0,
+			"id": "steel_platform",
+			"made_by": "RyeeRue",
+			"name": "Steel Platform Seed",
+			"parents": [
+				"wooden_platform",
+				"steel"
+			],
+			"pattern": 5,
+			"pattern_seed": 9670,
+			"rarity": 32,
+			"sprout": "#698d46",
+			"tag": "farmable"
+		},
+		{
+			"category": {
+				"hardness": 2,
+				"material": "object",
+				"status": "auto"
+			},
+			"colors": [
+				"#a5a6a4",
+				"#bcbcbc"
+			],
+			"crop": "round_tree",
+			"custom": false,
+			"drop": {
+				"auto": false,
+				"bg_tags": [],
+				"collision": false,
+				"damage": false,
+				"kind": "decoration",
+				"light": false
+			},
+			"found": 1795003352.0,
+			"id": "toilet",
+			"made_by": "RyeeRue",
+			"name": "Toilet Seed",
+			"parents": [
+				"white_block",
+				"bucket"
+			],
+			"pattern": 2,
+			"pattern_seed": 37850,
+			"rarity": 37,
+			"sprout": "#7eca8e",
+			"tag": "not_farmable"
+		},
+		{
+			"category": {
+				"hardness": 3,
+				"material": "wood",
+				"status": "auto"
+			},
+			"colors": [
+				"#ce9a28",
+				"#6d6536"
+			],
+			"crop": "twisted_tree",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": false,
+				"damage": false,
+				"kind": "decoration",
+				"light": false
+			},
+			"found": 1795003373.0,
+			"id": "chair",
+			"made_by": "RyeeRue",
+			"name": "Chair Seed",
+			"parents": [
+				"wood",
+				"wooden_platform"
+			],
+			"pattern": 5,
+			"pattern_seed": 21484,
+			"rarity": 11,
+			"sprout": "#9eca5d",
+			"tag": "not_farmable"
+		},
+		{
+			"category": {
+				"hardness": 3,
+				"material": "wood",
+				"status": "auto"
+			},
+			"colors": [
+				"#dbaa2f",
+				"#b3b3b3"
+			],
+			"crop": "round_tree",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": true,
+				"damage": false,
+				"kind": "decoration",
+				"light": false
+			},
+			"found": 1795003427.0,
+			"id": "chest",
+			"made_by": "RyeeRue",
+			"name": "Chest Seed",
+			"parents": [
+				"chair",
+				"bucket"
+			],
+			"pattern": 4,
+			"pattern_seed": 762,
+			"rarity": 24,
+			"sprout": "#9bec83",
+			"tag": "not_farmable"
+		},
+		{
+			"category": {
+				"hardness": 3,
+				"material": "wood",
+				"status": "auto"
+			},
+			"colors": [
+				"#dbdc7f",
+				"#e5cc3b"
+			],
+			"crop": "pine",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": true,
+				"damage": false,
+				"kind": "decoration",
+				"light": false
+			},
+			"found": 1795003440.0,
+			"id": "treasure_chest",
+			"made_by": "RyeeRue",
+			"name": "Treasure Chest Seed",
+			"parents": [
+				"gold",
+				"chest"
+			],
+			"pattern": 5,
+			"pattern_seed": 71640,
+			"rarity": 72,
+			"sprout": "#c6e849",
+			"tag": "not_farmable"
+		},
+		{
+			"category": {
+				"hardness": 1,
+				"material": "plant",
+				"status": "auto"
+			},
+			"colors": [
+				"#ff9a03",
+				"#d18b0a"
+			],
+			"crop": "twisted_tree",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": false,
+				"damage": false,
+				"kind": "decoration",
+				"light": false
+			},
+			"found": 1795003499.0,
+			"id": "tulip",
+			"made_by": "RyeeRue",
+			"name": "Tulip Seed",
+			"parents": [
+				"daffodil",
+				"rose"
+			],
+			"pattern": 0,
+			"pattern_seed": 93861,
+			"rarity": 12,
+			"sprout": "#4e822b",
+			"tag": "not_farmable"
+		},
+		{
+			"category": {
+				"hardness": 3,
+				"material": "building",
+				"status": "auto"
+			},
+			"colors": [
+				"#cd9e05",
+				"#f69906"
+			],
+			"crop": "mushroom",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": true,
+				"damage": false,
+				"kind": "block",
+				"light": false
+			},
+			"found": 1795003531.0,
+			"id": "orange_block",
+			"made_by": "RyeeRue",
+			"name": "Orange Block Seed",
+			"parents": [
+				"clay",
+				"tulip"
+			],
+			"pattern": 1,
+			"pattern_seed": 25508,
+			"rarity": 20,
+			"sprout": "#ffb44c",
+			"tag": "not_farmable"
+		},
+		{
+			"category": {
+				"hardness": 3,
+				"material": "building",
+				"status": "auto"
+			},
+			"colors": [
+				"#afff85",
+				"#dbff99"
+			],
+			"crop": "twisted_tree",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": true,
+				"damage": false,
+				"kind": "block",
+				"light": false
+			},
+			"found": 1795003611.0,
+			"id": "lime",
+			"made_by": "RyeeRue",
+			"name": "Lime Block Seed",
+			"parents": [
+				"green_block",
+				"orange_block"
+			],
+			"pattern": 3,
+			"pattern_seed": 53293,
+			"rarity": 31,
+			"sprout": "#187e00",
+			"tag": "not_farmable"
+		},
+		{
+			"category": {
+				"hardness": 3,
+				"material": "building",
+				"status": "auto"
+			},
+			"colors": [
+				"#35a8bf",
+				"#37b4ce"
+			],
+			"crop": "pine",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": true,
+				"damage": false,
+				"kind": "block",
+				"light": false
+			},
+			"found": 1795003654.0,
+			"id": "aqua_block",
+			"made_by": "RyeeRue",
+			"name": "Aqua Block Seed",
+			"parents": [
+				"water",
+				"blue_block"
+			],
+			"pattern": 3,
+			"pattern_seed": 81221,
+			"rarity": 37,
+			"sprout": "#38e9e7",
+			"tag": "not_farmable"
+		},
+		{
+			"category": {
+				"hardness": 3,
+				"material": "building",
+				"status": "auto"
+			},
+			"colors": [
+				"#5f4e4e",
+				"#343030"
+			],
+			"crop": "twisted_tree",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": true,
+				"damage": false,
+				"kind": "block",
+				"light": false
+			},
+			"found": 1795003683.0,
+			"id": "grey_block",
+			"made_by": "RyeeRue",
+			"name": "Grey Block Seed",
+			"parents": [
+				"white_block",
+				"black_block"
+			],
+			"pattern": 4,
+			"pattern_seed": 46387,
+			"rarity": 36,
+			"sprout": "#8b8b8b",
+			"tag": "not_farmable"
+		},
+		{
+			"category": {
+				"hardness": 3,
+				"material": "building",
+				"status": "auto"
+			},
+			"colors": [
+				"#8c5a36",
+				"#874e04"
+			],
+			"crop": "round_tree",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": true,
+				"damage": false,
+				"kind": "block",
+				"light": false
+			},
+			"found": 1795003710.0,
+			"id": "brown_block",
+			"made_by": "RyeeRue",
+			"name": "Brown Block Seed",
+			"parents": [
+				"dirt",
+				"clay"
+			],
+			"pattern": 0,
+			"pattern_seed": 49304,
+			"rarity": 9,
+			"sprout": "#523c0f",
+			"tag": "not_farmable"
+		},
+		{
+			"category": {
+				"hardness": 4,
+				"material": "metal",
+				"status": "auto"
+			},
+			"colors": [
+				"#47460a",
+				"#d7df82"
+			],
+			"crop": "pine",
+			"custom": false,
+			"drop": {
+				"auto": false,
+				"bg_tags": [],
+				"collision": true,
+				"damage": false,
+				"kind": "decoration",
+				"light": false
+			},
+			"found": 1795003775.0,
+			"id": "gold_platform_",
+			"made_by": "RyeeRue",
+			"name": "Gold Platform  Seed",
+			"parents": [
+				"wooden_platform",
+				"treasure_chest"
+			],
+			"pattern": 1,
+			"pattern_seed": 92985,
+			"rarity": 78,
+			"sprout": "#cbea5e",
+			"tag": "not_farmable"
+		},
+		{
+			"category": {
+				"hardness": 1,
+				"material": "background",
+				"status": "auto"
+			},
+			"colors": [
+				"#e02020",
+				"#ffffff"
+			],
+			"crop": "twisted_tree",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": false,
+				"damage": false,
+				"kind": "background",
+				"light": false
+			},
+			"found": 1795003866.0,
+			"id": "bricks_background",
+			"made_by": "RyeeRue",
+			"name": "Bricks Background Seed",
+			"parents": [
+				"bricksw",
+				"cave_background"
+			],
+			"pattern": 4,
+			"pattern_seed": 58843,
+			"rarity": 11,
+			"sprout": "#6ea363",
+			"tag": "not_farmable"
+		},
+		{
+			"category": {
+				"hardness": 1,
+				"material": "background",
+				"status": "auto"
+			},
+			"colors": [
+				"#c59529",
+				"#b7adae"
+			],
+			"crop": "twisted_tree",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": false,
+				"damage": false,
+				"kind": "background",
+				"light": false
+			},
+			"found": 1795003887.0,
+			"id": "wooden_background",
+			"made_by": "RyeeRue",
+			"name": "Wooden Background Seed",
+			"parents": [
+				"wood",
+				"stone_background"
+			],
+			"pattern": 3,
+			"pattern_seed": 55206,
+			"rarity": 7,
+			"sprout": "#8cb554",
+			"tag": "not_farmable"
+		},
+		{
+			"category": {
+				"hardness": 4,
+				"material": "crystal",
+				"status": "auto"
+			},
+			"colors": [
+				"#b8220f",
+				"#ff6700"
+			],
+			"crop": "mushroom",
+			"custom": false,
+			"drop": {
+				"auto": false,
+				"bg_tags": [],
+				"collision": false,
+				"damage": false,
+				"kind": "block",
+				"light": false
+			},
+			"found": 1795003926.0,
+			"id": "ruby",
+			"made_by": "RyeeRue",
+			"name": "Ruby Seed",
+			"parents": [
+				"lapis_lazuli",
+				"apple"
+			],
+			"pattern": 3,
+			"pattern_seed": 40064,
+			"rarity": 64,
+			"sprout": "#491818",
+			"tag": "not_farmable"
+		},
+		{
+			"category": {
+				"hardness": 3,
+				"material": "building",
+				"status": "auto"
+			},
+			"colors": [
+				"#c8c831",
+				"#c5c82b"
+			],
+			"crop": "pine",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": true,
+				"damage": false,
+				"kind": "block",
+				"light": false
+			},
+			"found": 1795004138.0,
+			"id": "hay_block",
+			"made_by": "RyeeRue",
+			"name": "Hay Block Seed",
+			"parents": [
+				"wheat",
+				"bush"
+			],
+			"pattern": 3,
+			"pattern_seed": 16216,
+			"rarity": 17,
+			"sprout": "#d9e58d",
+			"tag": "not_farmable"
+		},
+		{
+			"category": {
+				"hardness": 3,
+				"material": "building",
+				"status": "auto"
+			},
+			"colors": [
+				"#f2b0ff",
+				"#ffbdc2"
+			],
+			"crop": "round_tree",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": true,
+				"damage": false,
+				"kind": "block",
+				"light": false
+			},
+			"found": 1795004187.0,
+			"id": "pink_block",
+			"made_by": "RyeeRue",
+			"name": "Pink Block Seed",
+			"parents": [
+				"white_block",
+				"red_blockseed"
+			],
+			"pattern": 2,
+			"pattern_seed": 45192,
+			"rarity": 50,
+			"sprout": "#f49875",
+			"tag": "not_farmable"
+		},
+		{
+			"category": {
+				"hardness": 1,
+				"material": "plant",
+				"status": "auto"
+			},
+			"colors": [
+				"#fadfff",
+				"#eabfff"
+			],
+			"crop": "mushroom",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": false,
+				"damage": false,
+				"kind": "decoration",
+				"light": false
+			},
+			"found": 1795004225.0,
+			"id": "cherry_leaves",
+			"made_by": "RyeeRue",
+			"name": "Cherry Leaves Seed",
+			"parents": [
+				"leaves",
+				"pink_block"
+			],
+			"pattern": 3,
+			"pattern_seed": 63998,
+			"rarity": 68,
+			"sprout": "#766200",
+			"tag": "farmable"
+		},
+		{
+			"category": {
+				"hardness": 4,
+				"material": "stone",
+				"status": "auto"
+			},
+			"colors": [
+				"#9ba0b2",
+				"#2d5308"
+			],
+			"crop": "round_tree",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": true,
+				"damage": false,
+				"kind": "block",
+				"light": false
+			},
+			"found": 1795004273.0,
+			"id": "limestone",
+			"made_by": "RyeeRue",
+			"name": "Limestone Seed",
+			"parents": [
+				"stone",
+				"lime"
+			],
+			"pattern": 3,
+			"pattern_seed": 57148,
+			"rarity": 32,
+			"sprout": "#58a130",
+			"tag": "bountiful"
+		},
+		{
+			"category": {
+				"hardness": 1,
+				"material": "plant",
+				"status": "auto"
+			},
+			"colors": [
+				"#29bf76",
+				"#4ab829"
+			],
+			"crop": "flower",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": false,
+				"damage": false,
+				"kind": "decoration",
+				"light": false
+			},
+			"found": 1795004309.0,
+			"id": "seaweed",
+			"made_by": "RyeeRue",
+			"name": "Seaweed Seed",
+			"parents": [
+				"water",
+				"grass"
+			],
+			"pattern": 2,
+			"pattern_seed": 43020,
+			"rarity": 28,
+			"sprout": "#95f478",
+			"tag": "not_farmable"
+		},
+		{
+			"category": {
+				"hardness": 4,
+				"material": "stone",
+				"status": "auto"
+			},
+			"colors": [
+				"#c2babb",
+				"#9194aa"
+			],
+			"crop": "flower",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": true,
+				"damage": false,
+				"kind": "block",
+				"light": false
+			},
+			"found": 1795004623.0,
+			"id": "stone_bricks",
+			"made_by": "RyeeRue",
+			"name": "Stone Bricks Seed",
+			"parents": [
+				"bricks_background",
+				"stone"
+			],
+			"pattern": 2,
+			"pattern_seed": 90435,
+			"rarity": 12,
+			"sprout": "#91c271",
+			"tag": "not_farmable"
+		},
+		{
+			"category": {
+				"hardness": 1,
+				"material": "background",
+				"status": "auto"
+			},
+			"colors": [
+				"#877177",
+				"#6d655c"
+			],
+			"crop": "flower",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": false,
+				"damage": false,
+				"kind": "background",
+				"light": false
+			},
+			"found": 1795004644.0,
+			"id": "stone_brick_background",
+			"made_by": "RyeeRue",
+			"name": "Stone Brick Background Seed",
+			"parents": [
+				"stone_bricks",
+				"wooden_background"
+			],
+			"pattern": 2,
+			"pattern_seed": 31235,
+			"rarity": 19,
+			"sprout": "#9db96c",
+			"tag": "not_farmable"
+		},
+		{
+			"category": {
+				"hardness": 1,
+				"material": "plant",
+				"status": "auto"
+			},
+			"colors": [
+				"#d2d600",
+				"#f5f000"
+			],
+			"crop": "twisted_tree",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": true,
+				"damage": false,
+				"kind": "block",
+				"light": false
+			},
+			"found": 1795004687.0,
+			"id": "lemon",
+			"made_by": "RyeeRue",
+			"name": "Lemon Seed",
+			"parents": [
+				"bush",
+				"yellow_block"
+			],
+			"pattern": 4,
+			"pattern_seed": 28068,
+			"rarity": 25,
+			"sprout": "#e2d826",
+			"tag": "not_farmable"
+		},
+		{
+			"category": {
+				"hardness": 1,
+				"material": "plant",
+				"status": "auto"
+			},
+			"colors": [
+				"#d19a00",
+				"#e0a50b"
+			],
+			"crop": "mushroom",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": true,
+				"damage": false,
+				"kind": "block",
+				"light": false
+			},
+			"found": 1795004770.0,
+			"id": "melon",
+			"made_by": "RyeeRue",
+			"name": "Melon Seed",
+			"parents": [
+				"lemon",
+				"yam"
+			],
+			"pattern": 0,
+			"pattern_seed": 98119,
+			"rarity": 37,
+			"sprout": "#a5b735",
+			"tag": "not_farmable"
+		},
+		{
+			"category": {
+				"hardness": 1,
+				"material": "plant",
+				"status": "auto"
+			},
+			"colors": [
+				"#39cf00",
+				"#0f1414"
+			],
+			"crop": "twisted_tree",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": true,
+				"damage": false,
+				"kind": "block",
+				"light": false
+			},
+			"found": 1795004810.0,
+			"id": "watermelon",
+			"made_by": "RyeeRue",
+			"name": "Watermelon Seed",
+			"parents": [
+				"melon",
+				"water"
+			],
+			"pattern": 2,
+			"pattern_seed": 12865,
+			"rarity": 62,
+			"sprout": "#c3605a",
+			"tag": "not_farmable"
+		},
+		{
+			"category": {
+				"hardness": 1,
+				"material": "mushroom",
+				"status": "auto"
+			},
+			"colors": [
+				"#56c505",
+				"#5d7905"
+			],
+			"crop": "mushroom",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": false,
+				"damage": false,
+				"kind": "decoration",
+				"light": false
+			},
+			"found": 1795004863.0,
+			"id": "shroom_melons",
+			"made_by": "RyeeRue",
+			"name": "Shroom Melons Seed",
+			"parents": [
+				"watermelon",
+				"bouncy_shroom"
+			],
+			"pattern": 2,
+			"pattern_seed": 57403,
+			"rarity": 85,
+			"sprout": "#b17f58",
+			"tag": "not_farmable"
+		},
+		{
+			"category": {
+				"hardness": 3,
+				"material": "wood",
+				"status": "auto"
+			},
+			"colors": [
+				"#6d5f34",
+				"#897003"
+			],
+			"crop": "pine",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": true,
+				"damage": false,
+				"kind": "decoration",
+				"light": false
+			},
+			"found": 1795004901.0,
+			"id": "barrel",
+			"made_by": "RyeeRue",
+			"name": "Barrel Seed",
+			"parents": [
+				"steel_platform",
+				"chest"
+			],
+			"pattern": 0,
+			"pattern_seed": 41062,
+			"rarity": 56,
+			"sprout": "#83c06a",
+			"tag": "not_farmable"
+		},
+		{
+			"category": {
+				"hardness": 3,
+				"material": "crystal",
+				"status": "auto"
+			},
+			"colors": [
+				"#e9c400",
+				"#f1ff01"
+			],
+			"crop": "twisted_tree",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": true,
+				"damage": false,
+				"kind": "block",
+				"light": false
+			},
+			"found": 1795004949.0,
+			"id": "topaz",
+			"made_by": "RyeeRue",
+			"name": "Topaz Seed",
+			"parents": [
+				"lapis_lazuli",
+				"daffodil"
+			],
+			"pattern": 3,
+			"pattern_seed": 52312,
+			"rarity": 37,
+			"sprout": "#6c8541",
+			"tag": "not_farmable"
+		},
+		{
+			"category": {
+				"hardness": 4,
+				"material": "stone",
+				"status": "auto"
+			},
+			"colors": [
+				"#bdc4c6",
+				"#8c8ca4"
+			],
+			"crop": "flower",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": true,
+				"damage": false,
+				"kind": "block",
+				"light": false
+			},
+			"found": 1795006612.0,
+			"id": "boulder",
+			"made_by": "RyeeRue",
+			"name": "Boulder Seed",
+			"parents": [
+				"dirt",
+				"stone"
+			],
+			"pattern": 1,
+			"pattern_seed": 48866,
+			"rarity": 2,
+			"sprout": "#88cd60",
+			"tag": "farmable"
+		},
+		{
+			"category": {
+				"hardness": 4,
+				"material": "crystal",
+				"status": "auto"
+			},
+			"colors": [
+				"#d4827f",
+				"#ffbbfb"
+			],
+			"crop": "twisted_tree",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": false,
+				"damage": false,
+				"kind": "decoration",
+				"light": false
+			},
+			"found": 1795006729.0,
+			"id": "rose_quartz",
+			"made_by": "RyeeRue",
+			"name": "Rose Quartz Seed",
+			"parents": [
+				"rose",
+				"quartz_"
+			],
+			"pattern": 4,
+			"pattern_seed": 27019,
+			"rarity": 19,
+			"sprout": "#87ec6f",
+			"tag": "not_farmable"
+		},
+		{
+			"category": {
+				"hardness": 4,
+				"material": "metal",
+				"status": "auto"
+			},
+			"colors": [
+				"#756a76",
+				"#ccd0d1"
+			],
+			"crop": "mushroom",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": true,
+				"damage": true,
+				"kind": "block",
+				"light": false
+			},
+			"found": 1795006758.0,
+			"id": "spike",
+			"made_by": "RyeeRue",
+			"name": "Spike Seed",
+			"parents": [
+				"obsidian",
+				"boulder"
+			],
+			"pattern": 4,
+			"pattern_seed": 72730,
+			"rarity": 6,
+			"sprout": "#be770d",
+			"tag": "not_farmable"
+		},
+		{
+			"category": {
+				"hardness": 3,
+				"material": "wood",
+				"status": "auto"
+			},
+			"colors": [
+				"#bc6e2d",
+				"#462e18"
+			],
+			"crop": "twisted_tree",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": false,
+				"damage": false,
+				"kind": "decoration",
+				"light": false
+			},
+			"found": 1795006778.0,
+			"id": "sign",
+			"made_by": "RyeeRue",
+			"name": "Sign Seed Seed",
+			"parents": [
+				"wood",
+				"cave_background"
+			],
+			"pattern": 3,
+			"pattern_seed": 6064,
+			"rarity": 6,
+			"sprout": "#c0c753",
+			"tag": "farmable"
+		},
+		{
+			"category": {
+				"hardness": 3,
+				"material": "wood",
+				"status": "auto"
+			},
+			"colors": [
+				"#b67026",
+				"#7f6c7e"
+			],
+			"crop": "pine",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": false,
+				"damage": false,
+				"kind": "decoration",
+				"light": false
+			},
+			"found": 1795006788.0,
+			"id": "danger_sign",
+			"made_by": "RyeeRue",
+			"name": "Danger Sign Seed",
+			"parents": [
+				"sign",
+				"spike"
+			],
+			"pattern": 0,
+			"pattern_seed": 88947,
+			"rarity": 12,
+			"sprout": "#bc902c",
+			"tag": "not_farmable"
+		},
+		{
+			"category": {
+				"hardness": 3,
+				"material": "wood",
+				"status": "auto"
+			},
+			"colors": [
+				"#888a8a",
+				"#80787f"
+			],
+			"crop": "pine",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": true,
+				"damage": false,
+				"kind": "block",
+				"light": false
+			},
+			"found": 1795006804.0,
+			"id": "gate",
+			"made_by": "RyeeRue",
+			"name": "Gate Seed",
+			"parents": [
+				"door",
+				"spike"
+			],
+			"pattern": 2,
+			"pattern_seed": 82631,
+			"rarity": 13,
+			"sprout": "#bca433",
+			"tag": "farmable"
+		},
+		{
+			"category": {
+				"hardness": 3,
+				"material": "wood",
+				"status": "auto"
+			},
+			"colors": [
+				"#af5828",
+				"#7c7f7f"
+			],
+			"crop": "round_tree",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": false,
+				"damage": false,
+				"kind": "decoration",
+				"light": false
+			},
+			"found": 1795006823.0,
+			"id": "prison_door",
+			"made_by": "RyeeRue",
+			"name": "Prison Door Seed",
+			"parents": [
+				"danger_sign",
+				"gate"
+			],
+			"pattern": 2,
+			"pattern_seed": 70733,
+			"rarity": 25,
+			"sprout": "#c88427",
+			"tag": "not_farmable"
+		},
+		{
+			"category": {
+				"hardness": 4,
+				"material": "metal",
+				"status": "auto"
+			},
+			"colors": [
+				"#cecbca",
+				"#ffffff"
+			],
+			"crop": "round_tree",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": true,
+				"damage": false,
+				"kind": "block",
+				"light": false
+			},
+			"found": 1795006857.0,
+			"id": "prison_bars",
+			"made_by": "RyeeRue",
+			"name": "Prison Bars Seed",
+			"parents": [
+				"glass",
+				"prison_door"
+			],
+			"pattern": 5,
+			"pattern_seed": 18640,
+			"rarity": 33,
+			"sprout": "#ff9400",
+			"tag": "bountiful"
+		},
+		{
+			"category": {
+				"hardness": 2,
+				"material": "object",
+				"status": "auto"
+			},
+			"colors": [
+				"#c4c4c4",
+				"#1ebe87"
+			],
+			"crop": "flower",
+			"custom": false,
+			"drop": {
+				"auto": false,
+				"bg_tags": [],
+				"collision": false,
+				"damage": false,
+				"kind": "decoration",
+				"light": false
+			},
+			"found": 1795006894.0,
+			"id": "fishbowl",
+			"made_by": "RyeeRue",
+			"name": "Fishbowl Seed",
+			"parents": [
+				"glass",
+				"seaweed"
+			],
+			"pattern": 0,
+			"pattern_seed": 44006,
+			"rarity": 36,
+			"sprout": "#8d9344",
+			"tag": "not_farmable"
+		},
+		{
+			"category": {
+				"hardness": 2,
+				"material": "object",
+				"status": "auto"
+			},
+			"colors": [
+				"#31afb1",
+				"#c2c2c2"
+			],
+			"crop": "round_tree",
+			"custom": false,
+			"drop": {
+				"auto": false,
+				"bg_tags": [],
+				"collision": false,
+				"damage": false,
+				"kind": "decoration",
+				"light": false
+			},
+			"found": 1795006908.0,
+			"id": "fishtank",
+			"made_by": "RyeeRue",
+			"name": "Fishtank Seed",
+			"parents": [
+				"water",
+				"fishbowl"
+			],
+			"pattern": 4,
+			"pattern_seed": 68820,
+			"rarity": 61,
+			"sprout": "#94c762",
+			"tag": "not_farmable"
+		},
+		{
+			"category": {
+				"hardness": 2,
+				"material": "fire",
+				"status": "auto"
+			},
+			"colors": [
+				"#df380b",
+				"#a9a932"
+			],
+			"crop": "round_tree",
+			"custom": false,
+			"drop": {
+				"auto": false,
+				"bg_tags": [],
+				"collision": false,
+				"damage": false,
+				"kind": "decoration",
+				"light": false
+			},
+			"found": 1795006933.0,
+			"id": "lava_fishtank",
+			"made_by": "RyeeRue",
+			"name": "Lava Fishtank Seed",
+			"parents": [
+				"lava",
+				"fishtank"
+			],
+			"pattern": 4,
+			"pattern_seed": 55148,
+			"rarity": 63,
+			"sprout": "#8b582d",
+			"tag": "not_farmable"
+		},
+		{
+			"category": {
+				"hardness": 1,
+				"material": "mushroom",
+				"status": "auto"
+			},
+			"colors": [
+				"#e81c23",
+				"#229dcc"
+			],
+			"crop": "mushroom",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": false,
+				"damage": false,
+				"kind": "decoration",
+				"light": false
+			},
+			"found": 1795007093.0,
+			"id": "sporeberry",
+			"made_by": "RyeeRue",
+			"name": "Sporeberry",
+			"parents": [
+				"rose",
+				"glowing_mushroom"
+			],
+			"pattern": 2,
+			"pattern_seed": 6243,
+			"rarity": 4,
+			"sprout": "#61b849",
+			"tag": "bountiful"
+		},
+		{
+			"category": {
+				"hardness": 1,
+				"material": "mushroom",
+				"status": "auto"
+			},
+			"colors": [
+				"#ffe987",
+				"#ed221b"
+			],
+			"crop": "round_tree",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": false,
+				"damage": false,
+				"kind": "decoration",
+				"light": false
+			},
+			"found": 1795007115.0,
+			"id": "dried_mushroom",
+			"made_by": "RyeeRue",
+			"name": "Dried Mushroom Seed",
+			"parents": [
+				"sand",
+				"sporeberry"
+			],
+			"pattern": 1,
+			"pattern_seed": 96916,
+			"rarity": 10,
+			"sprout": "#6b882e",
+			"tag": "bountiful"
+		},
+		{
+			"category": {
+				"hardness": 4,
+				"material": "metal",
+				"status": "auto"
+			},
+			"colors": [
+				"#706472",
+				"#6c1786"
+			],
+			"crop": "pine",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": true,
+				"damage": true,
+				"kind": "block",
+				"light": false
+			},
+			"found": 1795007142.0,
+			"id": "poison_spike",
+			"made_by": "RyeeRue",
+			"name": "Poison Spike Seed",
+			"parents": [
+				"spike",
+				"deathcap"
+			],
+			"pattern": 2,
+			"pattern_seed": 61971,
+			"rarity": 11,
+			"sprout": "#8d6822",
+			"tag": "not_farmable"
+		},
+		{
+			"category": {
+				"hardness": 4,
+				"material": "stone",
+				"status": "auto"
+			},
+			"colors": [
+				"#3e3c39",
+				"#9999a6"
+			],
+			"crop": "mushroom",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": true,
+				"damage": false,
+				"kind": "block",
+				"light": false
+			},
+			"found": 1795007177.0,
+			"id": "stone_pathway",
+			"made_by": "RyeeRue",
+			"name": "Stone Pathway Seed",
+			"parents": [
+				"soil",
+				"stone"
+			],
+			"pattern": 5,
+			"pattern_seed": 31649,
+			"rarity": 3,
+			"sprout": "#9ecd56",
+			"tag": "not_farmable"
+		},
+		{
+			"category": {
+				"hardness": 4,
+				"material": "stone",
+				"status": "auto"
+			},
+			"colors": [
+				"#aaa8a9",
+				"#3d3934"
+			],
+			"crop": "mushroom",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": true,
+				"damage": false,
+				"kind": "block",
+				"light": false
+			},
+			"found": 1795007194.0,
+			"id": "asphalt",
+			"made_by": "RyeeRue",
+			"name": "Asphalt Seed",
+			"parents": [
+				"gravel",
+				"stone_pathway"
+			],
+			"pattern": 2,
+			"pattern_seed": 12553,
+			"rarity": 5,
+			"sprout": "#99c949",
+			"tag": "farmable"
+		},
+		{
+			"category": {
+				"hardness": 1,
+				"material": "plant",
+				"status": "auto"
+			},
+			"colors": [
+				"#b813b8",
+				"#56d016"
+			],
+			"crop": "pine",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": true,
+				"damage": false,
+				"kind": "block",
+				"light": false
+			},
+			"found": 1795007238.0,
+			"id": "venus_flytrap",
+			"made_by": "RyeeRue",
+			"name": "Venus Flytrap Seed",
+			"parents": [
+				"poison_spike",
+				"apple"
+			],
+			"pattern": 2,
+			"pattern_seed": 58397,
+			"rarity": 47,
+			"sprout": "#7e9c3e",
+			"tag": "not_farmable"
+		},
+		{
+			"category": {
+				"hardness": 1,
+				"material": "plant",
+				"status": "auto"
+			},
+			"colors": [
+				"#492b1c",
+				"#be18a1"
+			],
+			"crop": "flower",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": true,
+				"damage": false,
+				"kind": "block",
+				"light": false
+			},
+			"found": 1795007254.0,
+			"id": "hanging_flytrap",
+			"made_by": "RyeeRue",
+			"name": "Hanging Flytrap Seed",
+			"parents": [
+				"cave_background",
+				"venus_flytrap"
+			],
+			"pattern": 1,
+			"pattern_seed": 85923,
+			"rarity": 48,
+			"sprout": "#9aa748",
+			"tag": "not_farmable"
+		},
+		{
+			"category": {
+				"hardness": 1,
+				"material": "plant",
+				"status": "auto"
+			},
+			"colors": [
+				"#cef37e",
+				"#b9841a"
+			],
+			"crop": "mushroom",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": true,
+				"damage": false,
+				"kind": "block",
+				"light": false
+			},
+			"found": 1795007326.0,
+			"id": "starfruit",
+			"made_by": "RyeeRue",
+			"name": "Starfruit Seed",
+			"parents": [
+				"gold",
+				"yam"
+			],
+			"pattern": 5,
+			"pattern_seed": 84709,
+			"rarity": 60,
+			"sprout": "#b2d223",
+			"tag": "not_farmable"
+		},
+		{
+			"category": {
+				"hardness": 1,
+				"material": "plant",
+				"status": "auto"
+			},
+			"colors": [
+				"#52c497",
+				"#221863"
+			],
+			"crop": "round_tree",
+			"custom": false,
+			"drop": {
+				"auto": false,
+				"bg_tags": [],
+				"collision": true,
+				"damage": true,
+				"kind": "block",
+				"light": false
+			},
+			"found": 1795007365.0,
+			"id": "dragon_snappers",
+			"made_by": "RyeeRue",
+			"name": "Dragon Snappers Seed",
+			"parents": [
+				"starfruit",
+				"venus_flytrap"
+			],
+			"pattern": 1,
+			"pattern_seed": 48367,
+			"rarity": 107,
+			"sprout": "#7cbc34",
+			"tag": "farmable"
+		},
+		{
+			"category": {
+				"hardness": 3,
+				"material": "building",
+				"status": "auto"
+			},
+			"colors": [
+				"#b00606",
+				"#aba9a9"
+			],
+			"crop": "round_tree",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": true,
+				"damage": false,
+				"kind": "block",
+				"light": false
+			},
+			"found": 1795007526.0,
+			"id": "high_tech_block",
+			"made_by": "RyeeRue",
+			"name": "High-tech Block Seed",
+			"parents": [
+				"starfruit",
+				"steel"
+			],
+			"pattern": 1,
+			"pattern_seed": 73041,
+			"rarity": 86,
+			"sprout": "#ffffff",
+			"tag": "not_farmable"
+		},
+		{
+			"category": {
+				"hardness": 3,
+				"material": "crystal",
+				"status": "auto"
+			},
+			"colors": [
+				"#c0c0c0",
+				"#b4b4b4"
+			],
+			"crop": "flower",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": true,
+				"damage": false,
+				"kind": "block",
+				"light": false
+			},
+			"found": 1795007553.0,
+			"id": "space_window",
+			"made_by": "RyeeRue",
+			"name": "Space Window Seed",
+			"parents": [
+				"window",
+				"steel"
+			],
+			"pattern": 5,
+			"pattern_seed": 51479,
+			"rarity": 41,
+			"sprout": "#6c6a3d",
+			"tag": "not_farmable"
+		},
+		{
+			"category": {
+				"hardness": 4,
+				"material": "metal",
+				"status": "auto"
+			},
+			"colors": [
+				"#c1bbbe",
+				"#d4b63a"
+			],
+			"crop": "flower",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": true,
+				"damage": false,
+				"kind": "block",
+				"light": false
+			},
+			"found": 1795007585.0,
+			"id": "safe",
+			"made_by": "RyeeRue",
+			"name": "Safe Seed",
+			"parents": [
+				"iron_block",
+				"chest"
+			],
+			"pattern": 4,
+			"pattern_seed": 75874,
+			"rarity": 46,
+			"sprout": "#94dc79",
+			"tag": "not_farmable"
+		},
+		{
+			"category": {
+				"hardness": 2,
+				"material": "object",
+				"status": "auto"
+			},
+			"colors": [
+				"#ff4304",
+				"#e39800"
+			],
+			"crop": "pine",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": true,
+				"damage": false,
+				"kind": "block",
+				"light": false
+			},
+			"found": 1795007629.0,
+			"id": "traffic_cone",
+			"made_by": "RyeeRue",
+			"name": "Traffic Cone Seed",
+			"parents": [
+				"bricksw",
+				"bouncy_shroom"
+			],
+			"pattern": 4,
+			"pattern_seed": 31456,
+			"rarity": 33,
+			"sprout": "#ffffff",
+			"tag": "not_farmable"
+		},
+		{
+			"category": {
+				"hardness": 2,
+				"material": "soil",
+				"status": "auto"
+			},
+			"colors": [
+				"#664b13",
+				"#8f4c34"
+			],
+			"crop": "mushroom",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": true,
+				"damage": false,
+				"kind": "block",
+				"light": false
+			},
+			"found": 1795007654.0,
+			"id": "fertilizer",
+			"made_by": "RyeeRue",
+			"name": "Fertilizer Seed",
+			"parents": [
+				"soil",
+				"brown_block"
+			],
+			"pattern": 3,
+			"pattern_seed": 76801,
+			"rarity": 11,
+			"sprout": "#bbc443",
+			"tag": "bountiful"
+		},
+		{
+			"category": {
+				"hardness": 4,
+				"material": "metal",
+				"status": "auto"
+			},
+			"colors": [
+				"#d17201",
+				"#768d51"
+			],
+			"crop": "mushroom",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": true,
+				"damage": false,
+				"kind": "block",
+				"light": false
+			},
+			"found": 1795007700.0,
+			"id": "copper_block",
+			"made_by": "RyeeRue",
+			"name": "Copper Block Seed",
+			"parents": [
+				"cobblestone",
+				"orange_block"
+			],
+			"pattern": 3,
+			"pattern_seed": 16150,
+			"rarity": 24,
+			"sprout": "#ffb800",
+			"tag": "not_farmable"
+		},
+		{
+			"category": {
+				"hardness": 4,
+				"material": "metal",
+				"status": "auto"
+			},
+			"colors": [
+				"#5fc406",
+				"#5fd22d"
+			],
+			"crop": "mushroom",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": true,
+				"damage": false,
+				"kind": "block",
+				"light": false
+			},
+			"found": 1795008220.0,
+			"id": "plumber_pipe",
+			"made_by": "RyeeRue",
+			"name": "Plumber Pipe Seed",
+			"parents": [
+				"copper_block",
+				"green_block"
+			],
+			"pattern": 5,
+			"pattern_seed": 59950,
+			"rarity": 35,
+			"sprout": "#f7bf4f",
+			"tag": "not_farmable"
+		},
+		{
+			"category": {
+				"hardness": 4,
+				"material": "metal",
+				"status": "auto"
+			},
+			"colors": [
+				"#b9b1b2",
+				"#12c7ca"
+			],
+			"crop": "pine",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": true,
+				"damage": false,
+				"kind": "block",
+				"light": false
+			},
+			"found": 1795008244.0,
+			"id": "sprinkler",
+			"made_by": "RyeeRue",
+			"name": "Sprinkler Seed Seed",
+			"parents": [
+				"bucket",
+				"plumber_pipe"
+			],
+			"pattern": 2,
+			"pattern_seed": 4466,
+			"rarity": 48,
+			"sprout": "#bfdd67",
+			"tag": "not_farmable"
+		},
+		{
+			"category": {
+				"hardness": 2,
+				"material": "soil",
+				"status": "auto"
+			},
+			"colors": [
+				"#f2f2f2",
+				"#25bcb6"
+			],
+			"crop": "round_tree",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": true,
+				"damage": false,
+				"kind": "block",
+				"light": false
+			},
+			"found": 1795008478.0,
+			"id": "snow",
+			"made_by": "RyeeRue",
+			"name": "Snow Seed",
+			"parents": [
+				"white_block",
+				"glowing_mushroom"
+			],
+			"pattern": 3,
+			"pattern_seed": 34852,
+			"rarity": 25,
+			"sprout": "#c0f0a2",
+			"tag": "not_farmable"
+		},
+		{
+			"category": {
+				"hardness": 3,
+				"material": "crystal",
+				"status": "auto"
+			},
+			"colors": [
+				"#20cece",
+				"#1cfae4"
+			],
+			"crop": "mushroom",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": true,
+				"damage": false,
+				"kind": "block",
+				"light": false
+			},
+			"found": 1795008499.0,
+			"id": "ice",
+			"made_by": "RyeeRue",
+			"name": "Ice Seed",
+			"parents": [
+				"snow",
+				"glass"
+			],
+			"pattern": 0,
+			"pattern_seed": 5222,
+			"rarity": 33,
+			"sprout": "#958b4c",
+			"tag": "farmable"
+		},
+		{
+			"category": {
+				"hardness": 1,
+				"material": "plant",
+				"status": "auto"
+			},
+			"colors": [
+				"#ea7217",
+				"#d79a1f"
+			],
+			"crop": "mushroom",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": true,
+				"damage": false,
+				"kind": "block",
+				"light": false
+			},
+			"found": 1795008542.0,
+			"id": "pumpkin",
+			"made_by": "RyeeRue",
+			"name": "Pumpkin Seed",
+			"parents": [
+				"lava",
+				"watermelon"
+			],
+			"pattern": 4,
+			"pattern_seed": 27035,
+			"rarity": 64,
+			"sprout": "#2d5b1c",
+			"tag": "not_farmable"
+		},
+		{
+			"category": {
+				"hardness": 1,
+				"material": "light",
+				"status": "auto"
+			},
+			"colors": [
+				"#0d0d0d",
+				"#b7552a"
+			],
+			"crop": "flower",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": false,
+				"damage": false,
+				"kind": "decoration",
+				"light": true
+			},
+			"found": 1795009111.0,
+			"id": "torch",
+			"made_by": "RyeeRue",
+			"name": "Torch Seed",
+			"parents": [
+				"coal",
+				"sign"
+			],
+			"pattern": 2,
+			"pattern_seed": 29377,
+			"rarity": 10,
+			"sprout": "#978034",
+			"tag": "not_farmable"
+		},
+		{
+			"category": {
+				"hardness": 1,
+				"material": "plant",
+				"status": "auto"
+			},
+			"colors": [
+				"#4e2921",
+				"#815514"
+			],
+			"crop": "round_tree",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": true,
+				"damage": false,
+				"kind": "block",
+				"light": false
+			},
+			"found": 1795010950.0,
+			"id": "coconut",
+			"made_by": "RyeeRue",
+			"name": "Coconut Seed",
+			"parents": [
+				"cave_background",
+				"pumpkin"
+			],
+			"pattern": 1,
+			"pattern_seed": 37553,
+			"rarity": 65,
+			"sprout": "#758b3f",
+			"tag": "not_farmable"
+		},
+		{
+			"category": {
+				"hardness": 3,
+				"material": "wood",
+				"status": "auto"
+			},
+			"colors": [
+				"#b3911b",
+				"#cfa033"
+			],
+			"crop": "pine",
+			"custom": false,
+			"drop": {
+				"auto": false,
+				"bg_tags": [],
+				"collision": false,
+				"damage": false,
+				"kind": "decoration",
+				"light": false
+			},
+			"found": 1795011057.0,
+			"id": "wooden_fence",
+			"made_by": "RyeeRue",
+			"name": "Wooden Fence Seed",
+			"parents": [
+				"boulder",
+				"wood"
+			],
+			"pattern": 0,
+			"pattern_seed": 84066,
+			"rarity": 7,
+			"sprout": "#aacd5a",
+			"tag": "bountiful"
+		},
+		{
+			"category": {
+				"hardness": 3,
+				"material": "building",
+				"status": "auto"
+			},
+			"colors": [
+				"#bd1b1b",
+				"#f3f2f1"
+			],
+			"crop": "twisted_tree",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": true,
+				"damage": false,
+				"kind": "block",
+				"light": false
+			},
+			"found": 1795011088.0,
+			"id": "barn_blocks",
+			"made_by": "RyeeRue",
+			"name": "Barn Blocks Seed",
+			"parents": [
+				"wooden_fence",
+				"bricksw"
+			],
+			"pattern": 5,
+			"pattern_seed": 37401,
+			"rarity": 17,
+			"sprout": "#77b363",
+			"tag": "not_farmable"
+		},
+		{
+			"category": {
+				"hardness": 1,
+				"material": "mushroom",
+				"status": "auto"
+			},
+			"colors": [
+				"#343332",
+				"#fff508"
+			],
+			"crop": "mushroom",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": false,
+				"damage": false,
+				"kind": "decoration",
+				"light": false
+			},
+			"found": 1795011231.0,
+			"id": "lifeshroom",
+			"made_by": "RyeeRue",
+			"name": "Lifeshroom Seed",
+			"parents": [
+				"clay",
+				"sporeberry"
+			],
+			"pattern": 0,
+			"pattern_seed": 49206,
+			"rarity": 12,
+			"sprout": "#ae0be2",
+			"tag": "not_farmable"
+		},
+		{
+			"category": {
+				"hardness": 1,
+				"material": "mushroom",
+				"status": "auto"
+			},
+			"colors": [
+				"#c0bcbc",
+				"#272727"
+			],
+			"crop": "flower",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": false,
+				"damage": false,
+				"kind": "decoration",
+				"light": false
+			},
+			"found": 1795011256.0,
+			"id": "science_shroom",
+			"made_by": "RyeeRue",
+			"name": "Science Shroom Seed",
+			"parents": [
+				"glass",
+				"lifeshroom"
+			],
+			"pattern": 2,
+			"pattern_seed": 76139,
+			"rarity": 20,
+			"sprout": "#a5126c",
+			"tag": "not_farmable"
+		},
+		{
+			"category": {
+				"hardness": 1,
+				"material": "mushroom",
+				"status": "auto"
+			},
+			"colors": [
+				"#c9c9c9",
+				"#c02c2c"
+			],
+			"crop": "flower",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": false,
+				"damage": false,
+				"kind": "decoration",
+				"light": false
+			},
+			"found": 1795011324.0,
+			"id": "chicken_shroom",
+			"made_by": "RyeeRue",
+			"name": "Chicken Shroom Seed",
+			"parents": [
+				"science_shroom",
+				"hay_block"
+			],
+			"pattern": 1,
+			"pattern_seed": 50175,
+			"rarity": 37,
+			"sprout": "#ffb900",
+			"tag": "not_farmable"
+		},
+		{
+			"category": {
+				"hardness": 1,
+				"material": "mushroom",
+				"status": "auto"
+			},
+			"colors": [
+				"#c6bebf",
+				"#e5decc"
+			],
+			"crop": "pine",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": false,
+				"damage": false,
+				"kind": "decoration",
+				"light": false
+			},
+			"found": 1795011557.0,
+			"id": "sheep_shroom",
+			"made_by": "RyeeRue",
+			"name": "Sheep Shroom Seed",
+			"parents": [
+				"science_shroom",
+				"wheat"
+			],
+			"pattern": 0,
+			"pattern_seed": 23395,
+			"rarity": 29,
+			"sprout": "#de9192",
+			"tag": "not_farmable"
+		},
+		{
+			"category": {
+				"hardness": 1,
+				"material": "mushroom",
+				"status": "auto"
+			},
+			"colors": [
+				"#ffffff",
+				"#000000"
+			],
+			"crop": "round_tree",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": false,
+				"damage": false,
+				"kind": "decoration",
+				"light": false
+			},
+			"found": 1795011600.0,
+			"id": "cowcap",
+			"made_by": "RyeeRue",
+			"name": "Cowcap Seed",
+			"parents": [
+				"barn_blocks",
+				"science_shroom"
+			],
+			"pattern": 3,
+			"pattern_seed": 65808,
+			"rarity": 37,
+			"sprout": "#f4bcff",
+			"tag": "not_farmable"
+		},
+		{
+			"category": {
+				"hardness": 1,
+				"material": "plant",
+				"status": "auto"
+			},
+			"colors": [
+				"#ffa100",
+				"#ffa700"
+			],
+			"crop": "twisted_tree",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": false,
+				"damage": false,
+				"kind": "decoration",
+				"light": false
+			},
+			"found": 1795011687.0,
+			"id": "carrot",
+			"made_by": "RyeeRue",
+			"name": "Carrot Seed",
+			"parents": [
+				"wheat",
+				"orange_block"
+			],
+			"pattern": 0,
+			"pattern_seed": 93419,
+			"rarity": 29,
+			"sprout": "#20ff00",
+			"tag": "not_farmable"
+		},
+		{
+			"category": {
+				"hardness": 1,
+				"material": "mushroom",
+				"status": "auto"
+			},
+			"colors": [
+				"#6a7664",
+				"#825c71"
+			],
+			"crop": "twisted_tree",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": false,
+				"damage": false,
+				"kind": "decoration",
+				"light": false
+			},
+			"found": 1795011754.0,
+			"id": "rabbit_shroom",
+			"made_by": "RyeeRue",
+			"name": "Rabbit Shroom Seed",
+			"parents": [
+				"science_shroom",
+				"carrot"
+			],
+			"pattern": 1,
+			"pattern_seed": 45231,
+			"rarity": 49,
+			"sprout": "#f7c2ff",
+			"tag": "not_farmable"
+		},
+		{
+			"category": {
+				"hardness": 1,
+				"material": "plant",
+				"status": "auto"
+			},
+			"colors": [
+				"#db1a10",
+				"#ff006c"
+			],
+			"crop": "pine",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": true,
+				"damage": false,
+				"kind": "block",
+				"light": false
+			},
+			"found": 1795011811.0,
+			"id": "beetroot",
+			"made_by": "RyeeRue",
+			"name": "Beetroot Seed",
+			"parents": [
+				"rose",
+				"carrot"
+			],
+			"pattern": 1,
+			"pattern_seed": 71768,
+			"rarity": 32,
+			"sprout": "#2bc118",
+			"tag": "not_farmable"
+		},
+		{
+			"category": {
+				"hardness": 1,
+				"material": "mushroom",
+				"status": "auto"
+			},
+			"colors": [
+				"#e09dff",
+				"#715e20"
+			],
+			"crop": "pine",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": false,
+				"damage": false,
+				"kind": "decoration",
+				"light": false
+			},
+			"found": 1795011868.0,
+			"id": "pigcap",
+			"made_by": "RyeeRue",
+			"name": "PigCap Seed",
+			"parents": [
+				"science_shroom",
+				"beetroot"
+			],
+			"pattern": 2,
+			"pattern_seed": 14632,
+			"rarity": 52,
+			"sprout": "#ffb2b2",
+			"tag": "not_farmable"
+		},
+		{
+			"category": {
+				"hardness": 3,
+				"material": "other",
+				"status": "auto"
+			},
+			"colors": [
+				"#bf8122",
+				"#ca0e0e"
+			],
+			"crop": "round_tree",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": true,
+				"damage": false,
+				"kind": "block",
+				"light": false
+			},
+			"found": 1795011896.0,
+			"id": "campfire",
+			"made_by": "RyeeRue",
+			"name": "Campfire Seed",
+			"parents": [
+				"wooden_fence",
+				"torch"
+			],
+			"pattern": 4,
+			"pattern_seed": 135,
+			"rarity": 17,
+			"sprout": "#97a94e",
+			"tag": "not_farmable"
+		},
+		{
+			"category": {
+				"hardness": 3,
+				"material": "other",
+				"status": "auto"
+			},
+			"colors": [
+				"#fcc598",
+				"#bd8525"
+			],
+			"crop": "mushroom",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": true,
+				"damage": false,
+				"kind": "block",
+				"light": false
+			},
+			"found": 1795011921.0,
+			"id": "bacon",
+			"made_by": "RyeeRue",
+			"name": "Bacon Seed",
+			"parents": [
+				"pigcap",
+				"campfire"
+			],
+			"pattern": 4,
+			"pattern_seed": 10598,
+			"rarity": 69,
+			"sprout": "#ffffff",
+			"tag": "not_farmable"
+		},
+		{
+			"category": {
+				"hardness": 1,
+				"material": "background",
+				"status": "auto"
+			},
+			"colors": [
+				"#d796fb",
+				"#c69d1e"
+			],
+			"crop": "mushroom",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": false,
+				"damage": false,
+				"kind": "background",
+				"light": false
+			},
+			"found": 1795011942.0,
+			"id": "bacon_background",
+			"made_by": "RyeeRue",
+			"name": "Bacon Background Seed",
+			"parents": [
+				"bacon",
+				"wooden_background"
+			],
+			"pattern": 5,
+			"pattern_seed": 68972,
+			"rarity": 76,
+			"sprout": "#c1cfa2",
+			"tag": "farmable"
+		},
+		{
+			"category": {
+				"hardness": 1,
+				"material": "background",
+				"status": "auto"
+			},
+			"colors": [
+				"#000000",
+				"#000000"
+			],
+			"crop": "mushroom",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": false,
+				"damage": false,
+				"kind": "background",
+				"light": false
+			},
+			"found": 1795012043.0,
+			"id": "black_background",
+			"made_by": "RyeeRue",
+			"name": "Black Background Seed",
+			"parents": [
+				"cavern",
+				"black_block"
+			],
+			"pattern": 0,
+			"pattern_seed": 13731,
+			"rarity": 14,
+			"sprout": "#ffffff",
+			"tag": "farmable"
+		},
+		{
+			"category": {
+				"hardness": 1,
+				"material": "background",
+				"status": "auto"
+			},
+			"colors": [
+				"#ffffff",
+				"#ffffff"
+			],
+			"crop": "mushroom",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": false,
+				"damage": false,
+				"kind": "background",
+				"light": false
+			},
+			"found": 1795012064.0,
+			"id": "white_background",
+			"made_by": "RyeeRue",
+			"name": "White Background Seed",
+			"parents": [
+				"glass",
+				"black_background"
+			],
+			"pattern": 0,
+			"pattern_seed": 5765,
+			"rarity": 22,
+			"sprout": "#000000",
+			"tag": "not_farmable"
+		},
+		{
+			"category": {
+				"hardness": 1,
+				"material": "background",
+				"status": "auto"
+			},
+			"colors": [
+				"#ffa4ac",
+				"#ffa4ac"
+			],
+			"crop": "mushroom",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": false,
+				"damage": false,
+				"kind": "background",
+				"light": false
+			},
+			"found": 1795012098.0,
+			"id": "pink_background",
+			"made_by": "RyeeRue",
+			"name": "Pink Background Seed",
+			"parents": [
+				"rose",
+				"white_background"
+			],
+			"pattern": 5,
+			"pattern_seed": 79164,
+			"rarity": 25,
+			"sprout": "#000000",
+			"tag": "not_farmable"
+		},
+		{
+			"category": {
+				"hardness": 1,
+				"material": "background",
+				"status": "auto"
+			},
+			"colors": [
+				"#ffc602",
+				"#ffc602"
+			],
+			"crop": "twisted_tree",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": false,
+				"damage": false,
+				"kind": "background",
+				"light": false
+			},
+			"found": 1795012134.0,
+			"id": "orange_background",
+			"made_by": "RyeeRue",
+			"name": "Orange Background Seed",
+			"parents": [
+				"white_background",
+				"tulip"
+			],
+			"pattern": 0,
+			"pattern_seed": 7851,
+			"rarity": 34,
+			"sprout": "#000000",
+			"tag": "farmable"
+		},
+		{
+			"category": {
+				"hardness": 1,
+				"material": "background",
+				"status": "auto"
+			},
+			"colors": [
+				"#1d9fca",
+				"#1d9fca"
+			],
+			"crop": "flower",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": false,
+				"damage": false,
+				"kind": "background",
+				"light": false
+			},
+			"found": 1795012162.0,
+			"id": "blue_background",
+			"made_by": "RyeeRue",
+			"name": "Blue Background Seed",
+			"parents": [
+				"glowing_mushroom",
+				"white_background"
+			],
+			"pattern": 1,
+			"pattern_seed": 18273,
+			"rarity": 23,
+			"sprout": "#000000",
+			"tag": "not_farmable"
+		},
+		{
+			"category": {
+				"hardness": 1,
+				"material": "background",
+				"status": "auto"
+			},
+			"colors": [
+				"#017200",
+				"#1c7204"
+			],
+			"crop": "mushroom",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": false,
+				"damage": false,
+				"kind": "background",
+				"light": false
+			},
+			"found": 1795012185.0,
+			"id": "white_stone",
+			"made_by": "RyeeRue",
+			"name": "Green Background Seed",
+			"parents": [
+				"glowstone_stone",
+				"white_background"
+			],
+			"pattern": 4,
+			"pattern_seed": 25684,
+			"rarity": 24,
+			"sprout": "#0f0f0f",
+			"tag": "not_farmable"
+		},
+		{
+			"category": {
+				"hardness": 1,
+				"material": "background",
+				"status": "auto"
+			},
+			"colors": [
+				"#ff0000",
+				"#ff0000"
+			],
+			"crop": "flower",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": false,
+				"damage": false,
+				"kind": "background",
+				"light": false
+			},
+			"found": 1795012209.0,
+			"id": "red_background",
+			"made_by": "RyeeRue",
+			"name": "Red Background Seed",
+			"parents": [
+				"lava",
+				"white_background"
+			],
+			"pattern": 3,
+			"pattern_seed": 26732,
+			"rarity": 24,
+			"sprout": "#000000",
+			"tag": "farmable"
+		},
+		{
+			"category": {
+				"hardness": 1,
+				"material": "background",
+				"status": "auto"
+			},
+			"colors": [
+				"#f7ff00",
+				"#e5ff00"
+			],
+			"crop": "pine",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": false,
+				"damage": false,
+				"kind": "background",
+				"light": false
+			},
+			"found": 1795012244.0,
+			"id": "yellow_background",
+			"made_by": "RyeeRue",
+			"name": "Yellow Background Seed",
+			"parents": [
+				"sand",
+				"white_background"
+			],
+			"pattern": 1,
+			"pattern_seed": 46081,
+			"rarity": 28,
+			"sprout": "#000000",
+			"tag": "bountiful"
+		},
+		{
+			"category": {
+				"hardness": 1,
+				"material": "background",
+				"status": "auto"
+			},
+			"colors": [
+				"#3b104e",
+				"#2c0a5a"
+			],
+			"crop": "flower",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": false,
+				"damage": false,
+				"kind": "background",
+				"light": false
+			},
+			"found": 1795012289.0,
+			"id": "purple_background",
+			"made_by": "RyeeRue",
+			"name": "Purple Background Seed",
+			"parents": [
+				"purple_block",
+				"white_background"
+			],
+			"pattern": 4,
+			"pattern_seed": 73085,
+			"rarity": 34,
+			"sprout": "#000000",
+			"tag": "not_farmable"
+		},
+		{
+			"category": {
+				"hardness": 3,
+				"material": "other",
+				"status": "auto"
+			},
+			"colors": [
+				"#fffcfc",
+				"#ada994"
+			],
+			"crop": "round_tree",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": true,
+				"damage": false,
+				"kind": "block",
+				"light": false
+			},
+			"found": 1795012365.0,
+			"id": "sink",
+			"made_by": "RyeeRue",
+			"name": "Sink Seed",
+			"parents": [
+				"quartz_",
+				"well"
+			],
+			"pattern": 5,
+			"pattern_seed": 24371,
+			"rarity": 37,
+			"sprout": "#5a8358",
+			"tag": "not_farmable"
+		},
+		{
+			"category": {
+				"hardness": 3,
+				"material": "wood",
+				"status": "auto"
+			},
+			"colors": [
+				"#c75c24",
+				"#c57100"
+			],
+			"crop": "flower",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": false,
+				"damage": false,
+				"kind": "decoration",
+				"light": false
+			},
+			"found": 1795012401.0,
+			"id": "sturdy_door",
+			"made_by": "RyeeRue",
+			"name": "Sturdy Door Seed",
+			"parents": [
+				"sign",
+				"wood"
+			],
+			"pattern": 5,
+			"pattern_seed": 15564,
+			"rarity": 11,
+			"sprout": "#a1a1a1",
+			"tag": "not_farmable"
+		},
+		{
+			"category": {
+				"hardness": 1,
+				"material": "background",
+				"status": "auto"
+			},
+			"colors": [
+				"#5e5e5e",
+				"#0d0d0d"
+			],
+			"crop": "pine",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": false,
+				"damage": false,
+				"kind": "background",
+				"light": false
+			},
+			"found": 1795085526.0,
+			"fruit_count": 0.0,
+			"id": "gray_background",
+			"made_by": "RyeeRue",
+			"name": "Gray Background Seed",
+			"parents": [
+				"white_background",
+				"black_background"
+			],
+			"pattern": 4,
+			"pattern_seed": 42928,
+			"rarity": 36,
+			"sprout": "#898788",
+			"tag": "bountiful"
+		}
+	],
+	"recipes": [
+		{
+			"pair": "magma_rock|stone",
+			"result": "gravel"
+		},
+		{
+			"pair": "dirt|magma_rock",
+			"result": "soil"
+		},
+		{
+			"pair": "glowing_mushroom|soil",
+			"result": "grass"
+		},
+		{
+			"pair": "cave_background|stone",
+			"result": "stone_background"
+		},
+		{
+			"pair": "cave_background|magma_rock",
+			"result": "lava"
+		},
+		{
+			"pair": "glowing_mushroom|stone",
+			"result": "glowstone_stone"
+		},
+		{
+			"pair": "grass|stone_background",
+			"result": "wood"
+		},
+		{
+			"pair": "cave_background|dirt",
+			"result": "cavern"
+		},
+		{
+			"pair": "cavern|wood",
+			"result": "door"
+		},
+		{
+			"pair": "glowstone_stone|lava",
+			"result": "obsidian"
+		},
+		{
+			"pair": "gravel|obsidian",
+			"result": "sand"
+		},
+		{
+			"pair": "lava|sand",
+			"result": "glass"
+		},
+		{
+			"pair": "gravel|soil",
+			"result": "cobblestone"
+		},
+		{
+			"pair": "cobblestone|obsidian",
+			"result": "pumice"
+		},
+		{
+			"pair": "grass|sand",
+			"result": "wheat"
+		},
+		{
+			"pair": "glass|pumice",
+			"result": "quartz_"
+		},
+		{
+			"pair": "sand|stone_background",
+			"result": "clay"
+		},
+		{
+			"pair": "clay|sand",
+			"result": "sandstone"
+		},
+		{
+			"pair": "glass|wood",
+			"result": "bucket"
+		},
+		{
+			"pair": "bucket|clay",
+			"result": "well"
+		},
+		{
+			"pair": "clay|obsidian",
+			"result": "purple_block"
+		},
+		{
+			"pair": "clay|grass",
+			"result": "green_block"
+		},
+		{
+			"pair": "glowing_mushroom|grass",
+			"result": "blueberry"
+		},
+		{
+			"pair": "blueberry|clay",
+			"result": "blue_block"
+		},
+		{
+			"pair": "lava|wood",
+			"result": "ash"
+		},
+		{
+			"pair": "ash|soil",
+			"result": "cinder_soil"
+		},
+		{
+			"pair": "cinder_soil|grass",
+			"result": "yam"
+		},
+		{
+			"pair": "glowing_mushroom|obsidian",
+			"result": "deathcap"
+		},
+		{
+			"pair": "cave_background|glowing_mushroom",
+			"result": "spore_background"
+		},
+		{
+			"pair": "gravel|sand",
+			"result": "dust"
+		},
+		{
+			"pair": "grass|wood",
+			"result": "bush"
+		},
+		{
+			"pair": "door|grass",
+			"result": "hedge"
+		},
+		{
+			"pair": "bush|hedge",
+			"result": "leaves"
+		},
+		{
+			"pair": "clay|quartz_",
+			"result": "white_block"
+		},
+		{
+			"pair": "deathcap|leaves",
+			"result": "bouncy_shroom"
+		},
+		{
+			"pair": "door|glass",
+			"result": "window"
+		},
+		{
+			"pair": "blue_block|quartz_",
+			"result": "lapis_lazuli"
+		},
+		{
+			"pair": "window|wood",
+			"result": "wooden_window"
+		},
+		{
+			"pair": "lava|stone_background",
+			"result": "coal"
+		},
+		{
+			"pair": "clay|coal",
+			"result": "black_block"
+		},
+		{
+			"pair": "black_block|blueberry",
+			"result": "blackberry"
+		},
+		{
+			"pair": "coal|wood",
+			"result": "charcoal"
+		},
+		{
+			"pair": "bucket|charcoal",
+			"result": "iron_block"
+		},
+		{
+			"pair": "sandstone|yam",
+			"result": "amber"
+		},
+		{
+			"pair": "amber|iron_block",
+			"result": "gold"
+		},
+		{
+			"pair": "blue_block|bucket",
+			"result": "water"
+		},
+		{
+			"pair": "stone|wood",
+			"result": "wooden_platform"
+		},
+		{
+			"pair": "clay|stone_background",
+			"result": "bricksw"
+		},
+		{
+			"pair": "bricksw|bush",
+			"result": "strawberry"
+		},
+		{
+			"pair": "clay|strawberry",
+			"result": "red_blockseed"
+		},
+		{
+			"pair": "glowing_mushroom|lava",
+			"result": "rose"
+		},
+		{
+			"pair": "rose|sand",
+			"result": "daffodil"
+		},
+		{
+			"pair": "clay|daffodil",
+			"result": "yellow_block"
+		},
+		{
+			"pair": "leaves|strawberry",
+			"result": "apple"
+		},
+		{
+			"pair": "coal|iron_block",
+			"result": "steel"
+		},
+		{
+			"pair": "steel|wooden_platform",
+			"result": "steel_platform"
+		},
+		{
+			"pair": "bucket|white_block",
+			"result": "toilet"
+		},
+		{
+			"pair": "wood|wooden_platform",
+			"result": "chair"
+		},
+		{
+			"pair": "bucket|chair",
+			"result": "chest"
+		},
+		{
+			"pair": "chest|gold",
+			"result": "treasure_chest"
+		},
+		{
+			"pair": "daffodil|rose",
+			"result": "tulip"
+		},
+		{
+			"pair": "clay|tulip",
+			"result": "orange_block"
+		},
+		{
+			"pair": "green_block|orange_block",
+			"result": "lime"
+		},
+		{
+			"pair": "blue_block|water",
+			"result": "aqua_block"
+		},
+		{
+			"pair": "black_block|white_block",
+			"result": "grey_block"
+		},
+		{
+			"pair": "clay|dirt",
+			"result": "brown_block"
+		},
+		{
+			"pair": "treasure_chest|wooden_platform",
+			"result": "gold_platform_"
+		},
+		{
+			"pair": "bricksw|cave_background",
+			"result": "bricks_background"
+		},
+		{
+			"pair": "stone_background|wood",
+			"result": "wooden_background"
+		},
+		{
+			"pair": "apple|lapis_lazuli",
+			"result": "ruby"
+		},
+		{
+			"pair": "bush|wheat",
+			"result": "hay_block"
+		},
+		{
+			"pair": "red_blockseed|white_block",
+			"result": "pink_block"
+		},
+		{
+			"pair": "leaves|pink_block",
+			"result": "cherry_leaves"
+		},
+		{
+			"pair": "lime|stone",
+			"result": "limestone"
+		},
+		{
+			"pair": "grass|water",
+			"result": "seaweed"
+		},
+		{
+			"pair": "bricks_background|stone",
+			"result": "stone_bricks"
+		},
+		{
+			"pair": "stone_bricks|wooden_background",
+			"result": "stone_brick_background"
+		},
+		{
+			"pair": "bush|yellow_block",
+			"result": "lemon"
+		},
+		{
+			"pair": "lemon|yam",
+			"result": "melon"
+		},
+		{
+			"pair": "melon|water",
+			"result": "watermelon"
+		},
+		{
+			"pair": "bouncy_shroom|watermelon",
+			"result": "shroom_melons"
+		},
+		{
+			"pair": "chest|steel_platform",
+			"result": "barrel"
+		},
+		{
+			"pair": "daffodil|lapis_lazuli",
+			"result": "topaz"
+		},
+		{
+			"pair": "dirt|stone",
+			"result": "boulder"
+		},
+		{
+			"pair": "quartz_|rose",
+			"result": "rose_quartz"
+		},
+		{
+			"pair": "boulder|obsidian",
+			"result": "spike"
+		},
+		{
+			"pair": "cave_background|wood",
+			"result": "sign"
+		},
+		{
+			"pair": "sign|spike",
+			"result": "danger_sign"
+		},
+		{
+			"pair": "door|spike",
+			"result": "gate"
+		},
+		{
+			"pair": "danger_sign|gate",
+			"result": "prison_door"
+		},
+		{
+			"pair": "glass|prison_door",
+			"result": "prison_bars"
+		},
+		{
+			"pair": "glass|seaweed",
+			"result": "fishbowl"
+		},
+		{
+			"pair": "fishbowl|water",
+			"result": "fishtank"
+		},
+		{
+			"pair": "fishtank|lava",
+			"result": "lava_fishtank"
+		},
+		{
+			"pair": "glowing_mushroom|rose",
+			"result": "sporeberry"
+		},
+		{
+			"pair": "sand|sporeberry",
+			"result": "dried_mushroom"
+		},
+		{
+			"pair": "deathcap|spike",
+			"result": "poison_spike"
+		},
+		{
+			"pair": "soil|stone",
+			"result": "stone_pathway"
+		},
+		{
+			"pair": "gravel|stone_pathway",
+			"result": "asphalt"
+		},
+		{
+			"pair": "apple|poison_spike",
+			"result": "venus_flytrap"
+		},
+		{
+			"pair": "cave_background|venus_flytrap",
+			"result": "hanging_flytrap"
+		},
+		{
+			"pair": "gold|yam",
+			"result": "starfruit"
+		},
+		{
+			"pair": "starfruit|venus_flytrap",
+			"result": "dragon_snappers"
+		},
+		{
+			"pair": "starfruit|steel",
+			"result": "high_tech_block"
+		},
+		{
+			"pair": "steel|window",
+			"result": "space_window"
+		},
+		{
+			"pair": "chest|iron_block",
+			"result": "safe"
+		},
+		{
+			"pair": "bouncy_shroom|bricksw",
+			"result": "traffic_cone"
+		},
+		{
+			"pair": "brown_block|soil",
+			"result": "fertilizer"
+		},
+		{
+			"pair": "cobblestone|orange_block",
+			"result": "copper_block"
+		},
+		{
+			"pair": "copper_block|green_block",
+			"result": "plumber_pipe"
+		},
+		{
+			"pair": "bucket|plumber_pipe",
+			"result": "sprinkler"
+		},
+		{
+			"pair": "glowing_mushroom|white_block",
+			"result": "snow"
+		},
+		{
+			"pair": "glass|snow",
+			"result": "ice"
+		},
+		{
+			"pair": "lava|watermelon",
+			"result": "pumpkin"
+		},
+		{
+			"pair": "coal|sign",
+			"result": "torch"
+		},
+		{
+			"pair": "cave_background|pumpkin",
+			"result": "coconut"
+		},
+		{
+			"pair": "boulder|wood",
+			"result": "wooden_fence"
+		},
+		{
+			"pair": "bricksw|wooden_fence",
+			"result": "barn_blocks"
+		},
+		{
+			"pair": "clay|sporeberry",
+			"result": "lifeshroom"
+		},
+		{
+			"pair": "glass|lifeshroom",
+			"result": "science_shroom"
+		},
+		{
+			"pair": "hay_block|science_shroom",
+			"result": "chicken_shroom"
+		},
+		{
+			"pair": "science_shroom|wheat",
+			"result": "sheep_shroom"
+		},
+		{
+			"pair": "barn_blocks|science_shroom",
+			"result": "cowcap"
+		},
+		{
+			"pair": "orange_block|wheat",
+			"result": "carrot"
+		},
+		{
+			"pair": "carrot|science_shroom",
+			"result": "rabbit_shroom"
+		},
+		{
+			"pair": "carrot|rose",
+			"result": "beetroot"
+		},
+		{
+			"pair": "beetroot|science_shroom",
+			"result": "pigcap"
+		},
+		{
+			"pair": "torch|wooden_fence",
+			"result": "campfire"
+		},
+		{
+			"pair": "campfire|pigcap",
+			"result": "bacon"
+		},
+		{
+			"pair": "bacon|wooden_background",
+			"result": "bacon_background"
+		},
+		{
+			"pair": "black_block|cavern",
+			"result": "black_background"
+		},
+		{
+			"pair": "black_background|glass",
+			"result": "white_background"
+		},
+		{
+			"pair": "rose|white_background",
+			"result": "pink_background"
+		},
+		{
+			"pair": "tulip|white_background",
+			"result": "orange_background"
+		},
+		{
+			"pair": "glowing_mushroom|white_background",
+			"result": "blue_background"
+		},
+		{
+			"pair": "glowstone_stone|white_background",
+			"result": "white_stone"
+		},
+		{
+			"pair": "lava|white_background",
+			"result": "red_background"
+		},
+		{
+			"pair": "sand|white_background",
+			"result": "yellow_background"
+		},
+		{
+			"pair": "purple_block|white_background",
+			"result": "purple_background"
+		},
+		{
+			"pair": "quartz_|well",
+			"result": "sink"
+		},
+		{
+			"pair": "sign|wood",
+			"result": "sturdy_door"
+		},
+		{
+			"pair": "black_background|white_background",
+			"result": "gray_background"
+		}
+	]
+}
