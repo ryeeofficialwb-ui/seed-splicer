@@ -257,3 +257,28 @@ The export presets are set up (`export_presets.cfg`) and the Steam version of Go
 - Seed tokens and the Seeds / Splices / Recipe Tree lists show only name and rarity.
 - Drops: new kind **Background** (never collides or damages) with a checklist (emits light, cave / underground, sky / outdoors, animated), and a new **Emits light** tag on any drop (`drop.light`, `drop.bg_tags` in the export).
 - Dev: `--test18`, `--dict=<id> [--dict-tab=N]`, `--hub`. Run tests against a copy of your data (point APPDATA elsewhere): older tests rewrote files in your real block_art.
+
+## Update 1.0.0: approval stamps, graveyard, statistics, recipe tree tools (2026-11-20)
+
+- **Approval stamp.** Every update ships an official seed list (`data/approvals.json`). A seed whose
+  name is on it shows the stamp (your lily logo, `assets/stamp/`) and the name of the contributor who
+  made it: under the rarity of a seed floating in the void, after the rarity in the Seeds list, and in
+  the Dictionary's Approved column. `tools/publish_update.py` writes the list from your own save each
+  time you publish: every seed you have is approved, signed with its `made_by` (or your name).
+- **Your name.** Settings > You > Your name. Every seed you make from then on is signed with it, and
+  the publish script refuses to run until it is set.
+- **Graveyard.** Dictionary > a seed > *Send to graveyard*: it loses its stamp and moves to the new
+  Graveyard tab. Publishing ships your graveyard too, so players see every seed that did not make it
+  into the game. *Bring back from the graveyard* undoes it.
+- **Statistics.** Settings > Statistics: time played (counted while the game runs, saved every
+  30 seconds in `user://seed_splicer_stats.json`), sessions, seeds and splices found, rarest seed,
+  approved seeds you have, graveyard size.
+- **Recipe Tree.**
+  - *Tree only* hides the seed list and all the side text.
+  - *Compact* (on by default) stacks big branches downward so the tree keeps the window's shape
+    instead of growing wider and wider. Turn it off for the classic wide tree.
+  - Click the round **+** under a seed (or right-click the seed) to fold its branch away. A folded
+    branch shows how many seeds it hides. *Fold all* and *Open all* do every branch at once.
+  - *Shortest route (farm Farmable seeds)*: a Farmable or Bountiful seed in the tree is grown for more
+    seeds instead of being spliced again, so its branch stops there, and seeds with several recipes
+    use the one with the fewest splices. The side text counts the farmed seeds separately.

@@ -4,6 +4,11 @@ extends Control
 ## each seed are the two seeds that splice into it, all the way down to the Tier 1 seeds.
 ##   drag = pan     mouse wheel = zoom     click a seed = center the tree on it
 ##   click a "1/2" badge = switch to that seed's other recipe (seeds can have several)
+##   click the round "+" under a seed (or right-click the seed) = fold that branch away / open it
+## Layouts: Compact (default) stacks big branches downward so the tree stays near the window's
+## shape; Wide is the classic tree where every branch sits side by side.
+## Shortest route: a Farmable / Bountiful seed in the tree is farmed instead of spliced again
+## (its branch stops there), and every seed with several recipes uses its cheapest one.
 
 var root_id := ""
 
@@ -21,6 +26,12 @@ var _header: Label
 var _sub: Label
 var _totals: Label
 var _back_btn: Button
+var _left: Control
+var _side: Control
+var _hint: Label
+var _tree_only: CheckBox
+var _compact: CheckBox
+var _route: CheckBox
 var _count: Label
 var _history: Array[String] = []
 var _list_ids: Array[String] = []
@@ -74,9 +85,18 @@ class TreeCanvas extends Control:
 	const MIN_ZOOM := 0.01      ## zoom out as far as you like
 	const MAX_ZOOM := 1.6
 	const MAX_DEPTH := 80
+	const SLOT_W := CARD_W + GAP_X
+	const GAP_Y := LEVEL_H - CARD_H
+	const INDENT := 96.0   ## how far a stacked branch is pushed right of its trunk
+	const KNOB_R := 12.0   ## the round "+" under a seed (click: fold / unfold)
 
 	var root_id := ""
 	var choices := {}      # path -> which of the seed's recipes to show
+	var collapsed := {}    # path -> true: that branch is folded away
+	var compact := true    ## stack big branches downward (false: the classic wide tree)
+	var farm_route := false  ## shortest route: farm Farmable seeds instead of splicing them
+	var _cost_memo := {}
+	var _fold_marks: Array = []  # [world position, hidden count] of folded branches (drawn as text)
 	var nodes: Array = []  # every node in the tree, parents before children
 	var tree := {}
 	var pan := Vector2.ZERO
@@ -117,6 +137,31 @@ class TreeCanvas extends Control:
 	func set_root(id: String) -> void:
 		root_id = id
 		choices.clear()
+		collapsed.clear()
+		rebuild()
+		refit()
+
+	## Folds a branch away, or opens it again.
+	func toggle_fold(path: String) -> void:
+		if collapsed.has(path):
+			collapsed.erase(path)
+		else:
+			collapsed[path] = true
+		rebuild()
+		if auto_fit:
+			fit()
+
+	## Folds every branch under the top seed's two ingredients.
+	func fold_all() -> void:
+		collapsed.clear()
+		for n in nodes:
+			if n.depth == 1 and not n.kids.is_empty():
+				collapsed[n.path] = true
+		rebuild()
+		refit()
+
+	func unfold_all() -> void:
+		collapsed.clear()
 		rebuild()
 		refit()
 
@@ -128,50 +173,170 @@ class TreeCanvas extends Control:
 	func rebuild() -> void:
 		nodes.clear()
 		tree = {}
+		_cost_memo.clear()
 		if not Game.get_seed(root_id).is_empty():
-			tree = _build(root_id, "0", [], 0)
-			_layout(tree, 0.0)
+			tree = _build(root_id, "0", [], 0, false)
+			_count_splices(tree)
+			_measure(tree)
+			_place(tree, 0.0, 0.0)
 		queue_redraw()
 		built.emit()
 
-	func _build(id: String, path: String, ancestors: Array, depth: int) -> Dictionary:
+	## A seed you can farm (grow for more seeds) instead of splicing it again.
+	static func is_farmable(id: String) -> bool:
+		var s := Game.get_seed(id)
+		return not s.get("parents", []).is_empty() and String(s.get("tag", "")) in ["farmable", "bountiful"]
+
+	## Fewest splices to make `id` when Farmable seeds below the top are farmed, not spliced.
+	func _route_cost(id: String, stack: Dictionary) -> int:
+		if _cost_memo.has(id):
+			return _cost_memo[id]
+		var s := Game.get_seed(id)
+		if s.get("parents", []).is_empty() or is_farmable(id):
+			return 0
+		if stack.has(id) or stack.size() >= MAX_DEPTH:
+			return 1000000
+		stack[id] = true
+		var best := 1000000
+		for pair in Game.recipes_for(id):
+			best = mini(best, 1 + _route_cost(pair[0], stack) + _route_cost(pair[1], stack))
+		stack.erase(id)
+		_cost_memo[id] = best
+		return best
+
+	func _best_recipe(recs: Array, id: String) -> int:
+		var best := 0
+		var best_cost := 1 << 60
+		for i in recs.size():
+			var c := _route_cost(recs[i][0], { id: true }) + _route_cost(recs[i][1], { id: true })
+			if c < best_cost:
+				best_cost = c
+				best = i
+		return best
+
+	func _build(id: String, path: String, ancestors: Array, depth: int, hidden: bool) -> Dictionary:
 		var node := { "id": id, "path": path, "depth": depth, "kids": [], "recipes": 0, "idx": 0,
-			"loop": false, "x": 0.0, "w": CARD_W + GAP_X }
+			"loop": false, "farm": false, "collapsed": false, "hidden": hidden, "count": 0,
+			"x": 0.0, "y": 0.0, "bw": SLOT_W, "bh": CARD_H, "mode": 0, "box": Rect2() }
 		nodes.append(node)
 		if ancestors.has(id):
 			node.loop = true  # a recipe that needs the seed it is making: stop here
 			return node
 		if Game.get_seed(id).get("parents", []).is_empty() or depth >= MAX_DEPTH:
 			return node       # a Tier 1 seed
+		if farm_route and depth > 0 and is_farmable(id):
+			node.farm = true  # shortest route: farm this one instead of splicing it
+			return node
 		var recs := Game.recipes_for(id)
 		if recs.is_empty():
 			return node
 		node.recipes = recs.size()
-		node.idx = clampi(int(choices.get(path, 0)), 0, recs.size() - 1)
+		if choices.has(path):
+			node.idx = clampi(int(choices[path]), 0, recs.size() - 1)
+		elif farm_route and recs.size() > 1:
+			node.idx = _best_recipe(recs, id)
+		node.collapsed = collapsed.has(path)
 		var pair: Array = recs[node.idx]
 		var anc := ancestors.duplicate()
 		anc.append(id)
 		for k in 2:
-			node.kids.append(_build(pair[k], path + "." + str(k), anc, depth + 1))
+			var kid := _build(pair[k], path + "." + str(k), anc, depth + 1, hidden or node.collapsed)
+			node.kids.append(kid)
+			node.count += 1 + int(kid.count)
 		return node
 
-	## Leaves get one slot each; a seed sits centered over its two ingredients.
-	## Also counts, for every seed in the tree, how many splices it takes to make it from
-	## Tier 1 seeds (node.splices: every "+" below it, including itself).
-	func _layout(node: Dictionary, left: float) -> float:
-		if node.kids.is_empty():
-			node.w = CARD_W + GAP_X
-			node.x = left + node.w / 2.0
-			node.splices = 0
-			return node.w
-		var cursor := left
-		node.splices = 1
-		for k in node.kids:
-			cursor += _layout(k, cursor)
-			node.splices += int(k.splices)
-		node.w = cursor - left
-		node.x = (node.kids[0].x + node.kids[-1].x) / 2.0
-		return node.w
+	## node.splices: every "+" below a seed, including its own (how many splices it takes to make).
+	func _count_splices(node: Dictionary) -> int:
+		node.splices = 0
+		if not node.kids.is_empty():
+			node.splices = 1
+			for k in node.kids:
+				node.splices += _count_splices(k)
+		return node.splices
+
+	## How big each branch is drawn. A seed's two ingredients go side by side (mode 1), or in the
+	## Compact layout one under the other along a trunk (mode 2). A folded branch is just its seed
+	## (mode 0). Compact tries every useful mix: each branch keeps a short list of the shapes it can
+	## take (no shape on the list is both wider and taller than another), and the top seed picks the
+	## shape that fits the window best.
+	const MAX_SHAPES := 24
+
+	func _measure(root: Dictionary) -> void:
+		_shapes(root)
+		var best := 0
+		var opts: Array = root.opts
+		for i in opts.size():
+			if _shape_cost(opts[i][0], opts[i][1]) < _shape_cost(opts[best][0], opts[best][1]) - 0.0001:
+				best = i
+		_use_shape(root, best)
+
+	## n.opts: [width, height, mode, shape of ingredient 1, shape of ingredient 2], narrowest first.
+	func _shapes(n: Dictionary) -> void:
+		if n.kids.is_empty() or n.collapsed:
+			n.opts = [[SLOT_W, CARD_H, 0, -1, -1]]
+			return
+		var a: Dictionary = n.kids[0]
+		var b: Dictionary = n.kids[1]
+		_shapes(a)
+		_shapes(b)
+		var all: Array = []
+		for ai in a.opts.size():
+			var sa: Array = a.opts[ai]
+			for bi in b.opts.size():
+				var sb: Array = b.opts[bi]
+				all.append([sa[0] + sb[0], LEVEL_H + maxf(sa[1], sb[1]), 1, ai, bi])
+				if compact:
+					all.append([maxf(SLOT_W, INDENT + maxf(sa[0], sb[0])), LEVEL_H + sa[1] + GAP_Y + sb[1], 2, ai, bi])
+		all.sort_custom(func(x, y): return x[0] < y[0] or (x[0] == y[0] and x[1] < y[1]))
+		var front: Array = []
+		for o in all:
+			if front.is_empty() or o[1] < front[-1][1] - 0.5:
+				front.append(o)
+		if front.size() > MAX_SHAPES:  # keep the narrowest, the flattest and an even spread between
+			var keep: Array = []
+			for k in MAX_SHAPES:
+				keep.append(front[roundi(float(k) * (front.size() - 1) / (MAX_SHAPES - 1))])
+			front = keep
+		n.opts = front
+
+	func _use_shape(n: Dictionary, i: int) -> void:
+		var o: Array = n.opts[i]
+		n.bw = o[0]
+		n.bh = o[1]
+		n.mode = o[2]
+		if o[2] != 0:
+			_use_shape(n.kids[0], o[3])
+			_use_shape(n.kids[1], o[4])
+
+	## How far the view would have to zoom out to show a box this big (smaller is better).
+	func _shape_cost(w: float, h: float) -> float:
+		var view := size if size.x > 100.0 and size.y > 100.0 else Vector2(1200, 700)
+		return maxf(w / view.x, h / view.y)
+
+	func _place(n: Dictionary, ox: float, oy: float) -> void:
+		n.y = oy
+		n.box = Rect2(ox, oy, n.bw, n.bh)
+		match int(n.mode):
+			1:
+				_place(n.kids[0], ox, oy + LEVEL_H)
+				_place(n.kids[1], ox + float(n.kids[0].bw), oy + LEVEL_H)
+				n.x = (float(n.kids[0].x) + float(n.kids[1].x)) / 2.0
+			2:
+				n.x = ox + SLOT_W / 2.0
+				_place(n.kids[0], ox + INDENT, oy + LEVEL_H)
+				_place(n.kids[1], ox + INDENT, oy + LEVEL_H + float(n.kids[0].bh) + GAP_Y)
+			_:
+				n.x = ox + SLOT_W / 2.0
+
+	## The round knob under a seed: the "+" between it and its ingredients (click: fold / unfold).
+	func knob(n: Dictionary) -> Vector2:
+		return Vector2(n.x, n.y + CARD_H + GAP_Y / 2.0)
+
+	func knob_at(world: Vector2) -> Dictionary:
+		for n in nodes:
+			if not n.hidden and (not n.kids.is_empty()) and world.distance_to(knob(n)) <= KNOB_R + 4.0:
+				return n
+		return {}
 
 	## The math for the whole tree: { splices, different, longest, tier1 }
 	##   splices   every "+" in the tree: how many splices you do to make the top seed from scratch
@@ -180,14 +345,17 @@ class TreeCanvas extends Control:
 	##   longest   the most splices in a row, from a Tier 1 seed up to the top
 	##   tier1     how many Tier 1 seeds go in
 	func math() -> Dictionary:
-		var out := { "splices": 0, "different": 0, "longest": 0, "tier1": 0 }
+		var out := { "splices": 0, "different": 0, "longest": 0, "tier1": 0, "farm": 0 }
 		var seen := {}
 		for n in nodes:
 			if n.loop:
 				continue
 			if n.kids.is_empty():
 				if n.depth > 0:
-					out.tier1 += 1
+					if n.farm:
+						out.farm += 1
+					else:
+						out.tier1 += 1
 					out.longest = maxi(out.longest, int(n.depth))
 			else:
 				out.splices += 1
@@ -198,11 +366,8 @@ class TreeCanvas extends Control:
 	func fit() -> void:
 		if tree.is_empty() or size.x < 10.0:
 			return
-		var max_depth := 0
-		for n in nodes:
-			max_depth = maxi(max_depth, n.depth)
-		var bw: float = tree.w
-		var bh := max_depth * LEVEL_H + CARD_H
+		var bw: float = tree.bw
+		var bh: float = tree.bh
 		var pad := 20.0
 		zoom = clampf(minf((size.x - pad * 2.0) / bw, (size.y - pad * 2.0) / bh), MIN_ZOOM, 1.0)
 		var px := (size.x - bw * zoom) / 2.0
@@ -212,7 +377,7 @@ class TreeCanvas extends Control:
 		queue_redraw()
 
 	func card_rect(n: Dictionary) -> Rect2:
-		return Rect2(n.x - CARD_W / 2.0, n.depth * LEVEL_H, CARD_W, CARD_H)
+		return Rect2(n.x - CARD_W / 2.0, n.y, CARD_W, CARD_H)
 
 	func badge_rect(n: Dictionary) -> Rect2:
 		var r := card_rect(n)
@@ -220,7 +385,7 @@ class TreeCanvas extends Control:
 
 	func node_at(world: Vector2) -> Dictionary:
 		for i in range(nodes.size() - 1, -1, -1):
-			if card_rect(nodes[i]).has_point(world):
+			if not nodes[i].hidden and card_rect(nodes[i]).has_point(world):
 				return nodes[i]
 		return {}
 
@@ -244,6 +409,11 @@ class TreeCanvas extends Control:
 					_panning = false
 					_moved = false
 					update_lens(mb.position)
+				accept_event()
+			elif mb.button_index == MOUSE_BUTTON_RIGHT and mb.pressed:
+				var rn := node_at(_to_world(mb.position))  # right-click a seed: fold / unfold its branch
+				if not rn.is_empty() and not rn.kids.is_empty():
+					toggle_fold(rn.path)
 				accept_event()
 			elif mb.pressed and mb.shift_pressed and mb.button_index in [MOUSE_BUTTON_WHEEL_UP, MOUSE_BUTTON_WHEEL_DOWN]:
 				# Shift + wheel: how much the magnifier magnifies
@@ -273,6 +443,10 @@ class TreeCanvas extends Control:
 			update_lens(mm.position)
 
 	func click_at(world: Vector2) -> void:
+		var kn := knob_at(world)
+		if not kn.is_empty():
+			toggle_fold(kn.path)
+			return
 		var n := node_at(world)
 		if n.is_empty():
 			return
@@ -291,6 +465,10 @@ class TreeCanvas extends Control:
 		queue_redraw()
 
 	func _update_tooltip(world: Vector2) -> void:
+		var kn := knob_at(world)
+		if not kn.is_empty():
+			tooltip_text = ("Click to open this branch again (%d seeds)" if kn.collapsed else "Click to fold this branch away (%d seeds)") % int(kn.count)
+			return
 		var n := node_at(world)
 		if n.is_empty():
 			tooltip_text = ""
@@ -299,6 +477,8 @@ class TreeCanvas extends Control:
 		var line := "%s  ·  Rarity %d  ·  %s" % [s.name, int(s.rarity), Game.tag_name(s.get("tag", ""))]
 		if n.loop:
 			line += "\nThis recipe needs a seed that is already above it, so the tree stops here."
+		elif n.farm:
+			line += "\nFarmable: grow this one for more seeds instead of splicing it again"
 		elif n.recipes > 1 and badge_rect(n).has_point(world):
 			line += "\nClick to show another recipe (%d of %d now)" % [int(n.idx) + 1, int(n.recipes)]
 		else:
@@ -306,6 +486,8 @@ class TreeCanvas extends Control:
 				line += "\nTakes %d splice%s to make from Tier 1 seeds" % [n.splices, "" if n.splices == 1 else "s"]
 			if n.depth > 0:
 				line += "\nClick to center the tree on this seed"
+			if not n.kids.is_empty():
+				line += "\nRight-click to fold this branch %s" % ("open" if n.collapsed else "away")
 		tooltip_text = line
 
 	# --- drawing ---------------------------------------------------------------
@@ -327,19 +509,22 @@ class TreeCanvas extends Control:
 		zoom = z
 		var view := world_view.grow(CARD_W)
 		_plus_marks.clear()
+		_fold_marks.clear()
 		# Boxes and lines are scaled by the zoom...
 		ci.draw_set_transform(pan, 0.0, Vector2(zoom, zoom))
 		_draw_links(ci, tree, view)
 		for n in nodes:
-			if card_rect(n).intersects(view):
+			if not n.hidden and card_rect(n).intersects(view):
 				_draw_card(ci, n)
 		# ...but text and seed pictures are drawn at their real on-screen size, so they stay
 		# sharp however far you zoom out (scaling a drawn font just blurs it).
 		ci.draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
 		for m in _plus_marks:
 			_draw_plus(ci, m)
+		for m in _fold_marks:
+			_draw_fold_count(ci, m[0], m[1])
 		for n in nodes:
-			if card_rect(n).intersects(view):
+			if not n.hidden and card_rect(n).intersects(view):
 				_draw_card_content(ci, n)
 		pan = keep_pan
 		zoom = keep_zoom
@@ -362,25 +547,50 @@ class TreeCanvas extends Control:
 			HORIZONTAL_ALIGNMENT_CENTER, 40.0, fs, Color("#e8e4f5"))
 
 	func _draw_links(ci: CanvasItem, n: Dictionary, view: Rect2) -> void:
-		if n.kids.is_empty():
+		if n.kids.is_empty() or n.hidden:
 			return
 		var col := Color("#5b4d7a")
 		var bottom := card_rect(n).end.y
-		var kid_top: float = (n.depth + 1) * LEVEL_H
-		var mid := (bottom + kid_top) / 2.0
-		# skip a whole branch that is off screen
-		var span := Rect2(Vector2(n.x - n.w, n.depth * LEVEL_H), Vector2(n.w * 2.0, LEVEL_H * 2.0))
-		if span.intersects(view):
-			ci.draw_line(Vector2(n.x, bottom), Vector2(n.x, mid), col, _lw(3.0))
-			ci.draw_line(Vector2(n.kids[0].x, mid), Vector2(n.kids[1].x, mid), col, _lw(3.0))
-			for k in n.kids:
-				ci.draw_line(Vector2(k.x, mid), Vector2(k.x, kid_top), col, _lw(3.0))
-			if 12.0 * zoom >= 3.0:
-				ci.draw_circle(Vector2(n.x, mid), 12.0, Color("#241c35"))
-				ci.draw_arc(Vector2(n.x, mid), 12.0, 0.0, TAU, 20, col, _lw(2.0))
-				_plus_marks.append(Vector2(n.x, mid))
+		var k0 := knob(n)
+		if n.collapsed:
+			# a folded branch: a short stem and a knob that says how many seeds are hidden
+			if Rect2(k0 - Vector2(40, 40), Vector2(80, 80)).intersects(view):
+				ci.draw_line(Vector2(n.x, bottom), k0 - Vector2(0, KNOB_R), Color("#a6ff6e"), _lw(2.0))
+				if KNOB_R * zoom >= 3.0:
+					ci.draw_circle(k0, KNOB_R, Color("#2a3a1f"))
+					ci.draw_arc(k0, KNOB_R, 0.0, TAU, 20, Color("#a6ff6e"), _lw(2.0))
+					_fold_marks.append([k0, int(n.count)])
+			return
+		if n.box.intersects(view):  # skip a whole branch that is off screen
+			if int(n.mode) == 2:
+				# stacked: a trunk down the left, a branch off to each ingredient
+				var a: Dictionary = n.kids[0]
+				var b: Dictionary = n.kids[1]
+				ci.draw_line(Vector2(n.x, bottom), Vector2(n.x, float(b.y) + CARD_H / 2.0), col, _lw(3.0))
+				for k in [a, b]:
+					var y: float = float(k.y) + CARD_H / 2.0
+					ci.draw_line(Vector2(n.x, y), Vector2(float(k.x) - CARD_W / 2.0, y), col, _lw(3.0))
+			else:
+				var kid_top: float = n.kids[0].y
+				var mid := k0.y
+				ci.draw_line(Vector2(n.x, bottom), Vector2(n.x, mid), col, _lw(3.0))
+				ci.draw_line(Vector2(n.kids[0].x, mid), Vector2(n.kids[1].x, mid), col, _lw(3.0))
+				for k in n.kids:
+					ci.draw_line(Vector2(k.x, mid), Vector2(k.x, kid_top), col, _lw(3.0))
+			if KNOB_R * zoom >= 3.0:
+				ci.draw_circle(k0, KNOB_R, Color("#241c35"))
+				ci.draw_arc(k0, KNOB_R, 0.0, TAU, 20, col, _lw(2.0))
+				_plus_marks.append(k0)
 		for k in n.kids:
 			_draw_links(ci, k, view)
+
+	func _draw_fold_count(ci: CanvasItem, m: Vector2, count: int) -> void:
+		var fs := _fs(13.0)
+		if fs < 7:
+			return
+		var c := _sp(m)
+		ci.draw_string(get_theme_default_font(), Vector2(c.x - 30.0, roundf(c.y + fs * 0.35)), "+%d" % count,
+			HORIZONTAL_ALIGNMENT_CENTER, 60.0, fs, Color("#a6ff6e"))
 
 	## The card's box, border, tag square and badge (shapes: these scale with the zoom).
 	func _draw_card(ci: CanvasItem, n: Dictionary) -> void:
@@ -392,9 +602,11 @@ class TreeCanvas extends Control:
 		var alpha := 0.55 if n.loop else 1.0
 
 		var bg := Color("#1d1828") if not tier1 else Color("#15222a")
+		if n.farm:
+			bg = Color("#17271a")
 		bg.a = alpha
 		ci.draw_rect(r, bg)
-		var border: Color = Color("#a6ff6e") if is_root else (tier[1] as Color).darkened(0.25)
+		var border: Color = Color("#a6ff6e") if is_root else (Color("#7be36f") if n.farm else (tier[1] as Color).darkened(0.25))
 		border.a = alpha
 		ci.draw_rect(r, border, false, _lw(3.0 if is_root else 2.0))
 		if 8.0 * zoom < 2.0:
@@ -456,6 +668,9 @@ class TreeCanvas extends Control:
 			if n.loop:
 				bottom_text = "loop"
 				bottom_col = Color("#ffb347")
+			elif n.farm:
+				bottom_text += " · Farm"
+				bottom_col = Color("#7be36f")
 			elif tier1:
 				bottom_text += " · Tier 1"
 			var fs2 := maxi(8, _fs(11.0))
@@ -487,6 +702,7 @@ func _ready() -> void:
 
 	# --- left: seed picker
 	var left := VBoxContainer.new()
+	_left = left
 	left.custom_minimum_size = Vector2(370, 0)
 	left.add_theme_constant_override("separation", 8)
 	cols.add_child(left)
@@ -544,24 +760,72 @@ func _ready() -> void:
 	_back_btn.text = "Back"
 	_back_btn.pressed.connect(_go_back)
 	top.add_child(_back_btn)
+	var close := Button.new()
+	close.text = "Close"
+	close.pressed.connect(close_menu)
+	top.add_child(close)
+
+	# tools for the tree itself
+	var tools := HBoxContainer.new()
+	tools.add_theme_constant_override("separation", 6)
+	right.add_child(tools)
 	var fit := Button.new()
 	fit.text = "Fit"
 	fit.tooltip_text = "Zoom to fit the whole tree"
 	fit.pressed.connect(func(): _canvas.refit())
-	top.add_child(fit)
+	tools.add_child(fit)
+	var fold := Button.new()
+	fold.text = "Fold all"
+	fold.tooltip_text = "Fold every branch away under the top seed's two ingredients\n(click the round + under any seed to fold or open just that branch; right-click a seed works too)"
+	fold.pressed.connect(func(): _canvas.fold_all())
+	tools.add_child(fold)
+	var unfold := Button.new()
+	unfold.text = "Open all"
+	unfold.tooltip_text = "Open every folded branch"
+	unfold.pressed.connect(func(): _canvas.unfold_all())
+	tools.add_child(unfold)
+	tools.add_child(VSeparator.new())
+	_compact = CheckBox.new()
+	_compact.text = "Compact"
+	_compact.tooltip_text = "On: big branches go downward so the tree keeps the window's shape\nOff: the classic wide tree, every branch side by side"
+	_compact.button_pressed = bool(UserSettings.get_value("panels", "tree_compact", true))
+	_compact.toggled.connect(func(on):
+		UserSettings.set_value("panels", "tree_compact", on)
+		_canvas.compact = on
+		_canvas.rebuild()
+		_canvas.refit())
+	tools.add_child(_compact)
+	_route = CheckBox.new()
+	_route.text = "Shortest route (farm Farmable seeds)"
+	_route.tooltip_text = "A Farmable or Bountiful seed in the tree is grown for more seeds instead of being spliced again:\nits branch stops there. Seeds with several recipes use the one with the fewest splices."
+	_route.button_pressed = bool(UserSettings.get_value("panels", "tree_route", false))
+	_route.toggled.connect(func(on):
+		UserSettings.set_value("panels", "tree_route", on)
+		_canvas.farm_route = on
+		_canvas.choices.clear()
+		_canvas.collapsed.clear()
+		_canvas.rebuild()
+		_canvas.refit())
+	tools.add_child(_route)
+	var spacer := Control.new()
+	spacer.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	tools.add_child(spacer)
+	_tree_only = CheckBox.new()
+	_tree_only.text = "Tree only"
+	_tree_only.tooltip_text = "Hide the seed list and all the side text: just the tree"
+	_tree_only.button_pressed = bool(UserSettings.get_value("panels", "tree_only", false))
+	_tree_only.toggled.connect(func(on):
+		UserSettings.set_value("panels", "tree_only", on)
+		_apply_tree_only())
+	tools.add_child(_tree_only)
 	_lens_toggle = CheckBox.new()
 	_lens_toggle.text = "Magnifier"
 	_lens_toggle.tooltip_text = "Show the tree around your cursor up close, bottom right (Shift + wheel: stronger / weaker)"
 	_lens_toggle.button_pressed = bool(UserSettings.get_value("panels", "tree_lens", true))
 	_lens_toggle.toggled.connect(func(on):
-		_canvas.lens_enabled = on
-		_lens_box.visible = on
-		UserSettings.set_value("panels", "tree_lens", on))
-	top.add_child(_lens_toggle)
-	var close := Button.new()
-	close.text = "Close"
-	close.pressed.connect(close_menu)
-	top.add_child(close)
+		UserSettings.set_value("panels", "tree_lens", on)
+		_apply_tree_only())
+	tools.add_child(_lens_toggle)
 
 	_sub = Label.new()
 	_sub.add_theme_color_override("font_color", Color(0.8, 0.78, 0.9))
@@ -584,9 +848,11 @@ func _ready() -> void:
 	_canvas.reroot.connect(func(id): show_seed(id))
 	_canvas.built.connect(_update_totals)
 	frame.add_child(_canvas)
-	_canvas.lens_enabled = _lens_toggle.button_pressed
+	_canvas.compact = _compact.button_pressed
+	_canvas.farm_route = _route.button_pressed
 
 	var side := VBoxContainer.new()
+	_side = side
 	side.custom_minimum_size = Vector2(Lens.LENS_SIZE.x + 4, 0)
 	side.add_theme_constant_override("separation", 8)
 	middle.add_child(side)
@@ -614,7 +880,6 @@ func _ready() -> void:
 
 	_lens_box = PanelContainer.new()  # the magnifier, docked bottom right
 	_lens_box.add_theme_stylebox_override("panel", _box_style())
-	_lens_box.visible = _lens_toggle.button_pressed
 	side.add_child(_lens_box)
 	var lens := Lens.new()
 	lens.canvas = _canvas
@@ -622,13 +887,30 @@ func _ready() -> void:
 	_canvas.lens = lens
 
 	var hint := Label.new()
-	hint.text = "Drag to pan  ·  Wheel: zoom (as far out as you like)  ·  Shift + wheel: magnifier strength  ·  Click a seed to center on it  ·  1/2 badge: other recipe"
+	_hint = hint
+	hint.text = "Drag to pan  ·  Wheel: zoom  ·  Shift + wheel: magnifier strength  ·  Click a seed to center on it  ·  Click a round + (or right-click a seed) to fold its branch  ·  1/2 badge: other recipe"
 	hint.add_theme_font_size_override("font_size", 12)
 	hint.add_theme_color_override("font_color", Color(0.7, 0.67, 0.8))
+	hint.clip_text = true
 	right.add_child(hint)
+	_apply_tree_only()
 
 	Game.seeds_changed.connect(_on_data_changed)
 	Game.recipes_changed.connect(_on_data_changed)
+
+
+## Tree only: hides the seed list, the side text, the magnifier and the hints.
+func _apply_tree_only() -> void:
+	var only := _tree_only.button_pressed
+	for c in [_left, _sub, _hint]:
+		c.visible = not only
+	var lens_on := _lens_toggle.button_pressed and not only
+	_lens_toggle.disabled = only
+	_canvas.lens_enabled = lens_on
+	_lens_box.visible = lens_on
+	_side.visible = not only
+	if _canvas.auto_fit:
+		_canvas.call_deferred("fit")
 
 
 func _box_style() -> StyleBoxFlat:
@@ -710,10 +992,14 @@ func _update_totals() -> void:
 	if m.splices == 0:
 		_math.text = "%s is a Tier 1 seed: no splicing needed." % top_name if top_name != "" else ""
 	else:
-		_math.text = "To make %s from scratch: %d splice%s  (%d different recipe%s to discover)  ·  longest chain: %d splice%s in a row  ·  %d Tier 1 seeds" % [
+		_math.text = "To make %s from scratch: %d splice%s  (%d different recipe%s to discover)  ·  longest chain: %d splice%s in a row  ·  %d Tier 1 seeds%s" % [
 			top_name, m.splices, "" if m.splices == 1 else "s", m.different, "" if m.different == 1 else "s",
-			m.longest, "" if m.longest == 1 else "s", m.tier1]
+			m.longest, "" if m.longest == 1 else "s", m.tier1,
+			"  ·  %d farmed seed%s" % [m.farm, "" if m.farm == 1 else "s"] if m.farm > 0 else ""]
+		if _canvas.farm_route:
+			_math.text = "Shortest route (farming Farmable seeds): " + _math.text
 	var counts := {}
+	var farmed := {}
 	var loops := false
 	var total := 0
 	for n in _canvas.nodes:
@@ -722,6 +1008,8 @@ func _update_totals() -> void:
 		elif n.kids.is_empty() and n.depth > 0:
 			counts[n.id] = int(counts.get(n.id, 0)) + 1
 			total += 1
+			if n.farm:
+				farmed[n.id] = true
 	if counts.is_empty():
 		_totals.text = ""
 		return
@@ -729,8 +1017,8 @@ func _update_totals() -> void:
 	ids.sort_custom(func(a, b): return counts[a] > counts[b] or (counts[a] == counts[b] and String(Game.get_seed(a).name) < String(Game.get_seed(b).name)))
 	var parts: PackedStringArray = []
 	for id in ids:
-		parts.append("%d× %s" % [counts[id], Game.get_seed(id).name])
-	_totals.text = "Tier 1 seeds needed (%d): %s%s" % [total, ", ".join(parts),
+		parts.append("%d× %s%s" % [counts[id], Game.get_seed(id).name, " (farm it)" if farmed.has(id) else ""])
+	_totals.text = "%s (%d): %s%s" % ["Seeds to start from" if not farmed.is_empty() else "Tier 1 seeds needed", total, ", ".join(parts),
 		"   ·   a looping recipe was cut off" if loops else ""]
 
 

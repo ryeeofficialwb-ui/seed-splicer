@@ -14,7 +14,7 @@ const ART := 32 * SCALE
 const DRIFT_SPEED := 7.0
 const DRAG_THRESHOLD := 6.0  ## pixels you must drag before a drop counts as a splice
 const TOP_ROOM := 44.0     ## keep clear of the title
-const BOTTOM_ROOM := 70.0  ## room for the name label + the hint line
+const BOTTOM_ROOM := 96.0  ## room for the name, rarity and approval stamp lines
 
 var seed_id := ""
 var field: Control  ## the VoidField this token lives in
@@ -155,3 +155,14 @@ func _draw() -> void:
 	var rpos := Vector2((ART - rw) / 2.0, ART + 29.0)
 	draw_string_outline(font, rpos, rl, HORIZONTAL_ALIGNMENT_LEFT, -1, 12, 4, Color(0.05, 0.04, 0.08, 0.9))
 	draw_string(font, rpos, rl, HORIZONTAL_ALIGNMENT_LEFT, -1, 12, tier[1])
+	# third line: the approval stamp and who made it (only seeds on the official list)
+	var by := Approvals.approved_by(s)
+	if by != "":
+		var st := 22.0
+		var bw := font.get_string_size(by, HORIZONTAL_ALIGNMENT_LEFT, -1, 12).x
+		var x0 := roundf((ART - (st + 3.0 + bw)) / 2.0)
+		var top := ART + 34.0
+		draw_texture_rect(Approvals.STAMP_SMALL, Rect2(x0, top, st, st), false)
+		var bpos := Vector2(x0 + st + 3.0, top + 16.0)
+		draw_string_outline(font, bpos, by, HORIZONTAL_ALIGNMENT_LEFT, -1, 12, 4, Color(0.05, 0.04, 0.08, 0.9))
+		draw_string(font, bpos, by, HORIZONTAL_ALIGNMENT_LEFT, -1, 12, Approvals.STAMP_COLOR)

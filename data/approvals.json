@@ -1,0 +1,596 @@
+{
+	"format": "seed-splicer-approvals",
+	"version": "1.0.1",
+	"publisher": "RyeeRue",
+	"approved": [
+		{
+			"name": "Dirt Seed",
+			"made_by": "RyeeRue"
+		},
+		{
+			"name": "Glowing Mushroom Seed",
+			"made_by": "RyeeRue"
+		},
+		{
+			"name": "Stone Seed",
+			"made_by": "RyeeRue"
+		},
+		{
+			"name": "Magma Rock Seed",
+			"made_by": "RyeeRue"
+		},
+		{
+			"name": "Cave Background Seed",
+			"made_by": "RyeeRue"
+		},
+		{
+			"name": "Gravel Seed",
+			"made_by": "RyeeRue"
+		},
+		{
+			"name": "Soil Seed",
+			"made_by": "RyeeRue"
+		},
+		{
+			"name": "Grass Seed",
+			"made_by": "RyeeRue"
+		},
+		{
+			"name": "Stone Background Seed",
+			"made_by": "RyeeRue"
+		},
+		{
+			"name": "Lava Seed",
+			"made_by": "RyeeRue"
+		},
+		{
+			"name": "Glowstone  Seed",
+			"made_by": "RyeeRue"
+		},
+		{
+			"name": "Wood Seed",
+			"made_by": "RyeeRue"
+		},
+		{
+			"name": "Cavern Seed",
+			"made_by": "RyeeRue"
+		},
+		{
+			"name": "Door Seed",
+			"made_by": "RyeeRue"
+		},
+		{
+			"name": "Obsidian Seed",
+			"made_by": "RyeeRue"
+		},
+		{
+			"name": "Sand Seed",
+			"made_by": "RyeeRue"
+		},
+		{
+			"name": "Glass Seed",
+			"made_by": "RyeeRue"
+		},
+		{
+			"name": "Cobblestone Seed",
+			"made_by": "RyeeRue"
+		},
+		{
+			"name": "Pumice Seed",
+			"made_by": "RyeeRue"
+		},
+		{
+			"name": "Wheat Seed",
+			"made_by": "RyeeRue"
+		},
+		{
+			"name": "Quartz  Seed",
+			"made_by": "RyeeRue"
+		},
+		{
+			"name": "Clay Seed",
+			"made_by": "RyeeRue"
+		},
+		{
+			"name": "Sandstone Seed",
+			"made_by": "RyeeRue"
+		},
+		{
+			"name": "Bucket Seed",
+			"made_by": "RyeeRue"
+		},
+		{
+			"name": "Well Seed",
+			"made_by": "RyeeRue"
+		},
+		{
+			"name": "Purple Block Seed",
+			"made_by": "RyeeRue"
+		},
+		{
+			"name": "Green Block Seed",
+			"made_by": "RyeeRue"
+		},
+		{
+			"name": "Blueberry Seed",
+			"made_by": "RyeeRue"
+		},
+		{
+			"name": "Blue Block Seed",
+			"made_by": "RyeeRue"
+		},
+		{
+			"name": "Ash Seed",
+			"made_by": "RyeeRue"
+		},
+		{
+			"name": "Cinder Soil Seed",
+			"made_by": "RyeeRue"
+		},
+		{
+			"name": "Yam Seed",
+			"made_by": "RyeeRue"
+		},
+		{
+			"name": "Deathcap Seed",
+			"made_by": "RyeeRue"
+		},
+		{
+			"name": "Spore Background Seed",
+			"made_by": "RyeeRue"
+		},
+		{
+			"name": "Dust Seed",
+			"made_by": "RyeeRue"
+		},
+		{
+			"name": "Bush Seed",
+			"made_by": "RyeeRue"
+		},
+		{
+			"name": "Hedge Seed",
+			"made_by": "RyeeRue"
+		},
+		{
+			"name": "Leaves Seed",
+			"made_by": "RyeeRue"
+		},
+		{
+			"name": "White Block Seed",
+			"made_by": "RyeeRue"
+		},
+		{
+			"name": "Bouncy Shroom Seed",
+			"made_by": "RyeeRue"
+		},
+		{
+			"name": "Window Seed",
+			"made_by": "RyeeRue"
+		},
+		{
+			"name": "Lapis Lazuli Seed",
+			"made_by": "RyeeRue"
+		},
+		{
+			"name": "Wooden Window Seed",
+			"made_by": "RyeeRue"
+		},
+		{
+			"name": "Coal Seed",
+			"made_by": "RyeeRue"
+		},
+		{
+			"name": "Black Block Seed",
+			"made_by": "RyeeRue"
+		},
+		{
+			"name": "Blackberry Seed",
+			"made_by": "RyeeRue"
+		},
+		{
+			"name": "Charcoal Seed",
+			"made_by": "RyeeRue"
+		},
+		{
+			"name": "Iron Block Seed",
+			"made_by": "RyeeRue"
+		},
+		{
+			"name": "Amber Seed",
+			"made_by": "RyeeRue"
+		},
+		{
+			"name": "Gold Seed",
+			"made_by": "RyeeRue"
+		},
+		{
+			"name": "Water Seed",
+			"made_by": "RyeeRue"
+		},
+		{
+			"name": "Wooden Platform Seed",
+			"made_by": "RyeeRue"
+		},
+		{
+			"name": "Bricks Seed",
+			"made_by": "RyeeRue"
+		},
+		{
+			"name": "Strawberry Seed",
+			"made_by": "RyeeRue"
+		},
+		{
+			"name": "Red Block Seed",
+			"made_by": "RyeeRue"
+		},
+		{
+			"name": "Rose Seed",
+			"made_by": "RyeeRue"
+		},
+		{
+			"name": "Daffodil Seed",
+			"made_by": "RyeeRue"
+		},
+		{
+			"name": "Yellow Block Seed",
+			"made_by": "RyeeRue"
+		},
+		{
+			"name": "Apple Seed",
+			"made_by": "RyeeRue"
+		},
+		{
+			"name": "Steel Seed",
+			"made_by": "RyeeRue"
+		},
+		{
+			"name": "Steel Platform Seed",
+			"made_by": "RyeeRue"
+		},
+		{
+			"name": "Toilet Seed",
+			"made_by": "RyeeRue"
+		},
+		{
+			"name": "Chair Seed",
+			"made_by": "RyeeRue"
+		},
+		{
+			"name": "Chest Seed",
+			"made_by": "RyeeRue"
+		},
+		{
+			"name": "Treasure Chest Seed",
+			"made_by": "RyeeRue"
+		},
+		{
+			"name": "Tulip Seed",
+			"made_by": "RyeeRue"
+		},
+		{
+			"name": "Orange Block Seed",
+			"made_by": "RyeeRue"
+		},
+		{
+			"name": "Lime Block Seed",
+			"made_by": "RyeeRue"
+		},
+		{
+			"name": "Aqua Block Seed",
+			"made_by": "RyeeRue"
+		},
+		{
+			"name": "Grey Block Seed",
+			"made_by": "RyeeRue"
+		},
+		{
+			"name": "Brown Block Seed",
+			"made_by": "RyeeRue"
+		},
+		{
+			"name": "Gold Platform  Seed",
+			"made_by": "RyeeRue"
+		},
+		{
+			"name": "Bricks Background Seed",
+			"made_by": "RyeeRue"
+		},
+		{
+			"name": "Wooden Background Seed",
+			"made_by": "RyeeRue"
+		},
+		{
+			"name": "Ruby Seed",
+			"made_by": "RyeeRue"
+		},
+		{
+			"name": "Hay Block Seed",
+			"made_by": "RyeeRue"
+		},
+		{
+			"name": "Pink Block Seed",
+			"made_by": "RyeeRue"
+		},
+		{
+			"name": "Cherry Leaves Seed",
+			"made_by": "RyeeRue"
+		},
+		{
+			"name": "Limestone Seed",
+			"made_by": "RyeeRue"
+		},
+		{
+			"name": "Seaweed Seed",
+			"made_by": "RyeeRue"
+		},
+		{
+			"name": "Stone Bricks Seed",
+			"made_by": "RyeeRue"
+		},
+		{
+			"name": "Stone Brick Background Seed",
+			"made_by": "RyeeRue"
+		},
+		{
+			"name": "Lemon Seed",
+			"made_by": "RyeeRue"
+		},
+		{
+			"name": "Melon Seed",
+			"made_by": "RyeeRue"
+		},
+		{
+			"name": "Watermelon Seed",
+			"made_by": "RyeeRue"
+		},
+		{
+			"name": "Shroom Melons Seed",
+			"made_by": "RyeeRue"
+		},
+		{
+			"name": "Barrel Seed",
+			"made_by": "RyeeRue"
+		},
+		{
+			"name": "Topaz Seed",
+			"made_by": "RyeeRue"
+		},
+		{
+			"name": "Boulder Seed",
+			"made_by": "RyeeRue"
+		},
+		{
+			"name": "Rose Quartz Seed",
+			"made_by": "RyeeRue"
+		},
+		{
+			"name": "Spike Seed",
+			"made_by": "RyeeRue"
+		},
+		{
+			"name": "Sign Seed Seed",
+			"made_by": "RyeeRue"
+		},
+		{
+			"name": "Danger Sign Seed",
+			"made_by": "RyeeRue"
+		},
+		{
+			"name": "Gate Seed",
+			"made_by": "RyeeRue"
+		},
+		{
+			"name": "Prison Door Seed",
+			"made_by": "RyeeRue"
+		},
+		{
+			"name": "Prison Bars Seed",
+			"made_by": "RyeeRue"
+		},
+		{
+			"name": "Fishbowl Seed",
+			"made_by": "RyeeRue"
+		},
+		{
+			"name": "Fishtank Seed",
+			"made_by": "RyeeRue"
+		},
+		{
+			"name": "Lava Fishtank Seed",
+			"made_by": "RyeeRue"
+		},
+		{
+			"name": "Sporeberry",
+			"made_by": "RyeeRue"
+		},
+		{
+			"name": "Dried Mushroom Seed",
+			"made_by": "RyeeRue"
+		},
+		{
+			"name": "Poison Spike Seed",
+			"made_by": "RyeeRue"
+		},
+		{
+			"name": "Stone Pathway Seed",
+			"made_by": "RyeeRue"
+		},
+		{
+			"name": "Asphalt Seed",
+			"made_by": "RyeeRue"
+		},
+		{
+			"name": "Venus Flytrap Seed",
+			"made_by": "RyeeRue"
+		},
+		{
+			"name": "Hanging Flytrap Seed",
+			"made_by": "RyeeRue"
+		},
+		{
+			"name": "Starfruit Seed",
+			"made_by": "RyeeRue"
+		},
+		{
+			"name": "Dragon Snappers Seed",
+			"made_by": "RyeeRue"
+		},
+		{
+			"name": "High-tech Block Seed",
+			"made_by": "RyeeRue"
+		},
+		{
+			"name": "Space Window Seed",
+			"made_by": "RyeeRue"
+		},
+		{
+			"name": "Safe Seed",
+			"made_by": "RyeeRue"
+		},
+		{
+			"name": "Traffic Cone Seed",
+			"made_by": "RyeeRue"
+		},
+		{
+			"name": "Fertilizer Seed",
+			"made_by": "RyeeRue"
+		},
+		{
+			"name": "Copper Block Seed",
+			"made_by": "RyeeRue"
+		},
+		{
+			"name": "Plumber Pipe Seed",
+			"made_by": "RyeeRue"
+		},
+		{
+			"name": "Sprinkler Seed Seed",
+			"made_by": "RyeeRue"
+		},
+		{
+			"name": "Snow Seed",
+			"made_by": "RyeeRue"
+		},
+		{
+			"name": "Ice Seed",
+			"made_by": "RyeeRue"
+		},
+		{
+			"name": "Pumpkin Seed",
+			"made_by": "RyeeRue"
+		},
+		{
+			"name": "Torch Seed",
+			"made_by": "RyeeRue"
+		},
+		{
+			"name": "Coconut Seed",
+			"made_by": "RyeeRue"
+		},
+		{
+			"name": "Wooden Fence Seed",
+			"made_by": "RyeeRue"
+		},
+		{
+			"name": "Barn Blocks Seed",
+			"made_by": "RyeeRue"
+		},
+		{
+			"name": "Lifeshroom Seed",
+			"made_by": "RyeeRue"
+		},
+		{
+			"name": "Science Shroom Seed",
+			"made_by": "RyeeRue"
+		},
+		{
+			"name": "Chicken Shroom Seed",
+			"made_by": "RyeeRue"
+		},
+		{
+			"name": "Sheep Shroom Seed",
+			"made_by": "RyeeRue"
+		},
+		{
+			"name": "Cowcap Seed",
+			"made_by": "RyeeRue"
+		},
+		{
+			"name": "Carrot Seed",
+			"made_by": "RyeeRue"
+		},
+		{
+			"name": "Rabbit Shroom Seed",
+			"made_by": "RyeeRue"
+		},
+		{
+			"name": "Beetroot Seed",
+			"made_by": "RyeeRue"
+		},
+		{
+			"name": "PigCap Seed",
+			"made_by": "RyeeRue"
+		},
+		{
+			"name": "Campfire Seed",
+			"made_by": "RyeeRue"
+		},
+		{
+			"name": "Bacon Seed",
+			"made_by": "RyeeRue"
+		},
+		{
+			"name": "Bacon Background Seed",
+			"made_by": "RyeeRue"
+		},
+		{
+			"name": "Black Background Seed",
+			"made_by": "RyeeRue"
+		},
+		{
+			"name": "White Background Seed",
+			"made_by": "RyeeRue"
+		},
+		{
+			"name": "Pink Background Seed",
+			"made_by": "RyeeRue"
+		},
+		{
+			"name": "Orange Background Seed",
+			"made_by": "RyeeRue"
+		},
+		{
+			"name": "Blue Background Seed",
+			"made_by": "RyeeRue"
+		},
+		{
+			"name": "Green Background Seed",
+			"made_by": "RyeeRue"
+		},
+		{
+			"name": "Red Background Seed",
+			"made_by": "RyeeRue"
+		},
+		{
+			"name": "Yellow Background Seed",
+			"made_by": "RyeeRue"
+		},
+		{
+			"name": "Purple Background Seed",
+			"made_by": "RyeeRue"
+		},
+		{
+			"name": "Sink Seed",
+			"made_by": "RyeeRue"
+		},
+		{
+			"name": "Sturdy Door Seed",
+			"made_by": "RyeeRue"
+		},
+		{
+			"name": "Gray Background Seed",
+			"made_by": "RyeeRue"
+		}
+	],
+	"denied": []
+}

@@ -30,6 +30,10 @@ func _ready() -> void:
 	var test16 := false
 	var test17 := false
 	var test18 := false
+	var test19 := false
+	var approvals_file := ""  # --approvals=C:/x.json : use that official list (stamps) for the screenshot
+	var stats := false        # --stats : the Settings window on its Statistics tab
+	var tree_opts := []       # --tree-only --wide --route --fold : Recipe Tree options for the screenshot
 	var dict_seed := ""  # --dict=cave_background [--dict-tab=3] : the Dictionary open on that seed
 	var dict_tab := 0
 	var hub := false     # --hub : the Settings window open
@@ -101,6 +105,14 @@ func _ready() -> void:
 			test17 = true
 		elif a == "--test18":
 			test18 = true
+		elif a == "--test19":
+			test19 = true
+		elif a.begins_with("--approvals="):
+			approvals_file = a.substr(12)
+		elif a == "--stats":
+			stats = true
+		elif a in ["--tree-only", "--wide", "--route", "--fold"]:
+			tree_opts.append(a)
 		elif a.begins_with("--dict="):
 			dict_seed = a.substr(7)
 		elif a.begins_with("--dict-tab="):
@@ -114,7 +126,13 @@ func _ready() -> void:
 	if path == "":
 		queue_free()
 		return
+	if approvals_file != "":
+		Approvals.use_data(JSON.parse_string(FileAccess.get_file_as_string(approvals_file)))
+		main.panel.refresh_seeds()
 	await get_tree().create_timer(1.2).timeout
+	if stats:
+		main.settings_hub.open_stats()
+		await get_tree().create_timer(0.4).timeout
 	if with_popup:
 		main.popup.open_new("dirt", "stone")
 		await get_tree().create_timer(0.4).timeout
@@ -131,7 +149,19 @@ func _ready() -> void:
 	if tree_name != "":
 		var id := Game.find_by_name(tree_name + " Seed")
 		main.recipe_tree.open(id)
-		await get_tree().create_timer(0.8).timeout
+		var rtree: RecipeTree = main.recipe_tree
+		rtree._tree_only.set_pressed_no_signal("--tree-only" in tree_opts)
+		rtree._apply_tree_only()
+		rtree._canvas.compact = not "--wide" in tree_opts
+		rtree._canvas.farm_route = "--route" in tree_opts
+		rtree._canvas.rebuild()
+		await get_tree().create_timer(0.5).timeout
+		if "--fold" in tree_opts:
+			var n0: Dictionary = rtree._canvas.tree.kids[0]
+			rtree._canvas.toggle_fold(n0.path)
+		rtree._canvas.refit()
+		rtree._update_totals()
+		await get_tree().create_timer(0.5).timeout
 		var tc: RecipeTree.TreeCanvas = main.recipe_tree._canvas
 		print("tree fit zoom: ", tc.zoom, " nodes: ", tc.nodes.size())
 		if tree_zoom > 0.0:  # --zoom=0.57 : look at a specific zoom
@@ -174,6 +204,8 @@ func _ready() -> void:
 		await _run_test17(path.get_base_dir())
 	if test18:
 		await _run_test18(path.get_base_dir())
+	if test19:
+		await _run_test19(path.get_base_dir())
 	if test16:
 		_run_test16(path.get_base_dir())
 	if DisplayServer.get_name() == "headless":  # nothing is drawn headless: the checks above are all it can do
@@ -770,6 +802,146 @@ func _run_test18(base: String) -> void:
 func _collect_buttons(node: Node, out: PackedStringArray) -> void:
 	for c in node.find_children("*", "Button", true, false):
 		out.append((c as Button).text)
+
+
+## Update 1.0.0: approval stamps + contributor, graveyard, time played + Statistics, and the
+## Recipe Tree's tree-only view, folding, compact layout and shortest (farm) route.
+## Runs against the scratch copy of the save (APPDATA is pointed elsewhere by the runner).
+func _run_test19(_base: String) -> void:
+	var old_name := Game.player_name()
+	# --- the official list: stamp + who made it
+	var gray := Game.order[Game.order.size() - 1]
+	for id in Game.order:
+		if String(Game.seeds[id].name) == "Gray Background Seed":
+			gray = id
+	var gray_name := String(Game.seeds[gray].name)
+	Approvals.use_data({ "publisher": "Pub", "approved": [{ "name": gray_name, "made_by": "Tester" }, { "name": "dirt seed", "made_by": "" }],
+		"denied": [{ "name": "Ghost Seed", "made_by": "Bob", "rarity": 9, "pattern": 1, "colors": ["#ffffff", "#000000"], "sprout": "#ff00ff", "crop": "round_tree", "parent_names": ["Dirt Seed", "Stone Seed"] }] })
+	_check("an approved seed shows who made it", Approvals.approved_by(Game.seeds[gray]) == "Tester")
+	_check("names match whatever the case; no name = the publisher", Approvals.approved_by(Game.get_seed(Game.find_by_name("Dirt Seed"))) == "Pub")
+	_check("a seed that isn't on the list has no stamp", Approvals.approved_by(Game.get_seed(Game.find_by_name("Stone Seed"))) == "")
+	main.panel.refresh_seeds()
+	var stamped_ok := false
+	for i in main.panel._list.stamped:
+		stamped_ok = stamped_ok or main.panel._list.get_item_metadata(i) == gray
+	_check("the Seeds list stamps the approved seed (%d stamped)" % main.panel._list.stamped.size(), stamped_ok and main.panel._list.stamped.size() == 2)
+
+	# --- the graveyard
+	Game.set_denied(gray, true)
+	_check("a seed sent to the graveyard loses its stamp", Approvals.approved_by(Game.seeds[gray]) == "")
+	var grave := Approvals.graveyard()
+	_check("the graveyard has your denied seed + the official one (%d)" % grave.size(), grave.size() == 2
+		and grave.any(func(g): return g.local_id == gray) and grave.any(func(g): return g.seed.name == "Ghost Seed" and g.local_id == ""))
+	var dict: DictionaryWindow = main.dictionary
+	dict.open()
+	await get_tree().create_timer(0.3).timeout
+	dict._tabs.current_tab = 0
+	dict.refresh()
+	var listed := false
+	for g in dict._tree.get_root().get_children():
+		for it in g.get_children():
+			listed = listed or it.get_metadata(0) == gray
+	_check("a graveyard seed leaves the normal Dictionary tabs", not listed)
+	dict._tabs.current_tab = DictionaryWindow.GRAVE_TAB
+	dict.refresh()
+	var rows := dict._tree.get_root().get_child(0).get_child_count()
+	_check("the Graveyard tab lists both (%d rows)" % rows, rows == 2)
+	_check("its detail says it did not make it", dict._detail_text.text.contains("graveyard"))
+	dict._selected = "grave#1"
+	dict.refresh()
+	_check("an official graveyard seed you never had still shows its growth stages", dict._stages.all(func(p): return p.texture != null) and dict._grave_btn.disabled)
+	dict._selected = "grave#0"
+	dict.refresh()
+	dict._grave_btn.pressed.emit()
+	_check("Bring back takes it out of the graveyard", not Game.seeds[gray].get("denied", false) and Approvals.approved_by(Game.seeds[gray]) == "Tester")
+	dict.close_dialog()
+
+	# --- contributor on new seeds
+	Game.set_player_name("Tester")
+	var nid := Game.add_custom_seed({ "name": "Zz Test Seed", "pattern": 0, "colors": ["#ff0000", "#00ff00"], "sprout": "#0000ff", "pattern_seed": 1 })
+	_check("a seed you make is signed with your name", Game.seeds[nid].made_by == "Tester")
+	Game.set_player_name(old_name)
+
+	# --- time played + Statistics
+	_check("time played is counting (%.1f s)" % Game.stats.play_seconds, Game.stats.play_seconds > 0.5 and int(Game.stats.sessions) >= 1)
+	_check("time is written like 1h 02m 05s", Game.duration_text(3725) == "1h 02m 05s" and Game.duration_text(65) == "1m 05s")
+	main.settings_hub.open_stats()
+	await get_tree().create_timer(0.2).timeout
+	_check("Settings has a Statistics tab with the time played", main.settings_hub._stats_page.visible and main.settings_hub._time_label.text.ends_with("s")
+		and main.settings_hub._stats_text.text.contains("Seeds discovered"))
+	main.settings_hub.close_dialog()
+	Game.save_stats()
+	_check("time played is saved in its own file", FileAccess.file_exists(Game.STATS_PATH))
+
+	# --- Recipe Tree
+	var rt: RecipeTree = main.recipe_tree
+	var deep := ""
+	var best := 0
+	for id in Game.order:
+		if int(Game.seeds[id].rarity) > best and not Game.seeds[id].get("parents", []).is_empty():
+			best = int(Game.seeds[id].rarity)
+			deep = id
+	rt.open(deep)
+	await get_tree().create_timer(0.5).timeout
+	var tc: RecipeTree.TreeCanvas = rt._canvas
+	rt._route.button_pressed = false
+	rt._compact.button_pressed = false
+	await get_tree().create_timer(0.1).timeout
+	var wide_cost := tc._shape_cost(tc.tree.bw, tc.tree.bh)
+	var wide_splices: int = tc.math().splices
+	rt._compact.button_pressed = true
+	await get_tree().create_timer(0.1).timeout
+	var compact_cost := tc._shape_cost(tc.tree.bw, tc.tree.bh)
+	print("tree %s: %d nodes, wide %.2f x the view, compact %.2f x the view (%.0f x %.0f)" % [Game.seeds[deep].name, tc.nodes.size(), wide_cost, compact_cost, tc.tree.bw, tc.tree.bh])
+	_check("Compact keeps the tree closer to the window's shape", compact_cost <= wide_cost)
+	_check("Compact: no two seeds overlap", _no_overlap(tc))
+	_check("Compact has the same recipe math as Wide", tc.math().splices == wide_splices)
+	var kid: Dictionary = tc.tree.kids[0] if not tc.tree.kids.is_empty() else {}
+	var kid_path := String(kid.get("path", ""))
+	if not kid.is_empty() and not kid.kids.is_empty():
+		tc.click_at(tc.knob(kid))
+		var hidden := tc.nodes.filter(func(n): return n.hidden).size()
+		_check("clicking the round + folds that branch away (%d hidden)" % hidden, hidden == int(kid.count) and tc.collapsed.has(kid_path))
+		_check("folding never changes the recipe math", tc.math().splices == wide_splices)
+		_check("folded tree: no two seeds overlap", _no_overlap(tc))
+		var folded: Dictionary = tc.nodes.filter(func(n): return n.path == kid_path)[0]
+		tc.click_at(tc.knob(folded))
+		_check("clicking it again opens it", tc.nodes.filter(func(n): return n.hidden).is_empty())
+	tc.fold_all()
+	_check("Fold all leaves the top seed and its two ingredients", tc.nodes.filter(func(n): return not n.hidden).size() <= 3)
+	tc.unfold_all()
+	_check("Open all opens everything", tc.nodes.filter(func(n): return n.hidden).is_empty())
+	# shortest route through Farmable seeds
+	rt._route.button_pressed = true
+	await get_tree().create_timer(0.1).timeout
+	var m: Dictionary = tc.math()
+	var farm_ok := true
+	for n in tc.nodes:
+		if n.depth > 0 and RecipeTree.TreeCanvas.is_farmable(n.id) and not n.kids.is_empty():
+			farm_ok = false
+	print("route: %d splices (was %d), %d farmed" % [m.splices, wide_splices, m.farm])
+	_check("Shortest route stops at every Farmable seed (%d farmed)" % m.farm, farm_ok)
+	_check("Shortest route never takes more splices (%d vs %d)" % [m.splices, wide_splices], m.splices <= wide_splices)
+	_check("the side text says it's the shortest route", rt._math.text.begins_with("Shortest route"))
+	rt._route.button_pressed = false
+	# tree only
+	rt._tree_only.button_pressed = true
+	await get_tree().create_timer(0.1).timeout
+	_check("Tree only hides the seed list and all the side text", not rt._left.visible and not rt._side.visible and not rt._sub.visible and not rt._hint.visible and rt._canvas.is_visible_in_tree())
+	rt._tree_only.button_pressed = false
+	_check("and brings them back", rt._left.visible and rt._side.visible)
+	rt.close_menu()
+
+
+func _no_overlap(tc: RecipeTree.TreeCanvas) -> bool:
+	var shown := tc.nodes.filter(func(n): return not n.hidden)
+	for i in shown.size():
+		var a := tc.card_rect(shown[i]).grow(-1.0)
+		for j in range(i + 1, shown.size()):
+			if a.intersects(tc.card_rect(shown[j]).grow(-1.0)):
+				print("overlap: ", Game.seeds[shown[i].id].name, " / ", Game.seeds[shown[j].id].name)
+				return false
+	return true
 
 
 func _count_color(img: Image, c: Color) -> int:
@@ -1604,7 +1776,7 @@ func _run_test5(base: String) -> void:
 	await get_tree().create_timer(0.2).timeout
 	var g_node: Dictionary = c.nodes.filter(func(n): return n.id == gravel)[0]
 	_check("gravel now shows a 1/2 badge", g_node.recipes == 2 and g_node.idx == 0)
-	c.click_at(Vector2(g_node.x + 40.0, g_node.depth * RecipeTree.TreeCanvas.LEVEL_H + 10.0))  # the badge
+	c.click_at(Vector2(g_node.x + 40.0, float(g_node.y) + 10.0))  # the badge
 	g_node = c.nodes.filter(func(n): return n.id == gravel)[0]
 	_check("clicking the badge switches to recipe 2/2 (dirt + glowing mushroom)", g_node.idx == 1 and g_node.kids[1].id == "glowing_mushroom")
 	await _snap(base + "/t5_alt.png")

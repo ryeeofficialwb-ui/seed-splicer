@@ -4,12 +4,16 @@ extends Control
 ## Decorations and Backgrounds, with its block texture, rarity, material, hardness and every tag.
 ## Click a seed to see its 4 block boxes and its 5 growth stages big and crisp, and all of its
 ## tags written out. Double-click (or the Edit button) opens the seed editor.
+## Approved seeds (on the official list, see approvals.gd) show the stamp and who made them.
+## The Graveyard tab lists every seed that did not make it into the game.
 
 signal edit_requested(id: String)
 
 const THUMB := 64  ## block textures in the list are drawn at 2x (32 -> 64)
 const GROUP_KIND := 0
 const GROUP_MATERIAL := 1
+const GRAVE_TAB := 4
+const COLS := 7
 
 var _search: LineEdit
 var _tabs: TabBar
@@ -22,6 +26,8 @@ var _stages: Array[PixelPicture] = []
 var _detail_name: Label
 var _detail_text: RichTextLabel
 var _edit_btn: Button
+var _grave_btn: Button
+var _grave: Array = []  # Approvals.graveyard() while the Graveyard tab is open
 var _selected := ""
 var _collapsed := {}  # group key -> true
 var _thumbs := {}     # id -> [BlockArt.version, ImageTexture]
@@ -63,7 +69,7 @@ func _ready() -> void:
 	head.add_child(close)
 
 	_tabs = TabBar.new()
-	for t in ["All", "Blocks", "Decorations", "Backgrounds"]:
+	for t in ["All", "Blocks", "Decorations", "Backgrounds", "Graveyard"]:
 		_tabs.add_tab(t)
 	_tabs.tab_changed.connect(func(_i): refresh())
 	root.add_child(_tabs)
@@ -95,21 +101,21 @@ func _ready() -> void:
 	_tree = Tree.new()
 	_tree.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	_tree.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	_tree.columns = 6
+	_tree.columns = COLS
 	_tree.column_titles_visible = true
 	_tree.hide_root = true
 	_tree.select_mode = Tree.SELECT_ROW
 	_tree.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
-	for c in 6:
-		_tree.set_column_title(c, ["Seed", "R", "Material", "Hardness", "Seed tag", "Drop"][c])
+	for c in COLS:
+		_tree.set_column_title(c, ["Seed", "R", "Material", "Hardness", "Seed tag", "Drop", "Approved"][c])
 	_tree.set_column_expand(0, true)
-	_tree.set_column_custom_minimum_width(0, 240)
-	for c in [[1, 34], [2, 104], [3, 96], [4, 112], [5, 128]]:
+	_tree.set_column_custom_minimum_width(0, 200)
+	for c in [[1, 34], [2, 100], [3, 90], [4, 104], [5, 120], [6, 128]]:
 		_tree.set_column_expand(c[0], false)
 		_tree.set_column_custom_minimum_width(c[0], c[1])
 	_tree.item_selected.connect(_on_selected)
 	_tree.item_activated.connect(func():
-		if _selected != "":
+		if Game.seeds.has(_selected):
 			edit_requested.emit(_selected))
 	_tree.item_collapsed.connect(func(item: TreeItem):
 		var key: Variant = item.get_metadata(0)
@@ -132,7 +138,7 @@ func _ready() -> void:
 	detail.add_child(brow)
 	for i in BlockArt.FRAMES:
 		_blocks.append(_picture(brow))
-	detail.add_child(_caption("Grows:  seed â€º planted â€º sprout â€º sapling â€º crop"))
+	detail.add_child(_caption("Grows:  seed › planted › sprout › sapling › crop"))
 	var srow := HBoxContainer.new()
 	srow.add_theme_constant_override("separation", 4)
 	detail.add_child(srow)
@@ -149,9 +155,20 @@ func _ready() -> void:
 	_edit_btn = Button.new()
 	_edit_btn.text = "Edit this seed"
 	_edit_btn.pressed.connect(func():
-		if _selected != "":
-			edit_requested.emit(_selected))
-	detail.add_child(_edit_btn)
+		if Game.seeds.has(_local_id(_selected)):
+			edit_requested.emit(_local_id(_selected)))
+	_grave_btn = Button.new()
+	_grave_btn.tooltip_text = "Seeds in the graveyard did not make it into the game: no approval stamp.\nWhen an update is published, your graveyard ships with it."
+	_grave_btn.pressed.connect(func():
+		var id := _local_id(_selected)
+		if id != "":
+			Game.set_denied(id, not Game.seeds[id].get("denied", false)))
+	var btns := HBoxContainer.new()
+	btns.add_theme_constant_override("separation", 6)
+	for b in [_edit_btn, _grave_btn]:
+		b.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		btns.add_child(b)
+	detail.add_child(btns)
 
 	_summary = Label.new()
 	_summary.add_theme_font_size_override("font_size", 12)
@@ -243,12 +260,17 @@ func refresh() -> void:
 	_tree.clear()
 	var root := _tree.create_item()
 	var q := _search.text.strip_edges().to_lower()
+	if _tabs.current_tab == GRAVE_TAB:
+		_refresh_graveyard(root, q)
+		return
 	var kind_tab: String = ["", "block", "decoration", "background"][_tabs.current_tab]
 	var ids: Array = Game.order.filter(func(id):
 		var s: Dictionary = Game.seeds[id]
 		var d: Dictionary = s.get("drop", {})
 		if q != "" and not String(s.name).to_lower().contains(q):
 			return false
+		if s.get("denied", false):
+			return false  # it's in the Graveyard tab
 		if kind_tab != "" and d.get("kind", "block") != kind_tab:
 			return false
 		if _light_only.button_pressed and not d.get("light", false):
@@ -278,7 +300,7 @@ func refresh() -> void:
 		head.set_text(0, "%s   (%d)" % [DropLogic.KIND_PLURALS[g] if by_kind else CategoryLogic.material_name(g), members.size()])
 		head.set_custom_color(0, Color("#ffc94a") if by_kind else CategoryLogic.MATERIAL_COLORS.get(g, Color("#ffc94a")))
 		head.set_expand_right(0, true)
-		for c in 6:
+		for c in COLS:
 			head.set_selectable(c, false)
 		head.collapsed = _collapsed.get(key, false)
 		for id in members:
@@ -286,11 +308,12 @@ func refresh() -> void:
 			if id == _selected:
 				selected_item = it
 	var lights := ids.filter(func(id): return Game.seeds[id].get("drop", {}).get("light", false)).size()
-	_summary.text = "%d of %d seeds shown  Â·  %d emit light  Â·  %d with block art  Â·  double-click a seed to edit it" % [
-		ids.size(), Game.seeds.size(), lights, ids.filter(func(id): return BlockArt.has_art(id)).size()]
+	_summary.text = "%d of %d seeds shown  ·  %d emit light  ·  %d with block art  ·  %d approved  ·  double-click a seed to edit it" % [
+		ids.size(), Game.seeds.size(), lights, ids.filter(func(id): return BlockArt.has_art(id)).size(),
+		ids.filter(func(id): return Approvals.is_approved(Game.seeds[id])).size()]
 	_rebuilding = false
-	if selected_item == null and not ids.is_empty():
-		_selected = ids[0] if not ids.has(_selected) else _selected
+	if selected_item == null:
+		_selected = ids[0] if not ids.is_empty() and not ids.has(_selected) else _selected
 	if selected_item:
 		selected_item.get_parent().collapsed = false
 		selected_item.select(0)
@@ -319,26 +342,113 @@ func _row(parent: TreeItem, id: String) -> TreeItem:
 	var light: bool = d.get("light", false)
 	var drop_text := DropLogic.short_text(d)
 	if light:
-		drop_text += "  Â·  Light"
+		drop_text += "  ·  Light"
 	it.set_text(5, drop_text)
 	it.set_custom_color(5, DropLogic.LIGHT_COLOR if light else DropLogic.short_color(d))
 	it.set_tooltip_text(0, "%s drops %s\n%s" % [s.name, DropLogic.drop_name(s.name), DropLogic.describe(d)])
+	_approved_cell(it, s)
 	return it
+
+
+func _approved_cell(it: TreeItem, s: Dictionary) -> void:
+	var by := Approvals.approved_by(s)
+	if by == "":
+		return
+	it.set_icon(6, Approvals.STAMP_SMALL)
+	it.set_icon_max_width(6, 22)
+	it.set_text(6, by)
+	it.set_custom_color(6, Approvals.STAMP_COLOR)
+	it.set_tooltip_text(6, "Approved: on the official seed list  ·  made by %s" % by)
+
+
+## The Graveyard tab: seeds that did not make it into the game.
+func _refresh_graveyard(root: TreeItem, q: String) -> void:
+	_grave = Approvals.graveyard()
+	var head := _tree.create_item(root)
+	head.set_text(0, "Graveyard   (%d)" % _grave.size())
+	head.set_custom_color(0, Color("#a19bb8"))
+	head.set_expand_right(0, true)
+	for c in COLS:
+		head.set_selectable(c, false)
+	var selected_item: TreeItem = null
+	var first_item: TreeItem = null
+	for i in _grave.size():
+		var g: Dictionary = _grave[i]
+		var s: Dictionary = g.seed
+		if q != "" and not String(s.name).to_lower().contains(q):
+			continue
+		var key := "grave#%d" % i
+		var it := _tree.create_item(head)
+		it.set_metadata(0, key)
+		it.set_text(0, s.name)
+		it.set_icon(0, _seed_thumb(s))
+		it.set_icon_max_width(0, THUMB)
+		it.set_custom_color(0, Color("#a19bb8"))
+		it.set_text(1, str(int(s.rarity)))
+		it.set_custom_color(1, SeedArt.rarity_tier(int(s.rarity))[1])
+		var c: Dictionary = s.get("category", {})
+		if not c.is_empty():
+			it.set_text(2, CategoryLogic.material_name(c.get("material", "other")))
+		it.set_text(4, Game.tag_name(s.get("tag", "")))
+		it.set_custom_color(4, Game.tag_color(s.get("tag", "")))
+		it.set_text(6, "made by %s" % _maker(s))
+		it.set_custom_color(6, Color("#8a85a0"))
+		if first_item == null:
+			first_item = it
+		if key == _selected:
+			selected_item = it
+	_summary.text = "%d seeds in the graveyard: they did not make it into the game  ·  %s" % [_grave.size(),
+		"select one of yours to bring it back" if not _grave.is_empty() else "send a seed here from its page in the other tabs"]
+	_rebuilding = false
+	if selected_item == null:
+		selected_item = first_item
+		_selected = String(first_item.get_metadata(0)) if first_item else ""
+	if selected_item:
+		selected_item.select(0)
+		_tree.scroll_to_item(selected_item, true)
+	_show_detail(_selected)
+
+
+func _maker(s: Dictionary) -> String:
+	var by := String(s.get("made_by", "")).strip_edges()
+	if by == "":
+		by = Approvals.publisher  # seeds from before names existed: the developer's
+	return by if by != "" else "unknown"
+
+
+## A seed picture drawn 2x for the graveyard list.
+func _seed_thumb(s: Dictionary) -> Texture2D:
+	var img := SeedArt.render(s)
+	img.resize(THUMB, THUMB, Image.INTERPOLATE_NEAREST)
+	return ImageTexture.create_from_image(img)
+
+
+## The seed of yours behind a list key ("grave#3" or an id), or "".
+func _local_id(key: String) -> String:
+	if key.begins_with("grave#"):
+		var i := int(key.substr(6))
+		return String(_grave[i].local_id) if i < _grave.size() else ""
+	return key if Game.seeds.has(key) else ""
 
 
 func _on_selected() -> void:
 	if _rebuilding:
 		return
 	var it := _tree.get_selected()
-	if it == null or typeof(it.get_metadata(0)) != TYPE_STRING or String(it.get_metadata(0)).begins_with("group:"):
+	if it == null or typeof(it.get_metadata(0)) != TYPE_STRING or String(it.get_metadata(0)).begins_with("group:") or String(it.get_metadata(0)) == "":
 		return
 	_selected = it.get_metadata(0)
 	_show_detail(_selected)
 
 
-func _show_detail(id: String) -> void:
+func _show_detail(key: String) -> void:
+	var id := _local_id(key)
 	var s: Dictionary = Game.seeds.get(id, {})
-	_edit_btn.disabled = s.is_empty()
+	if s.is_empty() and key.begins_with("grave#") and int(key.substr(6)) < _grave.size():
+		s = _grave[int(key.substr(6))].seed  # a graveyard seed you don't have: draw what we know
+	_edit_btn.disabled = id == ""
+	_grave_btn.disabled = id == ""
+	_grave_btn.text = "Bring back from the graveyard" if id != "" and Game.seeds[id].get("denied", false) else "Send to graveyard"
 	for p in _blocks + _stages:
 		p.texture = null
 	if s.is_empty():
@@ -348,7 +458,7 @@ func _show_detail(id: String) -> void:
 	var tier: Array = SeedArt.rarity_tier(int(s.rarity))
 	_detail_name.text = s.name
 	_detail_name.add_theme_color_override("font_color", (tier[1] as Color).lerp(Color.WHITE, 0.3))
-	var art := BlockArt.get_art(id)
+	var art := BlockArt.get_art(id) if id != "" else null
 	for i in BlockArt.FRAMES:
 		if art != null:
 			var frame := art.get_region(Rect2i(i * BlockArt.SIZE, 0, BlockArt.SIZE, BlockArt.SIZE))
@@ -358,10 +468,16 @@ func _show_detail(id: String) -> void:
 	var d: Dictionary = DropLogic.sanitize(s.get("drop"), String(s.name))
 	var c: Dictionary = s.get("category", {})
 	var lines := PackedStringArray()
+	var by := Approvals.approved_by(s) if id != "" else ""
+	if by != "":
+		lines.append("[img=22x22]%s[/img] [color=#ffb347]Approved  ·  made by %s[/color]" % [Approvals.STAMP_SMALL.resource_path, by])
+	elif s.get("denied", false) or key.begins_with("grave#"):
+		lines.append("[color=#a19bb8]In the graveyard: this seed did not make it into the game[/color]")
+	lines.append("[color=#ffc94a]Made by[/color]  %s" % _maker(s))
 	lines.append("[color=#ffc94a]Rarity[/color]  %d  (%s)" % [int(s.rarity), tier[0]])
 	lines.append("[color=#ffc94a]Seed tag[/color]  [color=#%s]%s[/color]" % [Game.tag_color(s.get("tag", "")).to_html(false), Game.tag_name(s.get("tag", ""))])
 	lines.append("[color=#ffc94a]Drops[/color]  %s  (%s)" % [DropLogic.drop_name(s.name), DropLogic.KIND_NAMES[d.kind]])
-	lines.append("[color=#ffc94a]Material[/color]  %s  Â·  %s%s" % [CategoryLogic.material_name(c.get("material", "other")),
+	lines.append("[color=#ffc94a]Material[/color]  %s  ·  %s%s" % [CategoryLogic.material_name(c.get("material", "other")),
 		CategoryLogic.hardness_name(int(c.get("hardness", 3))), "  (a guess)" if c.get("status", "auto") == "auto" else ""])
 	if d.kind == "background":
 		lines.append("[color=#ffc94a]Background checklist[/color]")
@@ -374,11 +490,15 @@ func _show_detail(id: String) -> void:
 		lines.append("[color=#ffc94a]Emits light[/color]  %s" % ("[color=#ffe066]Yes[/color]" if d.light else "No"))
 	lines.append("[color=#ffc94a]Block art[/color]  %s" % ("%d of %d boxes drawn" % [BlockArt.frame_count(id), BlockArt.FRAMES] if art != null else "not drawn yet"))
 	lines.append("[color=#ffc94a]Crop[/color]  %s%s" % [CropArt.type_name(String(s.get("crop", ""))),
-		"  Â·  %d block fruit" % CropArt.fruit_count(s) if BlockArt.fruit(id) != null else ""])
-	var parents: Array = s.get("parents", [])
-	if parents.is_empty():
+		"  ·  %d block fruit" % CropArt.fruit_count(s) if BlockArt.fruit(id) != null else ""])
+	var parents: Array = s.get("parents", []) if id != "" else []
+	if id == "":
+		var pn: Array = s.get("parent_names", [])
+		lines.append("[color=#ffc94a]Made[/color]  %s" % (" + ".join(pn) if pn.size() == 2 else "unknown"))
+	elif parents.is_empty():
 		lines.append("[color=#ffc94a]Made[/color]  %s tier 1 seed" % ("your own" if s.get("custom", false) else "base"))
 	else:
 		lines.append("[color=#ffc94a]Made[/color]  %s + %s" % [Game.get_seed(parents[0]).get("name", "?"), Game.get_seed(parents[1]).get("name", "?")])
-	lines.append("[color=#8a85a0]%s[/color]" % ("Drop set by you" if not d.auto else "Drop guessed from the name"))
+	if id != "":
+		lines.append("[color=#8a85a0]%s[/color]" % ("Drop set by you" if not d.auto else "Drop guessed from the name"))
 	_detail_text.text = "\n".join(lines)

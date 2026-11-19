@@ -1,0 +1,113 @@
+class_name Approvals
+extends RefCounted
+## The official seed list that ships with every update (res://data/approvals.json).
+## tools/publish_update.py writes it from the developer's own save when an update is published:
+##   approved  every seed the developer has (not sent to the graveyard), with who made it.
+##             A seed of YOURS with the same name gets the approval stamp + that contributor's name.
+##   denied    seeds the developer sent to the graveyard: the Dictionary's Graveyard tab shows them.
+## A seed you send to the graveyard yourself (Dictionary > "Send to graveyard") is marked
+## `denied` in your save: it loses its stamp and moves to the Graveyard tab too.
+
+const PATH := "res://data/approvals.json"
+const FORMAT := "seed-splicer-approvals"
+const STAMP_SMALL := preload("res://assets/stamp/approval_stamp_24.png")
+const STAMP_BIG := preload("res://assets/stamp/approval_stamp_64.png")
+const STAMP_COLOR := Color("#ffb347")
+
+static var _loaded := false
+static var _approved := {}   # lowercase name -> contributor
+static var _denied: Array = []  # seed dictionaries (enough to draw them)
+static var version := ""
+static var publisher := ""
+
+
+static func _ensure() -> void:
+	if _loaded:
+		return
+	_loaded = true
+	_approved.clear()
+	_denied.clear()
+	if not FileAccess.file_exists(PATH):
+		return
+	var parsed: Variant = JSON.parse_string(FileAccess.get_file_as_string(PATH))
+	if typeof(parsed) != TYPE_DICTIONARY or parsed.get("format", "") != FORMAT:
+		return
+	version = String(parsed.get("version", ""))
+	publisher = String(parsed.get("publisher", ""))
+	for a in parsed.get("approved", []):
+		if typeof(a) == TYPE_DICTIONARY and String(a.get("name", "")).strip_edges() != "":
+			var by := String(a.get("made_by", "")).strip_edges()
+			_approved[String(a.name).strip_edges().to_lower()] = by if by != "" else publisher
+	for d in parsed.get("denied", []):
+		if typeof(d) == TYPE_DICTIONARY and String(d.get("name", "")).strip_edges() != "":
+			_denied.append(d)
+
+
+## Loads `data` instead of the shipped file (tests).
+static func use_data(data: Dictionary) -> void:
+	_loaded = true
+	_approved.clear()
+	_denied.clear()
+	version = String(data.get("version", ""))
+	publisher = String(data.get("publisher", ""))
+	for a in data.get("approved", []):
+		var by := String(a.get("made_by", "")).strip_edges()
+		_approved[String(a.name).strip_edges().to_lower()] = by if by != "" else publisher
+	for d in data.get("denied", []):
+		_denied.append(d)
+
+
+static func reload() -> void:
+	_loaded = false
+	_ensure()
+
+
+## Who made this seed, if it is approved (has the stamp); "" if it isn't.
+static func approved_by(seed: Dictionary) -> String:
+	_ensure()
+	if seed.is_empty() or seed.get("denied", false):
+		return ""
+	var key := String(seed.get("name", "")).strip_edges().to_lower()
+	if not _approved.has(key):
+		return ""
+	var by: String = _approved[key]
+	return by if by != "" else "?"
+
+
+static func is_approved(seed: Dictionary) -> bool:
+	return approved_by(seed) != ""
+
+
+static func official_count() -> int:
+	_ensure()
+	return _approved.size()
+
+
+## Every seed in the graveyard: the official denied list plus the ones you sent there yourself.
+## [{ seed: Dictionary (drawable), local_id: String ("" if you don't have it), official: bool }]
+static func graveyard() -> Array:
+	_ensure()
+	var out: Array = []
+	var names := {}
+	for id in Game.order:
+		var s: Dictionary = Game.seeds[id]
+		if s.get("denied", false):
+			names[String(s.name).to_lower()] = out.size()
+			out.append({ "seed": s, "local_id": id, "official": false })
+	for d in _denied:
+		var key := String(d.name).strip_edges().to_lower()
+		if names.has(key):
+			out[names[key]].official = true
+			continue
+		var s: Dictionary = d.duplicate(true)
+		s.id = "grave:" + key
+		s.rarity = maxi(1, int(s.get("rarity", 1)))
+		s.pattern = int(s.get("pattern", 0))
+		s.pattern_seed = int(s.get("pattern_seed", 0))
+		if typeof(s.get("colors")) != TYPE_ARRAY or s.colors.size() < 2:
+			s.colors = ["#777777", "#444444"]
+		s.sprout = String(s.get("sprout", "#7ccf4e"))
+		s.crop = CropArt.valid_type(s.get("crop"), key)
+		names[key] = out.size()
+		out.append({ "seed": s, "local_id": Game.find_by_name(String(d.name)), "official": true })
+	return out

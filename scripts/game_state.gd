@@ -6,7 +6,9 @@ extends Node
 ##   pattern_seed (int: variation inside the pattern), parents ([] for tier-1 seeds, else [id_a, id_b]),
 ##   tag ("farmable" / "not_farmable" / "bountiful"), crop (CropArt type id: what it grows into),
 ##   custom (true for tier-1 seeds you added),
-##   found (unix time it was added)
+##   found (unix time it was added),
+##   made_by (the contributor: your name from Settings when you made it, or theirs when imported),
+##   denied (true: you sent it to the graveyard - no approval stamp, see approvals.gd)
 ##
 ## RARITY RULE: a base seed is rarity 1. A spliced seed's rarity is the sum of its two
 ## parents' rarities, so it counts every base seed that went into the chain:
@@ -107,6 +109,7 @@ const BASE_SEEDS := [
 func _ready() -> void:
 	if not load_game():
 		reset()
+	_load_stats()
 
 
 # --- rarity / recipes -------------------------------------------------------
@@ -175,6 +178,7 @@ func add_spliced_seed(a: String, b: String, look: Dictionary) -> String:
 		"category": CategoryLogic.sanitize(look.get("category"), String(look.name), DropLogic.sanitize(look.get("drop"), String(look.name))),
 		"parents": [a, b],
 		"custom": false,
+		"made_by": player_name(),
 		"found": int(Time.get_unix_time_from_system()),
 	}
 	pending_rolls.erase(recipe_key(a, b))
@@ -204,12 +208,83 @@ func add_custom_seed(look: Dictionary) -> String:
 		"category": CategoryLogic.sanitize(look.get("category"), String(look.name), DropLogic.sanitize(look.get("drop"), String(look.name))),
 		"parents": [],
 		"custom": true,
+		"made_by": player_name(),
 		"found": int(Time.get_unix_time_from_system()),
 	}
 	order.append(id)
 	seeds_changed.emit()
 	save_game()
 	return id
+
+
+## Your name (Settings > You): written on every seed you make, shown next to the approval stamp.
+static func player_name() -> String:
+	return String(UserSettings.get_value("profile", "name", "")).strip_edges().left(32)
+
+
+static func set_player_name(n: String) -> void:
+	UserSettings.set_value("profile", "name", n.strip_edges().left(32))
+
+
+## Sends a seed to the graveyard (or brings it back). It keeps existing, but loses its stamp.
+func set_denied(id: String, on: bool) -> void:
+	if not seeds.has(id):
+		return
+	if on:
+		seeds[id].denied = true
+	else:
+		seeds[id].erase("denied")
+	seeds_changed.emit()
+	save_game()
+
+
+# --- statistics: time played (its own small file, saved every 30 s and on quit) ---------------
+
+const STATS_PATH := "user://seed_splicer_stats.json"
+var stats := { "play_seconds": 0.0, "sessions": 0, "first_played": 0 }
+var _stats_dirty := 0.0
+
+
+func _load_stats() -> void:
+	if FileAccess.file_exists(STATS_PATH):
+		var parsed: Variant = JSON.parse_string(FileAccess.get_file_as_string(STATS_PATH))
+		if typeof(parsed) == TYPE_DICTIONARY:
+			stats.play_seconds = maxf(0.0, float(parsed.get("play_seconds", 0.0)))
+			stats.sessions = maxi(0, int(parsed.get("sessions", 0)))
+			stats.first_played = int(parsed.get("first_played", 0))
+	if stats.first_played == 0:
+		stats.first_played = int(Time.get_unix_time_from_system())
+	stats.sessions += 1
+	save_stats()
+
+
+func save_stats() -> void:
+	var f := FileAccess.open(STATS_PATH, FileAccess.WRITE)
+	if f:
+		f.store_string(JSON.stringify(stats, "	"))
+	_stats_dirty = 0.0
+
+
+func _process(delta: float) -> void:
+	stats.play_seconds += delta
+	_stats_dirty += delta
+	if _stats_dirty >= 30.0:
+		save_stats()
+
+
+func _exit_tree() -> void:
+	save_stats()
+
+
+## "3h 05m 12s"
+static func duration_text(seconds: float) -> String:
+	var t := int(seconds)
+	var h := t / 3600
+	var m := (t / 60) % 60
+	var sec := t % 60
+	if h > 0:
+		return "%dh %02dm %02ds" % [h, m, sec]
+	return "%dm %02ds" % [m, sec]
 
 
 func _valid_tag(tag: Variant) -> String:
@@ -510,6 +585,9 @@ func load_game() -> bool:
 			s.crop = CropArt.random_type(String(s.id))  # older saves: a random crop type, fixed by the id
 			given_crops += 1
 		s.custom = bool(s.get("custom", false))
+		s.made_by = String(s.get("made_by", "")).strip_edges().left(32)
+		if not s.get("denied", false):
+			s.erase("denied")
 		if typeof(s.get("drop")) != TYPE_DICTIONARY or not DropLogic.KINDS.has(s.drop.get("kind", "")):
 			s.drop = DropLogic.classify(String(s.name))  # saves from before drops: sort it by logic
 			sorted_drops += 1
@@ -889,6 +967,7 @@ func read_import(path: String) -> Dictionary:
 				"drop": DropLogic.sanitize(s.get("drop"), String(s.name)),
 			"category": CategoryLogic.sanitize(s.get("category"), String(s.name), DropLogic.sanitize(s.get("drop"), String(s.name))),
 				"custom": bool(s.get("custom", false)),
+				"made_by": String(s.get("made_by", "")).strip_edges().left(32),
 			},
 		})
 	for r in parsed.get("recipes", []):

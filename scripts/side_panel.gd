@@ -28,6 +28,51 @@ class SeedList extends ItemList:
 	signal spawn(id: String)
 	signal edit(id: String, discard_spawn: bool)
 	var _pressed := -1
+	var stamped := {}  ## item index -> [name, "  ·  R36"]: drawn with the approval stamp after the rarity
+	const STAMP := 22.0
+
+	func _ready() -> void:
+		resized.connect(fit_stamped)
+
+	## A stamped row keeps its rarity and stamp in view: a long name is shortened instead.
+	func fit_stamped() -> void:
+		if stamped.is_empty() or item_count == 0:
+			return
+		var font := get_theme_font("font")
+		var fs := get_theme_font_size("font_size")
+		var avail := get_item_rect(0).size.x - (fixed_icon_size.x + get_theme_constant("icon_margin") + 2.0) - STAMP - 14.0
+		for idx in stamped:
+			if idx >= item_count:
+				continue
+			var seed_name: String = stamped[idx][0]
+			var tail: String = stamped[idx][1]
+			var text := seed_name + tail
+			var cut := seed_name.length()
+			while cut > 3 and font.get_string_size(text, HORIZONTAL_ALIGNMENT_LEFT, -1, fs).x > avail:
+				cut -= 1
+				text = seed_name.left(cut).strip_edges() + "…" + tail
+			if get_item_text(idx) != text:
+				set_item_text(idx, text)
+		queue_redraw()
+
+	## The approval stamp right after "Name  ·  R36" (ItemList has one icon per row, so it is
+	## drawn on top of the list).
+	func _draw() -> void:
+		if stamped.is_empty():
+			return
+		var font := get_theme_font("font")
+		var fs := get_theme_font_size("font_size")
+		var scroll := get_v_scroll_bar().value if get_v_scroll_bar().visible else 0.0
+		for idx in stamped:
+			if idx >= item_count:
+				continue
+			var r := get_item_rect(idx)
+			r.position.y -= scroll
+			if r.end.y < 0.0 or r.position.y > size.y:
+				continue
+			var text_x := r.position.x + fixed_icon_size.x + get_theme_constant("icon_margin") + 2.0
+			var x := minf(text_x + font.get_string_size(get_item_text(idx), HORIZONTAL_ALIGNMENT_LEFT, -1, fs).x + 5.0, r.end.x - STAMP - 2.0)
+			draw_texture_rect(Approvals.STAMP_SMALL, Rect2(Vector2(x, r.get_center().y - STAMP / 2.0).round(), Vector2(STAMP, STAMP)), false)
 
 	func _gui_input(event: InputEvent) -> void:
 		var mb := event as InputEventMouseButton
@@ -180,15 +225,21 @@ func refresh_seeds() -> void:
 		ids = ids.filter(func(id): return String(Game.seeds[id].name).to_lower().contains(q))
 	ids = SeedSort.sort_ids(SeedSort.filter_drops(SeedSort.filter_ids(ids, _filter.selected), _drop_filter.selected), _sort.selected)
 	_list.clear()
+	_list.stamped.clear()
 	for id in ids:
 		var s: Dictionary = Game.seeds[id]
 		var r := int(s.rarity)
 		var tier: Array = SeedArt.rarity_tier(r)
 		# only the name and rarity: every other tag (farmable, collision...) is in the Dictionary
+		var by := Approvals.approved_by(s)
 		var i := _list.add_item("%s  ·  R%d" % [s.name, r], SeedArt.texture_for(s))
 		_list.set_item_metadata(i, id)
 		_list.set_item_custom_fg_color(i, tier[1].lerp(Color.WHITE, 0.35))
-		_list.set_item_tooltip(i, _origin_text(s))
+		if by != "":
+			_list.stamped[i] = [String(s.name), "  ·  R%d" % r]
+		_list.set_item_tooltip(i, ("Approved seed  ·  made by %s
+" % by if by != "" else "") + _origin_text(s))
+	_list.fit_stamped.call_deferred()
 	_update_count()
 
 
