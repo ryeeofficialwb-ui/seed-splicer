@@ -1,0 +1,11 @@
+{
+	"cell": 32,
+	"stages": ["sprout", "sapling", "crop"],
+	"types": [
+		{ "id": "round_tree", "name": "Round Tree" },
+		{ "id": "pine", "name": "Pine" },
+		{ "id": "twisted_tree", "name": "Twisted Tree" },
+		{ "id": "flower", "name": "Big Flower" },
+		{ "id": "mushroom", "name": "Giant Mushroom" }
+	]
+}

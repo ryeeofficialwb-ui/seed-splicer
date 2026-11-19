@@ -1,0 +1,12 @@
+# Godot 4+ specific ignores
+.godot/
+/android/
+
+# exported builds
+build/
+
+# Cozy FX audio is licensed for use inside games only: never commit it
+assets/audio/music/
+assets/audio/sfx/
+*.ogg
+*.ogg.import
