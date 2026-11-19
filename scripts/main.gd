@@ -122,6 +122,22 @@ func _ready() -> void:
 	add_child(settings_hub)
 	settings_btn.pressed.connect(settings_hub.open)
 
+	# version + over-the-air update check (exported game only, never in the editor)
+	var version_label := Label.new()
+	version_label.text = "v%s" % GameVersion.VERSION
+	version_label.add_theme_font_size_override("font_size", 12)
+	version_label.add_theme_color_override("font_color", Color(0.6, 0.57, 0.7))
+	version_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	version_label.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_RIGHT, Control.PRESET_MODE_MINSIZE, 8)
+	version_label.grow_horizontal = Control.GROW_DIRECTION_BEGIN
+	version_label.grow_vertical = Control.GROW_DIRECTION_BEGIN
+	add_child(version_label)
+	if Updater.enabled():
+		var updater := Updater.new()
+		add_child(updater)
+		updater.status_changed.connect(func(text: String):
+			version_label.text = "v%s" % GameVersion.VERSION + ("   %s" % text if text != "" else ""))
+
 	import_picker = ImportDialog.new()
 	add_child(import_picker)
 	import_picker.confirmed.connect(_on_import_chosen)
