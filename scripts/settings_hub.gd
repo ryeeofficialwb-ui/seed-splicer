@@ -92,7 +92,11 @@ func _ready() -> void:
 	var lists := _row(_settings_page)
 	if DevMode.on():  # only the developer brings in players' creations; players get them in updates
 		_button(lists, "Import List", "Merge a player's splicing list into yours (developer only)", import_list_requested)
-	_button(lists, "Export List", "Save your splicing list (and its sprite sheet) to a file: send it to the developer.\nNew official seeds from everyone come to you in game updates.", export_list_requested)
+	if DevMode.on():
+		_button(lists, "Export List", "Save your splicing list (and its sprite sheet) to a file (backups, Mush Mantle).", export_list_requested)
+	else:
+		_button(lists, "Export to the developer", "Send your seeds to the developer for review, right now (log in first).\nApproved ones reach every player with your username and the stamp.", upload_requested)
+		_button(lists, "Save list to a file", "Save your splicing list (and its sprite sheet) to a file.", export_list_requested)
 
 	_heading(_settings_page, "Sprites")
 	var sheets := _row(_settings_page)

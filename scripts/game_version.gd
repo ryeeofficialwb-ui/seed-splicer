@@ -3,7 +3,7 @@ extends RefCounted
 ## The game's version, and where its updates come from. tools/publish_update.py sets VERSION when it
 ## publishes an update; don't change it by hand unless you're publishing.
 
-const VERSION := "1.0.3"
+const VERSION := "1.0.3.1"
 ## The GitHub repository whose Releases hold the update packs (SeedSplicer-<version>.pck plus its
 ## .sha256). It must be PUBLIC: players' games download from it without logging in.
 const RELEASES_REPO := "ryeeofficialwb-ui/seed-splicer"

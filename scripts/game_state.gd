@@ -113,12 +113,16 @@ var official_report := {}
 ## with made_by / parent_names / submission_id. They show in the Graveyard tab and ship in the
 ## graveyard on the next publish (tools/publish_update.py reads "graveyard" from the save).
 var graveyard_extra: Array = []
+## Seed names (lowercase) the developer REMOVED from the graveyard: not shown, never published.
+## A seed of yours that is removed stays in your game (still marked denied, just not listed).
+var graveyard_removed: Array = []
 
 
 func _ready() -> void:
 	if not load_game():
 		reset()
 	_load_stats()
+	Official.load_live_cache()  # a newer live push than this release's files, if there was one
 	official_report = Official.merge()
 
 
@@ -546,6 +550,7 @@ func reset() -> void:
 	pending_rolls.clear()
 	official_version = ""
 	graveyard_extra.clear()
+	graveyard_removed.clear()
 	for b in BASE_SEEDS:
 		var s: Dictionary = b.duplicate(true)
 		s.rarity = 1
@@ -572,6 +577,7 @@ func save_game() -> void:
 		"rolls": pending_rolls,
 		"official_version": official_version,
 		"graveyard": graveyard_extra,
+		"graveyard_removed": graveyard_removed,
 	}
 	var f := FileAccess.open(SAVE_PATH, FileAccess.WRITE)
 	if f:
@@ -629,6 +635,7 @@ func load_game() -> bool:
 	void_tokens = parsed.get("void", [])
 	official_version = String(parsed.get("official_version", ""))
 	graveyard_extra = parsed.get("graveyard", []) if parsed.get("graveyard") is Array else []
+	graveyard_removed = parsed.get("graveyard_removed", []).map(func(n): return String(n).strip_edges().to_lower()) if parsed.get("graveyard_removed") is Array else []
 	pending_rolls.clear()
 	var saved_rolls: Variant = parsed.get("rolls", {})
 	if typeof(saved_rolls) == TYPE_DICTIONARY:
@@ -751,6 +758,75 @@ func submission_payload(id: String) -> Dictionary:
 		"seeds": out_seeds, "recipes": out_recipes }
 
 
+## EVERYTHING PLAYERS GET from a push (Submissions > Push to players) or a release, built from
+## your game: { official: the seed list (seeds + recipes + block art, see official.gd),
+## approvals: stamps, art approval, RSR and the graveyard (see approvals.gd) }.
+## Same rules as tools/publish_update.py: every seed you have that isn't in your graveyard is
+## approved, signed with its made_by or your name; your graveyard + denied submissions + earlier
+## denied seeds are the graveyard.
+const DRAW_FIELDS := ["rarity", "pattern", "colors", "sprout", "pattern_seed", "crop", "tag", "category", "drop", "fruit_count"]
+
+
+func build_official_payload(version_label: String) -> Dictionary:
+	var me := player_name()
+	var now := int(Time.get_unix_time_from_system())
+	var approved: Array = []
+	var denied: Array = []
+	var seen := {}
+	var keep := {}
+	var list_seeds: Array = []
+	for id in order:
+		var s: Dictionary = seeds[id]
+		var by := String(s.get("made_by", "")).strip_edges()
+		if by == "":
+			by = me
+		var key := String(s.name).strip_edges().to_lower()
+		seen[key] = true
+		if s.get("denied", false):
+			if graveyard_removed.has(key):
+				continue  # removed from the graveyard: not approved, not listed
+			var d := { "name": s.name, "made_by": by }
+			for k in DRAW_FIELDS:
+				if s.has(k):
+					d[k] = s[k]
+			d.parent_names = s.get("parents", []).map(func(p): return String(get_seed(p).get("name", "?")))
+			denied.append(d)
+			continue
+		keep[id] = true
+		var rsr := int(s.get("rsr", 0))
+		approved.append({ "name": s.name, "made_by": by, "art": art_approved(id), "rsr": rsr if rsr >= 6 and rsr <= 10 else null })
+		var o := s.duplicate(true)
+		o.erase("denied")
+		o.made_by = by
+		var art_file := "user://block_art/%s.png" % String(id).validate_filename()
+		if FileAccess.file_exists(art_file):
+			o.block_art = Marshalls.raw_to_base64(FileAccess.get_file_as_bytes(art_file))
+		list_seeds.append(o)
+	for g in graveyard_extra:
+		var key := String(g.get("name", "")).strip_edges().to_lower()
+		if key != "" and not seen.has(key) and not graveyard_removed.has(key):
+			var d: Dictionary = g.duplicate(true)
+			d.erase("submission_id")
+			denied.append(d)
+			seen[key] = true
+	for d in Approvals.official_denied():
+		var key := String(d.get("name", "")).strip_edges().to_lower()
+		if key != "" and not seen.has(key) and not graveyard_removed.has(key):
+			denied.append(d)
+			seen[key] = true
+	var recs: Array = []
+	for k in recipe_order:
+		var pair := String(k).split("|")
+		if keep.has(pair[0]) and keep.has(pair[1]) and keep.has(recipes[k]):
+			recs.append({ "pair": k, "result": recipes[k] })
+	return {
+		"official": { "format": EXPORT_FORMAT, "official": true, "version": version_label, "username": me, "published": now,
+			"seeds": list_seeds, "recipes": recs },
+		"approvals": { "format": Approvals.FORMAT, "version": version_label, "publisher": me, "published": now,
+			"approved": approved, "denied": denied },
+	}
+
+
 ## The developer's RSR (RyeScale Rating) for a seed: 6..10, or 0 = not rated. Ships with the next
 ## update; an approved seed's Mycoras get x1 (6) .. x4 (10), see bank.gd.
 func set_rating(id: String, rsr: int) -> void:
@@ -780,9 +856,24 @@ func set_art_ok(id: String, ok: bool) -> void:
 	seeds_changed.emit()
 
 
+## Takes a seed out of the graveyard for good (developer): it isn't listed or published any more.
+func remove_from_graveyard(seed_name: String) -> void:
+	var key := seed_name.strip_edges().to_lower()
+	if key == "" or graveyard_removed.has(key):
+		return
+	graveyard_removed.append(key)
+	graveyard_extra = graveyard_extra.filter(func(g): return String(g.get("name", "")).strip_edges().to_lower() != key)
+	save_game()
+	seeds_changed.emit()
+
+
+func is_removed_from_graveyard(seed_name: String) -> bool:
+	return graveyard_removed.has(seed_name.strip_edges().to_lower())
+
+
 ## The developer denied a submission: its seed goes to the graveyard (once per seed name).
 ## Returns true if it was added.
-func bury_submission(payload: Dictionary, username: String, submission_id: int) -> bool:
+func bury_submission(payload: Dictionary, username: String, submission_id: int, explicit := false) -> bool:
 	var top: Dictionary = {}
 	var names := {}
 	for s in payload.get("seeds", []):
@@ -795,6 +886,10 @@ func bury_submission(payload: Dictionary, username: String, submission_id: int) 
 	var key := String(top.get("name", "")).strip_edges().to_lower()
 	if key == "" or graveyard_extra.any(func(g): return String(g.get("name", "")).strip_edges().to_lower() == key):
 		return false
+	if graveyard_removed.has(key):
+		if not explicit:
+			return false  # you removed it from the graveyard: the sync never brings it back
+		graveyard_removed.erase(key)  # you just denied it again: it goes back in
 	var g := {}
 	for k in ["name", "rarity", "pattern", "colors", "sprout", "pattern_seed", "crop", "tag", "category", "drop", "fruit_count"]:
 		if top.has(k):

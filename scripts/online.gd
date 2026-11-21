@@ -212,6 +212,35 @@ func denied_submissions() -> Array:
 	return r.data if r.ok and r.data is Array else []
 
 
+## The live official list's version on the server (-1 if it can't be read).
+func official_version() -> int:
+	var r := await _call("GET", "/rest/v1/official?select=version&id=eq.1", null, logged_in())
+	return int(r.data[0].version) if r.ok and r.data is Array and not r.data.is_empty() else -1
+
+
+## The live official list: { version, data } or {}.
+func fetch_official() -> Dictionary:
+	var r := await _call("GET", "/rest/v1/official?select=version,data&id=eq.1", null, logged_in())
+	return r.data[0] if r.ok and r.data is Array and not r.data.is_empty() else {}
+
+
+## Developer: push the official list to every player. Returns the new version (-1 = failed).
+func push_official(payload: Dictionary) -> int:
+	var v := await official_version()
+	if v < 0:
+		return -1
+	var r := await _call("PATCH", "/rest/v1/official?id=eq.1",
+		{ "version": v + 1, "data": payload, "published_at": Time.get_datetime_string_from_system(true), "published_by": user_id },
+		true, ["Prefer: return=representation"])
+	return v + 1 if r.ok and r.data is Array and not r.data.is_empty() else -1
+
+
+## Developer: how many submissions wait for review (0 for players).
+func pending_count() -> int:
+	var r := await _call("POST", "/rest/v1/rpc/pending_count", {}, true)
+	return int(r.data) if r.ok and r.data != null else 0
+
+
 ## Developer: approve or deny one submission.
 func review(id: int, status: String, note := "") -> bool:
 	var r := await _call("PATCH", "/rest/v1/submissions?id=eq.%d" % id,

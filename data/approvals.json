@@ -1,7 +1,8 @@
 {
 	"format": "seed-splicer-approvals",
-	"version": "1.0.3",
+	"version": "1.0.3.1",
 	"publisher": "KeepUpp",
+	"published": 1795290435,
 	"approved": [
 		{
 			"name": "Dirt Seed",
@@ -886,5 +887,22 @@
 			"rsr": null
 		}
 	],
-	"denied": []
+	"denied": [
+		{
+			"colors": [
+				"#ff66cc",
+				"#33ccff"
+			],
+			"made_by": "zztest_player3",
+			"name": "Zz Live Test Seed",
+			"parent_names": [
+				"Dirt Seed",
+				"Stone Seed"
+			],
+			"pattern": 3.0,
+			"rarity": 2.0,
+			"sprout": "#99ff66",
+			"tag": "farmable"
+		}
+	]
 }

@@ -33,6 +33,7 @@ import subprocess
 import shutil
 import sys
 import tempfile
+import time
 import zipfile
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -68,11 +69,15 @@ def bake_approvals(version):
     if os.path.exists(APPROVALS):
         old = json.load(open(APPROVALS, encoding="utf-8"))
     names = {s["id"]: s["name"] for s in save["seeds"]}
+    removed = {n.strip().lower() for n in save.get("graveyard_removed", [])}  # Remove from graveyard
     approved, denied, seen = [], [], set()
     for s in save["seeds"]:
         by = (s.get("made_by") or "").strip() or me
         key = s["name"].strip().lower()
         if s.get("denied"):
+            if key in removed:
+                seen.add(key)
+                continue
             d = {"name": s["name"], "made_by": by}
             d.update({k: s[k] for k in DRAW_FIELDS if k in s})
             d["parent_names"] = [names.get(p, "?") for p in s.get("parents", [])]
@@ -86,17 +91,17 @@ def bake_approvals(version):
     # players' submissions you denied (Settings > Submissions) never entered your game: add them
     for g in save.get("graveyard", []):
         key = g.get("name", "").strip().lower()
-        if key and key not in seen:
+        if key and key not in seen and key not in removed:
             d = {k: v for k, v in g.items() if k != "submission_id"}
             d["made_by"] = (g.get("made_by") or "").strip() or "unknown"
             denied.append(d)
             seen.add(key)
     # the graveyard keeps every seed denied in an earlier update (unless you have it again now)
     for d in old.get("denied", []):
-        if d.get("name", "").strip().lower() not in seen:
+        if d.get("name", "").strip().lower() not in seen and d.get("name", "").strip().lower() not in removed:
             denied.append(d)
             seen.add(d["name"].strip().lower())
-    data = {"format": "seed-splicer-approvals", "version": version, "publisher": me,
+    data = {"format": "seed-splicer-approvals", "version": version, "publisher": me, "published": int(time.time()),
             "approved": approved, "denied": denied}
     with open(APPROVALS, "w", encoding="utf-8", newline="\n") as f:
         json.dump(data, f, indent="\t", ensure_ascii=False)
@@ -128,7 +133,7 @@ def bake_official(version, save, me):
         pair = r["pair"].split("|")
         if len(pair) == 2 and pair[0] in keep and pair[1] in keep and r["result"] in keep:
             recipes.append(r)
-    data = {"format": "seed-splicer-list", "official": True, "version": version, "username": me,
+    data = {"format": "seed-splicer-list", "official": True, "version": version, "username": me, "published": int(time.time()),
             "seeds": seeds, "recipes": recipes}
     with open(OFFICIAL, "w", encoding="utf-8", newline="\n") as f:
         json.dump(data, f, indent="\t", ensure_ascii=False)

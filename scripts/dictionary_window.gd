@@ -27,6 +27,7 @@ var _detail_name: Label
 var _detail_text: RichTextLabel
 var _edit_btn: Button
 var _grave_btn: Button
+var _remove_btn: Button
 var _rsr: OptionButton
 var _art_ok: CheckBox
 var _dev_row: HBoxContainer
@@ -166,9 +167,20 @@ func _ready() -> void:
 		var id := _local_id(_selected)
 		if id != "":
 			Game.set_denied(id, not Game.seeds[id].get("denied", false)))
+	_remove_btn = Button.new()
+	_remove_btn.text = "Remove from graveyard"
+	_remove_btn.tooltip_text = "Take it out of the graveyard for good: it isn't listed, and your next push / update leaves it out.\n(A seed of yours stays in your game.)"
+	_remove_btn.pressed.connect(func():
+		if not _selected.begins_with("grave#"):
+			return
+		var i := int(_selected.substr(6))
+		if i < _grave.size():
+			Game.remove_from_graveyard(String(_grave[i].seed.name))
+			_selected = ""
+			refresh())
 	var btns := HBoxContainer.new()
 	btns.add_theme_constant_override("separation", 6)
-	for b in [_edit_btn, _grave_btn]:
+	for b in [_edit_btn, _grave_btn, _remove_btn]:
 		b.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		btns.add_child(b)
 	detail.add_child(btns)
@@ -484,6 +496,7 @@ func _show_detail(key: String) -> void:
 	_grave_btn.disabled = id == ""
 	_grave_btn.text = "Bring back from the graveyard" if id != "" and Game.seeds[id].get("denied", false) else "Send to graveyard"
 	_dev_row.visible = DevMode.on() and id != ""
+	_remove_btn.visible = DevMode.on() and key.begins_with("grave#")
 	if id != "":
 		_rsr.select(_rsr.get_item_index(int(Game.seeds[id].get("rsr", 0))))
 		_art_ok.set_pressed_no_signal(Game.art_approved(id))

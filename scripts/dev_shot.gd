@@ -36,6 +36,8 @@ func _ready() -> void:
 	var test22 := false
 	var test23 := false
 	var test24 := false
+	var test25 := false
+	var test26 := false
 	var weather_shot := ""  # --weather=rain|star : move the clock into that weather for the screenshot
 	var chest_shot := false  # --chest : the Seed Chest open (and spinning)
 	var approvals_file := ""  # --approvals=C:/x.json : use that official list (stamps) for the screenshot
@@ -79,6 +81,16 @@ func _ready() -> void:
 			_check("game: the session is saved for next time (no password)", FileAccess.file_exists(Online.SESSION_FILE) and not FileAccess.get_file_as_string(Online.SESSION_FILE).contains(accs.zztest_player1.pw))
 			await Online.log_out()
 			_check("game: log out forgets the session", not Online.logged_in() and not FileAccess.file_exists(Online.SESSION_FILE))
+			get_tree().quit()
+			return
+		if a == "--live-fetch":  # a PLAYER's game picking up the developer's latest push from the real database
+			DevMode.force_player = true
+			Official.live_version = 0
+			var before := Game.seeds.size()
+			var v: int = await Online.official_version()
+			await main.live.check_official()
+			print("live-fetch: server v%d, game now v%d, seeds %d -> %d, stamped %d" % [v, Official.live_version, before, Game.seeds.size(),
+				Game.order.filter(func(id): return Approvals.is_approved(Game.seeds[id])).size()])
 			get_tree().quit()
 			return
 		if a.begins_with("--swap-bat="):  # --swap-bat=<exe>|<pack>|<version>|<out.bat> : the updater's swap script, for testing
@@ -163,6 +175,10 @@ func _ready() -> void:
 			test23 = true
 		elif a == "--test24":
 			test24 = true
+		elif a == "--test25":
+			test25 = true
+		elif a == "--test26":
+			test26 = true
 		elif a.begins_with("--weather="):
 			weather_shot = a.substr(10)
 		elif a == "--chest":
@@ -276,6 +292,10 @@ func _ready() -> void:
 		await _run_test23(path.get_base_dir())
 	if test24:
 		await _run_test24(path.get_base_dir())
+	if test25:
+		await _run_test25(path.get_base_dir())
+	if test26:
+		await _run_test26(path.get_base_dir())
 	if weather_shot != "":
 		var slot := Weather.slot_of(Weather.now())
 		while not (Weather.of_slot(slot).star if weather_shot == "star" else (Weather.of_slot(slot).rain and not Weather.of_slot(slot).star)):
@@ -1049,7 +1069,7 @@ func _run_test20(base: String) -> void:
 	add_child(hub)
 	var labels := PackedStringArray()
 	_collect_buttons(hub, labels)
-	_check("a player's Settings has Export List but no Import List", labels.has("Export List") and not labels.has("Import List"))
+	_check("a player's Settings has Export (to the developer) but no Import List", labels.has("Export to the developer") and not labels.has("Import List"))
 	hub.open()
 	hub._name_edit.text = "KeepUp"
 	hub._on_name_changed("KeepUp")
@@ -1363,6 +1383,100 @@ func _run_test24(_base: String) -> void:
 	await get_tree().create_timer(0.2).timeout
 	_check("the Seed Chest window shows the price and the odds", cw._open_btn.text.contains(Bank.fmt(Bank.CHEST_PRICE)) and cw._odds.text.contains("Common"))
 	cw.close_dialog()
+
+
+## Live pushes (offline part): what a push contains, a player's game taking one in, notifications.
+func _run_test25(_base: String) -> void:
+	var old_name := String(UserSettings.get_value("profile", "name", ""))
+	Game.set_player_name("KeepUpp")
+	var den := Game.order[Game.order.size() - 1]
+	Game.set_denied(den, true)
+	Game.bury_submission({ "top": "zz_x", "seeds": [{ "id": "zz_x", "name": "Zz Buried Seed", "rarity": 3, "parents": [] }] }, "Bob", 5)
+	Game.set_rating("stone", 9)
+	var p := Game.build_official_payload("live-7")
+	var names: Array = p.approvals.approved.map(func(a): return a.name)
+	_check("a push approves every seed of yours except the graveyard (%d)" % names.size(), names.size() == Game.seeds.size() - 1 and not names.has(Game.seeds[den].name))
+	_check("...with your RSR", p.approvals.approved.any(func(a): return a.name == "Stone Seed" and a.rsr == 9))
+	var dn: Array = p.approvals.denied.map(func(d): return d.name)
+	_check("the graveyard has your graveyarded seed and the denied submission", dn.has(Game.seeds[den].name) and dn.has("Zz Buried Seed"))
+	_check("the seed list carries recipes and block art", p.official.recipes.size() > 0 and p.official.seeds.any(func(s): return s.has("block_art")))
+	_check("signed by you", p.approvals.publisher == "KeepUpp" and p.official.version == "live-7")
+	_check("a push is small enough (%d KB)" % (JSON.stringify(p).length() / 1024), JSON.stringify(p).length() < 3000000)
+	_check("the fingerprint ignores the time and version", SubmissionsWindow._fingerprint(p) == SubmissionsWindow._fingerprint(Game.build_official_payload("live-8")))
+
+	# a player's game takes the push in: a new seed arrives, with its stamp and art
+	var extra: Dictionary = p.duplicate(true)
+	var strip := Image.create_empty(128, 32, false, Image.FORMAT_RGBA8)
+	strip.fill_rect(Rect2i(2, 2, 28, 28), Color("#ff8800"))
+	extra.official.seeds.append({ "id": "zz_live_new", "name": "Zz Pushed Seed", "rarity": 1, "parents": [], "made_by": "Alice",
+		"block_art": Marshalls.raw_to_base64(strip.save_png_to_buffer()), "pattern": 1, "colors": ["#ff8800", "#0088ff"], "sprout": "#00ff00" })
+	extra.approvals.approved.append({ "name": "Zz Pushed Seed", "made_by": "Alice", "art": true, "rsr": 10 })
+	DevMode.force_player = true
+	var r := Official.apply_live(extra, 42)
+	var nid := Game.find_by_name("Zz Pushed Seed")
+	_check("a player's game takes in a push at once (%s)" % str(r), int(r.get("seeds_added", 0)) == 1 and nid != "" and Official.live_version == 42)
+	_check("...with its stamp, x25 art boost and RSR 10 (x%s)" % str(Bank.boost(Game.seeds[nid])), Approvals.approved_by(Game.seeds[nid]) == "Alice" and is_equal_approx(Bank.boost(Game.seeds[nid]), 100.0))
+	_check("...and its block art", BlockArt.get_art(nid) != null and BlockArt.get_art(nid).get_pixel(10, 10) == Color("#ff8800"))
+	_check("the push is kept for the next start (offline)", FileAccess.file_exists(Official.LIVE_CACHE))
+	Official.live_version = 0
+	Official._data = null  # as on a fresh start: only the release's own files are loaded
+	Official.load_live_cache()
+	_check("...and loaded again on start", Official.live_version == 42)
+	_check("the same push twice adds nothing", Official.apply_live(extra, 42).is_empty())
+	DevMode.force_player = false
+
+	# notifications for the developer
+	var ls: LiveSync = main.live
+	var keep_text := ls.settings_btn.text
+	ls._seen_pending = 0
+	ls.set_pending(3)
+	_check("new submissions: the Settings button shows how many", ls.settings_btn.text == "Settings  (3)")
+	ls.set_pending(0)
+	_check("...and clears when none wait", ls.settings_btn.text == "Settings")
+	ls.settings_btn.text = keep_text
+	var labels := PackedStringArray()
+	DevMode.force_player = true
+	var hub := SettingsHub.new()
+	add_child(hub)
+	_collect_buttons(hub, labels)
+	_check("a player's Export sends to the developer", labels.has("Export to the developer") and labels.has("Save list to a file") and not labels.has("Import List"))
+	hub.queue_free()
+	DevMode.force_player = false
+	Game.set_denied(den, false)
+	Game.set_rating("stone", 0)
+	UserSettings.set_value("profile", "name", old_name)
+
+
+## Removing seeds from the graveyard (developer).
+func _run_test26(_base: String) -> void:
+	var payload := { "top": "zz_rm", "seeds": [{ "id": "zz_rm", "name": "Zz Remove Me Seed", "rarity": 2, "parents": [] }] }
+	Game.bury_submission(payload, "Bob", 9, true)
+	var mine := Game.order[Game.order.size() - 1]
+	Game.set_denied(mine, true)
+	Approvals.use_data({ "publisher": "Pub", "approved": [], "denied": [{ "name": "Zz Old Denied Seed", "made_by": "Ann", "rarity": 3 }] })
+	var names := func(): return Approvals.graveyard().map(func(g): return String(g.seed.name))
+	_check("the graveyard has all three kinds (%s)" % ", ".join(names.call()), names.call().has("Zz Remove Me Seed") and names.call().has(Game.seeds[mine].name) and names.call().has("Zz Old Denied Seed"))
+	Game.remove_from_graveyard("Zz Remove Me Seed")
+	Game.remove_from_graveyard("zz old denied seed")
+	Game.remove_from_graveyard(Game.seeds[mine].name)
+	_check("removed seeds leave the graveyard (%s)" % ", ".join(names.call()), not names.call().has("Zz Remove Me Seed") and not names.call().has("Zz Old Denied Seed") and not names.call().has(Game.seeds[mine].name))
+	_check("a seed of yours stays in your game", Game.seeds.has(mine) and Game.seeds[mine].get("denied", false))
+	var p := Game.build_official_payload("live-1")
+	var dn: Array = p.approvals.denied.map(func(d): return String(d.name))
+	_check("a push leaves removed seeds out", not dn.has("Zz Remove Me Seed") and not dn.has("Zz Old Denied Seed") and not dn.has(Game.seeds[mine].name))
+	_check("...and doesn't approve your removed seed", not p.approvals.approved.any(func(a): return a.name == Game.seeds[mine].name))
+	_check("opening Submissions doesn't bring a removed one back", not Game.bury_submission(payload, "Bob", 9))
+	_check("denying it again does", Game.bury_submission(payload, "Bob", 9, true) and names.call().has("Zz Remove Me Seed"))
+	Game.save_game()
+	var saved: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(Game.SAVE_PATH))
+	_check("removals are saved (for the publish script too)", saved.get("graveyard_removed", []).has("zz old denied seed"))
+	var dict: DictionaryWindow = main.dictionary
+	dict.open()
+	dict._tabs.current_tab = DictionaryWindow.GRAVE_TAB
+	dict.refresh()
+	_check("the Graveyard tab has a Remove button for you", dict._remove_btn.visible)
+	dict.close_dialog()
+	Game.set_denied(mine, false)
 
 
 func _count_color(img: Image, c: Color) -> int:

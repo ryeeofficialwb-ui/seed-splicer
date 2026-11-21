@@ -7,15 +7,32 @@ extends Modal
 var _list: VBoxContainer
 var _status: Label
 var _busy := false
+var live: LiveSync
+var _push: Button
+var _push_note: Label
+var _push_armed := false
 
 
 func _ready() -> void:
 	_init_modal("Submissions", Vector2(720, 0))
 	body.add_child(note("Seeds players uploaded for review. Approve brings one into your game (credited to the player); your next published update gives it to everyone. Deny keeps it out."))
+	var top := HBoxContainer.new()
+	top.add_theme_constant_override("separation", 6)
+	body.add_child(top)
 	var refresh := Button.new()
 	refresh.text = "Refresh"
 	refresh.pressed.connect(_load)
-	body.add_child(refresh)
+	top.add_child(refresh)
+	_push = Button.new()
+	_push.text = "Push to players"
+	_push.tooltip_text = "When you're done approving: send your seeds, stamps, ratings, art and graveyard\nto every player right now (their games pick it up within 5 minutes, no install)."
+	_push.pressed.connect(_on_push)
+	top.add_child(_push)
+	_push_note = Label.new()
+	_push_note.add_theme_font_size_override("font_size", 13)
+	_push_note.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	_push_note.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	top.add_child(_push_note)
 	var scroll := ScrollContainer.new()
 	scroll.custom_minimum_size = Vector2(0, 420)
 	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
@@ -52,6 +69,9 @@ func _load() -> void:
 	for c in _list.get_children():
 		c.queue_free()
 	set_title("Submissions (%d waiting)" % rows.size())
+	if live:
+		live.set_pending(rows.size())
+	_update_push_note()
 	if rows.is_empty():
 		_list.add_child(note("Nothing waiting for review."))
 	for r in rows:
@@ -129,6 +149,57 @@ func _row(r: Dictionary) -> Control:
 	return panel
 
 
+## A fingerprint of what players would get, to tell whether there's anything new to push.
+static func _fingerprint(payload: Dictionary) -> String:
+	var p := payload.duplicate(true)
+	for part in ["official", "approvals"]:
+		p[part].erase("published")
+		p[part].erase("version")
+	return JSON.stringify(p).sha256_text()
+
+
+func _update_push_note() -> void:
+	_push_armed = false
+	_push.text = "Push to players"
+	if not (Online.logged_in() and Online.is_admin):
+		_push.disabled = true
+		_push_note.text = ""
+		return
+	_push.disabled = false
+	var fp := _fingerprint(Game.build_official_payload(""))
+	var same := fp == String(UserSettings.get_value("live", "pushed", ""))
+	_push_note.text = "Players have everything (live v%d)." % Official.live_version if same else "You have changes players don't have yet: push when you're done approving."
+	_push_note.add_theme_color_override("font_color", Color(0.7, 0.67, 0.8) if same else Color("#ffc94a"))
+
+
+func _on_push() -> void:
+	if _busy:
+		return
+	if not _push_armed:  # a second click confirms
+		_push_armed = true
+		_push.text = "Click again to push to every player"
+		return
+	_busy = true
+	_push.disabled = true
+	_push_note.text = "Pushing..."
+	var v: int = await Online.official_version()
+	var payload := Game.build_official_payload("live-%d" % (v + 1))
+	var nv: int = await Online.push_official(payload) if v >= 0 else -1
+	_busy = false
+	if nv < 0:
+		_push_note.text = "The push failed: check your internet connection and that you're logged in as the admin."
+		_push_note.add_theme_color_override("font_color", Color("#ff8a8a"))
+		_push.disabled = false
+		_push_armed = false
+		_push.text = "Push to players"
+		return
+	Official.apply_live(payload, nv)
+	UserSettings.set_value("live", "pushed", _fingerprint(payload))
+	Audio.play(&"success")
+	_update_push_note()
+	_status.text = "Pushed live v%d to every player: %d seeds, %d in the graveyard." % [nv, payload.official.seeds.size(), payload.approvals.denied.size()]
+
+
 ## Enough of a seed to draw it (a submitted seed may lack fields).
 func _drawable(s: Dictionary) -> Dictionary:
 	var d := s.duplicate()
@@ -161,7 +232,7 @@ func _decide(r: Dictionary, payload: Dictionary, status: String, text: String, p
 			res.seeds_added, "" if res.seeds_added == 1 else "s"]
 	else:
 		var who := String(r.get("profiles", {}).get("username", "")) if r.get("profiles") is Dictionary else ""
-		Game.bury_submission(payload, who, int(r.id))
+		Game.bury_submission(payload, who, int(r.id), true)
 		msg = "Denied %s: it's in your Graveyard (and ships in it with your next update)." % r.get("seed_name", "?")
 	var saved: bool = await Online.review(int(r.id), status, text)
 	_busy = false
@@ -171,3 +242,6 @@ func _decide(r: Dictionary, payload: Dictionary, status: String, text: String, p
 	_status.text = msg
 	Audio.play(&"success")
 	panel.queue_free()
+	if live:
+		live.set_pending(maxi(0, live.pending - 1))
+	_update_push_note()

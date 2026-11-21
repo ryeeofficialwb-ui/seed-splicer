@@ -342,3 +342,15 @@ page. Dev: `--test21`.
   boxes, or one 32x32).
 - Your Mycora orbs: `assets/mycora/` (cut by `art/make_mycora_icons.gd` from your art, unchanged).
 - Dev: `--test24`, `--weather=rain|star`, `--chest`.
+
+## Live seeds: Push to players + submission notifications (2026-11-22)
+
+- **Push to players** (Settings > Submissions, admin): when you're done approving, one click sends
+  your seeds, stamps, ratings, art and graveyard to every player through the database
+  (`public.official`, `supabase/fix_2_live.sql`). Games check every 5 minutes and on start, take it
+  in at once (no install) and keep it for offline starts (`user://official_live.json`).
+  Releases (`publish_update.py`) are only needed for code changes now.
+- **Notifications** (your Developer version, logged in as the admin): every minute it counts the
+  waiting submissions; new ones = a message, "Settings (N)" and the taskbar button flashes.
+- **Players' Export** = "Export to the developer" (sends to you); "Save list to a file" still saves.
+- Code: `scripts/live_sync.gd`, `Game.build_official_payload`, `Official.apply_live`. Dev: `--test25`.

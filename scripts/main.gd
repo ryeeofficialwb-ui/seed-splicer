@@ -12,6 +12,7 @@ var import_picker: ImportDialog
 var sound_dialog: SoundDialog
 var settings_hub: SettingsHub
 var chest: ChestWindow
+var live: LiveSync
 var dictionary: DictionaryWindow
 var _pending_import := {}  # the file being imported while you pick its seeds
 var _splices_btn: Button
@@ -132,6 +133,11 @@ func _ready() -> void:
 		dictionary.close_dialog()
 		popup.open_edit(id))
 
+	live = LiveSync.new()
+	live.settings_btn = settings_btn
+	live.toast = func(text: String, color: Color): field.show_toast(text, color, 8.0)
+	add_child(live)
+
 	chest = ChestWindow.new()
 	add_child(chest)
 	chest_btn.pressed.connect(chest.open)
@@ -204,6 +210,7 @@ func _ready() -> void:
 			account.open())
 	if DevMode.on():
 		var submissions := SubmissionsWindow.new()
+		submissions.live = live
 		add_child(submissions)
 		settings_hub.submissions_requested.connect(submissions.open)
 	settings_hub.import_list_requested.connect(func():

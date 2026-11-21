@@ -1,10 +1,12 @@
 {
 	"format": "seed-splicer-list",
 	"official": true,
-	"version": "1.0.3",
+	"version": "1.0.3.1",
 	"username": "KeepUpp",
+	"published": 1795290435,
 	"seeds": [
 		{
+			"art_ok": true,
 			"category": {
 				"hardness": 2,
 				"material": "soil",

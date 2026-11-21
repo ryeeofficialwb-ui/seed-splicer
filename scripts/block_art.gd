@@ -84,6 +84,13 @@ static func clear_all() -> void:
 			d.remove(f)
 
 
+## The official art changed (a live push): forget every cached picture so they are read again.
+static func refresh_all() -> void:
+	_cache.clear()
+	_fruit_cache.clear()
+	version += 1
+
+
 static func _changed(id: String) -> void:
 	_fruit_cache.erase(id)
 	version += 1

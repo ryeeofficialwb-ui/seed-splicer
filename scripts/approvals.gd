@@ -73,6 +73,12 @@ static func info(seed: Dictionary) -> Dictionary:
 	return _info.get(String(seed.get("name", "")).strip_edges().to_lower(), { "art": false, "rsr": 0 })
 
 
+## The graveyard as published (the official denied list, without your own marks).
+static func official_denied() -> Array:
+	_ensure()
+	return _denied.duplicate(true)
+
+
 static func reload() -> void:
 	_loaded = false
 	_ensure()
@@ -107,11 +113,13 @@ static func graveyard() -> Array:
 	var names := {}
 	for id in Game.order:
 		var s: Dictionary = Game.seeds[id]
-		if s.get("denied", false):
+		if s.get("denied", false) and not Game.is_removed_from_graveyard(String(s.name)):
 			names[String(s.name).to_lower()] = out.size()
 			out.append({ "seed": s, "local_id": id, "official": false })
 	for d in _denied + Game.graveyard_extra:
 		var key := String(d.name).strip_edges().to_lower()
+		if Game.is_removed_from_graveyard(key):
+			continue
 		if names.has(key):
 			out[names[key]].official = true
 			continue
