@@ -11,7 +11,9 @@
    seeds you sent to the graveyard (Dictionary > Send to graveyard) are listed as denied. Your name
    comes from Settings > You (the contributor on old seeds that were made before names existed).
 1. Sets GameVersion.VERSION (scripts/game_version.gd) to the new version.
-2. Exports the game pack: build/SeedSplicer-<version>.pck, and its SHA-256 in .pck.sha256.
+2. Exports the game pack: build/SeedSplicer-update-<version>.pck + its SHA-256 (.pck.sha256), and the
+   music pack (SeedSplicer-music.pck). Then SELF-TESTS the pack with the real release engine:
+   nothing is published unless the game builds its whole screen.
 3. Commits everything, tags it v<version> and pushes to the source repo.
 4. Creates the GitHub Release v<version> on GameVersion.RELEASES_REPO (this public repo) with the pack and its
    hash. Games older than <version> download it, check the hash and restart into it.
@@ -28,7 +30,9 @@ import json
 import os
 import re
 import subprocess
+import shutil
 import sys
+import tempfile
 import zipfile
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -74,8 +78,19 @@ def bake_approvals(version):
             d["parent_names"] = [names.get(p, "?") for p in s.get("parents", [])]
             denied.append(d)
         else:
-            approved.append({"name": s["name"], "made_by": by})
+            art_file = os.path.join(USER_DIR, "block_art", s["id"] + ".png")
+            art = os.path.exists(art_file) and s.get("art_ok", True) is not False
+            rsr = s.get("rsr") if isinstance(s.get("rsr"), int) and 6 <= s.get("rsr") <= 10 else None
+            approved.append({"name": s["name"], "made_by": by, "art": art, "rsr": rsr})
         seen.add(key)
+    # players' submissions you denied (Settings > Submissions) never entered your game: add them
+    for g in save.get("graveyard", []):
+        key = g.get("name", "").strip().lower()
+        if key and key not in seen:
+            d = {k: v for k, v in g.items() if k != "submission_id"}
+            d["made_by"] = (g.get("made_by") or "").strip() or "unknown"
+            denied.append(d)
+            seen.add(key)
     # the graveyard keeps every seed denied in an earlier update (unless you have it again now)
     for d in old.get("denied", []):
         if d.get("name", "").strip().lower() not in seen:
@@ -120,6 +135,49 @@ def bake_official(version, save, me):
     print("Shipped to every player: %d seeds (%d with block art), %d splices" % (len(seeds), with_art, len(recipes)))
 
 
+TEMPLATE = os.path.join(os.path.dirname(GODOT), "editor_data", "export_templates", "4.7.2.stable", "windows_release_x86_64.exe")
+MUSIC_PACK = os.path.join(BUILD, "SeedSplicer-music.pck")
+
+
+SELFTEST_CODE = 42  # main.gd quits with this under --selftest once its whole screen is built
+
+
+def smoke_test(pack):
+    """Plays the update exactly like a player's PC will: a copy of the real release engine named
+    SeedSplicer.exe, this pack next to it as SeedSplicer.pck, the music pack, a throwaway user
+    folder, and `--selftest`. Anything but exit code 42 (or any script error) stops the publish:
+    a broken update would reach every player."""
+    if not os.path.exists(TEMPLATE):
+        raise SystemExit("Can't test the build: no release template at " + TEMPLATE)
+    tmp = tempfile.mkdtemp(prefix="seedsplicer_smoke_")
+    try:
+        game = os.path.join(tmp, "game")
+        os.makedirs(game)
+        exe = os.path.join(game, "SeedSplicer.exe")
+        shutil.copy(TEMPLATE, exe)
+        shutil.copy(pack, os.path.join(game, "SeedSplicer.pck"))
+        shutil.copy(MUSIC_PACK, os.path.join(game, "SeedSplicer-music.pck"))
+        env = dict(os.environ, APPDATA=os.path.join(tmp, "appdata"))
+        r = subprocess.run([exe, "--headless", "--quit-after", "6000", "--", "--selftest", "--no-update"],
+                           capture_output=True, text=True, env=env, timeout=180)
+        out = (r.stdout or "") + (r.stderr or "")
+        bad = [l for l in out.splitlines() if "SCRIPT ERROR" in l or "Parse Error" in l or "Failed to load" in l
+               or "Failed to instantiate" in l or "Aborting" in l]
+        if bad or r.returncode != SELFTEST_CODE:
+            raise SystemExit("THE BUILD IS BROKEN, nothing was published (self-test exit code %d):\n  %s\n%s" % (
+                r.returncode, "\n  ".join(bad[:10]), out[-1500:]))
+        print("Smoke test passed: the exported game starts and builds its whole screen.")
+    finally:
+        shutil.rmtree(tmp, ignore_errors=True)
+
+
+def build_music_pack():
+    run(GODOT, "--headless", "--path", ROOT, "--script", "res://tools/make_music_pack.gd", "--", MUSIC_PACK)
+    digest = hashlib.sha256(open(MUSIC_PACK, "rb").read()).hexdigest()
+    open(MUSIC_PACK + ".sha256", "w", newline="\n").write("%s  %s\n" % (digest, os.path.basename(MUSIC_PACK)))
+    return [MUSIC_PACK, MUSIC_PACK + ".sha256"]
+
+
 def run(*cmd, **kw):
     print("> " + " ".join(cmd))
     subprocess.run(cmd, check=True, cwd=ROOT, **kw)
@@ -140,33 +198,52 @@ def main():
     bake_approvals(version)
     if "--approvals-only" in sys.argv:
         return
+    old_text = text
     text = text.replace('const VERSION := "%s"' % old, 'const VERSION := "%s"' % version)
     open(VERSION_FILE, "w", encoding="utf-8", newline="\n").write(text)
+    try:
+        assets = build_and_test(version, full)
+    except BaseException:
+        open(VERSION_FILE, "w", encoding="utf-8", newline="\n").write(old_text)  # nothing published
+        raise
+    publish(version, notes, repo, assets)
+
+
+def build_and_test(version, full):
 
     os.makedirs(BUILD, exist_ok=True)
-    pack = os.path.join(BUILD, "SeedSplicer-%s.pck" % version)
+    music = build_music_pack()  # attached to every release: games without music fetch it once
+    pack = os.path.join(BUILD, "SeedSplicer-update-%s.pck" % version)  # (1.0.1/1.0.2 looked for SeedSplicer-<v>.pck)
     run(GODOT, "--headless", "--path", ROOT, "--export-pack", PRESET, pack)
     digest = hashlib.sha256(open(pack, "rb").read()).hexdigest()
     sha_file = pack + ".sha256"
     open(sha_file, "w", newline="\n").write("%s  %s\n" % (digest, os.path.basename(pack)))
-    assets = [pack, sha_file]
+    smoke_test(pack)
+    assets = [pack, sha_file] + music
 
     if full:
-        # the exe has its pack inside (embed_pck), so one file is the whole game
+        # the game: SeedSplicer.exe (the engine) + SeedSplicer.pck (the game) + the music pack
         exe = os.path.join(BUILD, "windows", "SeedSplicer.exe")
         os.makedirs(os.path.dirname(exe), exist_ok=True)
         run(GODOT, "--headless", "--path", ROOT, "--export-release", PRESET, exe)
+        shutil.copy(MUSIC_PACK, os.path.join(os.path.dirname(exe), "SeedSplicer-music.pck"))
         bundle = os.path.join(BUILD, "SeedSplicer-%s-windows.zip" % version)
         with zipfile.ZipFile(bundle, "w", zipfile.ZIP_DEFLATED) as z:
-            z.write(exe, "SeedSplicer.exe")
+            for name in ("SeedSplicer.exe", "SeedSplicer.pck", "SeedSplicer-music.pck"):
+                z.write(os.path.join(os.path.dirname(exe), name), "SeedSplicer/" + name)
         assets.append(bundle)
         # your own Developer build (Import List, reserved names, no auto-update): never uploaded
         dev_exe = os.path.join(BUILD, "dev", "SeedSplicer-Developer.exe")
         os.makedirs(os.path.dirname(dev_exe), exist_ok=True)
         run(GODOT, "--headless", "--path", ROOT, "--export-release", "Windows Developer", dev_exe)
+        shutil.copy(MUSIC_PACK, os.path.join(os.path.dirname(dev_exe), "SeedSplicer-music.pck"))
+    return assets
 
+
+def publish(version, notes, repo, assets):
     run("git", "add", "-A")
-    run("git", "commit", "-m", "Release v%s" % version + ("\n\n" + notes if notes else ""))
+    run("git", "commit", "-m", "Release v%s" % version + ("\n\n" + notes if notes else "")
+        + "\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>")
     run("git", "tag", "v%s" % version)
     run("git", "push", "origin", "HEAD", "--tags")
     run(GH, "release", "create", "v%s" % version, *assets, "--repo", repo,

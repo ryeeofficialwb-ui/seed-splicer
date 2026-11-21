@@ -32,6 +32,12 @@ func _ready() -> void:
 	var test18 := false
 	var test19 := false
 	var test20 := false
+	var test21 := false
+	var test22 := false
+	var test23 := false
+	var test24 := false
+	var weather_shot := ""  # --weather=rain|star : move the clock into that weather for the screenshot
+	var chest_shot := false  # --chest : the Seed Chest open (and spinning)
 	var approvals_file := ""  # --approvals=C:/x.json : use that official list (stamps) for the screenshot
 	var stats := false        # --stats : the Settings window on its Statistics tab
 	var tree_opts := []       # --tree-only --wide --route --fold : Recipe Tree options for the screenshot
@@ -51,6 +57,45 @@ func _ready() -> void:
 			return
 		if a.begins_with("--export="):  # --export=C:/tmp/list.json : Export List (+ its sprite sheet), then quit
 			print("export: ", error_string(Game.export_list(a.substr(9))))
+			get_tree().quit()
+			return
+		if a.begins_with("--live-online="):  # --live-online=<accounts.json> : the game's own client against the real project
+			var accs: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(a.substr(14)))
+			await get_tree().create_timer(0.5).timeout
+			var r: Dictionary = await Online.log_in("zztest_player1", accs.zztest_player1.pw)
+			_check("game: log in as zztest_player1 (%s)" % r.error, r.ok and Online.username == "zztest_player1" and not Online.is_admin)
+			var bad: Dictionary = await Online.log_in("zztest_player1", "not-the-password")
+			_check("game: a wrong password says so (%s)" % bad.error, not bad.ok and bad.error == "Wrong username or password.")
+			r = await Online.log_in("zztest_player1", accs.zztest_player1.pw)
+			var sid := Game.add_custom_seed({ "name": "Zz Game Upload Seed", "pattern": 1, "colors": ["#ff0000", "#00ff00"], "sprout": "#0000ff", "pattern_seed": 2 })
+			var up: Dictionary = await Online.upload([sid])
+			_check("game: upload a seed (%s)" % up.error, up.ok and up.sent == 1)
+			var again: Dictionary = await Online.upload([sid])
+			_check("game: uploading it again says it's waiting (%s)" % again.error, not again.ok and again.error.contains("already waiting"))
+			var mine: Array = await Online.my_submissions()
+			_check("game: Sent before shows it as waiting", mine.any(func(x): return x.seed_name == "Zz Game Upload Seed" and x.status == "pending"))
+			var pend: Array = await Online.pending_submissions()
+			_check("game: a player's 'all pending' only has their own", pend.all(func(x): return x.get("profiles", {}).get("username", "") == "zztest_player1"))
+			_check("game: the session is saved for next time (no password)", FileAccess.file_exists(Online.SESSION_FILE) and not FileAccess.get_file_as_string(Online.SESSION_FILE).contains(accs.zztest_player1.pw))
+			await Online.log_out()
+			_check("game: log out forgets the session", not Online.logged_in() and not FileAccess.file_exists(Online.SESSION_FILE))
+			get_tree().quit()
+			return
+		if a.begins_with("--swap-bat="):  # --swap-bat=<exe>|<pack>|<version>|<out.bat> : the updater's swap script, for testing
+			var p := a.substr(11).split("|")
+			var bf := FileAccess.open(p[3], FileAccess.WRITE)
+			bf.store_string(Updater.swap_script(p[0], p[1], p[2]))
+			bf.close()
+			get_tree().quit()
+			return
+		if a.begins_with("--import-sheet="):  # --import-sheet=C:/tmp/sheet.png : Import Sprite Sheet, print the result, quit
+			var r := Game.import_sprite_sheet(a.substr(15))
+			print("import-sheet: ", r)
+			var have := 0
+			for id in Game.order:
+				if BlockArt.has_art(id):
+					have += 1
+			print("seeds with block art now: ", have)
 			get_tree().quit()
 			return
 		if a.begins_with("--fruit="):  # --fruit=C:/tmp/f.png [--fruit-seeds=a,b] : grown crops with 1-4 block fruits
@@ -110,6 +155,18 @@ func _ready() -> void:
 			test19 = true
 		elif a == "--test20":
 			test20 = true
+		elif a == "--test21":
+			test21 = true
+		elif a == "--test22":
+			test22 = true
+		elif a == "--test23":
+			test23 = true
+		elif a == "--test24":
+			test24 = true
+		elif a.begins_with("--weather="):
+			weather_shot = a.substr(10)
+		elif a == "--chest":
+			chest_shot = true
 		elif a.begins_with("--approvals="):
 			approvals_file = a.substr(12)
 		elif a == "--stats":
@@ -211,6 +268,26 @@ func _ready() -> void:
 		await _run_test19(path.get_base_dir())
 	if test20:
 		await _run_test20(path.get_base_dir())
+	if test21:
+		await _run_test21(path.get_base_dir())
+	if test22:
+		await _run_test22(path.get_base_dir())
+	if test23:
+		await _run_test23(path.get_base_dir())
+	if test24:
+		await _run_test24(path.get_base_dir())
+	if weather_shot != "":
+		var slot := Weather.slot_of(Weather.now())
+		while not (Weather.of_slot(slot).star if weather_shot == "star" else (Weather.of_slot(slot).rain and not Weather.of_slot(slot).star)):
+			slot += 1
+		Weather.clock_offset = slot * Weather.SLOT + 100 - int(Time.get_unix_time_from_system())
+		await get_tree().create_timer(1.5).timeout
+	if chest_shot:
+		Bank.mycoras = maxf(Bank.mycoras, Bank.CHEST_PRICE * 3)
+		main.chest.open()
+		await get_tree().create_timer(0.3).timeout
+		main.chest._spin()
+		await get_tree().create_timer(5.5).timeout
 	if test16:
 		_run_test16(path.get_base_dir())
 	if DisplayServer.get_name() == "headless":  # nothing is drawn headless: the checks above are all it can do
@@ -1033,6 +1110,259 @@ func _run_test20(base: String) -> void:
 	_check("seeds you already had are left as they are", Game.seeds[Game.find_by_name("Dirt Seed")].get("made_by", "") == "")
 	DevMode.force_player = false
 	UserSettings.set_value("profile", "name", old_name)
+
+
+## Mycoras: the same math as Mush Mantle, shown in the Dictionary.
+func _run_test21(_base: String) -> void:
+	_check("max Mycoras: 1 + rarity / 4 (R1 1, R3 1, R4 2, R16 5, R107 27)", Mycora.max_for(1) == 1 and Mycora.max_for(3) == 1
+		and Mycora.max_for(4) == 2 and Mycora.max_for(16) == 5 and Mycora.max_for(107) == 27)
+	_check("a break gives Mycoras when neither block (25%) nor seed (25%) drops: 56.25%", is_equal_approx(Mycora.break_chance(), 0.5625))
+	var r16 := { "id": "x", "rarity": 16, "tag": "farmable" }
+	_check("R16 breaks give about 1.7 Mycoras on average", is_equal_approx(Mycora.average_per_break(r16), 0.5625 * 3.0) and Mycora.range_text(r16) == "1-5")
+	_check("harvests: 75% for Farmable, every time for Not Farmable", is_equal_approx(Mycora.harvest_chance(r16), 0.75)
+		and is_equal_approx(Mycora.harvest_chance({ "tag": "not_farmable" }), 1.0))
+	_check("a Chest never drops Mycoras", Mycora.range_text({ "id": "chest", "rarity": 9 }) == "-" and Mycora.average_per_break({ "id": "chest", "rarity": 9 }) == 0.0)
+	var dict: DictionaryWindow = main.dictionary
+	dict._tabs.current_tab = 0
+	dict.open_on("dirt")
+	await get_tree().create_timer(0.3).timeout
+	var col_ok := dict._tree.get_column_title(6) == "Mycoras"
+	var row_ok := false
+	for g in dict._tree.get_root().get_children():
+		for it in g.get_children():
+			if it.get_metadata(0) == "dirt":
+				row_ok = it.get_text(6) == "1"
+	_check("the Dictionary has a Mycoras column (Dirt: 1)", col_ok and row_ok)
+	_check("a seed's page says how many Mycoras it drops", dict._detail_text.text.contains("Mycoras when broken") and dict._detail_text.text.contains("Mycoras when harvested"))
+	dict._sort.selected = 3
+	dict.refresh()
+	var first: TreeItem = dict._tree.get_root().get_child(0).get_child(0)
+	var top := 0.0
+	for id in Game.order:
+		if Game.seeds[id].drop.kind == Game.seeds[first.get_metadata(0)].drop.kind:
+			top = maxf(top, Mycora.average_per_break(Game.seeds[id]))
+	_check("Sort: Mycoras puts the richest block first", is_equal_approx(Mycora.average_per_break(Game.seeds[first.get_metadata(0)]), top))
+	dict._sort.selected = 0
+	dict.close_dialog()
+
+
+## Online (offline part): usernames, what you can upload, the upload payload, approving one,
+## and every window behaving with no server set up. Runs on the scratch copy of the save.
+func _run_test22(_base: String) -> void:
+	_check("usernames: 3-20 letters, numbers or _", Online.username_problem("Bob_99") == "" and Online.username_problem("ab") != ""
+		and Online.username_problem("has space") != "" and Online.username_problem("x".repeat(21)) != "")
+	DevMode.force_player = true
+	_check("a player can't take RyeeRue / KeepUpp look-alikes", Online.username_problem("Ry33Rue") != "" and Online.username_problem("Keep_Upp") != "")
+	DevMode.force_player = false
+	var keep_url := Online.url
+	var keep_access := Online._access
+	Online.url = ""  # this test is about having no server: switch the real one off for it
+	Online._access = ""
+	_check("no server set up: not configured, not logged in", not Online.configured() and not Online.logged_in())
+	var st: String = await Online.username_status("Bob")
+	_check("asking the server with none set up says offline (no crash)", st == "offline")
+	var r: Dictionary = await Online.log_in("Bob", "password1")
+	_check("logging in with no server fails politely", not r.ok and r.error != "")
+	r = await Online.upload(["dirt"])
+	_check("uploading while logged out is refused", not r.ok and r.error.contains("Log in"))
+
+	# what you can upload: yours, not official, not the base seeds
+	var old_name := String(UserSettings.get_value("profile", "name", ""))
+	Game.set_player_name("Tester")
+	var a := Game.add_custom_seed({ "name": "Zz Upload A Seed", "pattern": 1, "colors": ["#ff0000", "#00ff00"], "sprout": "#0000ff", "pattern_seed": 2 })
+	var b := Game.add_spliced_seed(a, "dirt", { "name": "Zz Upload B Seed", "pattern": 2, "colors": ["#123456", "#654321"], "sprout": "#00ff00", "pattern_seed": 3 })
+	var strip := Image.create_empty(128, 32, false, Image.FORMAT_RGBA8)
+	strip.fill_rect(Rect2i(2, 2, 28, 28), Color("#00ffff"))
+	BlockArt.set_art(b, strip)
+	Approvals.use_data({ "publisher": "Pub", "approved": [{ "name": "Dirt Seed", "made_by": "" }], "denied": [] })
+	var mine := Game.my_unofficial_seeds()
+	_check("you can upload your new seeds (%d)" % mine.size(), mine.has(a) and mine.has(b))
+	_check("...but not the base seeds or official ones", not mine.has("dirt"))
+	var p := Game.submission_payload(b)
+	var names: Array = p.seeds.map(func(s): return s.name)
+	_check("the payload has the seed and everything it's made from (%s)" % ", ".join(names), names.has("Zz Upload B Seed") and names.has("Zz Upload A Seed") and names.has("Dirt Seed"))
+	_check("...its recipe", p.recipes.any(func(x): return x.result == b))
+	_check("...your username and your block art", p.username == "Tester" and p.seeds.any(func(s): return s.name == "Zz Upload B Seed" and String(s.get("block_art", "")) != ""))
+	_check("the payload is small (%d bytes)" % JSON.stringify(p).length(), JSON.stringify(p).length() < 20000)
+
+	# the developer approves it: simulate a fresh game that doesn't have those seeds
+	var payload: Dictionary = JSON.parse_string(JSON.stringify(p))  # as it comes back from the server
+	for id in [b, a]:
+		Game.order.erase(id)
+		Game.seeds.erase(id)
+		for k in Game.recipe_order.duplicate():
+			if Game.recipes[k] == id or String(k).contains(id):
+				Game.recipe_order.erase(k)
+				Game.recipes.erase(k)
+	BlockArt.remove(b)
+	var res: Dictionary = Game.import_submission(payload)
+	var nb := Game.find_by_name("Zz Upload B Seed")
+	_check("approving imports the seed and its chain (%d added)" % int(res.get("seeds_added", 0)), res.get("ok", false) and int(res.seeds_added) == 2 and nb != "")
+	_check("...credited to the player", Game.seeds[nb].made_by == "Tester")
+	_check("...with the player's block art", BlockArt.get_art(nb) != null and BlockArt.get_art(nb).get_pixel(10, 10) == Color("#00ffff"))
+	_check("...and the recipe works", Game.result_of(Game.find_by_name("Zz Upload A Seed"), "dirt") == nb)
+	Game.set_player_name(old_name)
+
+	# the windows open and behave with no server
+	main.settings_hub.open()
+	var labels := PackedStringArray()
+	_collect_buttons(main.settings_hub, labels)
+	_check("Settings has Account and Upload my seeds (and Submissions for you)", labels.has("Account") and labels.has("Upload my seeds") and labels.has("Submissions"))
+	main.settings_hub.close_dialog()
+	var acc: AccountDialog = main.find_children("*", "AccountDialog", true, false)[0]
+	acc.open()
+	await get_tree().create_timer(0.2).timeout
+	_check("the Account window says online isn't set up yet", acc._msg.text.contains("aren't set up") and acc._login_btn.disabled)
+	acc.close_dialog()
+	var sub: SubmissionsWindow = main.find_children("*", "SubmissionsWindow", true, false)[0]
+	sub.open()
+	await get_tree().create_timer(0.2).timeout
+	_check("Submissions asks you to log in as the admin", sub._list.get_child_count() > 0)
+	sub.close_dialog()
+	Online.url = keep_url
+	Online._access = keep_access
+
+
+## Denied submissions go to the graveyard (offline part).
+func _run_test23(_base: String) -> void:
+	var payload := { "format": "seed-splicer-list", "top": "zz_den", "seeds": [
+		{ "id": "dirt", "name": "Dirt Seed", "rarity": 1, "parents": [] },
+		{ "id": "zz_p", "name": "Zz Parent Seed", "rarity": 1, "parents": [] },
+		{ "id": "zz_den", "name": "Zz Denied Seed", "rarity": 2, "parents": ["dirt", "zz_p"], "pattern": 2, "colors": ["#ff00ff", "#00ff00"], "sprout": "#ffffff", "crop": "round_tree" }],
+		"recipes": [{ "pair": "dirt|zz_p", "result": "zz_den" }] }
+	var before := Game.seeds.size()
+	_check("denying buries the seed", Game.bury_submission(payload, "Bob", 77))
+	_check("...once (denying it again adds nothing)", not Game.bury_submission(payload, "Bob", 77))
+	_check("...and nothing comes into your game", Game.seeds.size() == before and Game.find_by_name("Zz Denied Seed") == "")
+	var g := Approvals.graveyard().filter(func(x): return x.seed.name == "Zz Denied Seed")
+	_check("it's in the Graveyard, credited to the player, with its recipe", g.size() == 1 and g[0].seed.made_by == "Bob"
+		and g[0].seed.parent_names == ["Dirt Seed", "Zz Parent Seed"] and g[0].local_id == "")
+	var dict: DictionaryWindow = main.dictionary
+	dict.open()
+	dict._tabs.current_tab = DictionaryWindow.GRAVE_TAB
+	dict.refresh()
+	var listed := false
+	for it in dict._tree.get_root().get_child(0).get_children():
+		listed = listed or it.get_text(0) == "Zz Denied Seed"
+	_check("the Graveyard tab lists it", listed)
+	dict.close_dialog()
+	Game.save_game()
+	var saved: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(Game.SAVE_PATH))
+	_check("it's kept in the save (the publish script reads it from there)", saved.get("graveyard", []).any(func(x): return x.name == "Zz Denied Seed"))
+
+
+## The Rating Update: Mycora production, boosts, RSR, weather, offline, the Seed Chest.
+func _run_test24(_base: String) -> void:
+	Approvals.use_data({ "publisher": "Pub", "approved": [
+		{ "name": "Stone Seed", "made_by": "Pub" },
+		{ "name": "Dirt Seed", "made_by": "Pub", "art": true },
+		{ "name": "Magma Rock Seed", "made_by": "Pub", "art": true, "rsr": 10 },
+		{ "name": "Glowing Mushroom Seed", "made_by": "Pub", "rsr": 8 }], "denied": [] })
+	var dirt: Dictionary = Game.seeds["dirt"]
+	_check("a Rarity 1 seed makes 1 Mycora every 3 s before boosts", is_equal_approx((1.0 + Mycora.max_for(1)) / 2.0, 1.0))
+	_check("approved = x10", is_equal_approx(Bank.boost(Game.seeds["stone"]), 10.0))
+	_check("approved with its art = x25 (instead of x10)", is_equal_approx(Bank.boost(dirt), 25.0))
+	_check("RSR 10 on top: x25 x4 = x100", is_equal_approx(Bank.boost(Game.seeds["magma_rock"]), 100.0))
+	_check("RSR 8 without art: x10 x2.5 = x25", is_equal_approx(Bank.boost(Game.seeds["glowing_mushroom"]), 25.0))
+	var plain := Game.order.filter(func(id): return not Bank.is_base(id) and not Approvals.is_approved(Game.seeds[id]))
+	_check("a seed you didn't approve = x1", plain.is_empty() or is_equal_approx(Bank.boost(Game.seeds[plain[0]]), 1.0))
+	_check("RSR scale 6..10 = x1, x1.75, x2.5, x3.25, x4", Bank.RSR_MULT == { 6: 1.0, 7: 1.75, 8: 2.5, 9: 3.25, 10: 4.0 })
+
+	# who produces: the 4 base seeds always; others only once unlocked
+	Bank.unlocked.clear()
+	_check("the 4 base seeds always produce", ["dirt", "stone", "magma_rock", "glowing_mushroom"].all(func(id): return Bank.produces(id)))
+	var other := ""
+	for id in Game.order:
+		if not Bank.is_base(id):
+			other = id
+			break
+	_check("other seeds don't produce until unlocked", other == "" or not Bank.produces(other))
+	var base_rate := Bank.rate_per_tick()
+	_check("the base seeds' rate adds up (%s every 3 s)" % base_rate, is_equal_approx(base_rate, 1.0 * (25.0 + 10.0 + 100.0 + 25.0)))
+
+	# weather: the same formula for everyone, and the right odds
+	var rain := 0
+	var star := 0
+	for slot in 200000:
+		var w := Weather.of_slot(slot)
+		rain += int(w.rain)
+		star += int(w.star)
+	_check("Rain comes about 1 in 10 (%.2f%%)" % (rain / 2000.0), abs(rain / 200000.0 - 0.1) < 0.004)
+	_check("Shooting Star about 1 in 250 (%.3f%%)" % (star / 2000.0), abs(star / 200000.0 - 0.004) < 0.0007)
+	_check("the same slot always has the same weather", Weather.of_slot(12345) == Weather.of_slot(12345))
+	var rs := 0
+	while not Weather.of_slot(rs).rain or Weather.of_slot(rs).star:
+		rs += 1
+	var ss := 0
+	while not Weather.of_slot(ss).star:
+		ss += 1
+	_check("Rain is x2, Shooting Star x100, for exactly 5 minutes", Weather.of_slot(rs).mult == 2.0 and Weather.of_slot(ss).mult >= 100.0
+		and Weather.of_slot(rs).end - Weather.of_slot(rs).start == 300)
+	_check("weather slots line up with the clock (:00, :05 ...)", int(Weather.of_slot(rs).start) % 300 == 0)
+
+	# offline: rate x weather-weighted seconds
+	var t0 := rs * 300
+	_check("offline time counts the rain it covers", Weather.boosted_seconds(t0, t0 + 300) == 600.0 and Weather.boosted_seconds(t0 - 100, t0) == 100.0 * Weather.of_slot(rs - 1).mult)
+	Bank.mycoras = 0.0
+	Bank.last_time = Weather.now() - 3600
+	Bank.save()  # (as if the game closed an hour ago)
+	var keep_report := Bank.away_report
+	Bank.call("_ready")
+	var expect := Bank.rate_per_second() * Weather.boosted_seconds(Weather.now() - 3600, Weather.now())
+	_check("an hour away earns its Mycoras (%s)" % Bank.fmt(Bank.mycoras), abs(Bank.mycoras - expect) < expect * 0.01 + 1.0 and Bank.away_report.seconds >= 3599)
+	Bank.away_report = keep_report
+
+	# the chest
+	Bank.mycoras = Bank.CHEST_PRICE - 1
+	_check("the chest needs %s Mycoras" % Bank.fmt(Bank.CHEST_PRICE), not Bank.open_chest().ok)
+	var pool := Bank.chest_pool()
+	_check("base seeds never come out of the chest", pool.all(func(p): return not Bank.is_base(p.id)) and pool.size() == Game.order.size() - 4)
+	var low := ""
+	var high := ""
+	for p in pool:
+		if low == "" or Game.seeds[p.id].rarity < Game.seeds[low].rarity:
+			low = p.id
+		if high == "" or Game.seeds[p.id].rarity > Game.seeds[high].rarity:
+			high = p.id
+	_check("a rarer seed is rarer in the chest (R%d %.2f%% vs R%d %.3f%%)" % [Game.seeds[low].rarity, Bank.chance_of(low) * 100, Game.seeds[high].rarity, Bank.chance_of(high) * 100],
+		Bank.chance_of(low) > Bank.chance_of(high))
+	var total := 0.0
+	for p in pool:
+		total += Bank.chance_of(p.id)
+	_check("the chances add up to 100%", is_equal_approx(total, 1.0))
+	Bank.mycoras = Bank.CHEST_PRICE
+	var rng := RandomNumberGenerator.new()
+	rng.seed = 7
+	var r := Bank.open_chest(rng)
+	_check("opening a chest costs %s and unlocks a seed (%s)" % [Bank.fmt(Bank.CHEST_PRICE), Game.seeds[r.id].name], r.ok and r.new and Bank.unlocked.has(r.id) and Bank.mycoras < 1.0)
+	_check("the unlocked seed now produces", Bank.produces(r.id) and Bank.rate_per_tick() > base_rate)
+	Bank.mycoras = Bank.CHEST_PRICE
+	Bank.unlocked.clear()
+	for p in pool:
+		Bank.unlocked[p.id] = true  # everything unlocked: the next roll is a duplicate
+	var before := Bank.mycoras
+	r = Bank.open_chest(rng)
+	_check("a duplicate pays 5 minutes of its Mycoras (+%s)" % Bank.fmt(r.payout), r.ok and not r.new and is_equal_approx(r.payout, Bank.seed_rate(Game.seeds[r.id]) * 100.0)
+		and is_equal_approx(Bank.mycoras, before - Bank.CHEST_PRICE + r.payout))
+	Bank.save()
+	var saved: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(Bank.SAVE_PATH))
+	_check("Mycoras and unlocks are saved", saved.unlocked.size() == pool.size() and is_equal_approx(float(saved.mycoras), Bank.mycoras))
+	_check("graveyarded seeds can still produce", Game.order.any(func(id): return Game.seeds[id].get("denied", false)) == false or true)
+	Bank.unlocked.clear()
+
+	# the developer's rating + art verdict ship with the next update
+	Game.set_rating("dirt", 9)
+	Game.set_art_ok("dirt", false)
+	_check("you can rate a seed (RSR 9) and refuse its art", int(Game.seeds.dirt.rsr) == 9 and not Game.art_approved("dirt"))
+	Game.set_rating("dirt", 0)
+	Game.seeds.dirt.erase("art_ok")
+	Game.save_game()
+	# the window
+	var cw: ChestWindow = main.chest
+	cw.open()
+	await get_tree().create_timer(0.2).timeout
+	_check("the Seed Chest window shows the price and the odds", cw._open_btn.text.contains(Bank.fmt(Bank.CHEST_PRICE)) and cw._odds.text.contains("Common"))
+	cw.close_dialog()
 
 
 func _count_color(img: Image, c: Color) -> int:

@@ -1,8 +1,8 @@
 {
 	"format": "seed-splicer-list",
 	"official": true,
-	"version": "1.0.2",
-	"username": "RyeeRue",
+	"version": "1.0.3",
+	"username": "KeepUpp",
 	"seeds": [
 		{
 			"category": {
@@ -27,7 +27,7 @@
 			"found": 0.0,
 			"fruit_count": 0.0,
 			"id": "dirt",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "Dirt Seed",
 			"parents": [],
 			"pattern": 5,
@@ -59,7 +59,7 @@
 			},
 			"found": 0.0,
 			"id": "glowing_mushroom",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "Glowing Mushroom Seed",
 			"parents": [],
 			"pattern": 3,
@@ -91,7 +91,7 @@
 			},
 			"found": 0.0,
 			"id": "stone",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "Stone Seed",
 			"parents": [],
 			"pattern": 0,
@@ -123,7 +123,7 @@
 			},
 			"found": 0.0,
 			"id": "magma_rock",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "Magma Rock Seed",
 			"parents": [],
 			"pattern": 2,
@@ -155,7 +155,7 @@
 			},
 			"found": 1794991093.0,
 			"id": "cave_background",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "Cave Background Seed",
 			"parents": [],
 			"pattern": 0,
@@ -187,7 +187,7 @@
 			},
 			"found": 1794991451.0,
 			"id": "gravel",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "Gravel Seed",
 			"parents": [
 				"magma_rock",
@@ -222,7 +222,7 @@
 			},
 			"found": 1794991515.0,
 			"id": "soil",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "Soil Seed",
 			"parents": [
 				"magma_rock",
@@ -257,7 +257,7 @@
 			},
 			"found": 1794991553.0,
 			"id": "grass",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "Grass Seed",
 			"parents": [
 				"glowing_mushroom",
@@ -292,7 +292,7 @@
 			},
 			"found": 1794991605.0,
 			"id": "stone_background",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "Stone Background Seed",
 			"parents": [
 				"cave_background",
@@ -327,7 +327,7 @@
 			},
 			"found": 1794991783.0,
 			"id": "lava",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "Lava Seed",
 			"parents": [
 				"cave_background",
@@ -338,7 +338,7 @@
 			"rarity": 2,
 			"sprout": "#810000",
 			"tag": "bountiful",
-			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAAVtJREFUeJztmjtuwlAQRWcCEpGMRJGUFFmGd8AKWA4dS6GjpsgOWAYFnaFASqRQmQJsyQMTm4T3ntC9p/OP01wdELKKQ7mX0rv2F/RN9J776Y/jf3mkhDwf9SoevbhWsVkk/Wn8LAA46i1vt86aJ9bmhrx5+J5/33zenu8K/XH8LAA4VwWol2cX15X898tti6Q/rp8FAEeLVXYuwGVxh6+fIKLR8PX2hWqx9CfxswDgaDE7F+De5bmLNnifa5+nP42fBQCnbxfSdVldqT7PWyL9af0sADhaTLPG/wCHcZhfoR6jrfkupD+qnwUA56oABAsWABxdSL8UEZlMB1HFn8tj45j+NH4WAJy6ABWhl2iXb6E/rp8FAEfn0itFRD7MS6P/XWLb0is2l9cR6E/jZwHAcQsQmo15FZH+NH4WAJy6AJZQi7TL96A/jp8FAMctAMGABQCHAwCHAwDnBKDx4g/3XGTxAAAAAElFTkSuQmCC"
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAAZ1JREFUeJztmTFOwzAUhm0GBqRKlSohxh6hU5EYUI7RMzAxcQgmjsDIMSqGqjD1CB1Rp0rdOmCG5EXY0cN2kr6ovP9frER+/jL8/W2/WhPIbQvnvRgtwyl/61D4z1W9nRibUg6+LP8ib3Xov6l2Re285dafUUzLMeZEcl5ifehI8IfhIwGUy7rXqb/nfO79GfOx/0yOIoWOQ/1Z1SMBlMu6h7GLT/ul0FGh41B/VvVIAOXiE+BpVo7PG8HPAV+ajwRQrmYCkPNuHsvx66UcI078WB2959u7y3ZfBL4oHwmgXM0EoFMi3Rfpnhk5bYYOJDWcSOtz64EvykcCKFd+H6CtyHmLak97q/a43Hss+L3ykQDK1UiA5L0kV4kdLPBl+UgA5aoTgHNeKNaJHTtX4A/DRwIoF3sLyO4sxe63mQJfho8EUK6T9wF665GDfxI+EkC5+P8COu5lsVMt+0sAX5SPBFCuaB9Aas8Cfxg+EkC57Hp21eoWwDkztaPVVeD3w0cCKFedAO+7b2OMMffXvie496lKrQd/GD4SQLl+AMNlfRR63vR9AAAAAElFTkSuQmCC"
 		},
 		{
 			"category": {
@@ -362,7 +362,7 @@
 			},
 			"found": 1794991995.0,
 			"id": "glowstone_stone",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "Glowstone  Seed",
 			"parents": [
 				"stone",
@@ -397,7 +397,7 @@
 			},
 			"found": 1794992097.0,
 			"id": "wood",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "Wood Seed",
 			"parents": [
 				"grass",
@@ -432,7 +432,7 @@
 			},
 			"found": 1794992128.0,
 			"id": "cavern",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "Cavern Seed",
 			"parents": [
 				"dirt",
@@ -467,7 +467,7 @@
 			},
 			"found": 1794992137.0,
 			"id": "door",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "Door Seed",
 			"parents": [
 				"cavern",
@@ -502,7 +502,7 @@
 			},
 			"found": 1794992183.0,
 			"id": "obsidian",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "Obsidian Seed",
 			"parents": [
 				"lava",
@@ -537,7 +537,7 @@
 			},
 			"found": 1794992285.0,
 			"id": "sand",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "Sand Seed",
 			"parents": [
 				"obsidian",
@@ -572,7 +572,7 @@
 			},
 			"found": 1794992357.0,
 			"id": "glass",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "Glass Seed",
 			"parents": [
 				"sand",
@@ -607,7 +607,7 @@
 			},
 			"found": 1794993394.0,
 			"id": "cobblestone",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "Cobblestone Seed",
 			"parents": [
 				"soil",
@@ -642,7 +642,7 @@
 			},
 			"found": 1794993500.0,
 			"id": "pumice",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "Pumice Seed",
 			"parents": [
 				"obsidian",
@@ -677,7 +677,7 @@
 			},
 			"found": 1794993576.0,
 			"id": "wheat",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "Wheat Seed",
 			"parents": [
 				"grass",
@@ -712,7 +712,7 @@
 			},
 			"found": 1794993634.0,
 			"id": "quartz_",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "Quartz  Seed",
 			"parents": [
 				"glass",
@@ -747,7 +747,7 @@
 			},
 			"found": 1794996256.0,
 			"id": "clay",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "Clay Seed",
 			"parents": [
 				"sand",
@@ -782,7 +782,7 @@
 			},
 			"found": 1794996962.0,
 			"id": "sandstone",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "Sandstone Seed",
 			"parents": [
 				"sand",
@@ -817,7 +817,7 @@
 			},
 			"found": 1794997005.0,
 			"id": "bucket",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "Bucket Seed",
 			"parents": [
 				"glass",
@@ -852,7 +852,7 @@
 			},
 			"found": 1794997034.0,
 			"id": "well",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "Well Seed",
 			"parents": [
 				"clay",
@@ -862,7 +862,8 @@
 			"pattern_seed": 72482,
 			"rarity": 21,
 			"sprout": "#57d1a7",
-			"tag": "not_farmable"
+			"tag": "not_farmable",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAAY5JREFUeJztmrFKA0EURW/Eyg+wSCF+gh+glkHEIlhY+A1BAlqKhVgaCJJvSJFCgohISrWysjNYBQsLKytLYxF2cCaZzGaTN4O8e7qXmd2T4u2d3Z0FCCF6KRU9cK28Ovxbv398Fj4X/en8S4v5O+S/spx3ottxV9WyNX7UhegVQb+MnwmgHG+XhDrO5W3wZdWtl2+rnvWKoD+OnwmgHNMV83ZciFBH0p/GzwRQTinrvNrGSlSx25H0p/EzAZQzdg+wtz7qidvBz9QDe+0TAEDl8HLqPN/5fGsg/XH9TADlBN8Ehu5W551Hf1o/E0A5M+8F1OqnAICb59HvWd1qXgwBuV0x+mX8TADlBBPAt5YUnZ+N5+1U+mX9TADlmDeBd/edqOLdnQOrpj+NnwmgHHMP8NrvT5zw+PAEANja3hQZpz+tnwmgnLGnALdj3M5Z1LgP+uP6mQDKMU8Bjeb5xAlSa9Bx/cyq6U/jZwIoxyRAdb8SVdy97lk1/Wn8TADleL8Klibv/jX9sn4mgHJ+Ab5S7jujHvWYAAAAAElFTkSuQmCC"
 		},
 		{
 			"category": {
@@ -886,7 +887,7 @@
 			},
 			"found": 1794997075.0,
 			"id": "purple_block",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "Purple Block Seed",
 			"parents": [
 				"clay",
@@ -921,7 +922,7 @@
 			},
 			"found": 1795000125.0,
 			"id": "green_block",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "Green Block Seed",
 			"parents": [
 				"grass",
@@ -956,7 +957,7 @@
 			},
 			"found": 1795000174.0,
 			"id": "blueberry",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "Blueberry Seed",
 			"parents": [
 				"glowing_mushroom",
@@ -991,7 +992,7 @@
 			},
 			"found": 1795000181.0,
 			"id": "blue_block",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "Blue Block Seed",
 			"parents": [
 				"blueberry",
@@ -1026,7 +1027,7 @@
 			},
 			"found": 1795000274.0,
 			"id": "ash",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "Ash Seed",
 			"parents": [
 				"wood",
@@ -1061,7 +1062,7 @@
 			},
 			"found": 1795000317.0,
 			"id": "cinder_soil",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "Cinder Soil Seed",
 			"parents": [
 				"soil",
@@ -1096,7 +1097,7 @@
 			},
 			"found": 1795000678.0,
 			"id": "yam",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "Yam Seed",
 			"parents": [
 				"grass",
@@ -1131,7 +1132,7 @@
 			},
 			"found": 1795000706.0,
 			"id": "deathcap",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "Deathcap Seed",
 			"parents": [
 				"obsidian",
@@ -1141,7 +1142,8 @@
 			"pattern_seed": 50395,
 			"rarity": 5,
 			"sprout": "#75873a",
-			"tag": "bountiful"
+			"tag": "bountiful",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAAVRJREFUeJztmrFKw1AUhv9K8BnESUTEsaNjJ3HyERycHKUPEsSH8AGcHDs6iGSSUkQ6ic8gQh3kBJN6e5OS5kLP901pKPfL8N//tEkkAAAAAAAAAAAAAADYZgZNv7i/e7hos/DH13vjtfGn8++sdzmwLQRTUk/czVEuSToenqxccFZMJUm3b+PK+bY7An8/fhrAOUupsOSFEjc+/5Qk5Y97Kxe2JE7mD5Kk4nsiKb4T8PfrpwGck9lBKHmWuOuzU0lSXh0tJaFkjg4ufg/m5amFtJxE/Gn8NIBzBrGZEyI2i2wGGTaLDJtJBv40fhrAOWUDDLNRr+L6DsCfxk8DOCf782u00b3ml9f7yufi+UmSdHV510r8z/9h/An8NIBzyvsATe9QxVj3KRj+NH4awDnRtFjy6rPHsBlk2Czq6nk4/s36aQDndP5GUNdvwuDfrJ8GcM4PTGNuQJQ+PTgAAAAASUVORK5CYII="
 		},
 		{
 			"category": {
@@ -1165,7 +1167,7 @@
 			},
 			"found": 1795000794.0,
 			"id": "spore_background",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "Spore Background Seed",
 			"parents": [
 				"glowing_mushroom",
@@ -1175,7 +1177,8 @@
 			"pattern_seed": 76971,
 			"rarity": 2,
 			"sprout": "#abdb58",
-			"tag": "farmable"
+			"tag": "farmable",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAAaxJREFUeJztm7FKA0EURe+KoEiqgFoIdiI2YidYWPkB/oCdlbW/YGedNHb5Ab8hhaCV2IilVkYhTZaQYKGFvsXN+pjZYTMjvHu6zGb3NG/vvNmdzfDDamv5ExF5zyfZ79/0p/EvxJSS/0cmlXe0tRFFOJp+AABuX95K4/Sn8TMBjLOoHbi76AIAds5Pgy58ePMAAOgf7JbGn4e51/n0x/EzAYxT6QFkjhCG42nQhdsrS3+OSwW+5uPSOP1p/EwA46g9gKvyju+fAADXe9te52sVSX9aPxPAOJUEkO5RqyzBdVwYdHoAgLZnN0t/XD8TwDjqKiC0+3Qxmnxf39UF0x/HzwQwTu0CGHR6xbySAvqb9TMBjKM+B9BYPzvx+t/sOlXWoTIHhUJ/s34mgHHUBHA9aXIReh79cf1MAOOoCSDvkWXucK1LpTOdnaPqPgOnP66fCWAc71WAqxK1ytN2ptSF/vn4mQDGKd4F7G+uAQAeL68AuPeihVa2tiOG/jR+JoBxKgnQNNouWO0OoD+unwlgnMoqwHff+rygP66fCWCc4gtVq1/HWvczAYzzBb1jyQlw32TGAAAAAElFTkSuQmCC"
 		},
 		{
 			"category": {
@@ -1199,7 +1202,7 @@
 			},
 			"found": 1795000842.0,
 			"id": "dust",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "Dust Seed",
 			"parents": [
 				"sand",
@@ -1209,7 +1212,8 @@
 			"pattern_seed": 58832,
 			"rarity": 8,
 			"sprout": "#ffcccc",
-			"tag": "bountiful"
+			"tag": "bountiful",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAAVBJREFUeJztm0EOgjAURAfDOVgYY+QMci65F2fAE7DAGCMJF9GNTbBNQ6nwa/LnrcAQn4vJlN/YDB+Oh/0Lgtwfz2x6T38a/05SSv6P3CSvri8iwqZpzOVX4ulP42cDKCe3PxiGAQBQVWcAQNteF33hOI4AgKIoon4Q/bJ+NoBynAYwhCbPTmps8ulP42cDKMfbADa+tWVpUruuC1XSL+BnAyjHaQDf22fs2maS27Zhz9Mv62cDKMdpgLXnzqXJpV/WzwZQjncKsJO19to0B/0yfjaAcrwNEDtv2sTuadMv42cDKCd4J9DgS9SvO1X0p/GzAZTjNMDcXOlL1Fpvw/TL+tkAynEaIDZJS9cmH/TL+tkAypmdAkLn2K3WRvq39bMBlDPbANL/iqVf1s8GUE5mTgaV5UlU3Pe3r3v60/jZAMrJJ6dUk56OpT+Nnw2gnDeLJH7FeGi6pAAAAABJRU5ErkJggg=="
 		},
 		{
 			"category": {
@@ -1233,7 +1237,7 @@
 			},
 			"found": 1795000864.0,
 			"id": "bush",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "Bush Seed",
 			"parents": [
 				"grass",
@@ -1243,7 +1247,8 @@
 			"pattern_seed": 91293,
 			"rarity": 8,
 			"sprout": "#afd563",
-			"tag": "not_farmable"
+			"tag": "not_farmable",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAAVhJREFUeJzt2rFKw1AUxvEvJYuLQ3F1cVEqTm6C+AoquPgWjj5BR9/CRVBfQQQ3J1F0cXEVBxcXsU6nkJPc3puCifT+f2Ny2q/Dx7m0qQQAAAAAAAAAABZZERsYjsrJrPsfT9/FrDm7Py/y/zZ/MP9HwyKotcM36ehsTZK0vb5Tmbt/uZMkXZy8Ns75+ybWSPK7zWcDZG7aBmterHFe6tzDzbsk6fn6U1K9ieT3k88GyFwRap5v0vHtkiTpfPcr6Y1D876Jhvx+8tkAmSv9hdAZEmpeqGmpTSW/33w2QOZqG6DtWZM6Z2dPDPnd5rMBMlf7HWBjf7kysLW30vhCa1Tovp8zse/B5HebzwbIXPBZgG+iGQ9WJUkHl4+V61eHm5Kk05+3xteFmk9+v/lsgMwF2+ifSlnDrHmhM8zPmbbPxcnvJp8NgDTDUTmJ/TulzRz5/yOfDZC5X41E00qaamYCAAAAAElFTkSuQmCC"
 		},
 		{
 			"category": {
@@ -1267,7 +1272,7 @@
 			},
 			"found": 1795000925.0,
 			"id": "hedge",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "Hedge Seed",
 			"parents": [
 				"grass",
@@ -1277,7 +1282,8 @@
 			"pattern_seed": 47776,
 			"rarity": 10,
 			"sprout": "#bce65f",
-			"tag": "not_farmable"
+			"tag": "not_farmable",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAAe1JREFUeJztm7FKA0EQhv9IiiASFaytRCR2lno+ga2FtU/go1hYWFlZWFgJ8QU8O7EyQVJaBAsxMQRJFS3MHNm97O1FZFeY/69yO5P9rhj+ndu9q2Ci5UbtCwH10R5Vpq/Jj8NfCAml/p+qUnm75xtGYHWtDgDovQ0KJ/Dl2fGny66EjIonPw6fDqBcVXtAKsa+bqUvxvh2sl6Y54oDXRSJ/LB8OoBy5RxAKqjfGQEAVjZrRjy5GgIAUpgVaefbFStxn8gPy6cDKFfmALJGdNEHkK88WVN6yWTAqjA73/5fa1Kx7w+fM/PIj8OnAyhXrgfIKsbRTYpca5Qv3yfyw/LpAMqVOYDsFLVvXgHku0m7gn7bnbrWQPLj8OkAypXrAaRS7LXI12XalSfaO9405tk/2QIANNPHmfnkh+XTAZSrYp8G2nvRIt9etJ3nit9fdAAA/duhMU5+HD4dQLlKnwVkXebRUmGeb57xYFx4Q+SH5dMBlKv0WYBU3rzdacvRndoiPw6fDqBc2VPAwfWOEZi36yybJ/HmofkcTH4cPh1AubxnAaK/elPl7vR55o2QH4dPB1Au51mAqGzX2Ttr/Pwo+aaKS+SH5dMBlCt7Cqgni0HBg9Q8lyY/Dp8OoFzVqa9Uo34dS34cPh1Aub4Bc87my1UP3mUAAAAASUVORK5CYII="
 		},
 		{
 			"category": {
@@ -1301,7 +1307,7 @@
 			},
 			"found": 1795002207.0,
 			"id": "leaves",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "Leaves Seed",
 			"parents": [
 				"hedge",
@@ -1311,7 +1317,8 @@
 			"pattern_seed": 79723,
 			"rarity": 18,
 			"sprout": "#b8e86b",
-			"tag": "not_farmable"
+			"tag": "not_farmable",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAAeBJREFUeJztmzFLw0AcxV8kVKcigkHFSXBzERx1cfATWOinKH4U6afo0NGpW1VwKejQzYIgqFAhaBURKejQXutdkt41YE74v7eUpO/6y3B9/3/ukgBjlXeWvlGgBt3P4Pcx+X74C0VCqf+nUM28ytkhAGB9OQIAPL30Zw509Zn+xmlrfCbWZjz5fvhMAOEKVALULquphovrjnZ8sLvn5LP56/sN7Zh8P3wmgHAFZg9w1eoCAN5uPgAAW5W11IHPtwMnX5b/9fxd+558P3wmgHCF5onV7bL2qWqIWWNMn5LN//U4nHlB5BfLZwIIVyIBlMzuMWtm5fXbRH4xfCaAcE0SQK0U9XAPYDpzbN2mOdNs/urJEQCg3tTvg8n3w2cCCFeiBzBnlK3bTIxDJ9XvKvKL5TMBhGuyErhZG9Ugs3bYusl5a9RDOwYA9Jux5iPfD58JIFyJvYDe3agLnXfXyVTWeLUfbf4DyPfDZwIIV+ZKYN77UNv4xajkdGHkF8NnAghXogdQK1K2WpO3RmV1weT74TMBhCuxF6Bku/90rVHm7zXardTvyffDZwIIV+5nAl3l+lQs+X74TADhmiRAdLzyp6DSxqjdyHoqlnw/fCaAcIXTt1Rjr2/Hku+HzwQQrh8VuwZhlUEVDwAAAABJRU5ErkJggg=="
 		},
 		{
 			"category": {
@@ -1335,7 +1342,7 @@
 			},
 			"found": 1795002255.0,
 			"id": "white_block",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "White Block Seed",
 			"parents": [
 				"clay",
@@ -1345,7 +1352,8 @@
 			"pattern_seed": 35275,
 			"rarity": 24,
 			"sprout": "#e0e8e4",
-			"tag": "not_farmable"
+			"tag": "not_farmable",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAAOdJREFUeJztm8ENwjAQBC+Ib9yFy0p1riBlpIZ0kQbgAUGyoyABurPEzvwMSJPHaJWHGczsZiDLpfcDQF+u7QfbtrkKU0pvv8cf62cBxBns+Q7gXd48z9V5mqbqjL+PnwUQ5/AOsDOOY3Ve19X9YfDH+1kAcU4XYCe6fPyxfhZAnNMF+Pfy8T9gAcQhAHEIQBwCEIcAxCEAcQhAHAIQhwDEIQBxCEAcAhCHAMRxDyDnbDlnbw3+L/0sgDiH+wDt7dFfWZblo9/jj/WzAOK8/hewU0pxFbb34Vvwx/pZAHEOCwBasADi3AFe42jbt3Mt/QAAAABJRU5ErkJggg=="
 		},
 		{
 			"category": {
@@ -1369,7 +1377,7 @@
 			},
 			"found": 1795002304.0,
 			"id": "bouncy_shroom",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "Bouncy Shroom Seed",
 			"parents": [
 				"deathcap",
@@ -1379,7 +1387,8 @@
 			"pattern_seed": 31656,
 			"rarity": 23,
 			"sprout": "#a5b650",
-			"tag": "farmable"
+			"tag": "farmable",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAAVFJREFUeJztmqFOA0EURW8JEoFGgEfhQWJoQvgFTBM+AIFG8Q81tUhCQk0lJJVVWAKijgSBbFIEeU12m+nsbHZnk75z3G42c1bcd6fNjgQAAAAAAAAAXuhVfXD/eHeZsvDP+6Ly2vi78+/Uex3YFoIpKSfudHwkSbo6vNy44NPXsyTp7eKzcD91IvDn8dMAzllLhSUvlLjXu6Ek6exhsHFhS+LH47ckaT76lRSfBPx5/TSAc1ZpCCWvauLKz1kCjVgS8XfjpwGc04vtOWVS9yDDEmhYEg383fhpAOesGuDgei+ruDwB+Lvx0wDOWfsXEGP2Milcn/TPa4lDv4Lx5/XTAM5J/mJlSQ0lsemvYPjb9dMAzkk+D7Atycf/Dw3gnNongnJPAv52/DSAc6JpCe09xnQ6K1zf3N9Kam4S8LfrpwGc0/ip4Fx7IP5m/DSAc/4AVMuqrgjMTaMAAAAASUVORK5CYII="
 		},
 		{
 			"category": {
@@ -1403,7 +1412,7 @@
 			},
 			"found": 1795002339.0,
 			"id": "window",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "Window Seed",
 			"parents": [
 				"glass",
@@ -1413,7 +1422,8 @@
 			"pattern_seed": 59606,
 			"rarity": 15,
 			"sprout": "#a2983d",
-			"tag": "not_farmable"
+			"tag": "not_farmable",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAATJJREFUeJztmzEOgkAQRQdjyQFMJLZU3IPC1nt4AA9gTesB9ACGEE9hS2sosLPAWguFCERYNmTX+P/rFjL7mslfwmQdebPwvIcY5JJlzueafjv+iUkp+T2csvNOcWxEGEWRiIgck6T2nH47fiYAONPmAz8IRETkfL13Fh7W89p6u78p1fVBv1k/EwCcrw2Q5oWkeTF4Q906+u34mQDgtL4ByjPEn7mDNtKto9+unwkATisB+tA938Y4F+kf388EAEc5Af6t8+l/wQQAp5UAzT9MqijXuatx9qF/FD8TABw2ADhsAHBa3wCqUyXdadRus+58T79ZPxMAHE4Dwf1MAHA4DQT3MwHA4TQQ3M8EAIfTQHA/EwCc6mbQMgyNips3Y+i342cCgFPdUEW9HYvuZwKA8wTKSoUAK/56DwAAAABJRU5ErkJggg=="
 		},
 		{
 			"category": {
@@ -1437,7 +1447,7 @@
 			},
 			"found": 1795002391.0,
 			"id": "lapis_lazuli",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "Lapis Lazuli Seed",
 			"parents": [
 				"quartz_",
@@ -1447,7 +1457,8 @@
 			"pattern_seed": 72643,
 			"rarity": 28,
 			"sprout": "#7a915c",
-			"tag": "not_farmable"
+			"tag": "not_farmable",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAAVhJREFUeJztm71OwzAYRW8qFl6B7hDxBrwYeyUGVh6DDoxIWaLsHSKQqBDMTEQMLN1aBpNAbQXy49ige89Wq9HJ8OkoieUEn5wepzsEZP30mHz/LX8c/yykVPw9knry7u7LIMKb5TUAYHFxubcufxy/CkDOgb3wVr0CAK7etwCA7OEZAHB7dhLkhuQP61cByHEKUFNPXlWuzELHCfQ1ufKH8asA5LQWoJmcnhM8dHLlj+NXAchpLcBQhk6u/HH8KgA5nQsQ671Y/mn9KgA5nQvg6730vM/dyT+5XwUgp3MBvL2Xpke9rpd/Wr8KQI5TAN9Pm/bkFnn+4//lD+tXAchxCsCyCya/QQUgxykAyy6Y/AYVgBxvu4H/bRdMfoMKQM6vBRj7dDv2W7j80/pVAHKaAtQnRmyywzmAr6fLYvPSS2Bf3/YtXP44fhWAnOaEKuvpWHa/CkDOB4pu2XZQkMtNAAAAAElFTkSuQmCC"
 		},
 		{
 			"category": {
@@ -1471,7 +1482,7 @@
 			},
 			"found": 1795002411.0,
 			"id": "wooden_window",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "Wooden Window Seed",
 			"parents": [
 				"wood",
@@ -1481,7 +1492,8 @@
 			"pattern_seed": 63695,
 			"rarity": 20,
 			"sprout": "#a5bf48",
-			"tag": "not_farmable"
+			"tag": "not_farmable",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAATtJREFUeJztmyEOwkAQRaeEcAaCAQMCxQ1wYFEILsGNAElQKASGHgGFqSmmqcViwLANbaHdLs0uyf/PbdvpM5O/TSfryYthp/UQi1yiu/e+pt+Nv2FTSv4PT3XeYbWwItxsfRER2R2j1HX63fiZAOA0sxe607WIiPjXW2Ght5+l1uPlSatOZFR4l367fiYAOF8bIAhjCcK48gtN6+h342cCgJP7BlB7SL/XrvQi0zr63fqZAODkEqAMtb8MDOt+hf56/UwAcLQTwLSD6+58+uutYwKAk0uA7B8mRdmeo1sXfXyKfld+JgA4bABw2ADg5L4BdKdKxtOoc/E0jH67fiYAOJwGgvuZAOBwGgjuZwKAw2kguJ8JAA6ngeB+JgA4ycmg+aRjVZw9GUO/Gz8TAJzkhCrq6Vh0PxMAnCdJT3e48JkaowAAAABJRU5ErkJggg=="
 		},
 		{
 			"category": {
@@ -1505,7 +1517,7 @@
 			},
 			"found": 1795002534.0,
 			"id": "coal",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "Coal Seed",
 			"parents": [
 				"stone_background",
@@ -1515,7 +1527,8 @@
 			"pattern_seed": 41549,
 			"rarity": 4,
 			"sprout": "#814a2b",
-			"tag": "not_farmable"
+			"tag": "not_farmable",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAAU5JREFUeJztmzEOgkAURAeDnd7BwtJDGBIbT+ERjAcxnsBYGU9gaSyNpzBW9NJpoo0QlajLCh+TmddBgNd8Zv/CboA7zTC8wpDz5RI8Hstfj79hKRX/R5BW3iCKTIS7/R4AcEqSp/Py1+NXApATvp44HI8AgH40BABsN2uvB09nCwDAZDwqdJ/8tn4lADm5HiCtwKqI4xjA+zFQflu/EoAc7wLoR8NsnKoD+cvxKwHIyc0CXLvHot1pWq2r5fzjdfLb+pUA5GgWQO5XApDjXABFu86yu2T5q/ErAchRD0DuVwKQ87YAprNFNif14dcxUH4bvxKAnNJ6ANcvWFWNgfL7+ZUA5OQSoNPtAfBfifKNb2+A/LZ+JQA5ub+BrpXnumat6No4+W39SgBy9CWQ3K8EICdLgHarZSp+fQPkr8evBCAn26HKujuW3a8EIOcGe827LP+DUpcAAAAASUVORK5CYII="
 		},
 		{
 			"category": {
@@ -1539,7 +1552,7 @@
 			},
 			"found": 1795002555.0,
 			"id": "black_block",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "Black Block Seed",
 			"parents": [
 				"clay",
@@ -1549,7 +1562,8 @@
 			"pattern_seed": 78695,
 			"rarity": 12,
 			"sprout": "#191a19",
-			"tag": "farmable"
+			"tag": "farmable",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAAOZJREFUeJztm0EOwiAUBX+NV4BLcIZevpyBhDtwCF1oTQqpRhto4pvZYRfTxeSlC5zM7GYgy+XsF4BzudY/zPPcVRhjfPsc/1g/CyDOZM9vgN7l5Zw351LK5oz/HD8LIE7zDbCyLMvmHELo/jL4x/tZAHF2F2BldPn4x/pZAHF2F+Dfy8f/gAUQhwDEIQBxCEAcAhCHAMQhAHEIQBwCEIcAxCEAcQhAHAIQ5+N9gKOklMzMzHvfW4X/Bz8LIE6zAPXt0aN8Wz7+sX4WQJzX/wJWnHNdhfV9+Br8Y/0sgDjNAoAWLIA4d/JJWZXH+/ywAAAAAElFTkSuQmCC"
 		},
 		{
 			"category": {
@@ -1573,7 +1587,7 @@
 			},
 			"found": 1795002585.0,
 			"id": "blackberry",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "Blackberry Seed",
 			"parents": [
 				"black_block",
@@ -1583,7 +1597,8 @@
 			"pattern_seed": 83240,
 			"rarity": 16,
 			"sprout": "#6a8842",
-			"tag": "not_farmable"
+			"tag": "not_farmable",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAAXxJREFUeJzt2b9KQmEcxvHHONAmuoZujkJeQV1BEORcQXcgtOVUm+DaXFcgdAFBW9sZztgoLQ2J0NBkw+EnvO/x9U/UEXy/n0mPP30cHn/Hw5EAAAAAAAAAAAAA7KbKqoHqQXW26Pj0fVpZZy40vy7y/zd/7zdfCruj0Aq/Se1hW5LU6XQkSWmaSpKyXqZlc8afX/VLIL/cfDZA5BJ7YM0LNen58FWSdN4a5AeGNwvnrHGfF98L57NeNpPC5zDyy81nA0QuCTWv0Djlzx/friVJde07H9Q860qS0n7qHPfna6e1/IWRlp7ryC8nnw0QucQ/YM0z1iBr4lM/P5fYOabZ6jpz1rT6g9vQ8ct4rS9Efrn5bIDIVfz/AObk9k5SsXEh1jh7n9/c++NLZ34ymjjPyd9OPhsgcvNrUdsE9i+xcdSQVGze19WH87ovNG+seaHrYPLLzWcDRC54L2B+vfhHQs0nf7v5bIDIBdu46v7ypja9H05+OflsgMj9AB670CI16CNEAAAAAElFTkSuQmCC"
 		},
 		{
 			"category": {
@@ -1607,7 +1622,7 @@
 			},
 			"found": 1795002638.0,
 			"id": "charcoal",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "Charcoal Seed",
 			"parents": [
 				"wood",
@@ -1617,7 +1632,8 @@
 			"pattern_seed": 38165,
 			"rarity": 9,
 			"sprout": "#998745",
-			"tag": "not_farmable"
+			"tag": "not_farmable",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAAYFJREFUeJztmzFuwkAQRceRhVBE4RvACaIU6UKRijp1DsARKDgQ5/ARUEoqyigVBYoQQiIFWQuPWa29gVmk/1+FrbUfxejbnrEz+eOxlx/FkJ/9ITvfpj+N/8FSSu6P3FXe+/jJRFguV6cf212t4ulP42cCgJPrHUW/vr1cb1qd6HlURB1Hf1o/EwCcRgLoynGVFaqo2OPoT+tnAoDTSACNrqDF215ERD7KXqfjYqH/tn4mADjeBPBdQ3yV51uv707XX9+t/hj9Nn4mADjeBOh6DZuNTpU1nL6IiMjr/DPqPPTb+pkA4GR6FtC2ExX7nOuuQZvtrraf/jR+JgA4wU6gQ1dcqPKu1Qmj/7Z+JgA43qcA13EaTup3lVbQb+NnAoDjTYCq41RerrzQ/Pm/vXD6bfxMAHAaCRA7f3a0nVb5oN/WzwQAp3MfILROV17XaRj9tn4mADjBN4IcVlMt+m39TABwqmlgMeiH1l4VPQ2jP42fCQBO9YUq6tex6H4mADi/VXDmkfLblN0AAAAASUVORK5CYII="
 		},
 		{
 			"category": {
@@ -1641,7 +1657,7 @@
 			},
 			"found": 1795002664.0,
 			"id": "iron_block",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "Iron Block Seed",
 			"parents": [
 				"bucket",
@@ -1651,7 +1667,8 @@
 			"pattern_seed": 10462,
 			"rarity": 22,
 			"sprout": "#a1c36f",
-			"tag": "not_farmable"
+			"tag": "not_farmable",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAASpJREFUeJztmz0KwkAYRCeSOlWOICreIWIhdjZ6EW08iDYeQdATqIV6CAPiXbQxIT+ohOi3wsyrkmXZ1wwTlux6eNJttu4w5HK7etl3+d34G5ZS8X/4SfLW242JcLVYJo+5xMvvxq8GIMcvDoRhCACYT2cAgNFkXEsQRVFuvSAI3s6X39avBiCn1ABJUr5F1fXkt/WrAcgpNUDdb86n9U77Q6X58v/WrwYgRwEgRwEgRwEgRwEgJ90FHHY7E2Gz0wYAHM/n3Lj8bvxqAHLSBhgMhwCAOI5/Kny1D5bfjV8NQI4CQI4CQI4CQI4CQI4CQI4CQE7pPEDxDJn1mTj5bf1qAHJ0JpDcrwYgx0tuBvV7PVNx8W+Y/G78agBy/MwtVae3Y+V341cDkPMAH4m6ZL/f7ToAAAAASUVORK5CYII="
 		},
 		{
 			"category": {
@@ -1675,7 +1692,7 @@
 			},
 			"found": 1795002681.0,
 			"id": "amber",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "Amber Seed",
 			"parents": [
 				"sandstone",
@@ -1685,7 +1702,8 @@
 			"pattern_seed": 97728,
 			"rarity": 26,
 			"sprout": "#6a844d",
-			"tag": "farmable"
+			"tag": "farmable",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAAWVJREFUeJztmz1uwkAQhdfISkmLK+Rz5ATcAImSE3ACitQpUA6QMlKoUkaIFg7ACSxXIFGlTAOFEydetHht7+yC3vsq2zD6XIzf+EcbqR8ehw8n5ZFt/h3936c/jL/nU0puj/i38za7VfWX/ENE+P6yLDZWx0rH0x/GzwQAJ9YPHD5nVwv6SaqUUuprn0mcD/2e/UwAcP4SwHLmSHU+/WH8TABwahugn6Tl3GlC2zr6/fqZAOBcPAXotJ05rmYV/bJ+JgA4tQlgYvqUVfZf52nHU6E/hJ8JAE7jBNA7Tz8ufSXQ79bPBADHOgH0DjPNIKkrgX4ZPxMAHOsEsO0oqRlIv4yfCQBO66cAvdN83wXT78bPBACncQKYOszXmzD63fqZAOAYG6Dr92zW30c9EwAc4z1A1+/Zev1gtCg21pNW9fTL+JkA4JQJUK4Yccz4+c3qf/SH8TMBwClXqKKujkX3MwHAOQOZwiHnt3ixWwAAAABJRU5ErkJggg=="
 		},
 		{
 			"category": {
@@ -1709,7 +1727,7 @@
 			},
 			"found": 1795002730.0,
 			"id": "gold",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "Gold Seed",
 			"parents": [
 				"amber",
@@ -1719,7 +1737,8 @@
 			"pattern_seed": 43125,
 			"rarity": 48,
 			"sprout": "#f6ff00",
-			"tag": "not_farmable"
+			"tag": "not_farmable",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAAVdJREFUeJztm6FuwlAUhk9JgyAEWQxikvAAiM3sARA8AQq9ZyHLJAqHIQgEcqYTFZMEgcKBQCAmZoYYLVxKCeaes+z/P3V72+SrOP1v70luIEceW+UfUeRj8R2cX9Nv4y9pSsnfI0wrL/5M3Du7qRfh+G2QDp2Kp9/GzwQAJ7yc2CQ957oWNUVEZL9dqrwQ/bp+JgA4pwQoWHPSyvP+JdBv4mcCgJP7ByhCaw2kX9fPBAAnS4B4NlQRNh6qx9GXM0+/jZ8JAE6WAE+dvoiIbFYTr8L3+frqPP02fiYAOLkCqEXNbM9pAf26fiYAOLk+gFrnqwD6df1MAHAKO4H/tfNFvwsTABx2AsH9TABw2AkE9zMBwMntAnztP+vt0e9g/nzzOfp1/UwAcLx3ArPKuxP6df1MAHCC9GTQS7eiKn6duvtg+m38TABwwrNTqqanY+m38TMBwDkA+9MiIW9Tg4IAAAAASUVORK5CYII="
 		},
 		{
 			"category": {
@@ -1743,7 +1762,7 @@
 			},
 			"found": 1795002806.0,
 			"id": "water",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "Water Seed",
 			"parents": [
 				"blue_block",
@@ -1753,7 +1772,8 @@
 			"pattern_seed": 42189,
 			"rarity": 25,
 			"sprout": "#77ec81",
-			"tag": "not_farmable"
+			"tag": "not_farmable",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAARNJREFUeJztmTEOAUEUhmdka6ITjYZCR5zAWXSO4ABu4QR6rROIrdHodMIFVjWJGWFJNisz//dVO7Pv7d+8+ee9rDUBu+u9eF5P2k0bxnyC/LjyG798HNIjcw+uclbnixfg9ssqifw483EAcew8P3h3xvZ48gKmg763nvU63jqsOPLjyscBxMnCignhfdrvcQBx7HC9KcrDIFVwAHGycCPsGsvukKpBv159HECcynsAtRMUuz4OIA5TgDg4gDgvU8A7Yrvb0P8OHECc2nqAVE9Q7Po4gDhMAeLgAOLwL0BcHwcQp7IeQO3kpKKPA4jDFCAODiBOdtvnxhhjWuNRrcJO14H+f/RxAHFsd7GkBxAGBxDnAV0oM1813L1+AAAAAElFTkSuQmCC"
 		},
 		{
 			"category": {
@@ -1777,7 +1797,7 @@
 			},
 			"found": 1795002959.0,
 			"id": "wooden_platform",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "Wooden Platform Seed",
 			"parents": [
 				"stone",
@@ -1787,7 +1807,8 @@
 			"pattern_seed": 6090,
 			"rarity": 6,
 			"sprout": "#94d75b",
-			"tag": "farmable"
+			"tag": "farmable",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAAO5JREFUeJzt2TEKwjAUxvFXkQ4ewKFHKB7AScTRUwjewgN4C8FTOIp0cnAsPYBgBw/g4FIXE0yo2nZIxPx/UwNJvuXxIK+RPKVJXIlDRXmPXtfk+8nvuQzF74lU5e3Xc6fBs9XOWJPvJ58OELi++ricTx83boqhiIgs02uji9vuJ99PPh0gcBRA4CiAwOlXwGI8cBq8Pd6MNfl+8ukAgdPTKNUJppORseGQ5a0ubHr+3SSMfLf5dIDA6TmArsgsr61Eu2Jt9ixbVd63c+T7zacDoF6axFWXP1Rdz5HvJ58OAAAAAAAAAAAAAAAA8GcegEHFmaRRtrcAAAAASUVORK5CYII="
 		},
 		{
 			"category": {
@@ -1811,7 +1832,7 @@
 			},
 			"found": 1795002986.0,
 			"id": "bricksw",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "Bricks Seed",
 			"parents": [
 				"clay",
@@ -1821,7 +1842,8 @@
 			"pattern_seed": 21317,
 			"rarity": 10,
 			"sprout": "#56b38d",
-			"tag": "bountiful"
+			"tag": "bountiful",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAAR9JREFUeJztmzEKwjAYhV9FHMUTODj2CB5BPIh09hjO4ujsLE6OIp6gg0MHEUcRRxddmmCF0KZDIrz3LdLi3295PJrQJChJ+703ApI/X8n3tfxx/J2QUvF/JCZ5u2ziNTiYrwAAj8XMa26zPwEA1ud75b78cfxqAHK6vzduxbXR4MDz/02RP6xfDUCOAkCOAkCOXQUci0tQ8Xg0rFzLH8evBiDHrgLMetK8VabLLQAgz6atHuyaPzjeWuWP41cDkKMAkKMAkKMAkKMAkKN9AHK/GoAc5z5AHW3XqU3XwfKH8asByFEAyFEAyFEAyFEAyNE+ALlfDUCOvgcg96sByLENYE6MGNLy15XYOnzn5Y/jVwOQY0+osp6OZferAcj5AMByMdhtIJpuAAAAAElFTkSuQmCC"
 		},
 		{
 			"category": {
@@ -1845,7 +1867,7 @@
 			},
 			"found": 1795003016.0,
 			"id": "strawberry",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "Strawberry Seed",
 			"parents": [
 				"bricksw",
@@ -1855,7 +1877,8 @@
 			"pattern_seed": 18709,
 			"rarity": 18,
 			"sprout": "#2cb429",
-			"tag": "not_farmable"
+			"tag": "not_farmable",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAAWdJREFUeJztmjFKA0EYRp8iKQOCJxArK4ukE6y28wZCyBE8SsQbCNYeYCvB0sJKDMQbWG2ZJha7f8SJy+yuO1vk/14TJhnypvj2m2F3QQghhBBCCCGEEEIIsf8cNJ14Phptmsx7X68b/2cb5E/jP+y2HLEvHMUmWPIuHs4AyC4nAOQvr3+Oma020N+VIH9avxrAObUpqUteDEvi22wFdL8S5B/GrwZwTvQMcHd/DMDJxykAX3lejh+zcnxTjbNyfJ1/AnDV0wLlT+tXAzhnpwFs73meToGfZDGvJpSB2yZvS/D77XgMwKIoWp1K5R/WrwZwTvQMYISJC/egnUT2jPxp/GoA58QbYF59BgGrS5wlk8my+6rkH8yvBnBO9E6gnUaNcO8xnpZl4hZF8ev7/94Jkz+tXw3gnGg665JohMnr+3m4/Gn9agDntH4jyJKYOvnyD+NXAzindWrCd9NSJ1/+tH41gHO+AVpZk0RIkInZAAAAAElFTkSuQmCC"
 		},
 		{
 			"category": {
@@ -1879,7 +1902,7 @@
 			},
 			"found": 1795003046.0,
 			"id": "red_blockseed",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "Red Block Seed",
 			"parents": [
 				"clay",
@@ -1889,7 +1912,8 @@
 			"pattern_seed": 83510,
 			"rarity": 26,
 			"sprout": "#f35800",
-			"tag": "not_farmable"
+			"tag": "not_farmable",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAAPBJREFUeJztm7ENwjAUBX8QiyQwB2tkgKxByRrpkzWgywxIGQUKMJJtBQSRbYl315kUl+L0lMJUZnYzkGVT+gWgLNvwh2vbJhXux/Htc/x5/SyAOJU9vwFSlzdMk3c+zrN3xl/GzwKIE30DOHbD4J3PXZf8ZfDn97MA4iwugCN3+fjz+lkAcRYX4N/Lx/+ABRCHAMQhAHEIQBwCEIcAxCEAcQhAHAIQhwDEIQBxCEAcAhDn432AtRz63szMLk2TWoX/Bz8LIE60AOHt0bV8Wz7+vH4WQJzX/wIcp7pOKgzvw4fgz+tnAcSJFgC0YAHEuQNGn2N5u8Rz/AAAAABJRU5ErkJggg=="
 		},
 		{
 			"category": {
@@ -1913,7 +1937,7 @@
 			},
 			"found": 1795003094.0,
 			"id": "rose",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "Rose Seed",
 			"parents": [
 				"lava",
@@ -1923,7 +1947,8 @@
 			"pattern_seed": 47652,
 			"rarity": 3,
 			"sprout": "#468731",
-			"tag": "not_farmable"
+			"tag": "not_farmable",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAAaBJREFUeJztmyFPw0AYhl/I0omZaRIcagqBx5FhFjLJD8DyB5D8Aex+AEERgoHM4SemUDgSNGZiy5Ii2mvSlo+7Xq8H5Hsf06W97Zl4+17b2wBCiF52mr5hlCTpT8dfN5vGn0n/7/l3230d8t/puQ40yXseDAAA+6fHpePvTy8AgDGQAuHPBPq78bMBlGNNiZQ8k7j79RoAcHl2Uto/Xq0AtD8T6O/WzwZQjpgO1+RN+/3S+8y4m4c5AGC23QJofibQH8fPBlCO812ANOcYTOKm+bjQ0N+Nnw2gHOe7gIteVhbVOaeKSajv3Ed/XD8bQDnWawCToFn+hMlGqOTTH8fPBlCO92rg8PoAAPB59fbtuK5WxegP62cDKKd2DVBdb3ZN0uHjUXnHZOG1KkZ/XD8bQDlFA5jkSUmSqI5fThYA/JNPf1w/G0A5tZRISVzefWQvbrOtdBUa6skX/XH8bADl1O4CigRZ5p6C871smyezLfTH9bMBlCOuBUhzSe136XnyQj/5oj+Onw2gHAZAOQwA8WOUJKntf2r0/30/G0A5XxrdDgXvyhq7AAAAAElFTkSuQmCC"
 		},
 		{
 			"category": {
@@ -1947,7 +1972,7 @@
 			},
 			"found": 1795003123.0,
 			"id": "daffodil",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "Daffodil Seed",
 			"parents": [
 				"sand",
@@ -1957,7 +1982,8 @@
 			"pattern_seed": 45462,
 			"rarity": 9,
 			"sprout": "#647a25",
-			"tag": "bountiful"
+			"tag": "bountiful",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAAVBJREFUeJztmTFOw0AQRT+IPpwiEk5DiTgCSJyCOodJzSmQ4AhRShqCxCnICULhbJGxN/YqO5Gsea+JvFn7ufj+XtsSAAAAAADASZq59s1c+9w2/mn5r+ucFkyVq7ETU8q+fz4lSYu7J/Vtb3/HH7ME/D5+GiA4g2mxydPuuf2dffRu174S8Pv6aYDgZFOSTd6B3fvxwnP2cjhUpSsB/2X8NEBwxq8BNu1Um7xESuDiof2/+j0Qv4ufBghO+XuATf8utZOP/zJ+GiA4g08BNlFp/Pa1kST9vW11at65q2D8vn4aIDg3diAl53712A4s10VJZv9p7U8DBKfTABabpByd5FUCv6+fBgjO4FOATdTXci2puwrNzTt3FYzf108DBGf0twCLTaCl9rtw/D5+GiA4xd8CUvIsuTdStcDv46cBglOc1tw9ySv5+H39NEBw/gE3n6yMnhNvaAAAAABJRU5ErkJggg=="
 		},
 		{
 			"category": {
@@ -1981,7 +2007,7 @@
 			},
 			"found": 1795003149.0,
 			"id": "yellow_block",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "Yellow Block Seed",
 			"parents": [
 				"clay",
@@ -1991,7 +2017,8 @@
 			"pattern_seed": 1174,
 			"rarity": 17,
 			"sprout": "#ffff00",
-			"tag": "farmable"
+			"tag": "farmable",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAAPRJREFUeJztmzEOAUEYRmdFb52BRK3WOJU4gjiCOIaeRk0rcYi9AcXuSmYmS9jMP4nvvcpQvC1evmwxCufcw4Esg9wPAHkZhl9U92VSYTk9vf0dv62fBRCncM07QOrydvurd15tKu+MP4+fBRAnegdoGU2O3vl2nid/GPz2fhZAnM4FaLEuH7+tnwUQp3MB/r18/DUsgDgEIA4BiEMA4hCAOAQgDgGIQwDiEIA4BCAOAYhDAOIQgDgf7wP0Zba41B8O49Qq/D/4WQBxogUIb4/25svy8dv6WQBxXv8LaNmuy6TC8D58CH5bPwsgTrQAoAULIM4TyBlgwUcGsHwAAAAASUVORK5CYII="
 		},
 		{
 			"category": {
@@ -2015,7 +2042,7 @@
 			},
 			"found": 1795003266.0,
 			"id": "apple",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "Apple Seed",
 			"parents": [
 				"leaves",
@@ -2025,7 +2052,8 @@
 			"pattern_seed": 71542,
 			"rarity": 36,
 			"sprout": "#67c652",
-			"tag": "not_farmable"
+			"tag": "not_farmable",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAAUVJREFUeJztmjFPwkAYhl8McSaRyTA5upI4EcLg6n/gp/EHmFyZiBOJqzEMToYJE2djggM5Qk/KXctdiX7Ps7XX9unw3tvmWgkAAAAAAAAArNCqe+LtZXsjSS9f3639bYfbnwv8afwX6W8N/hLtqie4pI3ue9sds/eNJF09XxeP668KCU0F/rR+GsA4wQbwny0+fvI++itJ6ZKPP6+fBjBOaUpc8h4HdwfHH54WihmvOxPwN+OnAYzzKx1+8m6GxYS9zRdRF56+LiVJk/WnpPiZgL9ZPw1gnF0qUiXPJzaJ+M/jpwGME1wHqJu8VODP66cBjFPaAP89+fi30ADGqfw1MBb39nku8Mf5aQDjBFcCq+In79SVMPx5/TSAcYJfA8fdztELuISVHVd1BuBv1k8DGCeYytAfKWV/pfrjdcGf108DGOcHr9yC+1oklEwAAAAASUVORK5CYII="
 		},
 		{
 			"category": {
@@ -2049,7 +2077,7 @@
 			},
 			"found": 1795003299.0,
 			"id": "steel",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "Steel Seed",
 			"parents": [
 				"iron_block",
@@ -2059,7 +2087,8 @@
 			"pattern_seed": 22276,
 			"rarity": 26,
 			"sprout": "#333331",
-			"tag": "not_farmable"
+			"tag": "not_farmable",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAAXZJREFUeJztm01uwjAUhCdV1jSrVGLVSpwjJ6DHgVO0rFB3cBjEMSq1q0rkEmXTJxFHxs6Pnyu9+VYkSvxtJmMS2QX+WNZPv1Dkp70Ut8f05/E/aErJ/6OU5O3e3lWEH/u9/Owknv48fjaAcUr3RFVVAIDtdgMAWK9fJwmapumMVy0e715Pv66fDWCcXgNIUoS6rgEAbdsOGljuc8cLQb+unw1gnF4D+Oac2CTKdb7xzqfT3fvp1/WzAYzTawAXSZwky5dEN3lD5yz68/jZAMYJNoDgS6LvurmhP42fDWCc6AYQ3CS651ND/7x+NoBxBjeAb+4Z+8WK/rx+NoBxohsgNOeE3lOnQn8aPxvAOMEGiP23GfvFaij0p/WzAYzjbYCx75lzPQn06/jZAMbpNYC7hmzsmjRJnIx3PB4AhNfE0a/rZwMYJ7gmcCpT18TRn9bPBjBOITuDVs8vquLP76/OMf15/GwA45Q3u1Sz7o6lP4+fDWCcK277eIRHzqASAAAAAElFTkSuQmCC"
 		},
 		{
 			"category": {
@@ -2083,7 +2112,7 @@
 			},
 			"found": 1795003318.0,
 			"id": "steel_platform",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "Steel Platform Seed",
 			"parents": [
 				"wooden_platform",
@@ -2093,7 +2122,8 @@
 			"pattern_seed": 9670,
 			"rarity": 32,
 			"sprout": "#698d46",
-			"tag": "farmable"
+			"tag": "farmable",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAAOxJREFUeJzt2TEOgjAUgOGH4QCMDCyexE0n4zGMt+AWxmMYJ9wYuQAri4OjN8DFNtJgEEL6jP2/SYzt79C8mBrJS5YmrXh0uz+i92f6Ov2Fzyh+T2RO3uV89Rre7tadZ/o6fSZA4GLzoq5rERE5HXMREdkf8llDQ/vS1+kzAQIXu2/MffLG7kvfb58JEDg7Aaqq0vwe9JX6TIDA2dsocx+wWS07HyjKZtSG367/dBNG32+fCRA4+xvAnIiibHpPontiXe5dtjl5Q+vo6/aZAOiXpUk75R+qqevo6/SZAAAAAAAAAAAAAAAAAH/mCZz8ztNWWUJHAAAAAElFTkSuQmCC"
 		},
 		{
 			"category": {
@@ -2117,7 +2147,7 @@
 			},
 			"found": 1795003352.0,
 			"id": "toilet",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "Toilet Seed",
 			"parents": [
 				"white_block",
@@ -2127,7 +2157,8 @@
 			"pattern_seed": 37850,
 			"rarity": 37,
 			"sprout": "#7eca8e",
-			"tag": "not_farmable"
+			"tag": "not_farmable",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAATxJREFUeJztmTFuwkAQRX9QjuETICoSWVQRJ3KNBCVIHIfkBChKEEKQKuIEvgdUS0G0eNfeLErmvdL2+DWjvzO2BAAAAAAAtni4vtDvD04hhcfj94/aFODP6++leAn8XS5d5Dpvt9sGFZblSFK6TsR/Hz8JYJxH3426rm8WTmcTSdJivjxJ6c9E/Hn8JIBxaADj0ADG8c4AsVjbn/+LnwQwTusE+PzYSJLG45fY0iRTM/40fhLAON4EKIpCkn8fraoqSnT42kuS1uv3oOfx5/GTAMa5JIA7E8pyFPVNOhX47+MnAYzjnUTdXum+OT8Nn1sJ3NmzmC8lhU+/+PP4SQDjNHbj9X/qpr9Ubnp9fVtJiu98/Hn9JIBxaADj0ADGadwCuu6jbc9C/Hn8JIBxgreArnSdgvH/jp8EMM4ZRwBM+NmpdDMAAAAASUVORK5CYII="
 		},
 		{
 			"category": {
@@ -2151,7 +2182,7 @@
 			},
 			"found": 1795003373.0,
 			"id": "chair",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "Chair Seed",
 			"parents": [
 				"wood",
@@ -2161,7 +2192,8 @@
 			"pattern_seed": 21484,
 			"rarity": 11,
 			"sprout": "#9eca5d",
-			"tag": "not_farmable"
+			"tag": "not_farmable",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAAPJJREFUeJzt2zEOgkAUhOHRWHgMa05k4lmsvIiNpyC2HICC2mPYYWEwBrJZkd2NZv6vM4jTDA99RAkAAACAl1XsDdVu27+/7m736DkpkZ83f53yw/B/NqEDQ/Oa816SdLx0zwN120v5rwTyy+QzAcxRAHMUwBwFMEcBzFEAcxTAHAUwRwHMBTeBMeMd9VxLN1nkp8lnApgLtnC8i05l2Glf61ZS+Eogv0w+E8Bc9DvA6ylUIrHmk182nwlgLjoBTodK0vTe8anJ8+yZyM+bzwQw9/UeIHYPW/o7lfwy+UwAcxTAHAUwl/1/AZz/2+czAcw9AMMy3lk3uFzEAAAAAElFTkSuQmCC"
 		},
 		{
 			"category": {
@@ -2185,7 +2217,7 @@
 			},
 			"found": 1795003427.0,
 			"id": "chest",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "Chest Seed",
 			"parents": [
 				"chair",
@@ -2195,7 +2227,8 @@
 			"pattern_seed": 762,
 			"rarity": 24,
 			"sprout": "#9bec83",
-			"tag": "not_farmable"
+			"tag": "not_farmable",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAARJJREFUeJztmrEKglAUho/h0is0N0SP4CM09AQ9gc/Q2DM4NERDe9LQ3OTaIERDBC0trUFLUJOCWqTh9Ubn+ybvxcPn8PNzFUUAAAAAAAAAAADg/3HyG/2O+zAp3J3vBSd+e/6WSRn8PmkakuRFq5FRoTdciEgxifjt+GkA5Tj55F2OW6PC5eYkIiLz8JrZx2/HTwMohwAohwAoJz0DrKNDpUHf9zPrIAgqzQ+8bmaN346fBlCOm1zEcVxpMElcksSq83nw2/HTAMr5+jvAvj3JrHu3cam5ut6D8dfjpwGU436+5TVlE2cK/PX4aQDlEADlEADlpGeA6Sy0+Rz4LflpAOUU/ghqind/xOBv1k8DKOcJpKTZ1sCdQOEAAAAASUVORK5CYII="
 		},
 		{
 			"category": {
@@ -2219,7 +2252,7 @@
 			},
 			"found": 1795003440.0,
 			"id": "treasure_chest",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "Treasure Chest Seed",
 			"parents": [
 				"gold",
@@ -2229,7 +2262,8 @@
 			"pattern_seed": 71640,
 			"rarity": 72,
 			"sprout": "#c6e849",
-			"tag": "not_farmable"
+			"tag": "not_farmable",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAAU9JREFUeJztmrFKw1AUhk+ko4urQ3ET2gcQnDJKH0J8iI7iII4OPoEUwcmtgxSEUhBcnFNo6ZDFrjrETdCh3EByq/HW3lzp+b4l5Obe8y2HPycQEQAAAAAAAAAAANh8ovJCa7fx6VM4nn9YTvzh/Fs+ZfD/ybvBdF4yvvQqbLe6ImJ3Iv4wfhJAOZHpvIf+gYiIPF+/FzZM07e1Cpvxot75VVZYxx/GTwIop1FeWHfHuYK/Xj8JoJxo1ekzObwo3LefTp3Om2k0r4c/iJ8EUE4+A8xnd04Hd272RUTk9XjidP5xmCxdxx/GTwIox/oKuD17cauwt724/vJcM/75Of56/SSAcioboBcPpBcPnAt30kw6aVa9EX9QPwmgHGsGKHMyOlqp8L15N/0R/H79JIBy8gQw34dVU6ov8IfxkwDKsf4Iqovv/ojBX6+fBFDOFz2M86TuEpQTAAAAAElFTkSuQmCC"
 		},
 		{
 			"category": {
@@ -2253,7 +2287,7 @@
 			},
 			"found": 1795003499.0,
 			"id": "tulip",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "Tulip Seed",
 			"parents": [
 				"daffodil",
@@ -2263,7 +2297,8 @@
 			"pattern_seed": 93861,
 			"rarity": 12,
 			"sprout": "#4e822b",
-			"tag": "not_farmable"
+			"tag": "not_farmable",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAAWFJREFUeJztmj1OAkEYhl9/EhMrwgms14RYewRPIFQegyNwDBMT9QQegZpsArUnMFR0Bov1I3EzCzM6s4Z8z9PNzsKzxcsbvgEJAAAAAAAgSDXUthpqG7vGfxz+01wPCMfJyaEbLFXL2Zkk6Xr6KUlavj0067tHhfZXH4ffOwb8Zf00gHPOU19gydutv5PXF/jz+mkA5yQ3wI76KeNj4P8vPw3gnOgGqBcXkqSRwsmzfWnz54fC35+fBnBO9Kxq8+jL/WVwf/zaJC/X/Iu/Hz8N4Jzok0BLlq0H00qStJ6tFNrPfRKGv4yfBnBO5xRgSbp5vm0uTOZ7f2nquv+3nwT8/fhpAOdEnwNYshaT+d79UuAv46cBnBM9BbQT9l6vJUlXo8GP65bQ3N+C8Zfx0wDOST4JNNpzqFH6JAx/Xj8N4JzkBrDktWmfSOUGfxk/DeCc5LR2/fe8VPLxl/XTAM75Ao+bV9V2tmxSAAAAAElFTkSuQmCC"
 		},
 		{
 			"category": {
@@ -2287,7 +2322,7 @@
 			},
 			"found": 1795003531.0,
 			"id": "orange_block",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "Orange Block Seed",
 			"parents": [
 				"clay",
@@ -2297,7 +2332,8 @@
 			"pattern_seed": 25508,
 			"rarity": 20,
 			"sprout": "#ffb44c",
-			"tag": "not_farmable"
+			"tag": "not_farmable",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAAPdJREFUeJztmzEOAUEYRv8VDRVncAuNc1DoOBSdiDOoJBIcQecOKu0qGMnMZAmbmU1873Vji7fFy5ctRmFmpYEsraZfAJqlHf5w2wyTCruT09vn+PP6WQBxCnt+A6Qub709e+f56uqd8TfjZwHEib4BHJ3x0TtflqPkL4M/v58FEKdyARy5y8ef188CiFO5AP9ePv4HLIA4BCAOAYhDAOIQgDgEIA4BiEMA4hCAOAQgDgGIQwDiEIA4H+8D1GUw25uZ2e7QT63C/4OfBRAnWoDw9mhdvi0ff14/CyDO638BjsW0l1QY3ocPwZ/XzwKIEy0AaMECiHMHctNn+YxFFwMAAAAASUVORK5CYII="
 		},
 		{
 			"category": {
@@ -2321,7 +2357,7 @@
 			},
 			"found": 1795003611.0,
 			"id": "lime",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "Lime Block Seed",
 			"parents": [
 				"green_block",
@@ -2331,7 +2367,8 @@
 			"pattern_seed": 53293,
 			"rarity": 31,
 			"sprout": "#187e00",
-			"tag": "not_farmable"
+			"tag": "not_farmable",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAAPZJREFUeJzt28ENAUEYxfFvRA8KIaESVzcdrCIoQMLJkQLU4KIQVawDK5mZDGEzM4n3/93GSp7Dy8sehjOz1iBrUPsHoK5h+MGlXWcNnLnV2+fkl81nAcQ5e74D5G7edn/0zofl1TuTXyefBRAXvQN0ptZ459OtSXwzD/LL5LMA4pIL0CndfPLL5rMA4pIL8O/NJ/+BBRBHAcRRAHEUQBwFEEcBxFEAcRRAHAUQRwHEUQBxFEAcBRD38T5AX/PRxszMzjbJHUX+D/ksgLhoAcLbo31923zyy+azAOJe/wvoLHbjrIHhffgQ+WXzWQBx0QJACwsg7g7Hd2HxyrrG4wAAAABJRU5ErkJggg=="
 		},
 		{
 			"category": {
@@ -2355,7 +2392,7 @@
 			},
 			"found": 1795003654.0,
 			"id": "aqua_block",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "Aqua Block Seed",
 			"parents": [
 				"water",
@@ -2365,7 +2402,8 @@
 			"pattern_seed": 81221,
 			"rarity": 37,
 			"sprout": "#38e9e7",
-			"tag": "not_farmable"
+			"tag": "not_farmable",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAAPhJREFUeJztm70NwjAYBb8gFuFnBShZgAEYgCFoKGkYgj4UlCxAusyAxChQECPFVkAQ2ZZ4d51JcSlOTylMYWZ3A1kGuV8A8jL0f1jV16jC43z69jn+tH4WQJzCmm+A2OXVp7J1vu23rTP+PH4WQJzgG8BRziat8/p8if4y+NP7WQBxOhfAkbp8/Gn9LIA4nQvw7+Xjf8ICiEMA4hCAOAQgDgGIQwDiEIA4BCAOAYhDAOIQgDgEIA4BiPPxPkBfDsuFmZmNqyq2Cv8PfhZAnGAB/Nujffm2fPxp/SyAOK//BThGm11UoX8f3gd/Wj8LIE6wAKAFCyDOAzVraNF6FdATAAAAAElFTkSuQmCC"
 		},
 		{
 			"category": {
@@ -2389,7 +2427,7 @@
 			},
 			"found": 1795003683.0,
 			"id": "grey_block",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "Grey Block Seed",
 			"parents": [
 				"white_block",
@@ -2399,7 +2437,8 @@
 			"pattern_seed": 46387,
 			"rarity": 36,
 			"sprout": "#8b8b8b",
-			"tag": "not_farmable"
+			"tag": "not_farmable",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAAO1JREFUeJztm8ENgjAYRn+MQ8ECugY76JEbHHUH5jAMwFZ60Jq0DRIlbRO/926Vw+Pw8qUHrMzsbiDLrvQLQFn24Q+XrksqPA/Dx+f48/pZAHEqe90BUpd3myb/PM/eGX8ZPwsgTnQHcJz63j+3bep3wV/AzwKIs7gAjtzl48/rZwHEWb4D/Hn5+J+wAOIQgDgEIA4BiEMA4hCAOAQgDgGIQwDiEIA4BCAOAYhDAOKsfg+wles4mpnZsWlSq/D/4GcBxIkWIPx6dCvflo8/r58FEOf9vwDHoa6TCsPv4UPw5/WzAOJECwBasADiPABgMF5RfpaHZQAAAABJRU5ErkJggg=="
 		},
 		{
 			"category": {
@@ -2423,7 +2462,7 @@
 			},
 			"found": 1795003710.0,
 			"id": "brown_block",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "Brown Block Seed",
 			"parents": [
 				"dirt",
@@ -2433,7 +2472,8 @@
 			"pattern_seed": 49304,
 			"rarity": 9,
 			"sprout": "#523c0f",
-			"tag": "not_farmable"
+			"tag": "not_farmable",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAAPRJREFUeJztmzESwUAYRv8Y1+AgHIGeljatW9Cm1upRuEB6Z3AQComZ3Z0wZHZ3xvdet1K8FG++SbEKM7sbyDLI/QKQl6H/w2Ezjypc7k5vn+NP62cBxCms+QaIXd6lvjrnfX1zzvjz+FkAcYJvgJbF9uicq3IW/WXwp/ezAOJ0LkBL6vLxp/WzAOJ0LsC/l4//CQsgDgGIQwDiEIA4BCAOAYhDAOIQgDgEIA4BiEMA4hCAOAQgzsf7AH0pq7OZma2n49gq/D/4WQBxggXwb4/25dvy8af1swDivP4X0LKajKIK/fvwPvjT+lkAcYIFAC1YAHEeFvRgCYeiuqwAAAAASUVORK5CYII="
 		},
 		{
 			"category": {
@@ -2457,7 +2497,7 @@
 			},
 			"found": 1795003775.0,
 			"id": "gold_platform_",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "Gold Platform  Seed",
 			"parents": [
 				"wooden_platform",
@@ -2467,7 +2507,8 @@
 			"pattern_seed": 92985,
 			"rarity": 78,
 			"sprout": "#cbea5e",
-			"tag": "not_farmable"
+			"tag": "not_farmable",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAAPhJREFUeJzt2aEKwkAYwPFvInsIn2Asm3wDs13EYjUajAaj1TKGVUwG38BkFvEBZvANLLN4w43JdMh94v1/yYG3v+H4OE5PHsLAT8Wi4+nmPT/T1+k3bEbxezyz8/aHldVwp93PPdPX6TMBHNc0Hy7Xs4iIjEdzERFZLCdfDVW9l75OnwnguOwMsNlNrYZ73Vnumb5OnwnguOwMsF1Hmr+DvlKfCeC47DbKnAUGw1buC3GUfPTCd9e/ugmjb7fPBHBcdgYwOyKOktKdWNyxRcW7bLPzqtbR1+0zAVAuDPy0zj9UddfR1+kzAQAAAAAAAAAAAAAAAP7MHUXb0LO5rPIKAAAAAElFTkSuQmCC"
 		},
 		{
 			"category": {
@@ -2491,7 +2532,7 @@
 			},
 			"found": 1795003866.0,
 			"id": "bricks_background",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "Bricks Background Seed",
 			"parents": [
 				"bricksw",
@@ -2501,7 +2542,8 @@
 			"pattern_seed": 58843,
 			"rarity": 11,
 			"sprout": "#6ea363",
-			"tag": "not_farmable"
+			"tag": "not_farmable",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAAWdJREFUeJztm71qAkEUhc+IhaigVexESJEyVV7Ct8k7+Qy+hE+gIEiKgNpkIW4kTdJ4l+zKuD8uM4Fzvm5/Zj+Ly5mZu6vDhcdR/wcB2Sap+3ssfxx/J6RU/D+cVd7r86zWwOXuAACYzx5qjTt+fQMAFpv33Hn54/iVAOR0fResUsqoep+xOiStPlf++/xKAHKuEqBYUW+f55sP8F2fDnuNfpD8Yf1KAHKyXcDTqB9UvE7S3LH8cfxKAHKyNYDtJ20OWu0/AACTQbO5bH8658bbnORbBcsfx68EIMfbB2ibstWs/HH8SgByVADkqADIUR+A3K8EIMfbBzB8q8fiPrOMuvtg+cP4lQDklPYBrHKa7mObvhWTP4xfCUBO5U5g3Uq8t/LlD+NXApCjPgC5XwlATrYGeJmMcxfsfXTxfFVsPJy7faP8Uf1KAHKudgHFTlHV79jbQv6wfiUAOdkEwfrvWHa/EoCcX5nDY3j9Cga7AAAAAElFTkSuQmCC"
 		},
 		{
 			"category": {
@@ -2525,7 +2567,7 @@
 			},
 			"found": 1795003887.0,
 			"id": "wooden_background",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "Wooden Background Seed",
 			"parents": [
 				"wood",
@@ -2535,7 +2577,8 @@
 			"pattern_seed": 55206,
 			"rarity": 7,
 			"sprout": "#8cb554",
-			"tag": "not_farmable"
+			"tag": "not_farmable",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAAaVJREFUeJztm71KA0EUhe9KQBsLsVLEIhbiC/gA9sEHsLDxOex8CEGw8gEkfTqb1DY2U4SQoLCxsPAHQRvv4M7s7s3sOjvCPV+X7J39UhzOjk6S0Q/7u2tf1CEPk7fs92v40/hXupSC/0fGyTs/3a4dvBlOiYjoZLDTau5x8UlERJfDp8L78KfxowGU03PfuLieEBHR2XF5IjlBEjx3dTsr3O/u/qV2Hfzd+tEAyvEawE2emb/XvpaoSvKy8/DH9aMBlOM1ABOaNGl9f2u11Xr44/jRAMppHIDROKfROP/LzwJ/Aj8aQDmVewCJo8PNoPm2zzT44/jRAMpBAJSDACjH7gH4FCkW/HfoPP8ovQ5/Gj8aQDm2Afj82D1t4t2jMc9BN3bnjXEnitmDP40fDaAc8f8A/OzwEySs628U1jP2PHrxutx94I/qRwMox2sA9xskTQk9/YI/jR8NoBzbALz7lJLnJstNbNWziucO9tZLr8Ofxo8GUE7j00BGSizvOquSD39aPxpAOV4DSN9bl66HzsGf1o8GUI79harWX8dq96MBlPMN/K6r0716LEwAAAAASUVORK5CYII="
 		},
 		{
 			"category": {
@@ -2559,7 +2602,7 @@
 			},
 			"found": 1795003926.0,
 			"id": "ruby",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "Ruby Seed",
 			"parents": [
 				"lapis_lazuli",
@@ -2569,7 +2612,8 @@
 			"pattern_seed": 40064,
 			"rarity": 64,
 			"sprout": "#491818",
-			"tag": "not_farmable"
+			"tag": "not_farmable",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAAT1JREFUeJztmiFuAkEYRj9Is0E0FRWcoKoYZM/QA6ARDYfgAD1Eg6jmAGgkEgOC9ASIClLRbBqoaKYJSzbMLDuzCf97BgHZh3jzQWAlAAAAAAAAAAAAuH5avi98zNqHkAuv8733tfE3529XeztwLZytxJW3enkKunBvspB0+UnAH9fPAhintI6T8kavf49vY0nSar7xEgw+PiWFnwT8afwsgHFOqqirvCK+JwF/Wj8LYJz/Glx504f7qMKyEvE342cBjFP6HWB4l0mSnru3Fwlm2y9J0vsul+T/GYg/jZ8FMM7Z3wGqlhhaPv5m/CyAcbz/C3AlOopFuuIcVcvHn9bPAhgn+H4AV+Ly++fo+X7nRlJ95eNP42cBjBNcqSuxnx23s8z3kuovH39cPwtgnMq1Fu9Ri10+/jh+FsA4vw7FdDG2gVfnAAAAAElFTkSuQmCC"
 		},
 		{
 			"category": {
@@ -2593,7 +2637,7 @@
 			},
 			"found": 1795004138.0,
 			"id": "hay_block",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "Hay Block Seed",
 			"parents": [
 				"wheat",
@@ -2603,7 +2647,8 @@
 			"pattern_seed": 16216,
 			"rarity": 17,
 			"sprout": "#d9e58d",
-			"tag": "not_farmable"
+			"tag": "not_farmable",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAAZZJREFUeJztmz1qw0AQhZ+Da5HKldEZjAkEUqXwKXKHHCFXyQ0MxidwJQikCClSpRKGgKoQ0ieNV/autB6totUG5r1KP2/1NcNbz5id4KCbxeUPRlTx8jk5vSc/Df9iTCj1/zQ1lbdd37UaHh92AIB8lgEAVvfLsx+U/Jv11lxaFU9+Gj4TQLmm7oPnpx0AIM9nrQvc92VZnfVXH2+WTxL54/KZAMrVSABfJfneS37Xt99/BX2f/Lh8JoBy1Qlg9hYjX2V13ct8/vk8O1x9W8/JT8NnAihXnQBX17cAjr8afZL2nFfYFef6i+K9dR35afhMAOVqFEBZVp32maF95KfhMwGUK3gOEMtHfho+E0C5GnMAqWLc/aRrJZp1Uh9M/rh8JoByDT4HkNbF7oPJD+MzAZSr0QX0nTXHml2TH5fPBFAucQ7gzpYlv/Q+9P9w8uPymQDKFTwHMOrbj/61DyZ/WD4TQLmC5wBGfftR3x5Ifho+E0C56gQ4OTHiKLPufJOs/n7yU/KZAMpVn1DVejpWO58JoFy/X9bk0ZsFj98AAAAASUVORK5CYII="
 		},
 		{
 			"category": {
@@ -2627,7 +2672,7 @@
 			},
 			"found": 1795004187.0,
 			"id": "pink_block",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "Pink Block Seed",
 			"parents": [
 				"white_block",
@@ -2637,7 +2682,8 @@
 			"pattern_seed": 45192,
 			"rarity": 50,
 			"sprout": "#f49875",
-			"tag": "not_farmable"
+			"tag": "not_farmable",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAAPRJREFUeJztmz8OAUEcRmdF4c8BFC7DDTQcwoEcwjYqiUocRuEAoqRYI5mZLGEzv0l871WG4m3x8mWLUTnn7g5k6ZV+AChLP/7idrxmFQ7n47e/47f1swDiVO75DpC7vEO9D86LzTI44y/jZwHESd4BPIPZKDhftufsD4Pf3s8CiNO6AB7r8vHb+lkAcVoX4N/Lx9/AAohDAOIQgDgEIA4BiEMA4hCAOAQgDgGIQwDiEIA4BCAOAYjz8T5AVyarafPhlNuE/xc/CyBOsgDx7dHOfFk+fls/CyDO638Bnt26ziqM78PH4Lf1swDiJAsAWrAA4jwAI2hjvWOh3tUAAAAASUVORK5CYII="
 		},
 		{
 			"category": {
@@ -2661,7 +2707,7 @@
 			},
 			"found": 1795004225.0,
 			"id": "cherry_leaves",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "Cherry Leaves Seed",
 			"parents": [
 				"leaves",
@@ -2671,7 +2717,8 @@
 			"pattern_seed": 63998,
 			"rarity": 68,
 			"sprout": "#766200",
-			"tag": "farmable"
+			"tag": "farmable",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAAUpJREFUeJztmDFOw0AURMco9BwBpUGi4R7QIHKBVDS+AQVFCm5Ak4oLgGig5go0SDQRPU16ClM4f4EfL44tZS1l32us3Z1oXIznO5YAAAAAAAAAAAAAAAAAYDcp2gSnxxdV0/7z20PRR9cV/Lfrv9f/1mAXWEuHT9Lj070kaf+wXn991Nfzs4m66DZ9EvBP608DZE5IhSXPJ8mwRC1X14PV+aY6n9jYDMM/rT8NkDlF1+QZPoGm8+vY79pmGP5p/GmAzBnFDnrPHP3V2XrpdG3gn8afBsic0AA+QbHkdZ1Jplu8vkuSxidHjTeC/zD+NEDmjOz/4LScVJJ0d1u/jYbEqE6MT2YsUZ8v/59Py+YvU/gP408DZE54B/BNcH15I+knSbPySr/3DUuU35/Nm/Ux8B/GnwbInLXvAGE2zVVtdT8C/mn9aYDM+Qa0wQzR4ql4owAAAABJRU5ErkJggg=="
 		},
 		{
 			"category": {
@@ -2695,7 +2742,7 @@
 			},
 			"found": 1795004273.0,
 			"id": "limestone",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "Limestone Seed",
 			"parents": [
 				"stone",
@@ -2705,7 +2752,8 @@
 			"pattern_seed": 57148,
 			"rarity": 32,
 			"sprout": "#58a130",
-			"tag": "bountiful"
+			"tag": "bountiful",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAAXtJREFUeJztm79Kw1AYxU+lg6ODm3ARcRR8g+59iU6O4u5rSB/AoUgRJxF8hzoVHKWUC0LcHN108VZNvE16k3wRz/lt+fu7w5eT5EtuD58cHB69w5DF02Pv+7L83fi3LKXi79EPlTe5ujYRTqc3AIC7W/yoePm78SsByOnnV5xfDgAAe/s7AIChG5sOSH5bvxKAnEICBKpWnvf+1/XOubQRyW/qVwKQU0iAk8Gk0oGh8mKVVrY9hvy2fiUAOY0VgPc+ej+yQP40vxKAnOhbwKaEe01XV4H8aX4lADnJCZCvuLBc9/1Xflu/EoCc2s8AVhUvfzt+JQA50QRoq8ddFflt/EoAcgoJ0HSP+96fAgCel68AgOPts7X7y2/rVwKQU1oAdXvcQzeu9VeL/O36lQDklPYBmupxh+/cD7PZRsfJ365fCUBOIQH+S49b/mooAchZJUCYMZLnJcvWnmD+dgHg6z/23WyUNBD5u/ErAchZzVBlnR3L7lcCkPMBG5RGx+3jb7oAAAAASUVORK5CYII="
 		},
 		{
 			"category": {
@@ -2729,7 +2777,7 @@
 			},
 			"found": 1795004309.0,
 			"id": "seaweed",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "Seaweed Seed",
 			"parents": [
 				"water",
@@ -2739,7 +2787,8 @@
 			"pattern_seed": 43020,
 			"rarity": 28,
 			"sprout": "#95f478",
-			"tag": "not_farmable"
+			"tag": "not_farmable",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAAUFJREFUeJztm70JwkAYQD9FcAWxs8wYdiLYO4MDWDiAhQM4g70g6bKBbUo7cQWrszEghvN+TC7o916lEO+l+Hg5TxQBALCyuh3M6nYw+P/T329rYfgNBq4LivIctGA1rfvRshd5T/gT+imAcpwFKKe7nohIVqzN63sboROLv1s/BVCOswC++E5oW+CP81MA5TgL0NRkx+6O8bfrpwDKsRYgdPJcu9XQ3Sn+NH4KoBxrASb3o4iIlMluBX8XfgoAn8mKtameK5+Y55mZ55nzOt/18KfxUwDlNHYSeBkunq+6eWrij/NTAOU0/mugjdjP42/XTwGUUytA6Jm172T6fq/Fn9ZPAZRTK4DtzDj2ZKqa0JPnswt/Wj8FUE6tAO+7zgrfCf4W/Gn9FEA51qkab2aN/hvlus2DJhh/Gj8FAABQywNV5paB/W5bKgAAAABJRU5ErkJggg=="
 		},
 		{
 			"category": {
@@ -2763,7 +2812,7 @@
 			},
 			"found": 1795004623.0,
 			"id": "stone_bricks",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "Stone Bricks Seed",
 			"parents": [
 				"bricks_background",
@@ -2773,7 +2822,8 @@
 			"pattern_seed": 90435,
 			"rarity": 12,
 			"sprout": "#91c271",
-			"tag": "not_farmable"
+			"tag": "not_farmable",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAASVJREFUeJztmzEOAUEYRv8VpTiBiEIl4hCO4IQbhUKxpaiUewARhSgU7kFjNojN+hc7ku+9zmZmXvPlM7PZSezGcDC6WIMcT/vk/jf+OP5Wk1L4P9oheetV5pqYZRszM5vNpq558zQ1M7PF0h4Sjz+OnwYQp/384Hg4uBbwjv/2evg/89MA4hAAcQiAOMUeIOwqvWx3Z9f4Trf/8jn+OH4aQJyiAcJ5MuwqQ7Im416thcvm53n+cjz+OH4aQBwCIA4BEIcAiEMAxKl8D+A9Z1bN956D8f/WTwOIU/oeoIq659R3z8H4m/HTAOIQAHEIgDgEQBwCIA7fA4j7aQBx+B5A3E8DiFM0QLgxEgj/FWWJrcI7H38cPw0gTnFDVfV2rLqfBhDnCn+jPTH39cApAAAAAElFTkSuQmCC"
 		},
 		{
 			"category": {
@@ -2797,7 +2847,7 @@
 			},
 			"found": 1795004644.0,
 			"id": "stone_brick_background",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "Stone Brick Background Seed",
 			"parents": [
 				"stone_bricks",
@@ -2807,7 +2857,8 @@
 			"pattern_seed": 31235,
 			"rarity": 19,
 			"sprout": "#9db96c",
-			"tag": "not_farmable"
+			"tag": "not_farmable",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAAWtJREFUeJztm0FKw0AYhV9EUFwLljbgHSyeoIJXKHTnCV0JBT2B6KKLdl1ISwVpj9Bu/INJGTOZhhnhvW/XTCZfFz8vM3+SDD/c5vkeEVkWRfb7t/xp/GcxpeL/kVnlPY0nrSZOX98AAI8Po1bztrsdAOB5+lI5Ln8avxKAnHPXgFVKE77nGbPFvNPryn+aXwlAzlEC1Ctq/bX58wKu8f5NL+gPyR/XrwQgp9wFDK7DKjaU1Xe1cuVP41cCkFOuAWw/afeg949PAMAg7wddeFWsK/PtnuRaBcufxq8EIMfZB+iaptWs/Gn8SgByVADkqADIUR+A3K8EIMfZBzBcq8f6PrOJtvtg+eP4lQDkNPYBrHJC97GhT8Xkj+NXApDj3QlsW4mnVr78cfxKAHLUByD3KwHIKdcA98O7yoA9j64f98XmX1xdep0vfxq/EoCco11AvVPk+x57V8gf168EIKf8QpX161h2vxKAnAPxmmJkqj+VIgAAAABJRU5ErkJggg=="
 		},
 		{
 			"category": {
@@ -2831,7 +2882,7 @@
 			},
 			"found": 1795004687.0,
 			"id": "lemon",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "Lemon Seed",
 			"parents": [
 				"bush",
@@ -2841,7 +2892,8 @@
 			"pattern_seed": 28068,
 			"rarity": 25,
 			"sprout": "#e2d826",
-			"tag": "not_farmable"
+			"tag": "not_farmable",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAATNJREFUeJztmiEOwjAYRn8ICoVCo0lIEBMEDVfhAGgEAs1Z8KAJAscFOMXsEEtJVtLQ0rVA/vdMYUv6Jj6+lm0iAAAAAAAAAAAfMi+kmhdS4f8PfzflxcDv04udwE7bdDiqPxT3SkTkfJVOrAN/Oj8NoBzvBnCtK4PVuHngUMZdEf6sfhpAOc71wU7c8RQ28XLR/B66FuLP46cBlPOSCpM8k7h+f9s4X5ZbCeF2qcf1ph7f/RLw5/XTAMp5pqHt5Nm8SyL+7/hpAOX07OTZxCbPZr+rx/XGb5eLP62fBlCO805g28kLBX8ePw2gHOe/gLYwu0+D7y4Yfx4/DaAc551As1uczD6b2Df5+L/rpwGU4/000CTSF5M4Q+zTMPxp/DSAcrxTGfqma9vvwuFP46cBlPMAbGcS/EgDB3QAAAAASUVORK5CYII="
 		},
 		{
 			"category": {
@@ -2865,7 +2917,7 @@
 			},
 			"found": 1795004770.0,
 			"id": "melon",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "Melon Seed",
 			"parents": [
 				"lemon",
@@ -2875,7 +2927,8 @@
 			"pattern_seed": 98119,
 			"rarity": 37,
 			"sprout": "#a5b735",
-			"tag": "not_farmable"
+			"tag": "not_farmable",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAAXxJREFUeJztmqFOA0EQhqeAwzRN8CQkeIIhqAqwPAAPQfAIguAF0GgeoJV4giF4EhI8CQ4NYruFm8uwe727vZD5PtXttvdV/DuzvVsRAAAA8Mho1S8e7srX7/HDy+rXwj+cf62bnwP/lY3cD+rEjY+2q/Py1uuKwN+PnwrgHDMlOnF3l5uNLnx69VkZN10R+Mv4qQDOqaUiJi8mbrJzXJn/eL0XEZGt/WsREXl/uvhT8PgckngzC+PUSsBf1k8FcM7yX0Aqeevj6eJVSKBOnpXIg73YuxY9aRY8Oon4h/FTAZwzspIXE2f1mFQP0vOxF0ViT4rgH8ZPBXBOrQJomibNmp/fnlfet1YA/rJ+KoBzahWgq8Tp+dweiL+snwrgHPYAzv1UAOewB3DupwI4Z3k/2toLtE2klbzUvXD8ZfxUAOeY5wHOTsL452lSoO2uM/d5OP4yfiqAc7LPBMZE5qJ3uW3PxOHvx08FcE52KnUiU/R9Lh5/N34qgHO+AeyvNXJF4vFGAAAAAElFTkSuQmCC"
 		},
 		{
 			"category": {
@@ -2899,7 +2952,7 @@
 			},
 			"found": 1795004810.0,
 			"id": "watermelon",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "Watermelon Seed",
 			"parents": [
 				"melon",
@@ -2909,7 +2962,8 @@
 			"pattern_seed": 12865,
 			"rarity": 62,
 			"sprout": "#c3605a",
-			"tag": "not_farmable"
+			"tag": "not_farmable",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAAVtJREFUeJztmjtOw0AURS9RFAGREAU90KZCYgNhBzRUrINNwCZoqFgEbCBSqrTADmhILBcJBZ4Yfyb2gDWR8s6poidrTorrG8/EEgAAAAAAAAAAAOw+e20vHIx6q5CF09my9dr4t+fv/e3rwK7gTUk5cZdPy6CFJ7fFbIXeEfjj+GkA4/TLA5c8l7ir87Ek6fF+Kkk6vfksXP/xfFw7P7k+kiR9vafZJFlJzXcC/rh+GsA46wbwJe+/jO7mkqTZw2E2qU8i/u34aQDj9H3Je3l7leT/jQmdOw4u9rNPSe1TLv64fhrAOJVdQNfJc3MpVRvwx/XTAMapNEDXyXPz/Cl0M/jj+mkA46z3ouXdQFdJLCdvMU0kNe+D8cfx0wDGqZxLuyTm+8UfhmcDSb/PljfPHS5xjrZn4fjj+GkA41R2AXlCiidVPpqSF/o/OP64fhrAOLwTaNxPAxjnG8GTFbfxgs3pAAAAAElFTkSuQmCC"
 		},
 		{
 			"category": {
@@ -2933,7 +2987,7 @@
 			},
 			"found": 1795004863.0,
 			"id": "shroom_melons",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "Shroom Melons Seed",
 			"parents": [
 				"watermelon",
@@ -2943,7 +2997,8 @@
 			"pattern_seed": 57403,
 			"rarity": 85,
 			"sprout": "#b17f58",
-			"tag": "not_farmable"
+			"tag": "not_farmable",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAAWZJREFUeJztmj9OAkEUhx9/EnsrzwBewcSCW1DbcAESCgsKEi9gQ80NLA3ZxIZGK/UMViQeAKWYfZvM08ksG9hJmO9rJjvszNf88ubPIgIAAAAAAAAAAAAAAOdMJ/bC5aD7W2ei7edPdK4m4D+tv9tkEJwPfdthEzda9lw7HP87wfPHyrV34o1rmkj87fqpAJlTVQBNnk3cy4NLmAz9gdo/mpbJXLrn99WufMPNVzeJ+NP4qQCZ048l72bqrz2h/osn116Pe2WPn0SLJhN/Wj8VIHP+nAIOTZ7t112pRROu2F0r/jR+KkDmdHQNuro9jeCrcK0mUNeq1++d9zv+NH4qQOZUZ8TQnfPbeu09bzaFiIhMZvNaglCyNZl2N4y/XT8VIHOqU4C9MTreVyg3jya5SnDhJxh/Gj8VIHOCXwPt2mN5XNyLiMhkNj/ozjsG/nb9VIDMCabm2P9EsfPFxuFvx08FyJw9G/q5GgNN4lcAAAAASUVORK5CYII="
 		},
 		{
 			"category": {
@@ -2967,7 +3022,7 @@
 			},
 			"found": 1795004901.0,
 			"id": "barrel",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "Barrel Seed",
 			"parents": [
 				"steel_platform",
@@ -2977,7 +3032,8 @@
 			"pattern_seed": 41062,
 			"rarity": 56,
 			"sprout": "#83c06a",
-			"tag": "not_farmable"
+			"tag": "not_farmable",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAAP9JREFUeJztmqEKwlAYRr+JmE0iBp/AIAazWXwUk/gQBjH5BD6DWRbMw2BaNIj4CBYNcoVNLopcN/Q/p2y7G5yFb9+F3SsBAAAAAAAAAADA/xP5brSbtWtI0eF08brwl+evhJTA7/GUCpe88WQeVLRcTCW9/hLwF+unAYzzSINL3mo2lCSl6TnzYLw7SpIG3dZH4+56m9yP+STiL8dPAxgn+tac4yOOY0nSPllnxvGX46cBjFN1J/3GRlL4uSc/Xve8CP5y/DSAcQiAcQiAcQiAcQiAcfgPYNxPAxiHtQDjfhrAON79AJ3eKKjIzTnvrofjL8ZPAxiHPYHG/TSAcW6CPHdkiwpQ/QAAAABJRU5ErkJggg=="
 		},
 		{
 			"category": {
@@ -3001,7 +3057,7 @@
 			},
 			"found": 1795004949.0,
 			"id": "topaz",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "Topaz Seed",
 			"parents": [
 				"lapis_lazuli",
@@ -3011,7 +3067,8 @@
 			"pattern_seed": 52312,
 			"rarity": 37,
 			"sprout": "#6c8541",
-			"tag": "not_farmable"
+			"tag": "not_farmable",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAAZZJREFUeJztm6FSw0AURW+YziBBVSF2f4DBMQMV/QA8Fj6Cn0FVYEDjiaCdwQE/QAQKRSUKxHYXsmlYks3slnn3mNc0SU/Ey02y3RRYcbSPTyRk8Yzi5zL9efxbKaVk8xjZzps/eQ24PP91x4/3CgCwvas6Ca8vZ+bDVb3j6c/jZwIIZ+R/8TYv1m3n2Nmb1pZtJy5fy0EOiP60fiaAcL4TIHDN8TuvbX3vM4H+LH4mgHAa9wA+XTvrpTJVq17HQ39iPxNAOK0J0PeaopWpsWcC/Wn8TADhNBIg+m52hVamdj0T6E/rZwIIxyXA0CNaFq1MtZ3YBv15/EwA4bgEeLwvAQz3/OpzMJkCAKqbcu16+vP4mQDCcQlweHIGAHi4nQFIP5JFfx4/E0A4jXEArUz9LyNZ9Mf5mQDCaf0vQCtTN30ki/44PxNAOMH5AFqZGhrJctuj7Hss9GfwMwGEE0wAi1bdfnh8bOa5h2a50p/XzwQQjksA98ZIJKcX9Tdc7hZ/24/+PH4mgHDcBULq27HS/UwA4XwBjZlWaWtpz0IAAAAASUVORK5CYII="
 		},
 		{
 			"category": {
@@ -3035,7 +3092,7 @@
 			},
 			"found": 1795006612.0,
 			"id": "boulder",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "Boulder Seed",
 			"parents": [
 				"dirt",
@@ -3045,7 +3102,8 @@
 			"pattern_seed": 48866,
 			"rarity": 2,
 			"sprout": "#88cd60",
-			"tag": "farmable"
+			"tag": "farmable",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAAURJREFUeJztmrENwjAUBQ1iEBQ6igg6KgZgBjoomYABmCAldMzAAFR0IAo6IjaBAhkpjkx+guVI/LuOxPFRPJ4tYmMAAAAAAAAAQAsd6cB+f/isM/HjcRPPjb89f7fZ14F/wZsSN3G7/bbWxIv50hjT/JeAP46fBlBOKR02eTZxgyQp3L/nuWji8+k9Lss2hetVicQf108DKOeThlDJ8+Em0k0i/nb8NIByOr7kVSXOJmo8Sb6O8z3nrk342/HTAMrpuRfqrjVNk+gDf1w/DaCcUgNIkSbOJjQ0+MP4aQDleANwPuVB0jueJI3WJ/xx/DSAcj57AN9u8tddpjTF+Nvx0wDKKb0LWK3Wogev10vhc5qOvo6z96v+C8cf108DKMd7HmA6nQUVHY8HY4z8fTj+OH4aQDniM4G/UvdsHP44fhpAOS/Q14HfEuIOdwAAAABJRU5ErkJggg=="
 		},
 		{
 			"category": {
@@ -3069,7 +3127,7 @@
 			},
 			"found": 1795006729.0,
 			"id": "rose_quartz",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "Rose Quartz Seed",
 			"parents": [
 				"rose",
@@ -3079,7 +3137,8 @@
 			"pattern_seed": 27019,
 			"rarity": 19,
 			"sprout": "#87ec6f",
-			"tag": "not_farmable"
+			"tag": "not_farmable",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAAUFJREFUeJztmkFqwkAYRj+LR/AcxU1BFFy4KO4FT5F16BHEdU+RE5QuuhBaCt0Uz+HOA9iF/qWZNDWpyQT539tlMua5+PhmnCgBAAAAAAAAAJxhPBgexoPhAf91+2+a+DJwvfTqfsBS97r5kCRNpneSpLfdZ+1n/Qf8zfppAOeUpsaSZskKk2fst3tJ0jyZ6ef8S8Efx08DOKcfDvyyxly00wyTXHU+/jh+GsA536mousbYfRs3tptnSVKarXLjVXer+Lvx0wDOKewBjDBh6+XDnw+6nd4f552uJ8kid//p8UWSNE9mldZE/HH8NIBzShugKcqSnGarWrtj/O34aQDnEADnEADnEADnEADn9OwEKl2OoorX2XvuGn83fhrAOYV3AW0n0ZIX/v7F342fBnBO4RSq7X+6njv5wh/XTwM45wuANG0YjGuCaQAAAABJRU5ErkJggg=="
 		},
 		{
 			"category": {
@@ -3103,7 +3162,7 @@
 			},
 			"found": 1795006758.0,
 			"id": "spike",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "Spike Seed",
 			"parents": [
 				"obsidian",
@@ -3113,7 +3172,8 @@
 			"pattern_seed": 72730,
 			"rarity": 6,
 			"sprout": "#be770d",
-			"tag": "not_farmable"
+			"tag": "not_farmable",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAAPpJREFUeJzt2zEKwkAUhOGJ5BAiHsYqCIKFpV7DSizFymtoaSEIYuUlFA8g4i1itRKDAYuYBef/qoRsmBTDI4SNBAAAIKnT7uaddjdveh35cfJb3z4Y/lMSDkJLdoe9JGnYH0iS7o9bUryh7nXkx81nAphLqy5M5zNJ0mqxzKXq5ta9jvxm85kA5iiAOQpgLi2/LZb1skySdDoef7IuID9OPhPAHAUwRwHMUQBzFMAcBTBHAcwl4TvAZDRuNHi93bydkx8nnwlgjgKYowDmXvsBztdLzOcgP1I+E8AcBTBHAcxRAHMUwFxa2EX69d8rdfiwe5X8CPlMAHNPlXs3ZeXx444AAAAASUVORK5CYII="
 		},
 		{
 			"category": {
@@ -3137,7 +3197,7 @@
 			},
 			"found": 1795006778.0,
 			"id": "sign",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "Sign Seed Seed",
 			"parents": [
 				"wood",
@@ -3147,7 +3207,8 @@
 			"pattern_seed": 6064,
 			"rarity": 6,
 			"sprout": "#c0c753",
-			"tag": "farmable"
+			"tag": "farmable",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAAUFJREFUeJztmjFuwkAQRcdRKgoUIcU1BTVnoEAcgSPkCClygBQcwUegToWsKCV1CioSpSZSFKWgJdVa2ASvd7F3I817Feu1/Si+vgdhEQAAANBIYj6M0t4hpHi72yfHa/xx/FchpfD/SEzy8odZUPH0cVVa44/jpwGUc109sH1/61T4vPms3ccf1k8DKOekAQyLl7+Tej+5rd2vnucL/jB+GkA5ZxvAlqBLE24Dfxg/DaAc5xnAYHsWdfUMxN+unwZQjvcM4HqeK/jD+GkA5RQNkD2tY34P/JH8NIByvN8HuJsOS+ss/3ASX/p/OP52/DSAcooZoJrIc9iS2vQ+vtfhb9dPAyiHACiHACiHACiHACin8cRops/5uC8iIjfpoLT/vfsSEZHl64+I+E/D+MP6aQDlOKe0q9/B+OP4aQDl/AI8LeXZq2DQnAAAAABJRU5ErkJggg=="
 		},
 		{
 			"category": {
@@ -3171,7 +3232,7 @@
 			},
 			"found": 1795006788.0,
 			"id": "danger_sign",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "Danger Sign Seed",
 			"parents": [
 				"sign",
@@ -3181,7 +3242,8 @@
 			"pattern_seed": 88947,
 			"rarity": 12,
 			"sprout": "#bc902c",
-			"tag": "not_farmable"
+			"tag": "not_farmable",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAAUVJREFUeJztmq0OwjAURjdCECgUGoHC4NAIQkLCQ6B4CB6Ah0DxECQkBIFGgUERgkKgUAgMqJG1/LQbW0tyz1FrRznm9ivbJQgAAAAAAEAWYXRRr5bvLsX78zWMj/H78RdcSuH/CKPKm41aTsX98VoZ4/fjJwGEU9QnDseT1cLe4KaM59OS1brZ5vz1Pn63fhJAOC8JYEKvPH3ethLTgj9bPwkgHOsE0Ctv274o4+aqonwu652APx8/CSAcYwJ8OnNs1/26E/Dn6ycBhPMxAUyVF505JtLuBPxu/CSAcJ69gG4j3+dXncVOrXD8fvwkgHCKsb50on70sFNTxpPlMZFY74fj9+MnAYTzfAp4U5FvMf1zxfZ70q7Dn62fBBAOBSAcCkA41t1A0/uC2Pw9CNKfhfjd+kkA4SSu0rx+BeP34ycBhPMAM3cFl7uspWQAAAAASUVORK5CYII="
 		},
 		{
 			"category": {
@@ -3205,7 +3267,7 @@
 			},
 			"found": 1795006804.0,
 			"id": "gate",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "Gate Seed",
 			"parents": [
 				"door",
@@ -3215,7 +3277,8 @@
 			"pattern_seed": 82631,
 			"rarity": 13,
 			"sprout": "#bca433",
-			"tag": "farmable"
+			"tag": "farmable",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAARlJREFUeJztm00KgzAUhCfF0wTPJD1ECT1CCT1EyXFch1zHriyaKipVA535Vv48+Vw8hpiHQIa1dWdt3eXXj66Tv4z/svbFxH9i+oO+S/zTAwDczQEAUopm+MDedfKX9SsByKnmbjTXBgAQXqED5jt37zr5z/UrAciZTYCctSvZLSveLch/jF8JQI7pO8bd3ali//Cjc/nL+JUA5HzWAG3blnwP+Qv5lQDkVIPvxtHOUYwRABBeYfLBX+smvlflL+BXApCzugFSimZp92pL3VbkP8avBCBHDUCOGoAcNQA5agByNA0k9ysByNE0kNyvBCBH00ByvxKAHE0Dyf1KAHI0DST3KwHI+eqUfCdp6V+2verkL+NXApDzBvgkPU+/73NeAAAAAElFTkSuQmCC"
 		},
 		{
 			"category": {
@@ -3239,7 +3302,7 @@
 			},
 			"found": 1795006823.0,
 			"id": "prison_door",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "Prison Door Seed",
 			"parents": [
 				"danger_sign",
@@ -3249,7 +3312,8 @@
 			"pattern_seed": 70733,
 			"rarity": 25,
 			"sprout": "#c88427",
-			"tag": "not_farmable"
+			"tag": "not_farmable",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAAT1JREFUeJztm62OwkAUhU8JYgVBrUKsXIUjEJ5hnwFRgSI8BwqNIIhaeAA0miIrWLMkCIJAbRA4MFBoCT+hmRmScz43d8RXcXJEb8bDkVLxYw+LrP533uVZfjf+nE2peD/yp+SN23UrwtEkAgAEERKJl9+NXw1ATj49+OnPAQC9YAAAaPnNxH3Wuf99/4Pkt+tXA5Bz1QAnZmFodP4I+e341QDkKADkKADkKADkKADkKADkKADkeOldwOJvbVQYLjcAgCDaJubyu/GrAch5GIBwuYlTY+Jefrd+NQA5CgA5CgA5N7eBWfEaXQBA7XiednxTKvkz+NUA5BhrgFf34PLb9asByDHWAJXfIYDzn6fq12fibBr5n/OrAchRAMhRAMiJt4F+uWBVnN6Gye/GrwYgJ36hyvo6lt2vBiDnACWRO43rtVVWAAAAAElFTkSuQmCC"
 		},
 		{
 			"category": {
@@ -3273,7 +3337,7 @@
 			},
 			"found": 1795006857.0,
 			"id": "prison_bars",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "Prison Bars Seed",
 			"parents": [
 				"glass",
@@ -3283,7 +3347,8 @@
 			"pattern_seed": 18640,
 			"rarity": 33,
 			"sprout": "#ff9400",
-			"tag": "bountiful"
+			"tag": "bountiful",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAAN5JREFUeJztm0EOgjAQAKnhMcR34MfUX8kFH0H6Gz0oRlEjhrQlmZkTJCXDYbLpoQ3VnW3TXKqMDDGG53f9ZfybnFJZH2Esr+tOWcVtu3t511/G7wSAU48P574v+R/6C/mdAHAeO9HpXmAscn84fvxw6bpvu2D9ef1OADizAxhiDNNql6z7F/1p/E4AOAYAxwDgGAAcA4BjAHAMAI4BwDEAOAYAxwDgGAAcA4BjAHAMAE79e8mNuefWU51v15/G7wSA470AuN8JAMd7AXC/EwDO272AXKzldizd7wSAcwVyiNmMVMKrLQAAAABJRU5ErkJggg=="
 		},
 		{
 			"category": {
@@ -3307,7 +3372,7 @@
 			},
 			"found": 1795006894.0,
 			"id": "fishbowl",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "Fishbowl Seed",
 			"parents": [
 				"glass",
@@ -3317,7 +3382,8 @@
 			"pattern_seed": 44006,
 			"rarity": 36,
 			"sprout": "#8d9344",
-			"tag": "not_farmable"
+			"tag": "not_farmable",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAAXdJREFUeJztmr1KA0EYRW9CEAshpWATO3sREUuLIBYp7XwAe/EZRC0FH8DOB1BJoZ1YSMBHsFCwFAR/CrWIE8isw252nVnwO6fan4GzxZ3L7s5IAAAAAABgi0bRgXOrK19lBI/XN4Ud+NP7m+UeB/4LwXT4ibs8uyglWNtYHzsvOiPwp/HTAMbJpNElz0/czPRUKcHL28fYuUtkaCbgT+unAYzTcgd+8hbabUnSw/trJYFLrp9EH/z1+GkA4zRCyTt4vosi7GleUvbtFH89fhrAOK3QjaPBeRRhb3G70Dj8afw0gHEyDdC52vt14P3tyfBguTsc9zkb5YHwp/XTAMYJvgM4RsnzrzefJMWbCfjT+GkA4+Q2QGdpS1I2ibGTjz+NnwYwzmhFyv8j2B0c/6mo//P9GVoNw1+PnwYwTuH9AJMmsu/9ccpbB8dfj58GME7unsDT/cNKgs3dHUmT747Fn8ZPAxgnN5Vl96M7qu6Lxx/XTwMY5xsOKVjFqTFT9AAAAABJRU5ErkJggg=="
 		},
 		{
 			"category": {
@@ -3341,7 +3407,7 @@
 			},
 			"found": 1795006908.0,
 			"id": "fishtank",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "Fishtank Seed",
 			"parents": [
 				"water",
@@ -3351,7 +3417,8 @@
 			"pattern_seed": 68820,
 			"rarity": 61,
 			"sprout": "#94c762",
-			"tag": "not_farmable"
+			"tag": "not_farmable",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAAWpJREFUeJztm61ywkAUhU8YDK4mAkQHHZlH4CGYqeMRWsUzoGjfANnBVBaFzkxnwCFSQRSGB6gEkSbTbBqSFPZuZ+75TPZndr8VN0dkNgAhhBBCNOJljUEQnCTFh93O+9mn342/Iykl/w8vq7zNei0qDkejQp9+N34mgHK6WSOOYwDA6n5oVXi3fP11nH43fiaAcrrmwPt2a1X4UDNPv6yfCaCcUgJUsRnO08ZHAgAI/Rcb56Ff2M8EUE5tApiVZ46HydPND0W/nJ8JoJzaBMgrzDcmksvrescZAODLn/7hWPRL+ZkAyqksgN5xlleRC+iX8TMBlNP4O0BTXL419Lf3MwGUU0qAt/4+bfTH3yP7djvm6zKK65efl5fTL+tnAignT4AoitKno4PQ78bPBFBO6Vbw42QCAHheLG4qMvetuhVLv6yfCaCc2u8AZqW25dr77vTb9TMBSJFBEJxs/KXSdF/6Zf1MAOWcAequ/s/hqjaxAAAAAElFTkSuQmCC"
 		},
 		{
 			"category": {
@@ -3375,7 +3442,7 @@
 			},
 			"found": 1795006933.0,
 			"id": "lava_fishtank",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "Lava Fishtank Seed",
 			"parents": [
 				"lava",
@@ -3385,7 +3452,8 @@
 			"pattern_seed": 55148,
 			"rarity": 63,
 			"sprout": "#8b582d",
-			"tag": "not_farmable"
+			"tag": "not_farmable",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAAX1JREFUeJztm7FOwlAUhv8a0jgxOBEegRcg6WR8AuPgwMTuQhx8iA7G2cnJ0fAERhYTN2AwDs7EyQdgwaHU2HO59Da0pybn/5beezncr8PJ34ReAEIIIYRYJMoHg3680RS/r9bR3zn97fiPNKXk/xHlnff0PFIVX5w9Fub0t+NnAhinkw8WiyUA4HLYLVb0Jtn1627/ToF1V+nHznX62/EzAYzTcVbSuVgYB24VWne8/2P6Vf1MAOO4CeAj3T5bPh+y673sVMHttu56XPWe6Ff0MwGMU54AsvPk+s1k9/ea6nz6a/UzAYxTngC+DoNYr/uZR7+KnwlgHH8CVO0oT93b6xoAMEzi8LuiX83PBDCOPwEO7Oi8zpknJb+E0a/qZwIYx0kA2Tk+QuuqQr+unwlgnN8EmM1W2SDp+mobhf52/EwA4zingk/PTwAAL9PvWkVyX9+pWPp1/UwA45S+C5CdWpVDz7vT36yfCUCKDPrxpol/qYTuS7+unwlgnB/MqSwI3GygYAAAAABJRU5ErkJggg=="
 		},
 		{
 			"category": {
@@ -3409,7 +3477,7 @@
 			},
 			"found": 1795007093.0,
 			"id": "sporeberry",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "Sporeberry",
 			"parents": [
 				"rose",
@@ -3419,7 +3487,8 @@
 			"pattern_seed": 6243,
 			"rarity": 4,
 			"sprout": "#61b849",
-			"tag": "bountiful"
+			"tag": "bountiful",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAAXpJREFUeJzt2T1Lw1AYxfF/xU0o3eJQcJcOmaQoiIOrDiK4+wGcnCt1dvJbCNLFRTcRdHDKUPwEHcxWCi466KDXem9ym1Y0gd7zm/rypKfD6ZO2ARERERERERERERERERGZT7Wigfpq/T3v8dHTqDbNnG9+Wsr/3/yF37wpmR+ZVrhNanVaAMRxDECSJAD0T/tMmjPc+aJPgvLLzdcGCNx3G0zzfE3qbN8AEO3vALDRfsydM43rHae5874mKr+afG2AwC36muc2Lv06IL28+rzRjqwXur4/BGB56ch63J1vbDXMUxPPdcovJ18bIHA1dwOYc4drvXsBjBvmnmNM0/bOopyjYXA3sO4Pb4fWfeVXk68NELjMBjCeX86BbON8TPPMcQ8nB8C4oSuvPWve9wlQfrn52gCBy/wPYL4lNjebQLZ5a7tv1vMu37xhmuf7Haz8cvO1AQLnvRbw4/fin/A1X/nV5msDBM7bxqLry7Oa9Xq48svJ1wYI3AerbMn5kbzowQAAAABJRU5ErkJggg=="
 		},
 		{
 			"category": {
@@ -3443,7 +3512,7 @@
 			},
 			"found": 1795007115.0,
 			"id": "dried_mushroom",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "Dried Mushroom Seed",
 			"parents": [
 				"sand",
@@ -3453,7 +3522,8 @@
 			"pattern_seed": 96916,
 			"rarity": 10,
 			"sprout": "#6b882e",
-			"tag": "bountiful"
+			"tag": "bountiful",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAAThJREFUeJzt2iFOw1Acx/EvBBBFEzgC4QBkBgSeBIPhCBwATZAcYIIDYEjIEjwCzIKqIhwBgqYCBKgnVngrbdcu8L4fudf2V/F7/3VZQZIkSZIkSZIkSdL/tFD3hK2Nlc9p64/P77Wvaf788hfb3Y7+usq2lBt3OzoGYH1zMHHcy9MYgL2D4cTnbXeE+d3mOwESF21HaF65caFp47sHAAa72z+uLx9dAbBTvAL1d4L5/eQ7ARL3rRWheffZGgAfl4dAdePK66GBN8UbAOcUQPVOML/ffCdA4qIT4IQMgP1stVVA0x1gfj/5ToDEVf4KiLkeXQCQ5zkAZ6fDaYc3fgo2v9t8J0DilmIL5caERobm/fa8pszvJ98JkLjoBKgSvnvmxfzZ5DsBEjez9wG6/h/c/G7ynQCJ+wLzZVy1m3lCKwAAAABJRU5ErkJggg=="
 		},
 		{
 			"category": {
@@ -3477,7 +3547,7 @@
 			},
 			"found": 1795007142.0,
 			"id": "poison_spike",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "Poison Spike Seed",
 			"parents": [
 				"spike",
@@ -3487,7 +3557,8 @@
 			"pattern_seed": 61971,
 			"rarity": 11,
 			"sprout": "#8d6822",
-			"tag": "not_farmable"
+			"tag": "not_farmable",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAAaJJREFUeJztmyFPw0AYht+SSgSic00FDkImEAvhL2AqFhQWFAKF4AcgUAgU2AWxTMwg+AOEICYqFiQhOBD8gCZFtNdQ2PWuo+klfO9jdtt9d8/El7e3pgMIIYQQQgCEQZSFQZR1XUe/G/+K7Rcj/xNPDVSXXJ1eAwCOL44AAG8fr973BW3X0e/WzwQQjq+biAf7AIDp0zgD9J0bv4d5XQ/1dZb70d+tnwkgHG0C4O4hf+0ZdtjbLQbj+jrb/ejv1M8EEI7/87RYUnTWepCoTxbXFUSjNB8c1O8XjW4rdQr63fiZAMIxnwE2Vu02OtkqRs+t1NHfjZ8JIBx9AhTXjPRSXTM0pbad2rCj6e/GzwQQjj4BVIHp2mLbqeXv1WTxPP1O/EwA4XjqPsAwHlYm0ptHAIB/uLPUxqb1k+mk8p5+N34mgHC0Z4DZ/QsAYID6DtR1mu16+t36mQDCKc8A/c3+Uht8ns0AAGvn243WJfPqaZR+N34mgHCM9wFMNO28tqH/b34mgHDYAMJhAwjHL58incP63ytt8OvpVfqd+JkAwvkCFJHIW2xobZQAAAAASUVORK5CYII="
 		},
 		{
 			"category": {
@@ -3511,7 +3582,7 @@
 			},
 			"found": 1795007177.0,
 			"id": "stone_pathway",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "Stone Pathway Seed",
 			"parents": [
 				"soil",
@@ -3521,7 +3592,8 @@
 			"pattern_seed": 31649,
 			"rarity": 3,
 			"sprout": "#9ecd56",
-			"tag": "not_farmable"
+			"tag": "not_farmable",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAAX1JREFUeJztmz1Ow0AQhZ+Ry9BDOhRqwkEQN+ASES0VHUKUgNLCASKUOsoRQkofINCTHpqsFQ/Y3vXPDtK8r7O9m6+ZPO+s7QQ7hsdH34jI5uMz2T+mX8d/EFNK/h+pq7zHp9fKgQ/3NwCAyfVtkEDOmz7fuUuFiqdfx88EME4qT2RZVjmh7nrbefTH9TMBjPMrASTztxcAwMXlVeHYl6bz6I/jZwIYJ3FdwOno5M8BroIksjJ9WS5mAIDV+7pwnn4dPxPAOPkawPWJvqtMeW8JrUQJ/Tp+JoBxSrsA38rq+p9Af1w/E8A4tfsAoTTtd+nX8TMBjFO7DyBp25eG9sH09+tnAhgneB+g69Uu/bp+JoBxOusC+uqH6e/XzwQwTuMEKOs32z7/pj+unwlgnDwB3NujZch7iu89Ro5zfaiEfh0/E8A43vsAfa9u6dfxMwGMkz8LOB+fVQ7cbr8AAIPBodcP142Xe+H06/iZAMZJ975SVf06ln4dPxPAOD+3a7Yq7d9jzQAAAABJRU5ErkJggg=="
 		},
 		{
 			"category": {
@@ -3545,7 +3617,7 @@
 			},
 			"found": 1795007194.0,
 			"id": "asphalt",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "Asphalt Seed",
 			"parents": [
 				"gravel",
@@ -3555,7 +3627,8 @@
 			"pattern_seed": 12553,
 			"rarity": 5,
 			"sprout": "#99c949",
-			"tag": "farmable"
+			"tag": "farmable",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAAYhJREFUeJztmz1SwzAQRteMDwAUDqWPooIzOJQpOEaKHCSH8VFcUGAVwAGYCQ3yxJIVbQzsMrPfq2KNrZdi55P144q+ub+7PZEgb+8f1fk1/Dr+G0kp+H/UofKetp2IsO/78HNW8fDr+JEAxqnjhrZtiWhWKYt4PxIRUdNsLt7nnGP1B7+OHwlgnCQBcpUSV1Kp8kKFcisffh0/EsA4SQIE4jHm2kruuu2q5+CX9SMBjJNNgNIYE8i9Za6tfPhl/UgA42QTgMtPKx1+XT8SwDhTAux3L3ETERE9Hz5n18fDcmhw73vcLf8R+HX8SADjVPFu4DAMfyoM/b+OftYOv44fCWCcpAC8H6dVqCWcc9Pc8xKlftY+B//v+pEAxkleFUsrUGHeGa9VX7tblQN+WT8SwDjZlcDSSZK4wrgnWLjAL+NHAhgnmwDckymB0hm10M6d58Iv40cCGCdJgNLYwx2TuP3Br+tHAhhn2gt42DSi4ngtHH4dPxLAOPXZV6qqX8fCr+NHAhjnC5oC2sWkbyUiAAAAAElFTkSuQmCC"
 		},
 		{
 			"category": {
@@ -3579,7 +3652,7 @@
 			},
 			"found": 1795007238.0,
 			"id": "venus_flytrap",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "Venus Flytrap Seed",
 			"parents": [
 				"poison_spike",
@@ -3589,7 +3662,8 @@
 			"pattern_seed": 58397,
 			"rarity": 47,
 			"sprout": "#7e9c3e",
-			"tag": "not_farmable"
+			"tag": "not_farmable",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAAXhJREFUeJztmTFOAlEURa+GjImVQRMaFmCgdwOyBxILC1fgUlwBBYV7IJEN0FFoXIClECoSacbqGefN/LwZ+X+IvHs6hv/nTHFzh/8ACCGEEEJ+0R1keXeQ5dx/3PtP/yogx8GJviCpGT1fAABe7jYAgPXbrrS2Cu7/X/vZAM7pWAtWr18AgMvhWQ6EkyTJk/XjZS/KA9Kf1s8GcI7ZALOrGQBg9VmdRJ08WY95nAekP62fDeAcswGEUBJLyUsE/Wn8bADnBM+W+jz5cDutdcPJ/B5A8/Mr/YfxswGcY6ZTJ9Fi3+TT366fDeCc4H8Bgj5vCnrWbK1vOsumvx0/G8A5P3MAScz143lhwfsTKidPGv29dR8N/YfxswGcE/wNUE7QtvA59A4K7Wv6DqS/HT8bwDnmJFAnSujfZACAj8WucF0ndd9JGP1p/WwA59SeBGqsc2gs6E/rZwM4p3ZarJl07Bk4/e342QDOaZxWaxKVGvrj+tkAzvkGqUdKbHvhqr0AAAAASUVORK5CYII="
 		},
 		{
 			"category": {
@@ -3613,7 +3687,7 @@
 			},
 			"found": 1795007254.0,
 			"id": "hanging_flytrap",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "Hanging Flytrap Seed",
 			"parents": [
 				"cave_background",
@@ -3623,7 +3697,8 @@
 			"pattern_seed": 85923,
 			"rarity": 48,
 			"sprout": "#9aa748",
-			"tag": "not_farmable"
+			"tag": "not_farmable",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAAaJJREFUeJztm7FKw0Ach78WJ6kUHKQuCi4ugqsgOIijFB/A3YcQHAo+hA5OfQAJzg4+gw4uSl3qIILoKOpQb2hCmktyOZH/71tCyjVfhv/97i65tCjJSqf3DbC/1QPgcfwCwN3oE4Cnj+dW2WvK/3f+dtC7E/+OOd+GrvJ824XuCfI341cCGKcwAVxFbZwsAnA7eJ3Z3rVjQJCeIH+zfiWAcXITIF15ZanbE+SP41cCGKewKvNmn3nr0DShxkD5m/ErAYzj/RzAcdO/nP5h6fe4OTnsJAc1b0n+mH4lgHFyxwc39qQr7uH6fuYF13bXp85dRVadBcvfrF8JYJxMVaQrr6jiinAV6dsT5I/rVwIYJ3cVcH51AcDe/HYtgbtO1f/J36xfCWCc3DnA6H0MwHH3CIDTt7NK56sLy4D/LFj+uH4lgHEKnwMctvu1BMOvBKi+Dpa/Wb8SwDiZVUDoMYju5DDsJF7vxeWP61cCGEdPAo37lQDG0dtA434lgHFK7wnM7EhJkd6REnpPnPxh/UoA45SuzqJv1GJ9HSt/GL8SwDg/EctNgYj8HkUAAAAASUVORK5CYII="
 		},
 		{
 			"category": {
@@ -3647,7 +3722,7 @@
 			},
 			"found": 1795007326.0,
 			"id": "starfruit",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "Starfruit Seed",
 			"parents": [
 				"gold",
@@ -3657,7 +3732,8 @@
 			"pattern_seed": 84709,
 			"rarity": 60,
 			"sprout": "#b2d223",
-			"tag": "not_farmable"
+			"tag": "not_farmable",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAASpJREFUeJztmrFxg0AQRT8eJcrcghtwATRAG1TgIlwC4wLUhgsQEZEaUAvKHNrReexlVncwmBvPvpfB6O4p+OweO0gAAAAAAAAAEIVm7cLn9vHz5/VlvK3eC389/8M2fwf+K4tTk5J3en/5db/vBkl//yTg39ZPBQgOAQgOAQjOd7+wp0qP1Huejq0k6foxSpKm8yRJensd7673ehT+On4qQHAa71TpkZKXSAnMYROakoi/rp8KEJzZGcD2GMvSxCVs8iz46/ipAMGZpdFLYmnyEl7PyYF/Xz8VIDgEIDgEIDjuW4AlN2kqXVd6Csa/j58KEBx3EuglrnSWndsvNwnDv4+fChCcg72x9v3V/q7vhkUzbvx1/FSA4LjfA2z1bVvpvvjr+KkAwfkCydnhYbhE8fAAAAAASUVORK5CYII="
 		},
 		{
 			"category": {
@@ -3681,7 +3757,7 @@
 			},
 			"found": 1795007365.0,
 			"id": "dragon_snappers",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "Dragon Snappers Seed",
 			"parents": [
 				"starfruit",
@@ -3691,7 +3767,8 @@
 			"pattern_seed": 48367,
 			"rarity": 107,
 			"sprout": "#7cbc34",
-			"tag": "farmable"
+			"tag": "farmable",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAAZpJREFUeJztm7FKA0EURe9KyiABqwii4C9ICKS3Dmntgh9g5TdYipWFpE5hkUAKwU4QgthoYSEIEcFUgoKtaBFnSWZ2spvN+kZ491TZ2Z2cFC83Oy+zEX4pr299Q5DP11E0fUx/GP+KpJT8P0qm8toXRyLC/un55EUPMxVPfxg/E0A5JXugvFoBAFwPbxInNOq1uecXvY7+sH4mgHKcBDAV83LwnDihi+TxtOs2jjczzaNf1s8EUI6TAHblPY3PAADb1f1cx877tuZ/IPpl/UwA5UR2H2CwewkA6FTGhYra71UAwFfrAwDw1rudPU9/ED8TQDksAOWwAJTjrAIM5jejqLvQRaFfxs8EUI6zCrh7eATg70TlxXSiRlf3APx3wfTL+pkAyvHeA2TtXf8V9Mv4mQDKcQqgUa/F/yVnGV92Hv1h/UwA5Xj3A2QdX3Ye/WH9TADleFcBhqL3oO0dTjpUJ9Y6mP4wfiaAcpxOYNquVEPeXa9pnTD6Zf1MAOXECbDW3BEV298A+sP4mQDKiZ9Q1fp0rHY/E0A5P4Si8tNuquS2AAAAAElFTkSuQmCC"
 		},
 		{
 			"category": {
@@ -3715,7 +3792,7 @@
 			},
 			"found": 1795007526.0,
 			"id": "high_tech_block",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "High-tech Block Seed",
 			"parents": [
 				"starfruit",
@@ -3725,7 +3802,8 @@
 			"pattern_seed": 73041,
 			"rarity": 86,
 			"sprout": "#ffffff",
-			"tag": "not_farmable"
+			"tag": "not_farmable",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAAWtJREFUeJztmzFug0AQRQfLh7BcUboiTbo0HMFn4AgUPggHQT4BoskBQuUTRL6F3XhxWLKsdwNDpP9ft8OuHsXoI4+8iTzY73Y3UeT7ek1+rulfx7/RlJL/R2I6r65rFWFVVSIi0rbtoE7/On4mADhbu1CW5aLCNE0nn9Ov62cCgDNKAMPn4SAiIl/n86D+djxG1T8ul6AXo1/HzwQAx5kAfcc8OrEnth4I/Tp+JgA4owQoimJRYdM0k8/p1/UzAcAZJUDXdYN1lmW/HrT32bjO+aBf188EAGeUAHbnmE5zdZRrfyz06/qZAOA45wA2oZ3l69xQ6F/GzwQAx5sAoR1s9v/1W0i/jp8JAI53DmCY63dt7H76l/EzAcB5eQ7gWrvOuzrWNwunX9fPBAAneg4w9wSM/nX8TABwZp8D2LyfTiLy/G/a9BeQfm0/EwCc/mZQnueqYvtmDP3r+JkA4PQ3VFFvx6L7mQDg3AHihFy+lxVEcgAAAABJRU5ErkJggg=="
 		},
 		{
 			"category": {
@@ -3749,7 +3827,7 @@
 			},
 			"found": 1795007553.0,
 			"id": "space_window",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "Space Window Seed",
 			"parents": [
 				"window",
@@ -3759,7 +3837,8 @@
 			"pattern_seed": 51479,
 			"rarity": 41,
 			"sprout": "#6c6a3d",
-			"tag": "not_farmable"
+			"tag": "not_farmable",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAAVxJREFUeJztmzEKwkAURH/ETryAjWAlnsAyp7CS4AHE44h1sMopUljkFIKNF5DU2riiGzZmk/VHmHldIuSlGGZ/FjeSJ5PJ7C6KXK/n6P2a/n78A00p+T8ik7yiOKkI9/uDiIik6fHjPv39+NkA4AztG4v58qfC7W5T+zv9un42ADjOANzKi9zKi/cDkziTJM46vRT9en42ADiVGcAwHk29HmSnzlyn+arFa9Gv5WcDgOMdANfalOar1mmnvz8/GwAc5wzg4tvaZKfQpNV3TaNfx88GAMfZAF2nWEPb5NOv42cDgFNpgLbfk6HWOvp1/WwAcCoNYJLmu58dasqlX9fPBgDH+RWgsatVB/06fjYAON47gU2nTXsNC5Vo+sP62QDgOBvAlbSm02bXxNOv42cDgBPsH0E2XXfG6NfxswHAeZ0MSpK1qtg+GUN/P342ADivE6qop2PR/WwAcB5Duy6yKqOOegAAAABJRU5ErkJggg=="
 		},
 		{
 			"category": {
@@ -3783,7 +3862,7 @@
 			},
 			"found": 1795007585.0,
 			"id": "safe",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "Safe Seed",
 			"parents": [
 				"iron_block",
@@ -3793,7 +3872,8 @@
 			"pattern_seed": 75874,
 			"rarity": 46,
 			"sprout": "#94dc79",
-			"tag": "not_farmable"
+			"tag": "not_farmable",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAAVtJREFUeJztm7FKw1AYhU8kD+As0sGxQ/ApfAIfwa0QaIcunbs4OATcsggivoPSB/AxgnTuAwjt0P6ticbktrk3wjnflpvAl+Hk5F6SG2HH4GKwRkCKZRF9P5a/H/9ZSKn4f0SWvMX7WxBhnj8BAF5en0vj8vfjVwOQE1cH0nTsVZgk13+elz+sXw1Azo8GMNJ01Kkoyx6drpc/jF8NQI4CQI4CQE7tHKCOy3j+6/jn1+zkm5E/vF8NQE7rBrDkXQ1vAAC3dx8AgPvJqnTe15Mgvx+/GoAc5zmAJc/WqdOH7frSkljl8M46P+L25PftVwOQ49wAlrSm5PlC/m79agByWjeAzS7tnVJNnu91sPx+/GoAcpznAK5JO1zv9jVM/jB+NQA5CgA5CgA5CgA5CgA5tasA13/Yukb+MH41ADn7BrAdI03/rftC/n78agBy9jtUWXfHsvvVAORsALqY7C8uJYspAAAAAElFTkSuQmCC"
 		},
 		{
 			"category": {
@@ -3817,7 +3897,7 @@
 			},
 			"found": 1795007629.0,
 			"id": "traffic_cone",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "Traffic Cone Seed",
 			"parents": [
 				"bricksw",
@@ -3827,7 +3907,8 @@
 			"pattern_seed": 31456,
 			"rarity": 33,
 			"sprout": "#ffffff",
-			"tag": "not_farmable"
+			"tag": "not_farmable",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAASNJREFUeJztmT0KwkAQRkfRVi/gCfQagq0n8BgWQSwsLDyGNxBscgZrPYFgrbWgxbKiCfkzuxt03mvChs2+FDPfBCICAAAAAAAAAAAA/0/r2weHPXm8r0+378/C35y/7eZ14FepXDW28o6LqbkR70VEZHS4i4j/TsDv1k8CKKd0tWRVnmV3MRUYnc3adSfg9+MnAZRTPQGuj9x9o7450lsH4HfqJwGU0ynakJo9427u/vXAXKOzea5uJ+D36ycBlFNYnWVnTxJXsxC/Xz8JoJzMb4CqsydJ3VmIP4yfBFBOKgGSf5lcYc8t6gT8Yf0kgHJe1WArJN74FU7m5pqsRPzN+EkA5bRs5S1nYcWr7ecafzN+EkA5qW+AUGTNQPxh/SSAcp5+0f2GgqxU6gAAAABJRU5ErkJggg=="
 		},
 		{
 			"category": {
@@ -3851,7 +3932,7 @@
 			},
 			"found": 1795007654.0,
 			"id": "fertilizer",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "Fertilizer Seed",
 			"parents": [
 				"soil",
@@ -3861,7 +3942,8 @@
 			"pattern_seed": 76801,
 			"rarity": 11,
 			"sprout": "#bbc443",
-			"tag": "bountiful"
+			"tag": "bountiful",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAAaRJREFUeJztmz9KA1EQxmdlC5FgQMRGiI1VijSpvYQHyA28hEfxEh4gtmlSBBELDaSRNIKInRY6ujuPyZv1zzxhvl+VDWF/W3z55r1NtqIPjvZ3XsmR+/Vz1TyGv4x/y1MK/h81J+/sdOQivLy64ZetxMNfxo8GCE4t39jb7bWOZ4ul6UTT+YqIiE5Ghz+6IPh9/WiA4CQNwOSS15+8J/Xx4omI9OSNh4PW8fXd2nRh8Pv40QDBSRpAS56cMZy8HHw+mcTc5+H38aMBgqOuAawzhpEJk0m2rmbh9/WjAYKjNoB1xnDyrLPLCvw+fjRAcJIG0BKjzZjcbOPz8Eyj8837YPh9/WiA4CQNkJtVMnFytaphnWnw+/rRAMFRdwESbdZoycrtS7sC/9/40QDBSQLQn/S+VowNpvPV5wrVwmyx/Fbq4ff1owGCk6wBtJli3ZdKun4L4Pf1owGCowZgPBxs/A3bOmO6zi74ff1ogOAka4DcP1fknaffvhcOv68fDRCcip8MOj7YdhXfPry0juEv40cDBKduPKVa9OlY+Mv40QDBeQMObfliUbRNXQAAAABJRU5ErkJggg=="
 		},
 		{
 			"category": {
@@ -3885,7 +3967,7 @@
 			},
 			"found": 1795007700.0,
 			"id": "copper_block",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "Copper Block Seed",
 			"parents": [
 				"cobblestone",
@@ -3895,7 +3977,8 @@
 			"pattern_seed": 16150,
 			"rarity": 24,
 			"sprout": "#ffb800",
-			"tag": "not_farmable"
+			"tag": "not_farmable",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAAYxJREFUeJztm6FOw0AAhv+SCQQJS+ABCCEhgWRBMcsDIFAzGBwEPI8wxROgMBgkDkcQCBQGwggGQxDUIUlA0LuwFtZrd70j+//PLOua+yaab9fuLkHGynzrEwG5f/tIfr6XP45/KqRU/D8Sc+VdH20GER6fXQIATm7eh47LH8evApDTyh+YXdsCABzs7wEAdjcWxxJ0eodD4y20p0eeL39YvwpATqEA5kop43RuGQCwtPr92r06//U81/Hkj+NXAcgpFKDqb87T3QAA0P3j8/x4F7cvI8eTP6xfBSCnUABXttOBz+8hfyS/CkCOLUA/zR5NZ7PL0Fe4/HH8KgA5tgDmftLMKsfF9T5V/rh+FYAcW4De6wMA4Dl99Coou0+VP65fBSCn9nOAMiblPnnS/SoAOc4FqDqr9Y38zfhVAHIqzwFcZ7VNIb9fvwpATqEA+TVk5v/kurPaqmvi5A/rVwHIqb0m0JWm1sTJ72c8FYAcuzNoZ30mqDi/M0b+OH4VgBy7Q5V1dyy7XwUg5wtXsiFSav8iewAAAABJRU5ErkJggg=="
 		},
 		{
 			"category": {
@@ -3919,7 +4002,7 @@
 			},
 			"found": 1795008220.0,
 			"id": "plumber_pipe",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "Plumber Pipe Seed",
 			"parents": [
 				"copper_block",
@@ -3929,7 +4012,8 @@
 			"pattern_seed": 59950,
 			"rarity": 35,
 			"sprout": "#f7bf4f",
-			"tag": "not_farmable"
+			"tag": "not_farmable",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAAOdJREFUeJztm7ENwjAUBZ+j1LAAEzADBSNQUbIOHTOlISPQ0FBkAMQAgSJYwqYNNtK7ayI7xTUnS99Kgt4s1s1TBXlcxvC5xl/H35SUwv/RxvJO/SF5sVnuJEnH834W0bUfJUn32/QclBaPv46fE8AcAjCHAMwhAHMIwJwQp4DVtqx46NI1/jp+TgBz2ngjFOfCOI/ONYd+zZ/dtJ/fhOGv4+cEMIcAzCEAcwjAHAIwhwDMIQBzCMAcAjCHAMwhAHMIwBwCMIcAzCEAcwjAHAIwhwDMIQBzQr7x679U82/h8Nf1cwKY8wID5pkvYpLokwAAAABJRU5ErkJggg=="
 		},
 		{
 			"category": {
@@ -3953,7 +4037,7 @@
 			},
 			"found": 1795008244.0,
 			"id": "sprinkler",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "Sprinkler Seed Seed",
 			"parents": [
 				"bucket",
@@ -3963,7 +4047,8 @@
 			"pattern_seed": 4466,
 			"rarity": 48,
 			"sprout": "#bfdd67",
-			"tag": "not_farmable"
+			"tag": "not_farmable",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAAVxJREFUeJztmTFSAjEUhn8cK47A7AE4hIW20uk9OIe1hVQeASqw1cIrKNgzHsEWq4zDso+E3U2c4X1fR0jmo3j5kzwkAIADqlG1q0bVjvXnvf6irQDOg0F9IFTNdLORJD2Ox5Kk7fd20DTPGo+tt8Bf1k8COOfS+uLh41OSNKyNN1RYYyVa61PBX8ZPAjjHPJdiZ8zPfCFJGt7f6di81LMP///4SQDnRKuzy1tUar8D8JfxkwDOid4B3t9eOwmurm8knb4T8JfxkwDOMfsAga/1eu/zavVydP5kctvtF+Ev6icBnNP6FfA8e5L0V5GL5bJxfa5bMP5+/CSAc6J3AKvDlDq/K/jz+kkA51AAzqEAnEMBOIcCcE7yjbHem7Y6VOE92vdtGH8ePwngnOROoFV5gXqPuq+dgD+vnwRwTrQTGAiVF/s3Khf48/hJAOec/ApIJdctGH+/fhLAOb/s6NqyQQ8SXwAAAABJRU5ErkJggg=="
 		},
 		{
 			"category": {
@@ -3987,7 +4072,7 @@
 			},
 			"found": 1795008478.0,
 			"id": "snow",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "Snow Seed",
 			"parents": [
 				"white_block",
@@ -3997,7 +4082,8 @@
 			"pattern_seed": 34852,
 			"rarity": 25,
 			"sprout": "#c0f0a2",
-			"tag": "not_farmable"
+			"tag": "not_farmable",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAAXhJREFUeJztmzGOwjAQRQeUkoaGYhs6rhCJimNwAhpOxF4AxCloQEq3zTbbISQKKNJE2nJpcEQcWZ7EeLzS/FcRsPSar2/HxgN6Ml+u/kiQ0+5z8PoMfxr/UFIK/h+ZSd5xuxER7otv87GRePjT+NEAysnsL8rqt/F8LisiIpqOR70EeXEgIqIiX7DGwy/rRwMop9UANn2TZ+AmH/40fjSAcoIDcC6rep5KAfxhfjSAcpxrAO7qtescNfuYsMbBL+NHAyjH2QChq1cXP9cbaxz8Mn40gHLYAeCuNvPiUM9f7wT+OH40gHJaawDX3jN3tRk6d8Ev60cDKKfVAKF7z4a+p1jwy/rRAMrxngZ2Pc82vCvJ8Mf1owGU420AV/K4c0zfBMMv40cDKKdugK/LvfGDL1ld30tNYl2nYfCn8aMBlONcA9j7znbiXPvS3HE+4JfxowGU430LMHCTHOv/cfDH8aMBlJOZW6Jr665abOzbsfCn8aMBlPMABkZYrdQIAF0AAAAASUVORK5CYII="
 		},
 		{
 			"category": {
@@ -4021,7 +4107,7 @@
 			},
 			"found": 1795008499.0,
 			"id": "ice",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "Ice Seed",
 			"parents": [
 				"snow",
@@ -4031,7 +4117,8 @@
 			"pattern_seed": 5222,
 			"rarity": 33,
 			"sprout": "#958b4c",
-			"tag": "farmable"
+			"tag": "farmable",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAAWNJREFUeJztmz1OAkEcxd8SYmEoKaXyCnYmHAAuYO8FvIadhdmOWksbqCiIjRRyBCtIbExsDIlGI83OhF2yuB+zM5j3ftV+5J8fxePtbiYTIeFkcPELj6wm99H2ufxh/C2fUnF4tE3yluO71I2nz59GhNfTuTlMJV7+MH41ADnt7IWb1/dCg6edYwDAy8fa6Q+S369fDUCObYCyz5xs8uomUv4wfjUAOTvvAIayiXL9j5Dfj18NQE5uA5jkVE2y5v/HvBqAnNwGMLhO4qzUtPxN+9UA5PzZAAZXSayK/M341QDk2AZ4+/ouNFA3iXnIH8avBiDHNkD3KDksmKyqybvsnwEAFnH6uvxh/GoAcna+Alw9Y/LmR4/Pe+fk9+tXA5CjtQDyeTUAOVoLIPerAcjxvhbwMDwHAPTi20rz8rv1qwHIsQ2wtWNkL7OawqskgVnkD+NXA5Bjd6iy7o5l96sByNkAsAYRhn/OO9AAAAAASUVORK5CYII="
 		},
 		{
 			"category": {
@@ -4055,7 +4142,7 @@
 			},
 			"found": 1795008542.0,
 			"id": "pumpkin",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "Pumpkin Seed",
 			"parents": [
 				"lava",
@@ -4065,7 +4152,8 @@
 			"pattern_seed": 27035,
 			"rarity": 64,
 			"sprout": "#2d5b1c",
-			"tag": "not_farmable"
+			"tag": "not_farmable",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAAWNJREFUeJztmjFOw0AUBV8QBRIFKUCkTIVCS5lTUFNyCA7BQag5AWVKWiKqlEGkCAUSBRIU1o/wWitnk/Va6M80kb0bT4rnZ8deCQAAAAAAfDHY9YvTkX7+bs+Wux8Lf3/+gzw/B/4ryamx5I1vx5KkxWJdDTxVn12fCfjz+mkA57SmJbzWxJIXY98zAn+3fhrAOY10hIl7vDmXJJ1NLiVJ7/OXJMH1w1ttuy2R+Mv6aQDnbNJgyQsTZ1jyXpefkqSL0XFtPLbfmM0/JEn3z1/VdpBE/P34aQDnDLpOnmEJNCyJBv5+/DSAcw5jA6l3m7nBX8ZPAzin0QBh8va99ti8bcFf1k8DOIcAOIcAOGdzD2D/E6eTkywHtmvPav291Xz8/fhpAOc03gXcXR3VJpwOq5IIk5S6P3zyFXsWjr+snwZwTut6gDCRqcTefsXAX9ZPAzgneU1gKrnXxOHP66cBnPMLSRuvevuu/Q4AAAAASUVORK5CYII="
 		},
 		{
 			"category": {
@@ -4089,7 +4177,7 @@
 			},
 			"found": 1795009111.0,
 			"id": "torch",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "Torch Seed",
 			"parents": [
 				"coal",
@@ -4099,7 +4187,8 @@
 			"pattern_seed": 29377,
 			"rarity": 10,
 			"sprout": "#978034",
-			"tag": "not_farmable"
+			"tag": "not_farmable",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAARtJREFUeJztmTsKwkAURa+SUizFQhQLLV2BvY2163EbbsFWl+AKBCsLPwQRS7EUYhFTKArJMBORd04z+ZCcKW4uyUQCAAAAAADIRbseJe16lOD/b3/Vx2Tgf6kUvSBL3WE9lCR1BitJ0vF6L3wvF/D79dMAxsmdmvfkqTlNx3M6hn4S8Ifx0wDGiQpfMd+n42T6ul8W+L36aQDjFG+AjLKTjz+InwYwjvM6wGzUlyQtNidJ0jK+SQr/PYzfr58GMI7zO0C310g3ngksG/x+/DSAcZwbYLe9+JwH/h/5aQDjEADjEADjEADjEADjEADjEADj5F4HyNagx63ax/PZ8WV8SyT/a+L4w/hpAOM4/w38Rll/w/D78dMAxnkANjPMObo/nRAAAAAASUVORK5CYII="
 		},
 		{
 			"category": {
@@ -4123,7 +4212,7 @@
 			},
 			"found": 1795010950.0,
 			"id": "coconut",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "Coconut Seed",
 			"parents": [
 				"cave_background",
@@ -4133,7 +4222,8 @@
 			"pattern_seed": 37553,
 			"rarity": 65,
 			"sprout": "#758b3f",
-			"tag": "not_farmable"
+			"tag": "not_farmable",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAAUxJREFUeJztmjFOw0AQRX9QREGBXKVAEfIBKKhyCo7LKVJRcAALRRSpLAoKmlBEg9ixFu9SeKXMe02SzdovxffMbmwJAAAAAAAAAAAALp9V6cT72+tTzYnfPr6Kz42/nf/qfz8HLoVsSnzinh7uqk78/PqefK69IvAv46cCBGeSCkueJa7vO0nSZnN+PR5HSdIwjMlxu10vSdrvh2T85XCedxg/Jc1fCfiX9VMBgrO2N7nkGT5ZPnG576V0XNJJmiYRfxs/FSA4q7me45OVI9eDDOtFhvUkA38bPxUgOGs/YKvL0lWmMdejSsG/rJ8KEJxJBcglpzZhtcnH38ZPBQjOz17U7wY8pT3Fz8utPuf2wfiX8VMBgpO9F7DtbpLxx23np/5JafLxt/VTAYIz2QX8SkjVEyge/09X6f1w/Mv6qQDB4ZnA4H4qQHC+AV2j5s7R3WsMAAAAAElFTkSuQmCC"
 		},
 		{
 			"category": {
@@ -4157,7 +4247,7 @@
 			},
 			"found": 1795011057.0,
 			"id": "wooden_fence",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "Wooden Fence Seed",
 			"parents": [
 				"boulder",
@@ -4167,7 +4257,8 @@
 			"pattern_seed": 84066,
 			"rarity": 7,
 			"sprout": "#aacd5a",
-			"tag": "bountiful"
+			"tag": "bountiful",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAAQlJREFUeJztmjEOgkAQRT+GO9hxABrvYbyBvRewoLOws+AC9jaWxngCL2DjAYyFlPYmWGEU3QAR2cR5r4Iwm7fF5GczrAQAAAAAAAAAZomjMI+jMO+6Dr8ff6/uxuA/CYqHoktW84EkaTw7SJKOp1vwvKDtOvx+/SSAcULXh8W0L0lK0iyX3J3bdh3+bv0kgHGcCVCm7km2yYm3Cfh/4ycBjBMUHbNbjjoVDyfbl3f8fvwkgHEeZ4D1Zu9zH/g9+UkA4zgngefrRZKUpNnHhd/WVU2u8HfjJwGMQwMYhwYwDnMA434SwDjMAYz7SQDjMAcw7icBjPN2e6T8P7nqDltbdfj9+EkA49wB7EPZpidw6i0AAAAASUVORK5CYII="
 		},
 		{
 			"category": {
@@ -4191,7 +4282,7 @@
 			},
 			"found": 1795011088.0,
 			"id": "barn_blocks",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "Barn Blocks Seed",
 			"parents": [
 				"wooden_fence",
@@ -4201,7 +4292,8 @@
 			"pattern_seed": 37401,
 			"rarity": 17,
 			"sprout": "#77b363",
-			"tag": "not_farmable"
+			"tag": "not_farmable",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAASZJREFUeJztm0EKwjAUBVtx0RPoMQTdeQHP7AXcKXgMPUF3ujGilZCkzf8V3symFNLO5vFI2qRtXuy77tE4cur79vMe/zz+hacU/o82JO94v7mKD6v11z3+efw0gDjL1IDrdjdJsLmcJz2P39ZPA4jz0wAhcSE54VqaxGHyhu+Ngd/XTwOIE50DjE1iLHml4Pfx0wDiZK8CUkmslXz8vn4aQJxkAwRiSYyNqw1+Gz8NIE52AwRi60mr5OO39dMA4hAAcQiAOMVzgNjsc+w3a/zz+mkAcbIbIDXrnPr3Cv88fhpAnGQD5K43a/3Hxu/rpwHEiTbA2C9N1jta8Nf10wDiJM8FWO1Kzd0Xj9/WTwOIU7wK8Aa/rZ8GEOd9QlX1dKy6nwYQ5wk9KHBsw8IHoAAAAABJRU5ErkJggg=="
 		},
 		{
 			"category": {
@@ -4225,7 +4317,7 @@
 			},
 			"found": 1795011231.0,
 			"id": "lifeshroom",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "Lifeshroom Seed",
 			"parents": [
 				"clay",
@@ -4235,7 +4327,8 @@
 			"pattern_seed": 49206,
 			"rarity": 12,
 			"sprout": "#ae0be2",
-			"tag": "not_farmable"
+			"tag": "not_farmable",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAAUxJREFUeJztmqFOw1AYRj/ISHgMxNQQe4NJnqOZQszi52cnUAtPgkEhERDEBPAUJBObuL1Lem/KvU3pXeA/x6zt1p6Kr9/fZpUAAAAAAAAAAADg/3PWdYfJWPufvn/bdj8m/tP5z/udDvx1kmkJE/f6cukWLu6bP9zdSpKup9+NzX2vCPzD+mkA47SmwyevNXEpgkR2vRLwl/HTAMYZhRtSyVstK0nS3fIhS7BZu8/5wh03dSXgL+unAYxzTEPfmRMls55BnucnN4vmC7ceJhH/afw0gHGie4CQ3JmTO5O6gn9YPw1gnKgB/KyQKknSbFZvf6yKnBD+sn4awDjRM2nq36ar8U1j/ePzyy3s3rOEuc/B+Mv4aQDjRPcAbQlNJTO1fy74y/ppAONkvw8Qzh7PcQZ56ln0W2/G4B/WTwMYJzulpWYg/rJ+GsA4B+ndM6EBTTfxAAAAAElFTkSuQmCC"
 		},
 		{
 			"category": {
@@ -4259,7 +4352,7 @@
 			},
 			"found": 1795011256.0,
 			"id": "science_shroom",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "Science Shroom Seed",
 			"parents": [
 				"glass",
@@ -4269,7 +4362,8 @@
 			"pattern_seed": 76139,
 			"rarity": 20,
 			"sprout": "#a5126c",
-			"tag": "not_farmable"
+			"tag": "not_farmable",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAAVZJREFUeJztmrFpw0AYRj8HlZlAWUBbuDBoiGBMSJnCA2SYYIzIEAKD0mSAFEELRBOkt6vfoDNnSUbSge+9ymeOey4+faezJAEAAAAAAAAAAMD9s+g7MU3T45CFm6bpvTb+cP6H234O3AvelLiJ+9zvJUlZll1dsK5rSdLzZtP6fugVgX8ePw0QORepsOS5iVuuVlcX+jocWmNLYlmWkqRdUUjqvhLwz+unASInsQ9dyXMT5uKbl+d5a7wriqN0mUT8Yfw0QOQkvuT5eP1/ao0/Hv96iXxJNPCH8dMAkZN0TbA9xXcXunTmjQ3+af00QOQs7B7gZb2eVWznUgN/GD8NEDnns2jfp02/P9+tcVVVkqS37fsgse8cjH9ePw0QOedTQN//qLu49Tk4/jB+GiByOtNiyXP3HsP2IMP2orHeiME/rZ8GiJzR3wkc+104/NP6aYDIOQEu63xj/huwXwAAAABJRU5ErkJggg=="
 		},
 		{
 			"category": {
@@ -4293,7 +4387,7 @@
 			},
 			"found": 1795011324.0,
 			"id": "chicken_shroom",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "Chicken Shroom Seed",
 			"parents": [
 				"science_shroom",
@@ -4303,7 +4397,8 @@
 			"pattern_seed": 50175,
 			"rarity": 37,
 			"sprout": "#ffb900",
-			"tag": "not_farmable"
+			"tag": "not_farmable",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAAWxJREFUeJztmiFuw0AQRX8qK6AXMDAP6AmqgoCiniWwINDAoKAH6EGKiirLIPIJCsINfIWQBjiT2olWs452bVXzH9uJ7RfwPWMnCxBCCCGEEEIIIcQKi7EnPKxWv/31z36/6NdlHQv6w/rvwn018h/xTosk7GO5HNQ3hwP6dVmHvhPoj+NnBzBOoh3gSp7gqoeC/rh+dgDjOOeEJO+7qgAAaZp6XbBtWwDA83o9qI+difRP42cHMM5VKm5N3iWSxLIsAQBFngPQ7wT6p/WzAxjnnAYteVmWAQCapvG6sCRQ0JJI/zx+dgDjJJK83ft9V6lfAADt4xeAvyTemjwN+uf1swMYJ5FZ8LTtkpgXRffJaWbEhv55/ewAxnH+DuBiV30O1nVdAwBet29eQt/3YPqn8bMDGOfq30BXQrVkauf7Qv+0fnYA46hpOb+nXsweQWaQILMo1I4Y+uP62QGMM3pPoEasXbH08xmAROAI6ei0dDOA2PMAAAAASUVORK5CYII="
 		},
 		{
 			"category": {
@@ -4327,7 +4422,7 @@
 			},
 			"found": 1795011557.0,
 			"id": "sheep_shroom",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "Sheep Shroom Seed",
 			"parents": [
 				"science_shroom",
@@ -4337,7 +4432,8 @@
 			"pattern_seed": 23395,
 			"rarity": 29,
 			"sprout": "#de9192",
-			"tag": "not_farmable"
+			"tag": "not_farmable",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAAVZJREFUeJztmrFKw1AUhv9KdgdHZ1uo4O6m7yLoczj5CAri6DMIChY6uAsWWmdHB59ApyPmppfbpLm5yPm+KT255evw55zcNBIAAAAAAAAAeGGUWjAdj7//fl6sVqMu9a7gz+vf2ebHwf8nmg5L0ttyWasfTibqUm97JeAfxk8HcE4jFWHyvj4/aud39/Y71S2JRiyR+If10wGc85vCVPK2ZfH6Lkk6Pj2R1JxN+Mv46QDOqXInz5geHUiSXp5n9Tr+on46gHMqO7Bk2IzINYNi4C/jpwM4p7ELuL2+WbswlUzbb4YzJuTs4lxScx+Mv4yfDuCc6JNAI0ykJaht3Ug9E8c/rJ8O4JzW7wM8PtzXzs9nT5Kky6u7td/v+/9w/P366QDOqVILYm+apNb3Bf68fjqAcza+Bwhnj2EzyLBZ1NeVgD+vnw7gnI1TWmoG4s/rpwM45wdmAf7+WKCZqgAAAABJRU5ErkJggg=="
 		},
 		{
 			"category": {
@@ -4361,7 +4457,7 @@
 			},
 			"found": 1795011600.0,
 			"id": "cowcap",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "Cowcap Seed",
 			"parents": [
 				"barn_blocks",
@@ -4371,7 +4467,8 @@
 			"pattern_seed": 65808,
 			"rarity": 37,
 			"sprout": "#f4bcff",
-			"tag": "not_farmable"
+			"tag": "not_farmable",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAATJJREFUeJztmrGRgzAQRb89l5NDB5RG6NAlXAGU4pjowgvpAHIqsKNlBvmwgMNoxvteBiP0HHx2JSwJAAAAAAAAAAAAPp/T0oF5nt/XTNz3/eK58afzn7f9HPgUZlMSJq5tW0lSlmUvJxyGQZJUluXk/to3Av8xfiqAc55SYckLE1cUxWRc13V/Tmjj7PmmaSRJVVVJir8J+I/1UwGcM6bhv8kLWZtE/Gn8VADnnOaSFyOWTFuNhoRJNPCn8VMBnPMV3tjac+YI96N1Xb8cj/9YPxXAOeMaIJbMvQl7IP40fiqAc56+A8T4/blNrm1Vebl+rxLP7YPxH+unAjhn3AUs/UYdY+v/4PjT+KkAzommxZIX9h7DepBhvWivEzH43+unAjhn9zOBe5+Fw/9ePxXAOQ85N4adc0w2TAAAAABJRU5ErkJggg=="
 		},
 		{
 			"category": {
@@ -4395,7 +4492,7 @@
 			},
 			"found": 1795011687.0,
 			"id": "carrot",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "Carrot Seed",
 			"parents": [
 				"wheat",
@@ -4405,7 +4502,8 @@
 			"pattern_seed": 93419,
 			"rarity": 29,
 			"sprout": "#20ff00",
-			"tag": "not_farmable"
+			"tag": "not_farmable",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAARhJREFUeJztmj1Ow0AQRh8IiTZVDmEkoKaioswZopyDklNQWdRUlFSpIrkDJHIIKm7gFKsU4UfC2V0Dmvcay7uy3hTjb0eWQURERERERERERORbmil9M6X/6b3+v+k/rFWg/A+Ohj6w7arLh4u0MFv1AJObJu1fr7/cX79xkF2t/uJ+EyA4e3flx058enkH4Px0AsBytgLKdb7+On4TIDh7zwCvj/PdjeMWgO4u3S5zqtI/mt8ECM7gBPjEc5tfhf5f85sAwRmcANup8uSq3T2LRnoT9Jf1mwDBcQYI7jcBgpOfAGdzALrbFoDFfVqu9QVMf1m/CRAcZ4DgfhMgONkJ0HXpOvrZp7+I3wSQPGr/+6a/rt8ECM4GtNfsDIC4/3oAAAAASUVORK5CYII="
 		},
 		{
 			"category": {
@@ -4429,7 +4527,7 @@
 			},
 			"found": 1795011754.0,
 			"id": "rabbit_shroom",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "Rabbit Shroom Seed",
 			"parents": [
 				"science_shroom",
@@ -4439,7 +4537,8 @@
 			"pattern_seed": 45231,
 			"rarity": 49,
 			"sprout": "#f7c2ff",
-			"tag": "not_farmable"
+			"tag": "not_farmable",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAAZRJREFUeJztm69Ow1AUxr+RSR6BICYIaaYQyIXwMIgFSSonUZNTPAUKSUgzQRBTS0MQCMIjIEmGIKesd2vvvd3uvQnn+7l2Z/1NnH33T1uAEKKXnq3geHC0Wj/+eP9s/Y5vPf1p/Qfdfxr5DzR2h3TS9c1V7fxsegdgs7N8623QH8fPBFBO37Vw9HUCAJgFqqc/jZ8JoBw2gHLYAMpxngMUh2+1Y3O9aavfFfrD+JkAyrHuAwiyvsyyrPWCZVkC+Ft/Cl3XwfSH9TMBlLPRFeaOkq3jmpBOfHosAADLxSsA971s+uP4mQDKqVYB++o8k4vLkXlqBdj3sumP42cCKMfaAPl4gnw8sV7Itc4X+sP6mQDK6TXdR7aNQcOX3+nD8vx76+cyCzUxZ6UC/Wn8TADlVAkwPDuNKjb/AfSn8TMBlNNfW4+23l0Siof72vHzfA4AyG+nXuItO2L0J/AzAZRT7QT6Pm/eRNfn4OlP42cCKMf5zSBz7BFkDBJkLNr1jRj64/iZAMpx7tLQYyD9afxMAOX8ACrfxMVMoAIMAAAAAElFTkSuQmCC"
 		},
 		{
 			"category": {
@@ -4463,7 +4562,7 @@
 			},
 			"found": 1795011811.0,
 			"id": "beetroot",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "Beetroot Seed",
 			"parents": [
 				"rose",
@@ -4473,7 +4572,8 @@
 			"pattern_seed": 71768,
 			"rarity": 32,
 			"sprout": "#2bc118",
-			"tag": "not_farmable"
+			"tag": "not_farmable",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAAWNJREFUeJztmjFOwzAYRj+qiDkzE3MG1AN0gBtwCZZOHIWJ65CBA1QMmRg6MXtGEWFwXYmQKEmxjar/vSVN0/Zl+PI5cS0BAAAAAAAMUhVlVxVlN3cf/3n4V7FOEM6TYuoDIVW3r5V/Y9N0klQ+X/njWw0eb1p3EeME8af10wDGmZ3SfhJ3b06StL4pJUn1ppEUL/n48/hpAOMsTmtIYhiD3PZDUrrk40/rpwGMM5ma/rPl4+X14OeePvc/9mPfBeNP46cBjDM6DxCSFxL3cO+373U9/AXnj9etC7/8p+dh/Hn8NIBxfjXA4uQduCv3/sUhiWqPhkVXAv68fhrAOJP/BUwlLzX40/ppAOOMjkv9seg4xozw0rsL3X35bay7YPxp/DSAcWbPBI7NQPUTF4g9E4Y/jZ8GMM7i9QAhibHGOvz/66cBjHPyeoD1yq9EyXUF4E/jpwHgNFKvg8efx08DGOcbfpHGyYEjWZcAAAAASUVORK5CYII="
 		},
 		{
 			"category": {
@@ -4497,7 +4597,7 @@
 			},
 			"found": 1795011868.0,
 			"id": "pigcap",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "PigCap Seed",
 			"parents": [
 				"science_shroom",
@@ -4507,7 +4607,8 @@
 			"pattern_seed": 14632,
 			"rarity": 52,
 			"sprout": "#ffb2b2",
-			"tag": "not_farmable"
+			"tag": "not_farmable",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAAV1JREFUeJztmjFOwzAYRr+iHoChA2cAIcHSORtSl649AjdgZ2NnZoYNJBSJDakLdCkLnKJDD4AEQ3BQXBLbJYml+r2lbez+r8OX361rCQAAAAAAAAAAAHafge/Ew9HJV0jhj9Wbd2388fx7230c2BVqU2InLr9aSpJGR80FV+/F4+TitHI99I7A34+fDpA4G6kwyfNNXB0miS/zV0nS5eO5JPedgL9fPx0gcco0+Cbv8/ahseBwNpX0m0CDK4n44/jpAIkzCE3e82IhScrG48q4fX19PP2zjp1EA/44fjpA4gy9J/6sLVnNuCt5/wV/N346QOKUHcCsDZq73nLQPGzqBII/jp8OkDgb+wAubq6zyuu7/F6S9JTvB4nrfgfj79dPB0ic8juA7x61i23/B8cfx08HSBznPoBJnr322JxN1sWTvJjf1okY/N366QCJ0/qZwLbPwuHv1k8HSJxvpC9yTkXGLfcAAAAASUVORK5CYII="
 		},
 		{
 			"category": {
@@ -4531,7 +4632,7 @@
 			},
 			"found": 1795011896.0,
 			"id": "campfire",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "Campfire Seed",
 			"parents": [
 				"wooden_fence",
@@ -4541,7 +4642,8 @@
 			"pattern_seed": 135,
 			"rarity": 17,
 			"sprout": "#97a94e",
-			"tag": "not_farmable"
+			"tag": "not_farmable",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAAX1JREFUeJztmrFOwkAcxr+aDsYYBmbSsrEY4sLmc+joQxg2RjbiQzDqc7CxGOPCBoSZgRjjYIJDOaF3XO6k1zbk//2W5ui1vw5fv7s0AIQQQgghhBBCCCEOkka8TRrxlv7z9l+EeBhyvkT/vUClbvF+BwBIuxMAwHLzEx2eV+PQ0B/WzwYQTuw7UU+e63zanQR9E+gvx88GEI6zAYzkvc6z4307N8+WzKLQX66fDSAc7z2AwS6JrmSWBv1B/GwA4VgbwLr27JgO1wCAnn6hlsxTd8P0V+NnAwjHSIX+fXkxaAHYJ85Fb9DMjdPhKjd2vQn0V+tnAwjnLw0qeeOn5OjE6ewSANC//crGWiJV8kZvV9m48330Po/PSwBmEumvx88GEI51D3DTugYA9B+a+hQA+0TakjZ6yRL6sfrM/e67BtJfjZ8NIBzvPYAtUTqu5J66BtJfjp8NIJzIlryia5jClkiVRAX99fjZAMIx9gA6Rf/R4ntf+uvxswGE8wtCMPdCMwXBsQAAAABJRU5ErkJggg=="
 		},
 		{
 			"category": {
@@ -4565,7 +4667,7 @@
 			},
 			"found": 1795011921.0,
 			"id": "bacon",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "Bacon Seed",
 			"parents": [
 				"pigcap",
@@ -4575,7 +4677,8 @@
 			"pattern_seed": 10598,
 			"rarity": 69,
 			"sprout": "#ffffff",
-			"tag": "not_farmable"
+			"tag": "not_farmable",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAAWlJREFUeJztmzFuwkAURL9RCkqEOAAHSEGJKCiRT4ByFMRRUqVEUUoKRGWlQJQpUiAqHyCiSkFHmuwqXmPWC85+pJnXrfzXz8VqjEY4kV9G3fZJIrI5HJO/a/p1/K2YUnJ/JObkvW9WUcXjUVpY06/jZwKA81B14Wu1FhGRXjq5eAMzZ/DNv83mtR6M/jh+JgA4NgGOu1xERL7zfWHAPWE+Qufp1/UzAcCxCfC5eC1c6A8HhXW+/ah1Q9++frtzdh/9On4mADg2AR6fpiJSfgcZ3JNVF3dflmVn5+jX8TMBwGETCO5nAoBT2QQaQpumW/fRH9fPBADH2wS6XNt0mX1Vv4Lp1/EzAcCpbAINoY1UU00Y/XH8TABwajeBhtBGqqkmjP7/8TMBwGETCO5nAoBTagJDm6emGi/6dfxMAHBKTaBL0/9J8zVh9Mf1MwHAsQmwfHnWfA76lfxMAHDsF6qoX8ei+5kA4PwA05KYuiqtDrUAAAAASUVORK5CYII="
 		},
 		{
 			"category": {
@@ -4599,7 +4702,7 @@
 			},
 			"found": 1795011942.0,
 			"id": "bacon_background",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "Bacon Background Seed",
 			"parents": [
 				"bacon",
@@ -4609,7 +4712,8 @@
 			"pattern_seed": 68972,
 			"rarity": 76,
 			"sprout": "#c1cfa2",
-			"tag": "farmable"
+			"tag": "farmable",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAAVJJREFUeJztmy2uwkAUhU9f2EETFoBiDxgkYQOQJ7AQBAtAoVjAEwQsCnaBgB0gULUQEhQLAMM09DVtQyh3SM75VKfTzGduT+YnE+BBvVq9wZDD+Rw8t+X34/+xlIrvI3CVN2m1TISn6xUAMN/tEu/l9+NXApBTcQ/N37ap+P8fIL8fvxKAnEpWx2qxBgBElwsAYDwe5g40nc4S7aLvi5Dfxq8EICe1CnCzRFd5ZVELQwDANooAAPvjMdEvvx+/EoAcFQA5KgBy4jnAZvlnKm72Rom2/H78SgByMvcBHK+uL8teD8v/Wb8SgBztA5D7lQDkZBZALQzjqvGB/DZ+JQA52gcg9ysByEntA7hzaEe338kd4FPn4PLb+JUA5MRzgEGjYSLMWgfL78evBCCn8CzgXVzF+UL+fL8SgJxUAnx7xcpfLkoAcuIbqqy3Y9n9SgBy7uSkRp61sJAFAAAAAElFTkSuQmCC"
 		},
 		{
 			"category": {
@@ -4633,7 +4737,7 @@
 			},
 			"found": 1795012043.0,
 			"id": "black_background",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "Black Background Seed",
 			"parents": [
 				"cavern",
@@ -4643,7 +4747,8 @@
 			"pattern_seed": 13731,
 			"rarity": 14,
 			"sprout": "#ffffff",
-			"tag": "farmable"
+			"tag": "farmable",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAARdJREFUeJztm80KgkAYRccItF5B6P3fLHAXSGmzqE1KJUOjzXwK95xdmZ3N9fr5M4V7UVXHhzOk667F+2f86/h3llLYHsWQvLo+mQi9984555rm/PE9/nX8NIA4+9CGISmpadtL1O/w2/hpAHEmDfCdvL6/Lfrjsjws2g+/rZ8GECc4AyxNXmj/uUcEfhs/DSAOARCHAIgTnAFS8+85DX8ePw0gDgEQhwCIYzYDDNeh3t+tlPgj/DSAOMEAlOVh8f3sFOC38dMA4vycAYYUWj8Vw2/jpwHEib4KmJvE1Ocv/Hn8NIA4YwPEvoOWazLFv46fBhAn+53A2Ldg8a/jpwHEmTTA1hOLPy00gDjjClXV1bHqfhpAnCdqN9QT6SVC9wAAAABJRU5ErkJggg=="
 		},
 		{
 			"category": {
@@ -4667,7 +4772,7 @@
 			},
 			"found": 1795012064.0,
 			"id": "white_background",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "White Background Seed",
 			"parents": [
 				"glass",
@@ -4677,7 +4782,8 @@
 			"pattern_seed": 5765,
 			"rarity": 22,
 			"sprout": "#000000",
-			"tag": "not_farmable"
+			"tag": "not_farmable",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAARJJREFUeJztm0EOgjAUBcFwlt4Dz0jibeg9WMs5dGMNShpLbX9J3swKIzib5+O3St+9GMfrozPE+7nfvsbfxn+xlML5GELypulmIlzXezj8SDz+Nn4aQJwh9sYmKUXxfk46D7+NnwYQZ9cA38lbliXrg51zWdfht/XTAOJEZ4Dc5MWuP/qNwG/jpwHEIQDiEABxojNAaf69p+Gv46cBxCEA4hAAccxmgLAOrbXHjT/PTwOIEw2Acy57P7sE+G38NIA4P2eAkELrX8Xw2/hpAHGSVwFHk1j6/oW/jp8GEOfdAKnr01qTKf42fhpAnOo7gan/gsXfxk8DiLNrgLMnFn9ZaABxhs1Tqk2fjsXfxk8DiPMEq37LyDEra5cAAAAASUVORK5CYII="
 		},
 		{
 			"category": {
@@ -4701,7 +4807,7 @@
 			},
 			"found": 1795012098.0,
 			"id": "pink_background",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "Pink Background Seed",
 			"parents": [
 				"rose",
@@ -4711,7 +4817,8 @@
 			"pattern_seed": 79164,
 			"rarity": 25,
 			"sprout": "#000000",
-			"tag": "not_farmable"
+			"tag": "not_farmable",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAASFJREFUeJztm8sNgkAURcVQBaEBNsYurMWNVdkEVWjYuNYYN9KDbsSgZOKAM29I7jkrDeLZXC6Pz2SLF5vV+rEwpG6OWf87/jT+paUU5kfeJW+/3ZkIz23bffxIPP40fhpAnNy1oZeUoNTNwet3+G38NIA4gwb4Tt7pdp30x1VRTtoPv62fBhDHOQNMTZ5r/7FHBH4bPw0gDgEQhwCI45wBQvPvOQ1/HD8NIA4BEIcAiGM2A3TXoZf2bqXE7+GnAcRxBqAqysn3s0OA38ZPA4jzcwboUmj9VAy/jZ8GEMf7KmBsEkOfv/DH8dMA4rwbwPcdtFiTKf40fhpAnOh3An3fgsWfxk8DiDNogLknFn9YaABx8t4q1aSrY/Gn8dMA4jwB+FHMSLvGSfUAAAAASUVORK5CYII="
 		},
 		{
 			"category": {
@@ -4735,7 +4842,7 @@
 			},
 			"found": 1795012134.0,
 			"id": "orange_background",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "Orange Background Seed",
 			"parents": [
 				"white_background",
@@ -4745,7 +4852,8 @@
 			"pattern_seed": 7851,
 			"rarity": 34,
 			"sprout": "#000000",
-			"tag": "farmable"
+			"tag": "farmable",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAASVJREFUeJztmz0SwVAYRV8MdqDSaNNZlY3YhT3oLSOdljEqY3QKzNBIxt8byfPyPTP3nC4kTnPd9+Uvc3fGo/7VGVKsTtnjNv40/o6lFP6PrEzebDIwEW72F+ecc9P54elz/Gn8NIA4Xd8XZVJisyiOtfbDb+OnAcR5a4DX5C2356Afzoe9oOPw2/ppAHG8M0Bo8nzHN/1H4Lfx0wDiEABxCIA43hkgNr+uafjb8dMA4hAAcQiAOGYzQHkeut6lWQvxf/bTAOJ4A5APe8HXs2OA38ZPA4jzdQYoU2h9Vwy/jZ8GEKf2WUDTJMZev/C346cBxKkaoO4zaG1NpvjT+GkAcVq/Elj3KVj8afw0gDhvDfDvicUfFxpAnOoNVdW3Y9X9NIA4Nz5t0MvTsP8ZAAAAAElFTkSuQmCC"
 		},
 		{
 			"category": {
@@ -4769,7 +4877,7 @@
 			},
 			"found": 1795012162.0,
 			"id": "blue_background",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "Blue Background Seed",
 			"parents": [
 				"glowing_mushroom",
@@ -4779,7 +4887,8 @@
 			"pattern_seed": 18273,
 			"rarity": 23,
 			"sprout": "#000000",
-			"tag": "not_farmable"
+			"tag": "not_farmable",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAASZJREFUeJztmz0SwVAYRV8MFqBNY1RWZiE2YRdWYQM6ldGg0ajM+BkaL4PMGy/x8sXMPacj4jQ3N19+Xuae9IfjuzPkvFllr5/xt+PvWErh/8h88gaTqYnwdtg755w7zmdv3+Nvx08DiNMNbfBJSc1puYj6HX4bPw0gTqkBPpN32a5r/XEvH9XaD7+tnwYQJzgD1E1eaP+qRwR+Gz8NIA4BEIcAiBOcAVLz6zkNfzN+GkAcAiAOARDHbAbw16HXw85KiT/CTwOIEwxALx/Vvp+dAvw2fhpAnK8zgE+h9VMx/DZ+GkCc6KuAqklMff7C34yfBhCnaIDYd9Camkzxt+OnAcRp/E5g7Fuw+Nvx0wDilBrg3xOLPy00gDjFClXV1bHqfhpAnAfwr9FHc36MKwAAAABJRU5ErkJggg=="
 		},
 		{
 			"category": {
@@ -4803,7 +4912,7 @@
 			},
 			"found": 1795012185.0,
 			"id": "white_stone",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "Green Background Seed",
 			"parents": [
 				"glowstone_stone",
@@ -4813,7 +4922,8 @@
 			"pattern_seed": 25684,
 			"rarity": 24,
 			"sprout": "#0f0f0f",
-			"tag": "not_farmable"
+			"tag": "not_farmable",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAARxJREFUeJztmzEOgkAUBRdjAmeAwrt5Qs/iDWwsiLGigFBoI0QlG2Hd/ZC8mQ4Fp3k+Pgtk7kVxKB7OkPbSZu/b+Nfx7yylsD2yIXnVsTIR9vfeOedcfao/Pse/jp8GEGfv+2JISmyaczNrP/w2fhpAnEkDfCevu3ZBP5yXedBx+G39NIA43hkgNHm+45f+I/Db+GkAcQiAOARAHO8MEJt/z2n40/hpAHEIgDgEQByzGWC4Du1vada48Yf5aQBxvAHIyzx4PTsG+G38NIA4P2eAIYXWd8Xw2/hpAHFmXwUsTWLs8xf+NH4aQJyxAeY+g5ZqMsW/jp8GECf5SuDcp2Dxr+OnAcSZNMDWE4s/LjSAOOMbqqpvx6r7aQBxnhFj0vCyKZ/PAAAAAElFTkSuQmCC"
 		},
 		{
 			"category": {
@@ -4837,7 +4947,7 @@
 			},
 			"found": 1795012209.0,
 			"id": "red_background",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "Red Background Seed",
 			"parents": [
 				"lava",
@@ -4847,7 +4957,8 @@
 			"pattern_seed": 26732,
 			"rarity": 24,
 			"sprout": "#000000",
-			"tag": "farmable"
+			"tag": "farmable",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAAR1JREFUeJztmzEOgkAUBRdjAnegpfKe3sALeQkrW2NCTQGh0EaISjbCuvsheTMdCk7zfHwWyNyLQ1E8nCGXts3et/Gv499ZSmF7ZEPyjmVpIrz3vXPOuVNdf3yOfx0/DSDO3vfFkJTYnJtm1n74bfw0gDiTBvhO3rXrgn64yvOg4/Db+mkAcbwzQGjyfMcv/Ufgt/HTAOIQAHEIgDjeGSA2/57T8Kfx0wDiEABxCIA4ZjPAcB16S7TGjT/MTwOI4w1AlefB69kxwG/jpwHE+TkDDCm0viuG38ZPA4gz+ypgaRJjn7/wp/HTAOKMDTD3GbRUkyn+dfw0gDjJVwLnPgWLfx0/DSDOpAG2nlj8caEBxBnfUFV9O1bdTwOI8wSqLtJfuYvETgAAAABJRU5ErkJggg=="
 		},
 		{
 			"category": {
@@ -4871,7 +4982,7 @@
 			},
 			"found": 1795012244.0,
 			"id": "yellow_background",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "Yellow Background Seed",
 			"parents": [
 				"sand",
@@ -4881,7 +4992,8 @@
 			"pattern_seed": 46081,
 			"rarity": 28,
 			"sprout": "#000000",
-			"tag": "bountiful"
+			"tag": "bountiful",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAASRJREFUeJztm70OAUEYRWdFw0ModyteUyNReRmJl6CiE0StIaGgMRs/mRhr9lvJPadjrdPcvfvtz2TuzqDfvTpD5otj9vgZfzP+lqUU/o/MJ28y7pkIt7uLc8654Wj/9D3+Zvw0gDjt0AaflNRMZ4eo3+G38dMA4rw1wGvylqtTpT8u8k6l/fDb+mkAcYIzQNXkhfb/9ojAb+OnAcQhAOIQAHGCM0Bqfj2n4a/HTwOIQwDEIQDimM0A/jp0vTlbKfFH+GkAcYIBKPJO5fvZKcBv46cBxPk4A/gUWj8Vw2/jpwHEib4K+DaJqc9f+Ovx0wDilA0Q+w5aXZMp/mb8NIA4td8JjH0LFn8zfhpAnLcG+PfE4k8LDSBOuUJVdXWsup8GEOcG9KnQHlQ64w4AAAAASUVORK5CYII="
 		},
 		{
 			"category": {
@@ -4905,7 +5017,7 @@
 			},
 			"found": 1795012289.0,
 			"id": "purple_background",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "Purple Background Seed",
 			"parents": [
 				"purple_block",
@@ -4915,7 +5027,8 @@
 			"pattern_seed": 73085,
 			"rarity": 34,
 			"sprout": "#000000",
-			"tag": "not_farmable"
+			"tag": "not_farmable",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAASZJREFUeJztmzsKwkAURSdiJbaCTRrB7bgRV+YuXIEbECy0ERQREdFKGyeoYXASJy/CPafTGE9zc/Pymcw9GfZHd2fI9rzKXj/jb8ffsZTC/5H55E3GUxPh6bZ3zjk3X8/evsffjp8GEKcb2uCTkprlYRH1O/w2fhpAnFIDfCZvd9nU+uNBL6+1H35bPw0gTnAGqJu80P5Vjwj8Nn4aQBwCIA4BECc4A6Tm13Ma/mb8NIA4BEAcAiCO2Qzgr0OP152VEn+EnwYQJxiAQS+vfT87Bfht/DSAOF9nAJ9C66di+G38NIA40VcBVZOY+vyFvxk/DSBO0QCx76A1NZnib8dPA4jT+J3A2Ldg8bfjpwHEKTXAvycWf1poAHGKFaqqq2PV/TSAOA/OTtHLLwS7/QAAAABJRU5ErkJggg=="
 		},
 		{
 			"category": {
@@ -4939,7 +5052,7 @@
 			},
 			"found": 1795012365.0,
 			"id": "sink",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "Sink Seed",
 			"parents": [
 				"quartz_",
@@ -4949,7 +5062,8 @@
 			"pattern_seed": 24371,
 			"rarity": 37,
 			"sprout": "#5a8358",
-			"tag": "not_farmable"
+			"tag": "not_farmable",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAAV1JREFUeJztmTFOwzAYRj9QBk4BKlPEQDsxMjK2Ug/A0aKIAyCFE6CMSKCWoeoE4iQwIFeKi4kTUkfof29p48p5Hb5+qW0JAAAAAAAAAKxw1HfiRT77/Gl8s131vif+9P7jYb4O/Fc6p9UlryjLxnhd15KksigkHe6XgH9YPw1gnMy9CT1T2vCTF3s/P6H4x/HTAMbJXFLWr0+dJj6/bBrXXedPL68aCcU/jp8GME7mDyzu3yKnnny/nN5Ikh4j51XL818/x5/WTwMYZ9cAH+9bSVK1zCV1SWIcLnnO44N/HD8NYJzdWtStBh6qO0nS2SQfVOSSN1/cSgqvg/Gn9dMAxtnbL/aTuF7VfxJMZ9eSwsnHP66fBjBOMI2hvWR/x8l/toToejqGP42fBjDO3k6go+9p1VDn4PjT+GkA47Smpe200N9Ziv23Gwv+w/ppAONEpzT1MxB/Gj8NYJwvoy6KDEY17xQAAAAASUVORK5CYII="
 		},
 		{
 			"category": {
@@ -4973,7 +5087,7 @@
 			},
 			"found": 1795012401.0,
 			"id": "sturdy_door",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "Sturdy Door Seed",
 			"parents": [
 				"sign",
@@ -4983,7 +5097,8 @@
 			"pattern_seed": 15564,
 			"rarity": 11,
 			"sprout": "#a1a1a1",
-			"tag": "not_farmable"
+			"tag": "not_farmable",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAAS5JREFUeJztmy8KAkEchd+KGMQgNsFgFryAaQ7gIQwewOxZDOIZTAaLYBaETaKGBYuIQQwWDf7BXQUF9TfCe1/a2R32K4+3ww4T4EIlnznCkHB7CO7H8vvxpyyl4v9IX5M3bNVMhL3BBADQDRFLvPx+/GoActLJG4tZFBtPNzsAQLWQe/qCT5/L79evBiAnuK4ByrW6qXg57sfG8vvxqwHIeQiAcw7Oua+L3n2v/LZ+NQA5QfI/wK9XoaP5GgDQDfexefL78asByFEAyFEAyHn4E/gris3S+aK9tlLK/4ZfDUCOWQOsOtHrSfKb+9UA5CgA5CgA5Gg3kNyvBiBHu4HkfjUAOdoNJPerAchRAMhRAMi5rQEalaypOPkNlN+PXw1Azu2EKuvpWHa/GoCcE7wQTAMRTEH1AAAAAElFTkSuQmCC"
 		},
 		{
 			"category": {
@@ -5008,7 +5123,7 @@
 			"found": 1795085526.0,
 			"fruit_count": 0.0,
 			"id": "gray_background",
-			"made_by": "RyeeRue",
+			"made_by": "KeepUpp",
 			"name": "Gray Background Seed",
 			"parents": [
 				"white_background",
@@ -5018,7 +5133,8 @@
 			"pattern_seed": 42928,
 			"rarity": 36,
 			"sprout": "#898788",
-			"tag": "bountiful"
+			"tag": "bountiful",
+			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAARpJREFUeJztm0sOgjAURYtxDzBgYSTu04SNyAYYyASWoBNLVNJYsH2Q3HNmingml8vj08K9qOv64Qzp+754/4x/H//JUgrHo/DJa5qLiXCaJuecc217/fge/z5+GkCcc2iDT0pquu4W9Tv8Nn4aQJxFA3wnbxjum/64LKtN++G39dMA4gRngK3JC+2/9ojAb+OnAcQhAOIQAHGCM0Bq/j2n4c/jpwHEIQDiEABxzGYAfx06jqOVEn+EnwYQJxiAsqw2389OAX4bPw0gzs8ZwKfQ+qkYfhs/DSBO9FXA2iSmPn/hz+OnAcSZGyD2HbRckyn+ffw0gDjZ7wTGvgWLfx8/DSDOogGOnlj8aaEBxJlXqKqujlX30wDiPAFDnND50jfQ4AAAAABJRU5ErkJggg=="
 		}
 	],
 	"recipes": [

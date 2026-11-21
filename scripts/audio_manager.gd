@@ -14,6 +14,13 @@ extends Node
 
 signal track_changed(title: String)
 
+## THE MUSIC PACK: the songs are plain .ogg files (not imported by Godot: smaller) in their own
+## resource pack, SeedSplicer-music.pck, so game updates never carry them again. It is next to the
+## exe in the full download; a game that doesn't have it (older downloads) gets it once from the
+## latest GitHub release (Updater) into user://updates/. In the editor the files are just there.
+const MUSIC_PACK := "SeedSplicer-music.pck"
+const MUSIC_PACK_USER := "user://updates/SeedSplicer-music.pck"
+
 const MUSIC_DIR := "res://assets/audio/music/"
 const SFX_DIR := "res://assets/audio/sfx/"
 const MUSIC: Array[Dictionary] = [
@@ -64,7 +71,28 @@ func _ready() -> void:
 		p.bus = &"SFX"
 		add_child(p)
 		_pool.append(p)
+	mount_music_pack()
 	_start_music.call_deferred()
+
+
+## Loads the music pack (next to the exe, or the downloaded copy). True if the songs are there.
+func mount_music_pack() -> bool:
+	if has_music():
+		return true
+	for path in [OS.get_executable_path().get_base_dir().path_join(MUSIC_PACK), ProjectSettings.globalize_path(MUSIC_PACK_USER)]:
+		if FileAccess.file_exists(path) and ProjectSettings.load_resource_pack(path, false):
+			break
+	return has_music()
+
+
+func has_music() -> bool:
+	return FileAccess.file_exists(MUSIC_DIR + MUSIC[0].file)
+
+
+## The Updater downloaded the music pack: mount it and start playing.
+func music_pack_arrived() -> void:
+	if mount_music_pack() and not _music.playing:
+		_start_music()
 
 
 # --- sound effects -----------------------------------------------------------------------
@@ -129,7 +157,7 @@ func _start_music() -> void:
 
 
 func _play_track(i: int) -> void:
-	var stream := _stream(MUSIC_DIR + MUSIC[i].file)
+	var stream := _song(MUSIC_DIR + MUSIC[i].file)
 	if stream == null:
 		return
 	current_track = i
@@ -153,6 +181,13 @@ func _random_track() -> int:
 
 
 # --- plumbing ------------------------------------------------------------------------------
+
+## A song: read straight from its .ogg file (the music pack holds plain files, not imports).
+func _song(path: String) -> AudioStream:
+	if not _cache.has(path):
+		_cache[path] = AudioStreamOggVorbis.load_from_file(path) if FileAccess.file_exists(path) else null
+	return _cache[path]
+
 
 func _stream(path: String) -> AudioStream:
 	if not _cache.has(path):

@@ -109,6 +109,10 @@ const BASE_SEEDS := [
 ## The official list version this save has merged (see official.gd), and what the last merge added.
 var official_version := ""
 var official_report := {}
+## Seeds players submitted that the developer DENIED (never in your game): drawable seed dictionaries
+## with made_by / parent_names / submission_id. They show in the Graveyard tab and ship in the
+## graveyard on the next publish (tools/publish_update.py reads "graveyard" from the save).
+var graveyard_extra: Array = []
 
 
 func _ready() -> void:
@@ -541,6 +545,7 @@ func reset() -> void:
 	void_tokens.clear()
 	pending_rolls.clear()
 	official_version = ""
+	graveyard_extra.clear()
 	for b in BASE_SEEDS:
 		var s: Dictionary = b.duplicate(true)
 		s.rarity = 1
@@ -566,6 +571,7 @@ func save_game() -> void:
 		"void": void_tokens,
 		"rolls": pending_rolls,
 		"official_version": official_version,
+		"graveyard": graveyard_extra,
 	}
 	var f := FileAccess.open(SAVE_PATH, FileAccess.WRITE)
 	if f:
@@ -622,6 +628,7 @@ func load_game() -> bool:
 			recipe_order.append(r.pair)
 	void_tokens = parsed.get("void", [])
 	official_version = String(parsed.get("official_version", ""))
+	graveyard_extra = parsed.get("graveyard", []) if parsed.get("graveyard") is Array else []
 	pending_rolls.clear()
 	var saved_rolls: Variant = parsed.get("rolls", {})
 	if typeof(saved_rolls) == TYPE_DICTIONARY:
@@ -698,6 +705,130 @@ func _signed(s: Dictionary) -> Dictionary:
 	var out := s.duplicate()
 	out.made_by = player_name()
 	return out
+
+
+## Seeds a player can upload (Settings > Upload my seeds): theirs (signed with their name, or
+## unsigned and made by splicing / added in this game) and not already on the official list.
+func my_unofficial_seeds() -> Array:
+	var me := player_name().to_lower()
+	return order.filter(func(id):
+		var s: Dictionary = seeds[id]
+		if BASE_SEEDS.any(func(b): return b.id == id) or Approvals.is_approved(s):
+			return false
+		var by := String(s.get("made_by", "")).to_lower()
+		return by == me or by == "")
+
+
+## One seed as a small Seed Splicer list for an online submission: the seed, every seed it is
+## made from (all the way down), their recipes, and the block art you drew for them (base64 PNG,
+## like the official list). The developer's game imports it as it would an Export List.
+func submission_payload(id: String) -> Dictionary:
+	var need := {}
+	var stack: Array = [id]
+	while not stack.is_empty():
+		var x: String = stack.pop_back()
+		if need.has(x) or not seeds.has(x):
+			continue
+		need[x] = true
+		for p in seeds[x].get("parents", []):
+			stack.append(p)
+	var out_seeds: Array = []
+	for x in order:
+		if not need.has(x):
+			continue
+		var s := _signed(seeds[x]).duplicate()
+		s.erase("denied")
+		var art_file := "user://block_art/%s.png" % String(x).validate_filename()
+		if FileAccess.file_exists(art_file):
+			s.block_art = Marshalls.raw_to_base64(FileAccess.get_file_as_bytes(art_file))
+		out_seeds.append(s)
+	var out_recipes: Array = []
+	for k in recipe_order:
+		var pair := String(k).split("|")
+		if need.has(pair[0]) and need.has(pair[1]) and need.has(recipes[k]):
+			out_recipes.append({ "pair": k, "result": recipes[k] })
+	return { "format": EXPORT_FORMAT, "version": SAVE_VERSION, "username": player_name(), "top": id,
+		"seeds": out_seeds, "recipes": out_recipes }
+
+
+## The developer's RSR (RyeScale Rating) for a seed: 6..10, or 0 = not rated. Ships with the next
+## update; an approved seed's Mycoras get x1 (6) .. x4 (10), see bank.gd.
+func set_rating(id: String, rsr: int) -> void:
+	if not seeds.has(id):
+		return
+	if rsr >= 6 and rsr <= 10:
+		seeds[id].rsr = rsr
+	else:
+		seeds[id].erase("rsr")
+	save_game()
+	seeds_changed.emit()
+
+
+## Is this seed's block art approved (x25 instead of x10)? Your own art counts as approved unless
+## you say otherwise; a player's art only when you approved it with the seed.
+func art_approved(id: String) -> bool:
+	if not seeds.has(id) or not BlockArt.has_art(id):
+		return false
+	return bool(seeds[id].get("art_ok", true))
+
+
+func set_art_ok(id: String, ok: bool) -> void:
+	if not seeds.has(id):
+		return
+	seeds[id].art_ok = ok
+	save_game()
+	seeds_changed.emit()
+
+
+## The developer denied a submission: its seed goes to the graveyard (once per seed name).
+## Returns true if it was added.
+func bury_submission(payload: Dictionary, username: String, submission_id: int) -> bool:
+	var top: Dictionary = {}
+	var names := {}
+	for s in payload.get("seeds", []):
+		if s is Dictionary:
+			names[String(s.get("id", ""))] = String(s.get("name", "?"))
+			if String(s.get("id", "")) == String(payload.get("top", "")):
+				top = s
+	if top.is_empty():
+		return false
+	var key := String(top.get("name", "")).strip_edges().to_lower()
+	if key == "" or graveyard_extra.any(func(g): return String(g.get("name", "")).strip_edges().to_lower() == key):
+		return false
+	var g := {}
+	for k in ["name", "rarity", "pattern", "colors", "sprout", "pattern_seed", "crop", "tag", "category", "drop", "fruit_count"]:
+		if top.has(k):
+			g[k] = top[k]
+	g.made_by = username if username != "" else String(top.get("made_by", "unknown"))
+	g.parent_names = top.get("parents", []).map(func(p): return names.get(String(p), "?"))
+	g.submission_id = submission_id
+	graveyard_extra.append(g)
+	save_game()
+	seeds_changed.emit()
+	return true
+
+
+## The developer approves a submission: its seeds come in (credited as in the payload) with the
+## block art the player drew for the ones that are new. Returns apply_import's result.
+func import_submission(payload: Dictionary, with_art := true) -> Dictionary:
+	var preview := preview_from(payload)
+	if not preview.ok:
+		return preview
+	var before := {}
+	for id in order:
+		before[id] = true
+	var r := apply_import(preview, import_offer_ids(preview))
+	# block art for the seeds that just arrived (never over art you already have)
+	for s in payload.get("seeds", []):
+		var b64 := String(s.get("block_art", ""))
+		var mine := find_by_name(String(s.get("name", "")))
+		if not with_art or b64 == "" or mine == "" or before.has(mine) or BlockArt.has_art(mine):
+			continue
+		var img := Image.new()
+		if img.load_png_from_buffer(Marshalls.base64_to_raw(b64)) == OK and img.get_size() == Vector2i(BlockArt.FRAMES * BlockArt.SIZE, BlockArt.SIZE):
+			img.convert(Image.FORMAT_RGBA8)
+			BlockArt.set_art(mine, img)
+	return r
 
 
 ## The sprite sheet sits next to the list: seed_splicer_list.json -> seed_splicer_list_seeds.png
@@ -852,6 +983,10 @@ static func reference_notes() -> Dictionary:
 				+ "background). Any kind can have it. For a background it is also listed as 'emits_light' in drop.bg_tags.",
 			"The designer will later choose collision / no collision (and damage) by hand for any drop; "
 				+ "'drop.auto' = false marks those. Never overwrite a drop whose auto is false.",
+			"MYCORAS are the currency (MushMantle called them Spores; same math, scripts/mycora.gd): breaking a block rolls its block "
+				+ "(25%) and its seed (25%); when neither comes out it drops 1 to 1 + floor(rarity / 4) Mycoras. A harvest always gives "
+				+ "the blocks, plus the seed (25%) or else Mycoras for Farmable / Bountiful, and Mycoras every time for Not Farmable. "
+				+ "A Chest gives itself back, never Mycoras.",
 		],
 		"seed_fields": {
 			"id": "unique id of the seed",

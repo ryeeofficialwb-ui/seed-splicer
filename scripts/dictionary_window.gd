@@ -13,7 +13,7 @@ const THUMB := 64  ## block textures in the list are drawn at 2x (32 -> 64)
 const GROUP_KIND := 0
 const GROUP_MATERIAL := 1
 const GRAVE_TAB := 4
-const COLS := 7
+const COLS := 8
 
 var _search: LineEdit
 var _tabs: TabBar
@@ -27,6 +27,9 @@ var _detail_name: Label
 var _detail_text: RichTextLabel
 var _edit_btn: Button
 var _grave_btn: Button
+var _rsr: OptionButton
+var _art_ok: CheckBox
+var _dev_row: HBoxContainer
 var _grave: Array = []  # Approvals.graveyard() while the Graveyard tab is open
 var _selected := ""
 var _collapsed := {}  # group key -> true
@@ -84,7 +87,7 @@ func _ready() -> void:
 	_search.text_changed.connect(func(_t): refresh())
 	bar.add_child(_search)
 	_sort = OptionButton.new()
-	for n in ["Sort: name", "Sort: rarity (highest)", "Sort: newest"]:
+	for n in ["Sort: name", "Sort: rarity (highest)", "Sort: newest", "Sort: Mycoras (most)"]:
 		_sort.add_item(n)
 	_sort.item_selected.connect(func(_i): refresh())
 	bar.add_child(_sort)
@@ -107,10 +110,10 @@ func _ready() -> void:
 	_tree.select_mode = Tree.SELECT_ROW
 	_tree.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	for c in COLS:
-		_tree.set_column_title(c, ["Seed", "R", "Material", "Hardness", "Seed tag", "Drop", "Approved"][c])
+		_tree.set_column_title(c, ["Seed", "R", "Material", "Hardness", "Seed tag", "Drop", "Mycoras", "Approved"][c])
 	_tree.set_column_expand(0, true)
 	_tree.set_column_custom_minimum_width(0, 200)
-	for c in [[1, 34], [2, 100], [3, 90], [4, 104], [5, 120], [6, 128]]:
+	for c in [[1, 34], [2, 100], [3, 90], [4, 104], [5, 120], [6, 76], [7, 118]]:
 		_tree.set_column_expand(c[0], false)
 		_tree.set_column_custom_minimum_width(c[0], c[1])
 	_tree.item_selected.connect(_on_selected)
@@ -169,6 +172,30 @@ func _ready() -> void:
 		b.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		btns.add_child(b)
 	detail.add_child(btns)
+	# the developer's verdict: RSR (6-10) and whether the block art is approved
+	_dev_row = HBoxContainer.new()
+	_dev_row.add_theme_constant_override("separation", 6)
+	_dev_row.visible = DevMode.on()
+	detail.add_child(_dev_row)
+	_rsr = OptionButton.new()
+	_rsr.add_item("RSR: not rated", 0)
+	for r in range(6, 11):
+		_rsr.add_item("RSR %d  (x%s)" % [r, str(Bank.RSR_MULT[r])], r)
+	_rsr.tooltip_text = "RyeScale Rating: how much you like this seed. Ships with your next update:\nan approved seed makes x1 (6) to x4 (10) more Mycoras."
+	_rsr.item_selected.connect(func(i):
+		var id := _local_id(_selected)
+		if id != "":
+			Game.set_rating(id, _rsr.get_item_id(i)))
+	_rsr.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	_dev_row.add_child(_rsr)
+	_art_ok = CheckBox.new()
+	_art_ok.text = "Art approved"
+	_art_ok.tooltip_text = "Approved with its art: x25 Mycoras instead of x10 (ships with your next update)"
+	_art_ok.toggled.connect(func(on):
+		var id := _local_id(_selected)
+		if id != "" and on != Game.art_approved(id):
+			Game.set_art_ok(id, on))
+	_dev_row.add_child(_art_ok)
 
 	_summary = Label.new()
 	_summary.add_theme_font_size_override("font_size", 12)
@@ -283,6 +310,10 @@ func refresh() -> void:
 			var rb := int(Game.seeds[b].rarity)
 			return ra > rb if ra != rb else String(Game.seeds[a].name).naturalnocasecmp_to(Game.seeds[b].name) < 0)
 		2: ids.reverse()
+		3: ids.sort_custom(func(a, b):
+			var ma := Mycora.average_per_break(Game.seeds[a])
+			var mb := Mycora.average_per_break(Game.seeds[b])
+			return ma > mb if ma != mb else String(Game.seeds[a].name).naturalnocasecmp_to(Game.seeds[b].name) < 0)
 	_shown_ids = ids
 	# the All tab is grouped by kind, the others by material
 	var by_kind: bool = kind_tab == ""
@@ -346,6 +377,9 @@ func _row(parent: TreeItem, id: String) -> TreeItem:
 	it.set_text(5, drop_text)
 	it.set_custom_color(5, DropLogic.LIGHT_COLOR if light else DropLogic.short_color(d))
 	it.set_tooltip_text(0, "%s drops %s\n%s" % [s.name, DropLogic.drop_name(s.name), DropLogic.describe(d)])
+	it.set_text(6, Mycora.range_text(s))
+	it.set_custom_color(6, Mycora.COLOR)
+	it.set_tooltip_text(6, "Mycoras when the block is broken: %s\nWhen the crop is harvested: %s" % [Mycora.break_text(s), Mycora.harvest_text(s)])
 	_approved_cell(it, s)
 	return it
 
@@ -354,11 +388,11 @@ func _approved_cell(it: TreeItem, s: Dictionary) -> void:
 	var by := Approvals.approved_by(s)
 	if by == "":
 		return
-	it.set_icon(6, Approvals.STAMP_SMALL)
-	it.set_icon_max_width(6, 22)
-	it.set_text(6, by)
-	it.set_custom_color(6, Approvals.STAMP_COLOR)
-	it.set_tooltip_text(6, "Approved: on the official seed list  ·  made by %s" % by)
+	it.set_icon(7, Approvals.STAMP_SMALL)
+	it.set_icon_max_width(7, 22)
+	it.set_text(7, by)
+	it.set_custom_color(7, Approvals.STAMP_COLOR)
+	it.set_tooltip_text(7, "Approved: on the official seed list  ·  made by %s" % by)
 
 
 ## The Graveyard tab: seeds that did not make it into the game.
@@ -391,8 +425,8 @@ func _refresh_graveyard(root: TreeItem, q: String) -> void:
 			it.set_text(2, CategoryLogic.material_name(c.get("material", "other")))
 		it.set_text(4, Game.tag_name(s.get("tag", "")))
 		it.set_custom_color(4, Game.tag_color(s.get("tag", "")))
-		it.set_text(6, "made by %s" % _maker(s))
-		it.set_custom_color(6, Color("#8a85a0"))
+		it.set_text(7, "made by %s" % _maker(s))
+		it.set_custom_color(7, Color("#8a85a0"))
 		if first_item == null:
 			first_item = it
 		if key == _selected:
@@ -449,6 +483,11 @@ func _show_detail(key: String) -> void:
 	_edit_btn.disabled = id == ""
 	_grave_btn.disabled = id == ""
 	_grave_btn.text = "Bring back from the graveyard" if id != "" and Game.seeds[id].get("denied", false) else "Send to graveyard"
+	_dev_row.visible = DevMode.on() and id != ""
+	if id != "":
+		_rsr.select(_rsr.get_item_index(int(Game.seeds[id].get("rsr", 0))))
+		_art_ok.set_pressed_no_signal(Game.art_approved(id))
+		_art_ok.disabled = not BlockArt.has_art(id)
 	for p in _blocks + _stages:
 		p.texture = null
 	if s.is_empty():
@@ -475,6 +514,14 @@ func _show_detail(key: String) -> void:
 		lines.append("[color=#a19bb8]In the graveyard: this seed did not make it into the game[/color]")
 	lines.append("[color=#ffc94a]Made by[/color]  %s" % _maker(s))
 	lines.append("[color=#ffc94a]Rarity[/color]  %d  (%s)" % [int(s.rarity), tier[0]])
+	if id != "":
+		var inf := Approvals.info(s)
+		var rsr := int(inf.get("rsr", 0))
+		lines.append("[color=#ffc94a]Makes[/color]  [color=#7dffc0]%s Mycoras every 3 s[/color]  %s%s" % [Bank.fmt(Bank.seed_rate(s)) if Bank.seed_rate(s) >= 10 else "%.1f" % Bank.seed_rate(s),
+			"(x%s: %s%s)" % [str(Bank.boost(s)), "approved with its art" if inf.get("art", false) else "approved", ", RSR %d" % rsr if rsr > 0 else ""] if not inf.is_empty() else "",
+			"" if Bank.produces(id) else "  [color=#a19bb8]· locked: unlock it in the Seed Chest[/color]"])
+	lines.append("[color=#ffc94a]Mycoras when broken[/color]  [color=#7dffc0]%s[/color]" % Mycora.break_text(s))
+	lines.append("[color=#ffc94a]Mycoras when harvested[/color]  [color=#7dffc0]%s[/color]" % Mycora.harvest_text(s))
 	lines.append("[color=#ffc94a]Seed tag[/color]  [color=#%s]%s[/color]" % [Game.tag_color(s.get("tag", "")).to_html(false), Game.tag_name(s.get("tag", ""))])
 	lines.append("[color=#ffc94a]Drops[/color]  %s  (%s)" % [DropLogic.drop_name(s.name), DropLogic.KIND_NAMES[d.kind]])
 	lines.append("[color=#ffc94a]Material[/color]  %s  ·  %s%s" % [CategoryLogic.material_name(c.get("material", "other")),

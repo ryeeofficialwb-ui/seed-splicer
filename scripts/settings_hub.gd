@@ -15,6 +15,9 @@ signal sprites_folder_requested
 signal display_requested
 signal sound_requested
 signal reset_requested
+signal account_requested
+signal upload_requested
+signal submissions_requested
 
 var _tabs: TabBar
 var _settings_page: VBoxContainer
@@ -77,6 +80,13 @@ func _ready() -> void:
 	_name_note = Label.new()
 	_name_note.add_theme_font_size_override("font_size", 12)
 	_settings_page.add_child(_name_note)
+
+	_heading(_settings_page, "Online")
+	var online := _row(_settings_page)
+	_button(online, "Account", "Log in or create an account (username + password)", account_requested)
+	_button(online, "Upload my seeds", "Send seeds of yours to the developer for review.\nApproved ones reach every player in the next update, with your username.", upload_requested)
+	if DevMode.on():
+		_button(online, "Submissions", "Review the seeds players uploaded (developer only)", submissions_requested)
 
 	_heading(_settings_page, "Seed lists")
 	var lists := _row(_settings_page)
@@ -205,6 +215,11 @@ func _refresh_stats() -> void:
 		row.call("Seeds made by you", str(mine))
 	row.call("Seeds with block art", str(art))
 	row.call("Graveyard", "%d seeds" % Approvals.graveyard().size())
+	row.call("Mycoras", "%s  (+%s every 3 s)" % [Bank.fmt(Bank.mycoras), Bank.fmt(Bank.rate_per_tick())])
+	row.call("Mycoras made in total", Bank.fmt(Bank.earned_total))
+	row.call("Seed Chests opened", "%d  ·  %d seeds unlocked" % [Bank.chests, Bank.unlocked.size()])
+	var w := Weather.current()
+	row.call("Weather now", Weather.name_of(w) if Weather.name_of(w) != "" else "clear")
 	row.call("Game version", "v%s" % GameVersion.VERSION)
 	_stats_text.text = "\n".join(lines)
 

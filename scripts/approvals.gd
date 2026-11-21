@@ -16,6 +16,7 @@ const STAMP_COLOR := Color("#ffb347")
 
 static var _loaded := false
 static var _approved := {}   # lowercase name -> contributor
+static var _info := {}       # lowercase name -> { art: bool (approved with its art), rsr: 0 or 6..10 }
 static var _denied: Array = []  # seed dictionaries (enough to draw them)
 static var version := ""
 static var publisher := ""
@@ -26,6 +27,7 @@ static func _ensure() -> void:
 		return
 	_loaded = true
 	_approved.clear()
+	_info.clear()
 	_denied.clear()
 	if not FileAccess.file_exists(PATH):
 		return
@@ -36,8 +38,7 @@ static func _ensure() -> void:
 	publisher = String(parsed.get("publisher", ""))
 	for a in parsed.get("approved", []):
 		if typeof(a) == TYPE_DICTIONARY and String(a.get("name", "")).strip_edges() != "":
-			var by := String(a.get("made_by", "")).strip_edges()
-			_approved[String(a.name).strip_edges().to_lower()] = by if by != "" else publisher
+			_add(a)
 	for d in parsed.get("denied", []):
 		if typeof(d) == TYPE_DICTIONARY and String(d.get("name", "")).strip_edges() != "":
 			_denied.append(d)
@@ -47,14 +48,29 @@ static func _ensure() -> void:
 static func use_data(data: Dictionary) -> void:
 	_loaded = true
 	_approved.clear()
+	_info.clear()
 	_denied.clear()
 	version = String(data.get("version", ""))
 	publisher = String(data.get("publisher", ""))
 	for a in data.get("approved", []):
-		var by := String(a.get("made_by", "")).strip_edges()
-		_approved[String(a.name).strip_edges().to_lower()] = by if by != "" else publisher
+		_add(a)
 	for d in data.get("denied", []):
 		_denied.append(d)
+
+
+static func _add(a: Dictionary) -> void:
+	var key := String(a.name).strip_edges().to_lower()
+	var by := String(a.get("made_by", "")).strip_edges()
+	_approved[key] = by if by != "" else publisher
+	var rsr := int(a.get("rsr", 0)) if a.get("rsr") != null else 0
+	_info[key] = { "art": bool(a.get("art", false)), "rsr": rsr if rsr >= 6 and rsr <= 10 else 0 }
+
+
+## An approved seed's boosts: { art, rsr } ({} if it isn't approved). See bank.gd.
+static func info(seed: Dictionary) -> Dictionary:
+	if approved_by(seed) == "":
+		return {}
+	return _info.get(String(seed.get("name", "")).strip_edges().to_lower(), { "art": false, "rsr": 0 })
 
 
 static func reload() -> void:
@@ -94,7 +110,7 @@ static func graveyard() -> Array:
 		if s.get("denied", false):
 			names[String(s.name).to_lower()] = out.size()
 			out.append({ "seed": s, "local_id": id, "official": false })
-	for d in _denied:
+	for d in _denied + Game.graveyard_extra:
 		var key := String(d.name).strip_edges().to_lower()
 		if names.has(key):
 			out[names[key]].official = true
@@ -109,5 +125,5 @@ static func graveyard() -> Array:
 		s.sprout = String(s.get("sprout", "#7ccf4e"))
 		s.crop = CropArt.valid_type(s.get("crop"), key)
 		names[key] = out.size()
-		out.append({ "seed": s, "local_id": Game.find_by_name(String(d.name)), "official": true })
+		out.append({ "seed": s, "local_id": Game.find_by_name(String(d.name)), "official": not d.has("submission_id") })
 	return out

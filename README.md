@@ -297,3 +297,48 @@ The export presets are set up (`export_presets.cfg`) and the Steam version of Go
   its recipes, who made it and its block art). When a player's game starts on the new version it adds
   every official seed it doesn't have (`scripts/official.gd`); seeds they already have stay theirs.
 - Dev: `--test20`.
+
+## Mycoras (2026-11-20)
+
+The currency orbs blocks drop (Mush Mantle's Spores, renamed). Same math as Mush Mantle
+(`scripts/mycora.gd`): breaking a block rolls its block (25%) and its seed (25%); when neither comes
+out it drops 1 to 1 + floor(rarity / 4) Mycoras. A harvest gives its blocks plus the seed (25%) or
+else Mycoras (Farmable / Bountiful), or Mycoras every time (Not Farmable). A Chest never drops any.
+The Dictionary has a Mycoras column, a "Sort: Mycoras (most)" option and both lines on each seed's
+page. Dev: `--test21`.
+
+## Online accounts and seed submissions (Supabase, 2026-11-22)
+
+- `supabase/setup.sql`: run once in the Supabase SQL Editor. Accounts, usernames (unique ignoring
+  case and look-alikes; RyeeRue / KeepUpp / KeepUp reserved), submissions, and row level security:
+  players add and see only their own, only admins approve or deny.
+- `data/supabase.json`: the project URL and the PUBLISHABLE (anon) key (safe to ship; never the
+  secret / service_role key). Empty = online features off.
+- Players: Settings > Account (username + password, no email, can't be reset) and Settings >
+  Upload my seeds (with the status of everything sent).
+- Developer: Settings > Submissions: Approve imports the seed + its recipe chain + the player's
+  block art, credited to them; publish an update to give it to everyone. Deny keeps it out.
+- Becoming the admin: `insert into public.reserved_allow values ('RyeeRue');` in the SQL Editor,
+  then create the RyeeRue account from the Developer game.
+- Code: `scripts/online.gd` (autoload `Online`), `account_dialog.gd`, `upload_window.gd`,
+  `submissions_window.gd`, `modal.gd`. Dev: `--test22` (offline part).
+
+## 1.0.3, the Rating Update: Mycoras, the Seed Chest, RSR and weather (2026-11-22)
+
+- **Mycoras** (`scripts/bank.gd`, autoload `Bank`): every 3 seconds each producing seed makes its
+  Mycora drop (Mush Mantle's math: the average of 1 .. 1 + rarity / 4). Boosts: approved x10,
+  approved with its art x25 (instead), RSR 6/7/8/9/10 = x1/x1.75/x2.5/x3.25/x4 on top.
+- **The 4 base seeds always produce.** Every other seed (graveyarded or not) produces once it is
+  unlocked in the **Seed Chest** (top bar, `chest_window.gd`): 5,000 Mycoras, a CS2-style reel,
+  any seed in your game except the base seeds, chance ~ 1 / rarity. A duplicate pays 5 minutes of
+  that seed's Mycoras. Saved in `user://seed_splicer_mycoras.json`.
+- **Weather** (`weather.gd`): every 5 minutes on the clock (UTC, the same for every player):
+  Rain 1 in 10 = x2, Shooting Star 1 in 250 = x100 (both = x200), drawn over the void.
+- **Offline**: what you made while the game was closed, weather included, arrives on start.
+- **RSR (RyeScale Rating) + art approval**: you rate a seed 6-10 and approve or refuse its art on
+  its Dictionary page, or in Submissions when you approve a player's seed. Publishing ships both
+  in `data/approvals.json` (`art`, `rsr`).
+- **Players attach block art** to a submission (Upload my seeds > Add art...: a 128x32 PNG of 4
+  boxes, or one 32x32).
+- Your Mycora orbs: `assets/mycora/` (cut by `art/make_mycora_icons.gd` from your art, unchanged).
+- Dev: `--test24`, `--weather=rain|star`, `--chest`.

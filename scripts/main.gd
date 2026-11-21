@@ -11,6 +11,7 @@ var settings_dialog: SettingsDialog
 var import_picker: ImportDialog
 var sound_dialog: SoundDialog
 var settings_hub: SettingsHub
+var chest: ChestWindow
 var dictionary: DictionaryWindow
 var _pending_import := {}  # the file being imported while you pick its seeds
 var _splices_btn: Button
@@ -60,9 +61,22 @@ func _ready() -> void:
 	panel.shown_changed.connect(func(on): grip.visible = on)
 
 	# top-right buttons over the void
+	field.add_child(WeatherLayer.new())  # rain / shooting stars over the void
+
 	var bar := HBoxContainer.new()
 	bar.add_theme_constant_override("separation", 6)
 	field.add_child(bar)
+	var hud := MycoraHud.new()
+	hud.position = Vector2(205, 14)  # right of the title
+	field.add_child(hud)
+	field.add_child(hud.weather_label)
+	hud.weather_label.set_anchors_and_offsets_preset(Control.PRESET_TOP_RIGHT, Control.PRESET_MODE_MINSIZE, 14)
+	hud.weather_label.offset_top = 58
+	hud.weather_label.grow_horizontal = Control.GROW_DIRECTION_BEGIN
+	var chest_btn := Button.new()
+	chest_btn.text = "Chest"
+	chest_btn.tooltip_text = "The Seed Chest: unlock seeds so they make Mycoras"
+	bar.add_child(chest_btn)
 	_seeds_btn = Button.new()
 	_seeds_btn.text = "Seeds"
 	_seeds_btn.toggle_mode = true
@@ -118,6 +132,10 @@ func _ready() -> void:
 		dictionary.close_dialog()
 		popup.open_edit(id))
 
+	chest = ChestWindow.new()
+	add_child(chest)
+	chest_btn.pressed.connect(chest.open)
+
 	settings_hub = SettingsHub.new()
 	add_child(settings_hub)
 	settings_btn.pressed.connect(settings_hub.open)
@@ -130,7 +148,10 @@ func _ready() -> void:
 	version_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	version_label.position = Vector2(22, 52)  # under the title, clear of every button
 	add_child(version_label)
-	if Updater.enabled():
+	print("Seed Splicer v%s - %s version" % [GameVersion.VERSION, "DEVELOPER" if DevMode.on() else "player"])
+	if DevMode.on():
+		version_label.text += "  ·  Developer"
+	if Updater.enabled() and not "--selftest" in OS.get_cmdline_user_args():
 		var updater := Updater.new()
 		add_child(updater)
 		updater.status_changed.connect(func(text: String):
@@ -171,6 +192,20 @@ func _ready() -> void:
 	panel.clear_void_requested.connect(field.clear)
 	panel.add_seed_requested.connect(popup.open_add)
 	settings_hub.export_list_requested.connect(_request_export)
+	var account := AccountDialog.new()
+	add_child(account)
+	var upload := UploadWindow.new()
+	add_child(upload)
+	settings_hub.account_requested.connect(account.open)
+	settings_hub.upload_requested.connect(func():
+		if Online.logged_in():
+			upload.open()
+		else:
+			account.open())
+	if DevMode.on():
+		var submissions := SubmissionsWindow.new()
+		add_child(submissions)
+		settings_hub.submissions_requested.connect(submissions.open)
 	settings_hub.import_list_requested.connect(func():
 		if DevMode.on():
 			_import_dialog.popup_centered_ratio())
@@ -200,6 +235,10 @@ func _ready() -> void:
 		field.spawn_starters()
 	else:
 		field.restore(Game.void_tokens.duplicate())
+	if "--selftest" in OS.get_cmdline_user_args():
+		# the updater's check of a freshly installed pack: the whole screen got built, report success
+		get_tree().quit.call_deferred(Updater.SELFTEST_CODE)
+		return
 	if not Game.reroll_report.is_empty():  # the one-time reroll of existing seeds just happened
 		var c: Dictionary = Game.reroll_report.counts
 		field.show_toast("Rerolled %d seeds:   %d Bountiful  ·  %d Farmable  ·  %d Not Farmable" % [
@@ -215,6 +254,9 @@ func _ready() -> void:
 	if not Game.crop_report.is_empty():  # seeds from before crop types just got a random one each
 		field.show_toast("Gave %d seeds a random crop type. Double-click a seed to pick another." % Game.crop_report.total, Color("#a6ff6e"), 8.0)
 		Game.crop_report = {}
+	if not Bank.away_report.is_empty():  # Mycoras made while the game was closed
+		field.show_toast("While you were away (%s): +%s Mycoras" % [Game.duration_text(Bank.away_report.seconds), Bank.fmt(Bank.away_report.earned)], Mycora.COLOR, 8.0)
+		Bank.away_report = {}
 	if int(Game.official_report.get("seeds_added", 0)) > 0:  # this update brought new official seeds
 		field.show_toast("Update v%s: %d new official seeds and %d splices were added to your game!" % [
 			Game.official_report.version, Game.official_report.seeds_added, Game.official_report.recipes_added], Color("#a6ff6e"), 8.0)
@@ -410,6 +452,7 @@ func _on_edited(id: String, look: Dictionary) -> void:
 func _do_reset() -> void:
 	field.clear()
 	Game.reset()
+	Bank.reset()
 	await get_tree().process_frame
 	field.spawn_starters()
 

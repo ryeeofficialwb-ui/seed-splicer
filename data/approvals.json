@@ -1,595 +1,889 @@
 {
 	"format": "seed-splicer-approvals",
-	"version": "1.0.2",
-	"publisher": "RyeeRue",
+	"version": "1.0.3",
+	"publisher": "KeepUpp",
 	"approved": [
 		{
 			"name": "Dirt Seed",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		},
 		{
 			"name": "Glowing Mushroom Seed",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		},
 		{
 			"name": "Stone Seed",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		},
 		{
 			"name": "Magma Rock Seed",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		},
 		{
 			"name": "Cave Background Seed",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		},
 		{
 			"name": "Gravel Seed",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		},
 		{
 			"name": "Soil Seed",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		},
 		{
 			"name": "Grass Seed",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		},
 		{
 			"name": "Stone Background Seed",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		},
 		{
 			"name": "Lava Seed",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		},
 		{
 			"name": "Glowstone  Seed",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		},
 		{
 			"name": "Wood Seed",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		},
 		{
 			"name": "Cavern Seed",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		},
 		{
 			"name": "Door Seed",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		},
 		{
 			"name": "Obsidian Seed",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		},
 		{
 			"name": "Sand Seed",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		},
 		{
 			"name": "Glass Seed",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		},
 		{
 			"name": "Cobblestone Seed",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		},
 		{
 			"name": "Pumice Seed",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		},
 		{
 			"name": "Wheat Seed",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		},
 		{
 			"name": "Quartz  Seed",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		},
 		{
 			"name": "Clay Seed",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		},
 		{
 			"name": "Sandstone Seed",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		},
 		{
 			"name": "Bucket Seed",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		},
 		{
 			"name": "Well Seed",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		},
 		{
 			"name": "Purple Block Seed",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		},
 		{
 			"name": "Green Block Seed",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		},
 		{
 			"name": "Blueberry Seed",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		},
 		{
 			"name": "Blue Block Seed",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		},
 		{
 			"name": "Ash Seed",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		},
 		{
 			"name": "Cinder Soil Seed",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		},
 		{
 			"name": "Yam Seed",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		},
 		{
 			"name": "Deathcap Seed",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		},
 		{
 			"name": "Spore Background Seed",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		},
 		{
 			"name": "Dust Seed",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		},
 		{
 			"name": "Bush Seed",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		},
 		{
 			"name": "Hedge Seed",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		},
 		{
 			"name": "Leaves Seed",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		},
 		{
 			"name": "White Block Seed",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		},
 		{
 			"name": "Bouncy Shroom Seed",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		},
 		{
 			"name": "Window Seed",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		},
 		{
 			"name": "Lapis Lazuli Seed",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		},
 		{
 			"name": "Wooden Window Seed",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		},
 		{
 			"name": "Coal Seed",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		},
 		{
 			"name": "Black Block Seed",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		},
 		{
 			"name": "Blackberry Seed",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		},
 		{
 			"name": "Charcoal Seed",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		},
 		{
 			"name": "Iron Block Seed",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		},
 		{
 			"name": "Amber Seed",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		},
 		{
 			"name": "Gold Seed",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		},
 		{
 			"name": "Water Seed",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		},
 		{
 			"name": "Wooden Platform Seed",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		},
 		{
 			"name": "Bricks Seed",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		},
 		{
 			"name": "Strawberry Seed",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		},
 		{
 			"name": "Red Block Seed",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		},
 		{
 			"name": "Rose Seed",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		},
 		{
 			"name": "Daffodil Seed",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		},
 		{
 			"name": "Yellow Block Seed",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		},
 		{
 			"name": "Apple Seed",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		},
 		{
 			"name": "Steel Seed",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		},
 		{
 			"name": "Steel Platform Seed",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		},
 		{
 			"name": "Toilet Seed",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		},
 		{
 			"name": "Chair Seed",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		},
 		{
 			"name": "Chest Seed",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		},
 		{
 			"name": "Treasure Chest Seed",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		},
 		{
 			"name": "Tulip Seed",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		},
 		{
 			"name": "Orange Block Seed",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		},
 		{
 			"name": "Lime Block Seed",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		},
 		{
 			"name": "Aqua Block Seed",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		},
 		{
 			"name": "Grey Block Seed",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		},
 		{
 			"name": "Brown Block Seed",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		},
 		{
 			"name": "Gold Platform  Seed",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		},
 		{
 			"name": "Bricks Background Seed",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		},
 		{
 			"name": "Wooden Background Seed",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		},
 		{
 			"name": "Ruby Seed",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		},
 		{
 			"name": "Hay Block Seed",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		},
 		{
 			"name": "Pink Block Seed",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		},
 		{
 			"name": "Cherry Leaves Seed",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		},
 		{
 			"name": "Limestone Seed",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		},
 		{
 			"name": "Seaweed Seed",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		},
 		{
 			"name": "Stone Bricks Seed",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		},
 		{
 			"name": "Stone Brick Background Seed",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		},
 		{
 			"name": "Lemon Seed",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		},
 		{
 			"name": "Melon Seed",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		},
 		{
 			"name": "Watermelon Seed",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		},
 		{
 			"name": "Shroom Melons Seed",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		},
 		{
 			"name": "Barrel Seed",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		},
 		{
 			"name": "Topaz Seed",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		},
 		{
 			"name": "Boulder Seed",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		},
 		{
 			"name": "Rose Quartz Seed",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		},
 		{
 			"name": "Spike Seed",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		},
 		{
 			"name": "Sign Seed Seed",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		},
 		{
 			"name": "Danger Sign Seed",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		},
 		{
 			"name": "Gate Seed",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		},
 		{
 			"name": "Prison Door Seed",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		},
 		{
 			"name": "Prison Bars Seed",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		},
 		{
 			"name": "Fishbowl Seed",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		},
 		{
 			"name": "Fishtank Seed",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		},
 		{
 			"name": "Lava Fishtank Seed",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		},
 		{
 			"name": "Sporeberry",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		},
 		{
 			"name": "Dried Mushroom Seed",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		},
 		{
 			"name": "Poison Spike Seed",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		},
 		{
 			"name": "Stone Pathway Seed",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		},
 		{
 			"name": "Asphalt Seed",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		},
 		{
 			"name": "Venus Flytrap Seed",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		},
 		{
 			"name": "Hanging Flytrap Seed",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		},
 		{
 			"name": "Starfruit Seed",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		},
 		{
 			"name": "Dragon Snappers Seed",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		},
 		{
 			"name": "High-tech Block Seed",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		},
 		{
 			"name": "Space Window Seed",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		},
 		{
 			"name": "Safe Seed",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		},
 		{
 			"name": "Traffic Cone Seed",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		},
 		{
 			"name": "Fertilizer Seed",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		},
 		{
 			"name": "Copper Block Seed",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		},
 		{
 			"name": "Plumber Pipe Seed",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		},
 		{
 			"name": "Sprinkler Seed Seed",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		},
 		{
 			"name": "Snow Seed",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		},
 		{
 			"name": "Ice Seed",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		},
 		{
 			"name": "Pumpkin Seed",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		},
 		{
 			"name": "Torch Seed",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		},
 		{
 			"name": "Coconut Seed",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		},
 		{
 			"name": "Wooden Fence Seed",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		},
 		{
 			"name": "Barn Blocks Seed",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		},
 		{
 			"name": "Lifeshroom Seed",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		},
 		{
 			"name": "Science Shroom Seed",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		},
 		{
 			"name": "Chicken Shroom Seed",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		},
 		{
 			"name": "Sheep Shroom Seed",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		},
 		{
 			"name": "Cowcap Seed",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		},
 		{
 			"name": "Carrot Seed",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		},
 		{
 			"name": "Rabbit Shroom Seed",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		},
 		{
 			"name": "Beetroot Seed",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		},
 		{
 			"name": "PigCap Seed",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		},
 		{
 			"name": "Campfire Seed",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		},
 		{
 			"name": "Bacon Seed",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		},
 		{
 			"name": "Bacon Background Seed",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		},
 		{
 			"name": "Black Background Seed",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		},
 		{
 			"name": "White Background Seed",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		},
 		{
 			"name": "Pink Background Seed",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		},
 		{
 			"name": "Orange Background Seed",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		},
 		{
 			"name": "Blue Background Seed",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		},
 		{
 			"name": "Green Background Seed",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		},
 		{
 			"name": "Red Background Seed",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		},
 		{
 			"name": "Yellow Background Seed",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		},
 		{
 			"name": "Purple Background Seed",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		},
 		{
 			"name": "Sink Seed",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		},
 		{
 			"name": "Sturdy Door Seed",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		},
 		{
 			"name": "Gray Background Seed",
-			"made_by": "RyeeRue"
+			"made_by": "KeepUpp",
+			"art": true,
+			"rsr": null
 		}
 	],
 	"denied": []

@@ -1,39 +1,55 @@
 class_name Updater
 extends Node
-## OVER-THE-AIR UPDATES from GitHub Releases. The main menu starts one of these.
+## OVER-THE-AIR UPDATES from GitHub Releases (main.gd starts one of these).
 ##
-## The game is exported as SeedSplicer.exe (the Godot engine) + SeedSplicer.pck (everything we make:
-## scripts, scenes, art, data). An update is a new .pck published as a GitHub Release on
-## GameVersion.RELEASES_REPO, tagged v<version>, with two files: SeedSplicer-<version>.pck and
-## SeedSplicer-<version>.pck.sha256 (tools/publish_update.py makes both).
+## The game is SeedSplicer.exe (the Godot engine, never changes) + SeedSplicer.pck next to it
+## (everything we make: scripts, scenes, art, data) + SeedSplicer-music.pck (the songs).
+## An update is a new game pack, published as a GitHub Release on GameVersion.RELEASES_REPO tagged
+## v<version>, with SeedSplicer-update-<version>.pck and its .sha256 (tools/publish_update.py).
 ##
-## 1. A pack downloaded earlier that is newer than this one? Restart into it right away.
-## 2. Otherwise ask GitHub for the latest release. If it's newer, download the .pck and its .sha256
-##    into user://updates/, check the hash, then restart into it with --main-pack: the whole game,
-##    autoloads included, then runs from the new pack.
-## Offline, GitHub down, no release yet, a bad hash: the game just starts as it is.
-## Never runs in the editor (or the editor binary running tests), or with --no-update.
+## (Godot's release engine refuses to be pointed at another pack with --main-pack, so the update
+## REPLACES SeedSplicer.pck instead. A running game can't overwrite its own pack on Windows, so a
+## tiny script does the swap right after the game closes.)
+##
+##   1. Ask GitHub for the latest release. Newer than this game? Download its pack next to the exe
+##      as SeedSplicer.pck.new and check its SHA-256.
+##   2. Write user://updates/apply_update.bat and run it, then quit. The script waits for the game
+##      to close, keeps the old pack as SeedSplicer.pck.old, puts the new one in its place, and
+##      SELF-TESTS it: `SeedSplicer.exe --headless -- --selftest` must exit with code 42 (main.gd
+##      does that once its screen is built).
+##   3. Test passed: the new version starts. Test failed: the old pack goes back, the version goes
+##      in SeedSplicer-update-failed.txt (never tried again), and the old version starts.
+## Offline, GitHub down, a bad hash, a folder we can't write to: the game just runs as it is.
+## Never runs in the editor, the Developer build, or with --no-update.
 
 signal status_changed(text: String)
 
 const UPDATES_DIR := "user://updates"
-const PACK_PREFIX := "SeedSplicer-"
+const UPDATE_PREFIX := "SeedSplicer-update-"
+const FAILED_FILE := "SeedSplicer-update-failed.txt"
+const SELFTEST_CODE := 42
 const TIMEOUT := 8.0
 
 var _http: HTTPRequest
 
 
-## Should this run check for updates? Only exported games, and not with --no-update.
+## Should this run check for updates? Only exported player games, and not with --no-update.
 static func enabled() -> bool:
 	return not OS.has_feature("editor") and not DevMode.on() and not "--no-update" in OS.get_cmdline_user_args() \
 		and not "--no-update" in OS.get_cmdline_args()
 
 
+## The game's own pack (next to the exe) and the folder it is in.
+static func game_dir() -> String:
+	return OS.get_executable_path().get_base_dir()
+
+
+static func pack_path() -> String:
+	return game_dir().path_join(OS.get_executable_path().get_file().get_basename() + ".pck")
+
+
 func _ready() -> void:
-	var waiting := newest_downloaded()
-	if waiting != "":
-		_restart_into(waiting)
-		return
+	_clean_old_scheme()
 	_http = HTTPRequest.new()
 	_http.timeout = TIMEOUT
 	add_child(_http)
@@ -44,21 +60,14 @@ func _ready() -> void:
 		_done("")
 
 
-## The newest pack in user://updates that is newer than the running game and still matches its
-## saved hash, or "".
-static func newest_downloaded() -> String:
-	var best := ""
-	var best_version := GameVersion.VERSION
-	DirAccess.make_dir_recursive_absolute(UPDATES_DIR)
-	for file in DirAccess.get_files_at(UPDATES_DIR):
-		if not (file.begins_with(PACK_PREFIX) and file.ends_with(".pck")):
-			continue
-		var version := file.trim_prefix(PACK_PREFIX).trim_suffix(".pck")
-		var path := UPDATES_DIR.path_join(file)
-		if GameVersion.is_newer(version, best_version) and _hash_ok(path, _read_text(path + ".sha256")):
-			best = path
-			best_version = version
-	return best
+## 1.0.1 / 1.0.2 kept downloaded packs in user://updates and started them with --main-pack (which
+## the release engine refuses). Those packs are useless: remove them.
+static func _clean_old_scheme() -> void:
+	if not DirAccess.dir_exists_absolute(UPDATES_DIR):
+		return
+	for f in DirAccess.get_files_at(UPDATES_DIR):
+		if f.begins_with("SeedSplicer-") and not f.begins_with("SeedSplicer-music") and (f.ends_with(".pck") or f.ends_with(".sha256") or f.ends_with(".trying")):
+			DirAccess.remove_absolute(UPDATES_DIR.path_join(f))
 
 
 func _on_release(result: int, code: int, _headers: PackedStringArray, body: PackedByteArray) -> void:
@@ -71,34 +80,117 @@ func _on_release(result: int, code: int, _headers: PackedStringArray, body: Pack
 		return
 	var version := str(release.get("tag_name", "")).trim_prefix("v")
 	if not GameVersion.is_newer(version, GameVersion.VERSION):
+		await _fetch_music(release)
 		_done("Up to date (v%s)" % GameVersion.VERSION)
+		return
+	if _failed_before(version):
+		await _fetch_music(release)
+		_done("Update v%s didn't start on this PC - still on v%s" % [version, GameVersion.VERSION])
 		return
 	var pack_url := ""
 	var hash_url := ""
 	for asset in release.get("assets", []):
 		var name := str(asset.get("name", ""))
-		if name == PACK_PREFIX + version + ".pck":
+		if name == UPDATE_PREFIX + version + ".pck":
 			pack_url = str(asset.get("browser_download_url", ""))
-		elif name == PACK_PREFIX + version + ".pck.sha256":
+		elif name == UPDATE_PREFIX + version + ".pck.sha256":
 			hash_url = str(asset.get("browser_download_url", ""))
 	if pack_url == "" or hash_url == "":
 		_done("")  # a release without its pack or hash: never install it
 		return
-	DirAccess.make_dir_recursive_absolute(UPDATES_DIR)
-	var pack := UPDATES_DIR.path_join(PACK_PREFIX + version + ".pck")
+	var target := pack_path() + ".new"
+	if not _can_write(target):
+		_done("v%s is out: download it from GitHub (this folder is read-only)" % version)
+		return
 	status_changed.emit("Downloading update v%s..." % version)
 	var hash_text := await _download_text(hash_url)
-	if hash_text == "" or not await _download_file(pack_url, pack):
+	if hash_text == "" or not await _download_file(pack_url, target):
+		DirAccess.remove_absolute(target)
 		_done("Update download failed - playing v%s" % GameVersion.VERSION)
 		return
-	if not _hash_ok(pack, hash_text):
-		DirAccess.remove_absolute(pack)
+	if not _hash_ok(target, hash_text):
+		DirAccess.remove_absolute(target)
 		_done("Update failed its safety check - playing v%s" % GameVersion.VERSION)
 		return
-	var f := FileAccess.open(pack + ".sha256", FileAccess.WRITE)
-	f.store_string(hash_text)
+	_apply_and_restart(version)
+
+
+static func _failed_before(version: String) -> bool:
+	var f := game_dir().path_join(FAILED_FILE)
+	return FileAccess.file_exists(f) and FileAccess.get_file_as_string(f).split("\n", false).has(version)
+
+
+static func _can_write(path: String) -> bool:
+	var f := FileAccess.open(path, FileAccess.WRITE)
+	if f == null:
+		return false
 	f.close()
-	_restart_into(pack)
+	return true
+
+
+## The swap script (see the top of this file). Windows paths, quoted for spaces.
+static func swap_script(exe: String, pack: String, version: String) -> String:
+	exe = exe.replace("/", "\\")
+	pack = pack.replace("/", "\\")
+	var failed := exe.get_base_dir().path_join(FAILED_FILE).replace("/", "\\")
+	var lines := PackedStringArray([
+		"@echo off",
+		"rem Seed Splicer update to v%s: swap the game pack, self-test it, roll back if it fails." % version,
+		"ping -n 3 127.0.0.1 >nul",
+		"if not exist \"%s.new\" goto start" % pack,
+		"move /y \"%s\" \"%s.old\" >nul" % [pack, pack],
+		"move /y \"%s.new\" \"%s\" >nul" % [pack, pack],
+		"\"%s\" --headless --quit-after 6000 -- --selftest --no-update" % exe,
+		"if errorlevel %d if not errorlevel %d goto passed" % [SELFTEST_CODE, SELFTEST_CODE + 1],
+		"move /y \"%s.old\" \"%s\" >nul" % [pack, pack],
+		">>\"%s\" echo %s" % [failed, version],
+		"goto start",
+		":passed",
+		"del \"%s.old\" >nul 2>nul" % pack,
+		":start",
+		"start \"\" \"%s\"" % exe,
+	])
+	return "\r\n".join(lines) + "\r\n"
+
+
+func _apply_and_restart(version: String) -> void:
+	DirAccess.make_dir_recursive_absolute(UPDATES_DIR)
+	var bat := ProjectSettings.globalize_path(UPDATES_DIR.path_join("apply_update.bat"))
+	var f := FileAccess.open(bat, FileAccess.WRITE)
+	if f == null:
+		DirAccess.remove_absolute(pack_path() + ".new")
+		_done("")
+		return
+	f.store_string(swap_script(OS.get_executable_path(), pack_path(), version))
+	f.close()
+	status_changed.emit("Installing v%s..." % version)
+	OS.create_process("cmd.exe", ["/c", bat.replace("/", "\\")])
+	get_tree().quit()
+
+
+## A game without the music pack (an older download had none): fetch it once from the release.
+func _fetch_music(release: Dictionary) -> void:
+	if Audio.has_music():
+		return
+	var pack_url := ""
+	var hash_url := ""
+	for asset in release.get("assets", []):
+		var name := str(asset.get("name", ""))
+		if name == Audio.MUSIC_PACK:
+			pack_url = str(asset.get("browser_download_url", ""))
+		elif name == Audio.MUSIC_PACK + ".sha256":
+			hash_url = str(asset.get("browser_download_url", ""))
+	if pack_url == "" or hash_url == "":
+		return
+	status_changed.emit("Downloading the music...")
+	DirAccess.make_dir_recursive_absolute(UPDATES_DIR)
+	var hash_text := await _download_text(hash_url)
+	if hash_text == "" or not await _download_file(pack_url, Audio.MUSIC_PACK_USER):
+		return
+	if not _hash_ok(Audio.MUSIC_PACK_USER, hash_text):
+		DirAccess.remove_absolute(Audio.MUSIC_PACK_USER)
+		return
+	Audio.music_pack_arrived()
 
 
 func _download_text(url: String) -> String:
@@ -130,16 +222,6 @@ static func _hash_ok(path: String, hash_text: String) -> bool:
 	var want := hash_text.strip_edges().split(" ", false)
 	return not want.is_empty() and FileAccess.file_exists(path) \
 		and FileAccess.get_sha256(path).to_lower() == want[0].to_lower()
-
-
-static func _read_text(path: String) -> String:
-	return FileAccess.get_file_as_string(path) if FileAccess.file_exists(path) else ""
-
-
-func _restart_into(pack: String) -> void:
-	status_changed.emit("Starting the new version...")
-	OS.create_process(OS.get_executable_path(), ["--main-pack", ProjectSettings.globalize_path(pack)])
-	get_tree().quit()
 
 
 func _done(text: String) -> void:
