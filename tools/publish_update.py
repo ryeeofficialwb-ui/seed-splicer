@@ -140,7 +140,10 @@ def bake_official(version, save, me):
     print("Shipped to every player: %d seeds (%d with block art), %d splices" % (len(seeds), with_art, len(recipes)))
 
 
+# Players who installed before 1.0.4 run the official engine; new downloads ship the slim one
+# (tools/engine/build_template.ps1). Updates are only the pack, so they must work on BOTH.
 TEMPLATE = os.path.join(os.path.dirname(GODOT), "editor_data", "export_templates", "4.7.2.stable", "windows_release_x86_64.exe")
+SLIM_TEMPLATE = os.path.join(ROOT, "tools", "engine", "bin", "seedsplicer_template_release.x86_64.exe")
 MUSIC_PACK = os.path.join(BUILD, "SeedSplicer-music.pck")
 
 
@@ -148,18 +151,24 @@ SELFTEST_CODE = 42  # main.gd quits with this under --selftest once its whole sc
 
 
 def smoke_test(pack):
+    """Runs the pack on every engine players have: the official one and the slim one."""
+    for name, template in (("official", TEMPLATE), ("slim", SLIM_TEMPLATE)):
+        smoke_test_on(pack, name, template)
+
+
+def smoke_test_on(pack, name, template):
     """Plays the update exactly like a player's PC will: a copy of the real release engine named
     SeedSplicer.exe, this pack next to it as SeedSplicer.pck, the music pack, a throwaway user
     folder, and `--selftest`. Anything but exit code 42 (or any script error) stops the publish:
     a broken update would reach every player."""
-    if not os.path.exists(TEMPLATE):
-        raise SystemExit("Can't test the build: no release template at " + TEMPLATE)
+    if not os.path.exists(template):
+        raise SystemExit("Can't test the build: no %s release template at %s" % (name, template))
     tmp = tempfile.mkdtemp(prefix="seedsplicer_smoke_")
     try:
         game = os.path.join(tmp, "game")
         os.makedirs(game)
         exe = os.path.join(game, "SeedSplicer.exe")
-        shutil.copy(TEMPLATE, exe)
+        shutil.copy(template, exe)
         shutil.copy(pack, os.path.join(game, "SeedSplicer.pck"))
         shutil.copy(MUSIC_PACK, os.path.join(game, "SeedSplicer-music.pck"))
         env = dict(os.environ, APPDATA=os.path.join(tmp, "appdata"))
@@ -169,9 +178,9 @@ def smoke_test(pack):
         bad = [l for l in out.splitlines() if "SCRIPT ERROR" in l or "Parse Error" in l or "Failed to load" in l
                or "Failed to instantiate" in l or "Aborting" in l]
         if bad or r.returncode != SELFTEST_CODE:
-            raise SystemExit("THE BUILD IS BROKEN, nothing was published (self-test exit code %d):\n  %s\n%s" % (
-                r.returncode, "\n  ".join(bad[:10]), out[-1500:]))
-        print("Smoke test passed: the exported game starts and builds its whole screen.")
+            raise SystemExit("THE BUILD IS BROKEN on the %s engine, nothing was published (self-test exit code %d):\n  %s\n%s" % (
+                name, r.returncode,"\n  ".join(bad[:10]), out[-1500:]))
+        print("Smoke test passed on the %s engine: the exported game starts and builds its whole screen." % name)
     finally:
         shutil.rmtree(tmp, ignore_errors=True)
 

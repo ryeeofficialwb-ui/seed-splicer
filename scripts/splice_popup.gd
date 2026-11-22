@@ -86,8 +86,9 @@ func _ready() -> void:
 	add_child(center)
 
 	var panel := PanelContainer.new()
+	panel.theme_type_variation = &"WindowPanel"
 	_panel = panel
-	panel.custom_minimum_size = Vector2(740, 0)
+	panel.custom_minimum_size = Vector2(1100, 0)
 	center.add_child(panel)
 
 	var root := VBoxContainer.new()
@@ -95,7 +96,7 @@ func _ready() -> void:
 	panel.add_child(root)
 
 	_title = Label.new()
-	_title.add_theme_font_size_override("font_size", 24)
+	_title.add_theme_font_size_override("font_size", UiKit.BIG)
 	_title.add_theme_color_override("font_color", Color("#a6ff6e"))
 	_title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	root.add_child(_title)
@@ -111,7 +112,7 @@ func _ready() -> void:
 	_label_b = Label.new()
 	var plus := Label.new()
 	plus.text = "  +  "
-	plus.add_theme_font_size_override("font_size", 20)
+	plus.add_theme_font_size_override("font_size", UiKit.BIG)
 	for c in [_icon_a, _label_a, plus, _icon_b, _label_b]:
 		_parents_row.add_child(c)
 
@@ -130,12 +131,7 @@ func _ready() -> void:
 	left.add_theme_constant_override("separation", 4)
 	body.add_child(left)
 	var frame := PanelContainer.new()
-	var fsb := StyleBoxFlat.new()
-	fsb.bg_color = Color("#0e0b16")
-	fsb.border_color = Color("#3b3150")
-	fsb.set_border_width_all(2)
-	fsb.set_content_margin_all(8)
-	frame.add_theme_stylebox_override("panel", fsb)
+	frame.add_theme_stylebox_override("panel", UiKit.box("inset", 3, [8, 8, 8, 8]))
 	left.add_child(frame)
 	# every picture in this window is a PixelPicture: whole screen pixels per art pixel at any
 	# window size, so the pixel art never gets lumpy
@@ -144,11 +140,11 @@ func _ready() -> void:
 	frame.add_child(_preview)
 	_rarity = Label.new()
 	_rarity.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	_rarity.add_theme_font_size_override("font_size", 18)
+	_rarity.add_theme_font_size_override("font_size", UiKit.SMALL)
 	left.add_child(_rarity)
 	_rarity_sum = Label.new()
 	_rarity_sum.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	_rarity_sum.add_theme_font_size_override("font_size", 13)
+	_rarity_sum.add_theme_font_size_override("font_size", UiKit.SMALL)
 	_rarity_sum.add_theme_color_override("font_color", Color(0.7, 0.67, 0.8))
 	left.add_child(_rarity_sum)
 
@@ -218,8 +214,8 @@ func _ready() -> void:
 		_bg_checks[t] = cb
 	_drop_note = Label.new()
 	_drop_note.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	_drop_note.custom_minimum_size = Vector2(208, 0)
-	_drop_note.add_theme_font_size_override("font_size", 11)
+	_drop_note.custom_minimum_size = Vector2(300, 0)
+	_drop_note.add_theme_font_size_override("font_size", UiKit.SMALL)
 	_drop_note.add_theme_color_override("font_color", Color(0.7, 0.67, 0.8))
 	left.add_child(_drop_note)
 
@@ -325,11 +321,11 @@ func _ready() -> void:
 	right.add_child(_tag_caption)
 	# a brand new splice doesn't get to choose: it shows the roll (and its odds) instead
 	_tag_roll = Label.new()
-	_tag_roll.add_theme_font_size_override("font_size", 20)
+	_tag_roll.add_theme_font_size_override("font_size", UiKit.BIG)
 	right.add_child(_tag_roll)
 	_tag_odds = Label.new()
 	_tag_odds.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	_tag_odds.add_theme_font_size_override("font_size", 12)
+	_tag_odds.add_theme_font_size_override("font_size", UiKit.SMALL)
 	_tag_odds.add_theme_color_override("font_color", Color(0.7, 0.67, 0.8))
 	right.add_child(_tag_odds)
 	var tags := HBoxContainer.new()
@@ -366,11 +362,11 @@ func _ready() -> void:
 	root.add_child(buttons)
 	var cancel := Button.new()
 	cancel.text = "Cancel"
-	cancel.custom_minimum_size = Vector2(110, 38)
+	cancel.custom_minimum_size = Vector2(150, 48)
 	cancel.pressed.connect(_cancel)
 	buttons.add_child(cancel)
 	_ok = Button.new()
-	_ok.custom_minimum_size = Vector2(190, 38)
+	_ok.custom_minimum_size = Vector2(280, 48)
 	_ok.add_theme_color_override("font_color", Color("#a6ff6e"))
 	_ok.pressed.connect(_confirm)
 	buttons.add_child(_ok)
@@ -718,7 +714,7 @@ func _unhandled_key_input(event: InputEvent) -> void:
 func _caption(text: String) -> Label:
 	var l := Label.new()
 	l.text = text
-	l.add_theme_font_size_override("font_size", 13)
+	l.add_theme_font_size_override("font_size", UiKit.SMALL)
 	l.add_theme_color_override("font_color", Color(0.65, 0.62, 0.78))
 	return l
 
@@ -753,11 +749,11 @@ func _color_button(caption: String, parent: Control, on_change: Callable) -> Col
 	parent.add_child(box)
 	var l := Label.new()
 	l.text = caption
-	l.add_theme_font_size_override("font_size", 12)
+	l.add_theme_font_size_override("font_size", UiKit.SMALL)
 	box.add_child(l)
 	var b := ColorPickerButton.new()
 	b.edit_alpha = false
-	b.custom_minimum_size = Vector2(0, 34)
+	b.custom_minimum_size = Vector2(0, 46)
 	b.color_changed.connect(on_change)
 	var picker := b.get_picker()
 	for p in PRESETS:

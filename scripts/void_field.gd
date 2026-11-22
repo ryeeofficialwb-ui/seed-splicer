@@ -6,6 +6,7 @@ extends Control
 signal splice_new(a: SeedToken, b: SeedToken)  ## a pair nobody has spliced yet: main opens the popup
 signal edit_seed(id: String)                    ## a floating seed was double-clicked
 signal void_changed
+signal spliced(result_id: String, is_new: bool)  ## any splice finished (the tutorial waits for one)
 
 const SPLICE_DISTANCE := 62.0
 const SPARKLE := preload("res://assets/sparkle.png")
@@ -15,6 +16,8 @@ const SPARKLE_FRAME_TIME := 0.07
 var tokens_layer: Control
 var fx_layer: FxLayer
 var toast: Label
+var _toast_box: PanelContainer
+var _toast_tw: Tween
 var _stars: Array = []
 var _motes: Array = []
 var _t := 0.0
@@ -60,7 +63,7 @@ func _ready() -> void:
 
 	var title := Label.new()
 	title.text = "SEED SPLICER"
-	title.add_theme_font_size_override("font_size", 22)
+	title.add_theme_font_size_override("font_size", UiKit.BIG)
 	title.add_theme_color_override("font_color", Color("#a6ff6e"))
 	title.position = Vector2(18, 12)
 	title.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -68,26 +71,29 @@ func _ready() -> void:
 
 	var hint := Label.new()
 	hint.text = "Drag one seed onto another to splice  ·  Double-click: edit  ·  Right-click: remove  ·  Ctrl+click: copy"
-	hint.add_theme_font_size_override("font_size", 13)
+	hint.add_theme_font_size_override("font_size", UiKit.SMALL)
 	hint.add_theme_color_override("font_color", Color(0.75, 0.72, 0.85, 0.7))
-	hint.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_LEFT)
+	hint.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART  # two lines when the void is narrow
+	hint.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_WIDE)
 	hint.offset_left = 18
-	hint.offset_top = -30
+	hint.offset_right = -18
+	hint.offset_top = -72
 	hint.offset_bottom = -10
+	hint.vertical_alignment = VERTICAL_ALIGNMENT_BOTTOM
 	hint.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(hint)
 
+	# messages: a pixel panel centered near the top (fades out by itself)
+	_toast_box = PanelContainer.new()
+	_toast_box.theme_type_variation = &"ToastPanel"
+	_toast_box.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_toast_box.modulate.a = 0.0
+	add_child(_toast_box)
 	toast = Label.new()
-	toast.add_theme_font_size_override("font_size", 17)
-	toast.add_theme_color_override("font_outline_color", Color(0.05, 0.04, 0.08))
-	toast.add_theme_constant_override("outline_size", 6)
 	toast.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	toast.set_anchors_and_offsets_preset(Control.PRESET_TOP_WIDE)
-	toast.offset_top = 46
-	toast.offset_bottom = 74
 	toast.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	toast.modulate.a = 0.0
-	add_child(toast)
+	_toast_box.add_child(toast)
+	resized.connect(_place_toast)
 
 	var rng := RandomNumberGenerator.new()
 	rng.seed = 1234
@@ -305,6 +311,7 @@ func complete_splice(a: SeedToken, b: SeedToken, result: String, is_new: bool) -
 	var s := Game.get_seed(result)
 	var tier: Array = SeedArt.rarity_tier(int(s.rarity))
 	show_toast("%s%s  ·  Rarity %d %s" % ["NEW!  " if is_new else "", s.name, int(s.rarity), tier[0]], tier[1])
+	spliced.emit(result, is_new)
 
 
 func cancel_splice(a: SeedToken, b: SeedToken) -> void:
@@ -322,10 +329,18 @@ func cancel_splice(a: SeedToken, b: SeedToken) -> void:
 func show_toast(text: String, color := Color.WHITE, seconds := 2.0) -> void:
 	toast.text = text
 	toast.add_theme_color_override("font_color", color)
-	toast.modulate.a = 1.0
-	var tw := toast.create_tween()
-	tw.tween_interval(seconds)
-	tw.tween_property(toast, "modulate:a", 0.0, 0.6)
+	_place_toast()
+	_toast_box.modulate.a = 1.0
+	if _toast_tw:
+		_toast_tw.kill()
+	_toast_tw = _toast_box.create_tween()
+	_toast_tw.tween_interval(seconds)
+	_toast_tw.tween_property(_toast_box, "modulate:a", 0.0, 0.6)
+
+
+func _place_toast() -> void:
+	_toast_box.reset_size()
+	_toast_box.position = (Vector2((size.x - _toast_box.size.x) / 2.0, 96.0)).round()
 
 
 # --- drag from the dictionary -------------------------------------------------

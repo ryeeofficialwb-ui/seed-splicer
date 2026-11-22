@@ -84,14 +84,14 @@ func _ready() -> void:
 	buttons.add_child(agree_all)
 
 	_summary = Label.new()
-	_summary.add_theme_font_size_override("font_size", 12)
+	_summary.add_theme_font_size_override("font_size", UiKit.SMALL)
 	_summary.add_theme_color_override("font_color", Color(0.75, 0.72, 0.85))
 	_summary.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	add_child(_summary)
 	var tip := Label.new()
 	tip.text = "Tick OK to agree  ·  pick another material or hardness to change it  ·  untick to go back to the guess"
 	tip.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	tip.add_theme_font_size_override("font_size", 12)
+	tip.add_theme_font_size_override("font_size", UiKit.SMALL)
 	tip.add_theme_color_override("font_color", Color(0.65, 0.62, 0.78))
 	add_child(tip)
 

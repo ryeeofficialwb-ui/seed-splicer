@@ -32,8 +32,19 @@ const DROP_FILTER_NAMES: Array[String] = ["Drops: anything", "Drops: blocks", "D
 	"Drops: collision", "Drops: no collision", "Drops: collision damage", "Drops: backgrounds", "Drops: emits light"]
 
 
-static func make_sort_button(default_mode: int) -> OptionButton:
+## A dropdown that shrinks with its panel (the chosen item is cut short) instead of being as wide as
+## its longest item: with 26 px text that would make the Seeds panel too wide to resize.
+static func _option() -> OptionButton:
 	var o := OptionButton.new()
+	o.fit_to_longest_item = false
+	o.clip_text = true
+	o.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
+	o.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	return o
+
+
+static func make_sort_button(default_mode: int) -> OptionButton:
+	var o := _option()
 	for s in SORT_NAMES:
 		o.add_item(s)
 	o.select(default_mode)
@@ -42,7 +53,7 @@ static func make_sort_button(default_mode: int) -> OptionButton:
 
 
 static func make_filter_button() -> OptionButton:
-	var o := OptionButton.new()
+	var o := _option()
 	o.add_item("Show: all tags")
 	for tag in Game.TAGS:
 		o.add_item("Show only: " + Game.tag_name(tag))
@@ -51,7 +62,7 @@ static func make_filter_button() -> OptionButton:
 
 
 static func make_drop_filter_button() -> OptionButton:
-	var o := OptionButton.new()
+	var o := _option()
 	for s in DROP_FILTER_NAMES:
 		o.add_item(s)
 	o.tooltip_text = "Only list seeds by what they drop: block or decoration, with or without collision"

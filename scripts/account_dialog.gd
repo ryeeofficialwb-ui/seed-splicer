@@ -15,7 +15,7 @@ var _busy := false
 
 
 func _ready() -> void:
-	_init_modal("Account", Vector2(420, 0))
+	_init_modal("Account", Vector2(640, 0))
 	_form = VBoxContainer.new()
 	_form.add_theme_constant_override("separation", 8)
 	body.add_child(_form)
@@ -52,7 +52,7 @@ func _ready() -> void:
 	_signed_in.add_theme_constant_override("separation", 8)
 	body.add_child(_signed_in)
 	_who = Label.new()
-	_who.add_theme_font_size_override("font_size", 18)
+	_who.add_theme_font_size_override("font_size", UiKit.SMALL)
 	_signed_in.add_child(_who)
 	var out := Button.new()
 	out.text = "Log out"

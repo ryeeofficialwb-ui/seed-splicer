@@ -14,7 +14,7 @@ var _push_armed := false
 
 
 func _ready() -> void:
-	_init_modal("Submissions", Vector2(720, 0))
+	_init_modal("Submissions", Vector2(1060, 0))
 	body.add_child(note("Seeds players uploaded for review. Approve brings one into your game (credited to the player); your next published update gives it to everyone. Deny keeps it out."))
 	var top := HBoxContainer.new()
 	top.add_theme_constant_override("separation", 6)
@@ -29,7 +29,7 @@ func _ready() -> void:
 	_push.pressed.connect(_on_push)
 	top.add_child(_push)
 	_push_note = Label.new()
-	_push_note.add_theme_font_size_override("font_size", 13)
+	_push_note.add_theme_font_size_override("font_size", UiKit.SMALL)
 	_push_note.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	_push_note.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	top.add_child(_push_note)
@@ -86,6 +86,7 @@ func _row(r: Dictionary) -> Control:
 			top = s
 	var who := String(r.get("profiles", {}).get("username", "?")) if r.get("profiles") is Dictionary else "?"
 	var panel := PanelContainer.new()
+	panel.theme_type_variation = &"WindowPanel"
 	var h := HBoxContainer.new()
 	h.add_theme_constant_override("separation", 10)
 	panel.add_child(h)
@@ -112,7 +113,7 @@ func _row(r: Dictionary) -> Control:
 	h.add_child(info)
 	var name_l := Label.new()
 	name_l.text = "%s  ·  by %s" % [r.get("seed_name", "?"), who]
-	name_l.add_theme_font_size_override("font_size", 16)
+	name_l.add_theme_font_size_override("font_size", UiKit.SMALL)
 	info.add_child(name_l)
 	var known := Game.find_by_name(String(r.get("seed_name", ""))) != ""
 	info.add_child(note("R%d  ·  %s  ·  %d seed%s in the recipe chain%s" % [int(top.get("rarity", 1)), Game.tag_name(String(top.get("tag", ""))),

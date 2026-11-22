@@ -7,8 +7,14 @@ extends RefCounted
 ##   BORDERLESS  "fullscreen windowed": covers the screen with no borders, instant alt-tab
 ##   FULLSCREEN  exclusive fullscreen
 ## Both fullscreen modes use your screen's own resolution; the resolution list is for windowed mode.
-## The game always lays itself out as if the window were at least 1280x720, then scales up
-## (UI size multiplies that), so every resolution shows the same screen, just sharper.
+## PIXEL-PERFECT SCALE: the UI is pixel art, so the game is only ever drawn at WHOLE zooms
+## (1x, 2x, 3x): every art pixel is the same number of screen pixels. The window shows the game at
+## that zoom and the extra room is just more room (no stretching).
+##   UI size Auto    the biggest zoom that still leaves at least 1280x720 of room
+##   UI size 1x-3x   that zoom, as long as it leaves at least 960x540 of room (else smaller)
+## A window smaller than that is drawn at 1x if it still has 1024x600 of room, else at 0.5x: still
+## sharp, because the 26 px text becomes the font's crisp 13 px and an art pixel one screen pixel
+## (a fraction like 0.8x would mangle the pixel font, e.g. in the Godot editor's embedded Game view).
 
 enum Mode { WINDOWED, BORDERLESS, FULLSCREEN }
 
@@ -19,16 +25,21 @@ const RESOLUTIONS: Array[Vector2i] = [
 	Vector2i(1920, 1080), Vector2i(1920, 1200), Vector2i(2560, 1440), Vector2i(3440, 1440),
 	Vector2i(3840, 2160),
 ]
-const UI_SCALES: Array[float] = [0.75, 1.0, 1.25]
-const UI_SCALE_NAMES: Array[String] = ["Small (75%)", "Normal (100%)", "Large (125%)"]
-const MIN_WINDOW := Vector2i(960, 540)
+const UI_SIZES: Array[int] = [0, 1, 2, 3]  ## 0 = Auto
+const UI_SIZE_NAMES: Array[String] = ["Auto", "1x", "2x", "3x"]
+const BASE := Vector2(1280, 720)  ## the room the layout wants
+const MIN_ROOM := Vector2(1280, 720)  ## the least room a chosen UI size may leave
+const SMALL_ROOM := Vector2(1024, 600)  ## a smaller window still at 1x down to this (then 0.5x)
+const MIN_WINDOW := Vector2i(1024, 600)
 const DEFAULT_RES := Vector2i(1280, 720)
 
 
 ## Call once at startup.
 static func load_and_apply(window: Window) -> void:
 	window.min_size = MIN_WINDOW
-	window.content_scale_factor = ui_scale()
+	if not window.size_changed.is_connected(apply_scale.bind(window)):
+		window.size_changed.connect(apply_scale.bind(window))
+	apply_scale(window)
 	var mode := int(UserSettings.get_value("display", "mode", Mode.WINDOWED))
 	if mode == Mode.WINDOWED:
 		set_resolution(window, saved_resolution())
@@ -41,8 +52,27 @@ static func saved_resolution() -> Vector2i:
 	return v if v is Vector2i else DEFAULT_RES
 
 
-static func ui_scale() -> float:
-	return clampf(float(UserSettings.get_value("display", "ui_scale", 1.0)), UI_SCALES[0], UI_SCALES[-1])
+## The chosen UI size: 0 = Auto, else 1-3.
+static func ui_size() -> int:
+	return clampi(int(UserSettings.get_value("display", "ui_size", 0)), 0, UI_SIZES[-1])
+
+
+## The zoom the game is drawn at in a window this big.
+static func zoom_for(window_size: Vector2, chosen: int) -> float:
+	var fit := minf(window_size.x / BASE.x, window_size.y / BASE.y)
+	if fit < 1.0:
+		return 1.0 if window_size.x >= SMALL_ROOM.x and window_size.y >= SMALL_ROOM.y else 0.5
+	var auto := floorf(fit)
+	if chosen <= 0:
+		return auto
+	var k := float(chosen)
+	while k > 1.0 and (window_size.x / k < MIN_ROOM.x or window_size.y / k < MIN_ROOM.y):
+		k -= 1.0
+	return k
+
+
+static func apply_scale(window: Window) -> void:
+	window.content_scale_factor = zoom_for(Vector2(window.size), ui_size())
 
 
 static func current_mode(window: Window) -> int:
@@ -82,9 +112,9 @@ static func set_resolution(window: Window, res: Vector2i) -> void:
 	UserSettings.set_value("display", "res", fit)
 
 
-static func set_ui_scale(window: Window, scale: float) -> void:
-	window.content_scale_factor = scale
-	UserSettings.set_value("display", "ui_scale", scale)
+static func set_ui_size(window: Window, chosen: int) -> void:
+	UserSettings.set_value("display", "ui_size", chosen)
+	apply_scale(window)
 
 
 ## F11: windowed <-> your last fullscreen mode (borderless by default).

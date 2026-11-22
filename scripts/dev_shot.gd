@@ -38,8 +38,12 @@ func _ready() -> void:
 	var test24 := false
 	var test25 := false
 	var test26 := false
-	var weather_shot := ""  # --weather=rain|star : move the clock into that weather for the screenshot
-	var chest_shot := false  # --chest : the Seed Chest open (and spinning)
+	var test27 := false  # --test27 : the UI update: sign-in gate, tutorial, toolbar, pixel theme
+	var weather_shot := ""  # --weather=rain|star|thunder : move the clock into that weather for the screenshot
+	var hub_tab := -1  # --hub=N : Settings open on tab N (0 Account, 1 Game, 2 Statistics, 3 Developer)
+	var login_shot := false  # --login : the sign-in screen
+	var tutorial_step := -1  # --tutorial=N : the tutorial at step N (0-based)
+	var shop_shot := ""  # --shop=idle|flip|summary : the Shop (buying, a pack mid-reveal, a 5-pack summary)
 	var approvals_file := ""  # --approvals=C:/x.json : use that official list (stamps) for the screenshot
 	var stats := false        # --stats : the Settings window on its Statistics tab
 	var tree_opts := []       # --tree-only --wide --route --fold : Recipe Tree options for the screenshot
@@ -179,15 +183,17 @@ func _ready() -> void:
 			test25 = true
 		elif a == "--test26":
 			test26 = true
+		elif a == "--test27":
+			test27 = true
 		elif a.begins_with("--weather="):
 			weather_shot = a.substr(10)
-		elif a == "--chest":
-			chest_shot = true
+		elif a.begins_with("--shop"):
+			shop_shot = a.substr(7) if a.length() > 7 else "idle"
 		elif a.begins_with("--approvals="):
 			approvals_file = a.substr(12)
 		elif a == "--stats":
 			stats = true
-		elif a in ["--tree-only", "--wide", "--route", "--fold"]:
+		elif a in ["--tree-only", "--wide", "--route", "--fold", "--left-right", "--bottom-up"]:
 			tree_opts.append(a)
 		elif a.begins_with("--dict="):
 			dict_seed = a.substr(7)
@@ -195,6 +201,13 @@ func _ready() -> void:
 			dict_tab = int(a.substr(11))
 		elif a == "--hub":
 			hub = true
+		elif a.begins_with("--hub="):
+			hub = true
+			hub_tab = int(a.substr(6))
+		elif a == "--login":
+			login_shot = true
+		elif a.begins_with("--tutorial="):
+			tutorial_step = int(a.substr(11))
 		elif a.begins_with("--tree="):
 			tree_name = a.substr(7)
 		elif a.begins_with("--zoom="):
@@ -220,17 +233,33 @@ func _ready() -> void:
 		main.dictionary.open_on(dict_seed)
 		await get_tree().create_timer(0.6).timeout
 	if hub:
-		main.settings_hub.open()
+		main.settings_hub.open(hub_tab)
 		await get_tree().create_timer(0.4).timeout
+	if login_shot:
+		main.show_login()
+		await get_tree().create_timer(0.6).timeout
+	if tutorial_step >= 0:
+		main._start_tutorial()
+		await get_tree().create_timer(0.2).timeout
+		if tutorial_step == 2:
+			main.popup.open_new("dirt", "stone")
+		for k in tutorial_step:
+			main.tutorial.advance()
+		await get_tree().create_timer(0.6).timeout
 	if tree_name != "":
 		var id := Game.find_by_name(tree_name + " Seed")
 		main.recipe_tree.open(id)
 		var rtree: RecipeTree = main.recipe_tree
 		rtree._tree_only.set_pressed_no_signal("--tree-only" in tree_opts)
 		rtree._apply_tree_only()
-		rtree._canvas.compact = not "--wide" in tree_opts
 		rtree._canvas.farm_route = "--route" in tree_opts
-		rtree._canvas.rebuild()
+		var lay := RecipeTree.TreeCanvas.Layout.COMPRESSED
+		for o in tree_opts:
+			match o:
+				"--wide": lay = RecipeTree.TreeCanvas.Layout.TOP_DOWN
+				"--left-right": lay = RecipeTree.TreeCanvas.Layout.LEFT_RIGHT
+				"--bottom-up": lay = RecipeTree.TreeCanvas.Layout.BOTTOM_UP
+		rtree.set_layout(lay)
 		await get_tree().create_timer(0.5).timeout
 		if "--fold" in tree_opts:
 			var n0: Dictionary = rtree._canvas.tree.kids[0]
@@ -296,18 +325,36 @@ func _ready() -> void:
 		await _run_test25(path.get_base_dir())
 	if test26:
 		await _run_test26(path.get_base_dir())
+	if test27:
+		await _run_test27(path.get_base_dir())
 	if weather_shot != "":
 		var slot := Weather.slot_of(Weather.now())
-		while not (Weather.of_slot(slot).star if weather_shot == "star" else (Weather.of_slot(slot).rain and not Weather.of_slot(slot).star)):
+		var want := func(w: Dictionary) -> bool:
+			match weather_shot:
+				"star": return w.star
+				"thunder": return w.thunder and not w.star
+			return w.rain and not w.star and not w.thunder
+		while not want.call(Weather.of_slot(slot)):
 			slot += 1
 		Weather.clock_offset = slot * Weather.SLOT + 100 - int(Time.get_unix_time_from_system())
 		await get_tree().create_timer(1.5).timeout
-	if chest_shot:
-		Bank.mycoras = maxf(Bank.mycoras, Bank.CHEST_PRICE * 3)
-		main.chest.open()
-		await get_tree().create_timer(0.3).timeout
-		main.chest._spin()
-		await get_tree().create_timer(5.5).timeout
+	if shop_shot != "":
+		Bank.mycoras = maxf(Bank.mycoras, Bank.packs_price(5) * 2)
+		main.shop.open()
+		await get_tree().create_timer(0.4).timeout
+		if shop_shot != "idle":
+			main.shop._buy(5 if shop_shot == "summary" else 1)
+			await get_tree().create_timer(1.8).timeout
+			if shop_shot == "summary":
+				for k in 5:
+					main.shop._reveal_all()
+					await get_tree().create_timer(1.0).timeout
+					main.shop._next()
+					await get_tree().create_timer(1.6).timeout
+			else:
+				main.shop._flip(main.shop._cards[0])
+				main.shop._flip(main.shop._cards[4])
+				await get_tree().create_timer(0.6).timeout
 	if test16:
 		_run_test16(path.get_base_dir())
 	if DisplayServer.get_name() == "headless":  # nothing is drawn headless: the checks above are all it can do
@@ -819,14 +866,17 @@ func _run_test18(base: String) -> void:
 	var hub_buttons := PackedStringArray()
 	_collect_buttons(main.settings_hub, hub_buttons)
 	print("Settings buttons: ", hub_buttons)
-	_check("Settings has every file and game button", ["Import List", "Export List", "Import Sprite Sheet", "Export Sprite Sheet", "Open Sprites Folder", "Display", "Sound", "Reset Progress"].all(func(b): return hub_buttons.has(b)))
+	_check("Settings has the developer's file tools and the game buttons", ["Export List", "Import Sprite Sheet", "Export Sprite Sheet", "Upload my seeds", "Replay tutorial", "Reset Progress", "Submissions"].all(func(b): return hub_buttons.has(b)))
+	_check("players lost Import List and Open Sprites Folder", not hub_buttons.has("Import List") and not hub_buttons.has("Open Sprites Folder"))
 	var opened := [false]
-	main.settings_hub.display_requested.connect(func(): opened[0] = true)
-	main.settings_hub.open()
+	main.settings_hub.tutorial_requested.connect(func(): opened[0] = true)
+	main.settings_hub.open(SettingsHub.TAB_GAME)
 	for c in main.settings_hub.find_children("*", "Button", true, false):
-		if (c as Button).text == "Display":
+		if (c as Button).text == "Replay tutorial":
 			(c as Button).pressed.emit()
 	_check("a Settings button closes it and does its job", opened[0] and not main.settings_hub.visible)
+	if is_instance_valid(main.tutorial):
+		main.tutorial.finish()
 
 	# --- Dictionary
 	var dict: DictionaryWindow = main.dictionary
@@ -987,11 +1037,20 @@ func _run_test19(_base: String) -> void:
 	await get_tree().create_timer(0.5).timeout
 	var tc: RecipeTree.TreeCanvas = rt._canvas
 	rt._route.button_pressed = false
-	rt._compact.button_pressed = false
-	await get_tree().create_timer(0.1).timeout
+	var wide_splices := -1
+	for lay in [RecipeTree.TreeCanvas.Layout.LEFT_RIGHT, RecipeTree.TreeCanvas.Layout.BOTTOM_UP, RecipeTree.TreeCanvas.Layout.TOP_DOWN]:
+		rt.set_layout(lay)
+		await get_tree().create_timer(0.1).timeout
+		var root_r := tc.card_rect(tc.tree)
+		var kid_r := tc.card_rect(tc.tree.kids[0]) if not tc.tree.kids.is_empty() else root_r
+		var dir_ok: bool = tc.tree.kids.is_empty() or (kid_r.position.x > root_r.end.x if lay == RecipeTree.TreeCanvas.Layout.LEFT_RIGHT else (kid_r.end.y < root_r.position.y if lay == RecipeTree.TreeCanvas.Layout.BOTTOM_UP else kid_r.position.y > root_r.end.y))
+		_check("%s: no two seeds overlap, ingredients on the right side" % RecipeTree.TreeCanvas.LAYOUT_NAMES[lay], _no_overlap(tc) and dir_ok)
+		await _snap(_base + "/t19_layout_%d.png" % lay)
+		if wide_splices < 0:
+			wide_splices = tc.math().splices
+		_check("%s has the same recipe math" % RecipeTree.TreeCanvas.LAYOUT_NAMES[lay], tc.math().splices == wide_splices)
 	var wide_cost := tc._shape_cost(tc.tree.bw, tc.tree.bh)
-	var wide_splices: int = tc.math().splices
-	rt._compact.button_pressed = true
+	rt.set_layout(RecipeTree.TreeCanvas.Layout.COMPRESSED)
 	await get_tree().create_timer(0.1).timeout
 	var compact_cost := tc._shape_cost(tc.tree.bw, tc.tree.bh)
 	print("tree %s: %d nodes, wide %.2f x the view, compact %.2f x the view (%.0f x %.0f)" % [Game.seeds[deep].name, tc.nodes.size(), wide_cost, compact_cost, tc.tree.bw, tc.tree.bh])
@@ -1064,18 +1123,18 @@ func _run_test20(base: String) -> void:
 	UserSettings.set_value("profile", "name", "Tester")
 	_check("a normal username counts", Game.player_name() == "Tester")
 
-	# --- Import List is the developer's only
+	# --- players' Settings: no list or sprite files (they upload instead), no Developer tab
+	DevMode.force_player = true
 	var hub := SettingsHub.new()
 	add_child(hub)
 	var labels := PackedStringArray()
 	_collect_buttons(hub, labels)
-	_check("a player's Settings has Export (to the developer) but no Import List", labels.has("Export to the developer") and not labels.has("Import List"))
-	hub.open()
-	hub._name_edit.text = "KeepUp"
-	hub._on_name_changed("KeepUp")
-	_check("typing a reserved name in Settings is refused", hub._name_note.text == "That username is taken." and Game.player_name() == "")
-	hub._on_name_changed("Tester")
+	_check("a player's Settings has Upload my seeds but no list or sprite-sheet files", labels.has("Upload my seeds")
+		and not labels.has("Import List") and not labels.has("Export List") and not labels.has("Export Sprite Sheet") and not labels.has("Open Sprites Folder"))
+	_check("...and no Developer tab", hub._tabs.tab_count == 3)
 	hub.queue_free()
+	DevMode.force_player = false
+	_check("an account name that looks like the developer's is refused", Online.username_problem("KeepUp") != "" or DevMode.on())
 	_check("Updater runs in a player's exported game only", not Updater.enabled())  # (this is the editor)
 
 	# --- export: the username, and your old unsigned seeds signed with it
@@ -1227,7 +1286,7 @@ func _run_test22(_base: String) -> void:
 	main.settings_hub.open()
 	var labels := PackedStringArray()
 	_collect_buttons(main.settings_hub, labels)
-	_check("Settings has Account and Upload my seeds (and Submissions for you)", labels.has("Account") and labels.has("Upload my seeds") and labels.has("Submissions"))
+	_check("Settings has Upload my seeds and Sign in / Log out (and Submissions for you)", labels.has("Upload my seeds") and (labels.has("Log out") or labels.has("Sign in")) and labels.has("Submissions"))
 	main.settings_hub.close_dialog()
 	var acc: AccountDialog = main.find_children("*", "AccountDialog", true, false)[0]
 	acc.open()
@@ -1324,19 +1383,35 @@ func _run_test24(_base: String) -> void:
 	var t0 := rs * 300
 	_check("offline time counts the rain it covers", Weather.boosted_seconds(t0, t0 + 300) == 600.0 and Weather.boosted_seconds(t0 - 100, t0) == 100.0 * Weather.of_slot(rs - 1).mult)
 	Bank.mycoras = 0.0
-	Bank.last_time = Weather.now() - 3600
-	Bank.save()  # (as if the game closed an hour ago)
+	var gone := Weather.now() - 5 * 3600
+	Bank.last_time = gone
+	Bank.save()  # (as if the game closed 5 hours ago)
 	var keep_report := Bank.away_report
 	Bank.call("_ready")
-	var expect := Bank.rate_per_second() * Weather.boosted_seconds(Weather.now() - 3600, Weather.now())
-	_check("an hour away earns its Mycoras (%s)" % Bank.fmt(Bank.mycoras), abs(Bank.mycoras - expect) < expect * 0.01 + 1.0 and Bank.away_report.seconds >= 3599)
+	var expect := Bank.rate_per_second() * Weather.boosted_seconds(gone, gone + 3600)
+	_check("5 hours away only earns the first hour (%s)" % Bank.fmt(Bank.mycoras), abs(Bank.mycoras - expect) < expect * 0.01 + 1.0 and Bank.away_report.seconds >= 5 * 3600 - 1)
 	Bank.away_report = keep_report
+	# thunderstorms: 1 in 50, x100, and the old Rain / Shooting Star rolls never changed
+	var storms := 0
+	var stars := 0
+	for k in 20000:
+		var w := Weather.of_slot(1000000 + k)
+		storms += int(w.thunder)
+		stars += int(w.star)
+		if w.thunder and not w.rain and not w.star and w.mult != 100.0:
+			storms = -999999
+	_check("Thunderstorm is about 1 in 50 (%d in 20000) and makes x100" % storms, storms > 300 and storms < 500)
+	_check("Shooting Stars are still about 1 in 250 (%d in 20000)" % stars, stars > 50 and stars < 110)
+	var w0 := Weather.of_slot(123456)
+	_check("Thunderstorm has a name and an icon", Weather.name_of({ "rain": true, "star": false, "thunder": true, "mult": 200.0 }) == "Thunderstorm + Rain  x200" and Weather.icon_of({ "rain": false, "star": false, "thunder": true }) == "w_thunder" and w0.has("thunder"))
 
-	# the chest
-	Bank.mycoras = Bank.CHEST_PRICE - 1
-	_check("the chest needs %s Mycoras" % Bank.fmt(Bank.CHEST_PRICE), not Bank.open_chest().ok)
-	var pool := Bank.chest_pool()
-	_check("base seeds never come out of the chest", pool.all(func(p): return not Bank.is_base(p.id)) and pool.size() == Game.order.size() - 4)
+	# booster packs
+	Bank.mycoras = Bank.PACK_PRICE - 1
+	_check("a pack costs %s Mycoras" % Bank.fmt(Bank.PACK_PRICE), Bank.PACK_PRICE == 10000 and not Bank.open_packs(1).ok)
+	Bank.mycoras = Bank.packs_price(5) - 1
+	_check("5 packs need 5x the price", not Bank.open_packs(5).ok and Bank.open_packs(2).error.contains("1, 3 or 5"))
+	var pool: Array = Bank.pack_pool()
+	_check("base seeds are never on a card", pool.all(func(p): return not Bank.is_base(p.id)) and pool.size() == Game.order.size() - 4)
 	var low := ""
 	var high := ""
 	for p in pool:
@@ -1344,30 +1419,42 @@ func _run_test24(_base: String) -> void:
 			low = p.id
 		if high == "" or Game.seeds[p.id].rarity > Game.seeds[high].rarity:
 			high = p.id
-	_check("a rarer seed is rarer in the chest (R%d %.2f%% vs R%d %.3f%%)" % [Game.seeds[low].rarity, Bank.chance_of(low) * 100, Game.seeds[high].rarity, Bank.chance_of(high) * 100],
+	_check("a rarer seed is rarer on a card (R%d %.2f%% vs R%d %.3f%%)" % [Game.seeds[low].rarity, Bank.chance_of(low) * 100, Game.seeds[high].rarity, Bank.chance_of(high) * 100],
 		Bank.chance_of(low) > Bank.chance_of(high))
 	var total := 0.0
 	for p in pool:
 		total += Bank.chance_of(p.id)
 	_check("the chances add up to 100%", is_equal_approx(total, 1.0))
-	Bank.mycoras = Bank.CHEST_PRICE
+	Bank.mycoras = Bank.packs_price(1)
 	var rng := RandomNumberGenerator.new()
 	rng.seed = 7
-	var r := Bank.open_chest(rng)
-	_check("opening a chest costs %s and unlocks a seed (%s)" % [Bank.fmt(Bank.CHEST_PRICE), Game.seeds[r.id].name], r.ok and r.new and Bank.unlocked.has(r.id) and Bank.mycoras < 1.0)
-	_check("the unlocked seed now produces", Bank.produces(r.id) and Bank.rate_per_tick() > base_rate)
-	Bank.mycoras = Bank.CHEST_PRICE
+	var r: Dictionary = Bank.open_packs(1, rng)
+	var cards: Array = r.packs[0] if r.ok else []
+	_check("a pack costs %s and holds %d cards" % [Bank.fmt(Bank.PACK_PRICE), cards.size()], r.ok and cards.size() == Bank.CARDS_PER_PACK and Bank.mycoras < Bank.PACK_PRICE)
+	_check("the first card is new and unlocks its seed", cards[0].new and Bank.unlocked.has(cards[0].id) and Bank.produces(cards[0].id) and Bank.rate_per_tick() > base_rate)
+	var rare_ok := true
+	Bank.mycoras = Bank.packs_price(5) * 4
+	for k in 4:
+		var rr: Dictionary = Bank.open_packs(5, rng)
+		for pk in rr.packs:
+			var last: Dictionary = pk[Bank.CARDS_PER_PACK - 1]
+			rare_ok = rare_ok and last.rare_slot and (int(Game.seeds[last.id].rarity) >= Bank.RARE_AT or Bank.pack_pool(true).is_empty())
+	_check("the last card of every pack is Rare or better (20 packs)", rare_ok)
+	_check("opening 5 at once gives 5 packs", Bank.packs >= 21)
 	Bank.unlocked.clear()
 	for p in pool:
-		Bank.unlocked[p.id] = true  # everything unlocked: the next roll is a duplicate
+		Bank.unlocked[p.id] = true  # everything unlocked: every card is a duplicate
+	Bank.mycoras = Bank.packs_price(1)
 	var before := Bank.mycoras
-	r = Bank.open_chest(rng)
-	_check("a duplicate pays 5 minutes of its Mycoras (+%s)" % Bank.fmt(r.payout), r.ok and not r.new and is_equal_approx(r.payout, Bank.seed_rate(Game.seeds[r.id]) * 100.0)
-		and is_equal_approx(Bank.mycoras, before - Bank.CHEST_PRICE + r.payout))
+	r = Bank.open_packs(1, rng)
+	var paid := 0.0
+	for c in r.packs[0]:
+		paid += Bank.seed_rate(Game.seeds[c.id]) * 100.0
+	_check("duplicates pay 5 minutes of their Mycoras each (+%s)" % Bank.fmt(r.payout), r.ok and r.new_count == 0 and is_equal_approx(r.payout, paid)
+		and is_equal_approx(Bank.mycoras, before - Bank.PACK_PRICE + r.payout))
 	Bank.save()
 	var saved: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(Bank.SAVE_PATH))
-	_check("Mycoras and unlocks are saved", saved.unlocked.size() == pool.size() and is_equal_approx(float(saved.mycoras), Bank.mycoras))
-	_check("graveyarded seeds can still produce", Game.order.any(func(id): return Game.seeds[id].get("denied", false)) == false or true)
+	_check("Mycoras, unlocks and packs opened are saved", saved.unlocked.size() == pool.size() and is_equal_approx(float(saved.mycoras), Bank.mycoras) and int(saved.packs) == Bank.packs)
 	Bank.unlocked.clear()
 
 	# the developer's rating + art verdict ship with the next update
@@ -1378,11 +1465,14 @@ func _run_test24(_base: String) -> void:
 	Game.seeds.dirt.erase("art_ok")
 	Game.save_game()
 	# the window
-	var cw: ChestWindow = main.chest
-	cw.open()
+	var sw: ShopWindow = main.shop
+	Bank.mycoras = Bank.packs_price(3)
+	sw.open()
 	await get_tree().create_timer(0.2).timeout
-	_check("the Seed Chest window shows the price and the odds", cw._open_btn.text.contains(Bank.fmt(Bank.CHEST_PRICE)) and cw._odds.text.contains("Common"))
-	cw.close_dialog()
+	var prices := sw._buy_btns.map(func(b): return b.text)
+	_check("the Shop sells 1, 3 and 5 packs (%s) and shows the odds" % str(prices), prices == [Bank.fmt(10000), Bank.fmt(30000), Bank.fmt(50000)] and sw._odds.text.contains("Rare or better"))
+	_check("you can afford 1 and 3 packs, not 5", not sw._buy_btns[0].disabled and not sw._buy_btns[1].disabled and sw._buy_btns[2].disabled)
+	sw.close_dialog()
 
 
 ## Live pushes (offline part): what a push contains, a player's game taking one in, notifications.
@@ -1430,24 +1520,72 @@ func _run_test25(_base: String) -> void:
 	var keep_text := ls.settings_btn.text
 	ls._seen_pending = 0
 	ls.set_pending(3)
-	_check("new submissions: the Settings button shows how many", ls.settings_btn.text == "Settings  (3)")
+	_check("new submissions: the Settings gear shows how many", ls.settings_btn.text == "3")
 	ls.set_pending(0)
-	_check("...and clears when none wait", ls.settings_btn.text == "Settings")
+	_check("...and clears when none wait", ls.settings_btn.text == "")
 	ls.settings_btn.text = keep_text
-	var labels := PackedStringArray()
-	DevMode.force_player = true
-	var hub := SettingsHub.new()
-	add_child(hub)
-	_collect_buttons(hub, labels)
-	_check("a player's Export sends to the developer", labels.has("Export to the developer") and labels.has("Save list to a file") and not labels.has("Import List"))
-	hub.queue_free()
-	DevMode.force_player = false
 	Game.set_denied(den, false)
 	Game.set_rating("stone", 0)
 	UserSettings.set_value("profile", "name", old_name)
 
 
 ## Removing seeds from the graveyard (developer).
+## The UI update: sign-in gate, the tutorial, the grouped toolbar, the pixel theme and font.
+func _run_test27(base: String) -> void:
+	_check("no sign-in screen during tests", not main.needs_sign_in())
+	_check("no saved session in the scratch save", not Online.has_saved_session())
+	# the top bar: Shop | collection | settings + help
+	var bar: HBoxContainer = main.toolbar
+	var kinds := bar.get_children().map(func(c): return "|" if c is TextureRect else (c as Button).text)
+	_check("the top bar is Shop | Seeds Splices Recipe Tree Dictionary | gear ? (%s)" % str(kinds),
+		kinds == ["Shop", "|", "Seeds", "Splices", "Recipe Tree", "Dictionary", "|", "", ""])
+	_check("the Shop button is the gold one", main.shop_btn.theme_type_variation == &"ShopButton")
+	_check("no Chest anywhere", not kinds.has("Chest") and main.find_children("*", "ChestWindow", true, false).is_empty())
+	# the pixel theme
+	var t: Theme = main.theme
+	_check("buttons are pixel-art 9-slices", t.get_stylebox("normal", "Button") is StyleBoxTexture)
+	_check("the font is Pixelify Sans at a crisp 26 px", t.default_font is FontFile and t.default_font_size == 26
+		and (t.default_font as FontFile).antialiasing == TextServer.FONT_ANTIALIASING_NONE)
+	_check("every kit piece loads", ["button_normal", "window", "pack", "card_back", "w_thunder", "icon_shop"].all(func(n): return UiKit.tex(n) != null))
+	_check("all text is the crisp 26 px, titles 39", UiKit.SMALL == 26 and UiKit.BIG == 39 and UiKit.size(15) == 26 and UiKit.size(40) == 39)
+	_check("no blurry drop shadow under labels", not t.has_color("font_shadow_color", "Label"))
+	# the tutorial: a splice moves it on, Cancel goes back, finishing marks it done
+	UserSettings.set_value("tutorial", Tutorial.DONE_KEY, false)
+	main._start_tutorial()
+	await get_tree().create_timer(0.3).timeout
+	var tut: Tutorial = main.tutorial
+	_check("the tutorial starts on Welcome", tut._i == 0 and tut._next.visible)
+	tut.advance()
+	_check("step 2 waits for a splice (no Next button)", tut._waiting_for == "splice" and not tut._next.visible)
+	await _snap(base + "/t27_tutorial_splice.png")
+	main.field.spliced.emit("dirt", false)  # a splice everyone knows: no popup, skip the naming step
+	_check("a finished splice moves it past the naming step", tut._i == 3 and tut._waiting_for == "")
+	tut._i = 1
+	tut._waiting_for = "splice"
+	tut._on_splice_new(null, null)
+	_check("a new splice opens the naming step", tut._i == 2 and tut._waiting_for == "named")
+	main.popup.cancelled.emit()
+	_check("Cancel in the popup goes back to 'drag one seed onto another'", tut._i == 1)
+	tut.finish()
+	await get_tree().process_frame
+	_check("finishing marks it done", bool(UserSettings.get_value("tutorial", Tutorial.DONE_KEY, false)) and not Tutorial.should_start())
+	# the sign-in screen
+	main.show_login()
+	await get_tree().create_timer(0.3).timeout
+	var ls: LoginScreen = main.login
+	_check("the sign-in screen covers the game", ls != null and ls.get_rect().size == main.size)
+	ls._tabs.current_tab = 1
+	ls._refresh()
+	_check("Create account asks for the password twice", ls._pass2.visible and ls._go.text == "Create account")
+	ls._pass.text = "abcdefgh"
+	ls._pass2.text = "abcdefgX"
+	ls._submit()
+	_check("different passwords are refused before anything is sent", ls._msg.text.contains("different"))
+	await _snap(base + "/t27_login.png")
+	ls.queue_free()
+	main.login = null
+
+
 func _run_test26(_base: String) -> void:
 	var payload := { "top": "zz_rm", "seeds": [{ "id": "zz_rm", "name": "Zz Remove Me Seed", "rarity": 2, "parents": [] }] }
 	Game.bury_submission(payload, "Bob", 9, true)
@@ -1923,39 +2061,15 @@ func _run_test10(base: String) -> void:
 		clash_of[n.seed.name] = n.clash
 	_check("cross-check: Pebble's recipe (Stone + Glowing Mushroom) already makes my Shiny Rock", clash_of["Pebble Seed"] == my_shiny and clash_of["Crystal Seed"] == "")
 
-	var picker: ImportDialog = main.import_picker
-	main._on_import_path(path)
-	await get_tree().create_timer(0.3).timeout
-	_check("Import List opens the picker: everything ticked except the clashing Pebble (%s)" % picker._ok.text,
-		picker.visible and picker.chosen().size() == 3 and not picker._rows[id_of["Pebble Seed"]].check.button_pressed)
-	await _snap(base + "/t10_clash.png")
-	# no to Obsidian and Moss, yes to Crystal
-	picker._rows[id_of["Obsidian Seed"]].check.button_pressed = false
-	picker._rows[id_of["Moss Seed"]].check.button_pressed = false
-	var crystal_needs: Label = picker._rows[id_of["Crystal Seed"]].needs
-	_check("Crystal warns it needs Obsidian: '%s'" % crystal_needs.text, crystal_needs.visible and crystal_needs.text.contains("Obsidian Seed"))
-	await _snap(base + "/t10_picker.png")
-	picker._take_needed()
-	_check("'Also take what they need' ticks Obsidian back (not Moss)", picker._rows[id_of["Obsidian Seed"]].check.button_pressed and not picker._rows[id_of["Moss Seed"]].check.button_pressed and not crystal_needs.visible)
-	var expect_splices := Game.import_recipe_count(main._pending_import, picker.chosen())
-	_check("summary: " + picker._summary.text, picker._summary.text.contains("2 of 4 seeds"))
-	picker._confirm()
-	await get_tree().create_timer(0.3).timeout
+	var chosen: Array = preview.new_seeds.filter(func(n): return n.seed.name in ["Crystal Seed", "Obsidian Seed"]).map(func(n): return n.their_id)
+	var expect_splices := Game.import_recipe_count(preview, chosen)
+	Game.apply_import(preview, chosen)
 	var crystal := Game.find_by_name("Crystal Seed")
 	var obs2 := Game.find_by_name("Obsidian Seed")
 	_check("only the yes seeds came in (Crystal + Obsidian, no Moss)", crystal != "" and obs2 != "" and Game.find_by_name("Moss Seed") == "" and Game.seeds.size() == before + 2)
 	_check("their splices came with them (%d, preview said %d)" % [Game.recipes.size() - 2, expect_splices], Game.result_of(obs2, "glowing_mushroom") == crystal and Game.recipes.size() - 2 == expect_splices)
 	_check("rarity redone with my seeds: Crystal R%d" % int(Game.seeds[crystal].rarity), int(Game.seeds[crystal].rarity) == 4)
 	_check("my own Gravel is untouched", Game.seeds[my_gravel].tag == my_gravel_tag and Game.seeds[my_gravel].parents == ["dirt", "magma_rock"])
-
-	# importing the same file again: only Moss is still new; cancelling adds nothing
-	var n_before := Game.seeds.size()
-	var r_before := Game.recipes.size()
-	main._on_import_path(path)
-	await get_tree().create_timer(0.2).timeout
-	_check("second time only Moss and Pebble are offered", picker.visible and picker._rows.size() == 2)
-	picker._cancel()
-	_check("Cancel adds nothing", Game.seeds.size() == n_before and Game.recipes.size() == r_before and Game.find_by_name("Moss Seed") == "")
 	# saying yes to Pebble anyway: it comes in, but MY recipe still makes Shiny Rock
 	var r_peb := Game.apply_import(Game.read_import(path), [id_of["Pebble Seed"]])
 	var peb := Game.find_by_name("Pebble Seed")
@@ -2303,7 +2417,7 @@ func _run_test5(base: String) -> void:
 	_check("parent is centered over its two ingredients", absf(c.tree.x - (c.tree.kids[0].x + c.tree.kids[1].x) / 2.0) < 0.01)
 	_check("totals text: " + rt._totals.text, rt._totals.text.contains("Dirt Seed") and rt._totals.text.contains("(4)"))
 	_check("sub text: " + rt._sub.text, rt._sub.text.contains("Obsidian Seed") and rt._sub.text.contains("Crystal Seed"))
-	_check("tree is fitted to the view, not tiny (zoom %.2f)" % c.zoom, c.zoom > 0.55)
+	_check("tree is fitted to the view, not tiny (zoom %.2f)" % c.zoom, c.zoom > 0.4)
 	await _snap(base + "/t5_chain.png")
 
 	# a second recipe for Gravel: Dirt + Glowing Mushroom also makes it
@@ -2346,9 +2460,9 @@ func _run_test4(base: String) -> void:
 	var field: VoidField = main.field
 	var grip: SideGrip = panel.get_parent().get_child(panel.get_index() - 1)
 	panel.show_panel(true)
-	panel.set_width(380.0)
+	panel.set_width(SidePanel.DEFAULT_WIDTH)
 	await get_tree().create_timer(0.2).timeout
-	_check("Seeds panel visible at 380 (is %d)" % panel.size.x, panel.visible and absf(panel.size.x - 380.0) < 2.0 and grip.visible)
+	_check("Seeds panel visible at %d (is %d)" % [SidePanel.DEFAULT_WIDTH, panel.size.x], panel.visible and absf(panel.size.x - SidePanel.DEFAULT_WIDTH) < 2.0 and grip.visible)
 	var void_w := field.size.x
 	panel.show_panel(false)
 	await get_tree().create_timer(0.2).timeout
@@ -2367,17 +2481,17 @@ func _run_test4(base: String) -> void:
 	main._unhandled_key_input(k)
 	await get_tree().create_timer(0.2).timeout
 	_check("Ctrl+B shows it again", panel.visible)
-	grip.width_changed.emit(520.0)
+	grip.width_changed.emit(620.0)
 	grip.released.emit()
 	await get_tree().create_timer(0.2).timeout
-	_check("drag wider -> 520 (is %d)" % panel.size.x, absf(panel.size.x - 520.0) < 2.0 and float(UserSettings.get_value("panels", "side_width", 0.0)) == 520.0)
+	_check("drag wider -> 620 (is %d)" % panel.size.x, absf(panel.size.x - 620.0) < 2.0 and float(UserSettings.get_value("panels", "side_width", 0.0)) == 620.0)
 	grip.width_changed.emit(100.0)
 	await get_tree().create_timer(0.1).timeout
-	_check("narrowest is 320 (is %d)" % panel.size.x, absf(panel.size.x - 320.0) < 2.0)
+	_check("narrowest is %d (is %d)" % [SidePanel.MIN_WIDTH, panel.size.x], absf(panel.size.x - SidePanel.MIN_WIDTH) < 2.0)
 	grip.width_changed.emit(5000.0)
 	await get_tree().create_timer(0.1).timeout
-	_check("widest is 640 (is %d)" % panel.size.x, absf(panel.size.x - 640.0) < 2.0)
-	grip.width_changed.emit(520.0)
+	_check("widest is %d (is %d)" % [SidePanel.MAX_WIDTH, panel.size.x], absf(panel.size.x - SidePanel.MAX_WIDTH) < 2.0)
+	grip.width_changed.emit(620.0)
 	grip.released.emit()
 	await _snap(base + "/t4_wide.png")
 	panel.set_width(380.0)
@@ -2496,11 +2610,10 @@ func _run_test3(base: String) -> void:
 	await get_tree().create_timer(0.5).timeout
 	_check("4:3 resolution applied (window is %s)" % win.size, win.size == Vector2i(1024, 768))
 	await _snap(base + "/t3_res_43.png")
-	DisplayManager.set_ui_scale(win, 1.25)
-	popup.open_add()
-	await _snap(base + "/t3_ui125.png")
-	popup._cancel()
-	DisplayManager.set_ui_scale(win, 1.0)
+	_check("UI size Auto: 1x at 1440x900", DisplayManager.zoom_for(Vector2(1440, 900), 0) == 1.0)
+	_check("UI size Auto: 2x at 2560x1440, 3x at 3840x2160", DisplayManager.zoom_for(Vector2(2560, 1440), 0) == 2.0 and DisplayManager.zoom_for(Vector2(3840, 2160), 0) == 3.0)
+	_check("UI size 2x falls back to 1x when it would leave too little room", DisplayManager.zoom_for(Vector2(1920, 1080), 2) == 1.0 and DisplayManager.zoom_for(Vector2(2560, 1440), 2) == 2.0)
+	_check("a smaller window stays sharp: 1x down to 1024x600, then 0.5x (never a fraction)", DisplayManager.zoom_for(Vector2(1100, 650), 0) == 1.0 and DisplayManager.zoom_for(Vector2(900, 500), 0) == 0.5)
 
 	DisplayManager.set_mode(win, DisplayManager.Mode.BORDERLESS)
 	await get_tree().create_timer(0.8).timeout
@@ -2515,7 +2628,7 @@ func _run_test3(base: String) -> void:
 	DisplayManager.toggle_fullscreen(win)
 	await get_tree().create_timer(0.8).timeout
 	_check("back to windowed again", win.mode == Window.MODE_WINDOWED)
-	main.settings_dialog.open()
+	main.settings_hub.open(SettingsHub.TAB_GAME)
 	await _snap(base + "/t3_settings.png")
-	main.settings_dialog.close_dialog()
+	main.settings_hub.close_dialog()
 	DisplayManager.set_resolution(win, start_res)

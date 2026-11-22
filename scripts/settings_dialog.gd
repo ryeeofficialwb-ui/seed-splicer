@@ -1,6 +1,7 @@
 class_name SettingsDialog
-extends Control
-## Display settings: window mode, resolution (windowed), UI size. Changes apply instantly.
+extends VBoxContainer
+## Display settings (a page in Settings > Game): window mode, resolution (windowed), UI size.
+## Changes apply instantly.
 
 var _mode: OptionButton
 var _res: OptionButton
@@ -11,33 +12,11 @@ var _busy := false
 
 
 func _ready() -> void:
-	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	mouse_filter = Control.MOUSE_FILTER_STOP
-	visible = false
-
-	var dim := ColorRect.new()
-	dim.color = Color(0.02, 0.01, 0.05, 0.72)
-	dim.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	add_child(dim)
-
-	var center := CenterContainer.new()
-	center.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	add_child(center)
-
-	var panel := PanelContainer.new()
-	panel.custom_minimum_size = Vector2(500, 0)
-	center.add_child(panel)
-
-	var root := VBoxContainer.new()
-	root.add_theme_constant_override("separation", 12)
-	panel.add_child(root)
-
-	var title := Label.new()
-	title.text = "Display"
-	title.add_theme_font_size_override("font_size", 24)
-	title.add_theme_color_override("font_color", Color("#a6ff6e"))
-	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	root.add_child(title)
+	add_theme_constant_override("separation", 8)
+	var root := self
+	get_window().size_changed.connect(func():
+		if is_visible_in_tree():
+			refresh.call_deferred())
 
 	var grid := GridContainer.new()
 	grid.columns = 2
@@ -54,38 +33,24 @@ func _ready() -> void:
 	_res.item_selected.connect(_on_res)
 
 	_ui = _row(grid, "UI size")
-	for n in DisplayManager.UI_SCALE_NAMES:
+	for n in DisplayManager.UI_SIZE_NAMES:
 		_ui.add_item(n)
 	_ui.item_selected.connect(_on_ui)
 
 	_note = Label.new()
 	_note.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	_note.add_theme_font_size_override("font_size", 13)
-	_note.add_theme_color_override("font_color", Color(0.7, 0.67, 0.8))
+	_note.theme_type_variation = &"NoteLabel"
 	root.add_child(_note)
 
 	var hint := Label.new()
-	hint.text = "F11 switches between windowed and fullscreen. You can also drag the window edges to resize it."
+	hint.text = "F11 switches between windowed and fullscreen. The game is always drawn at a whole zoom (1x, 2x, 3x) so the pixel art stays sharp."
 	hint.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	hint.add_theme_font_size_override("font_size", 13)
-	hint.add_theme_color_override("font_color", Color(0.7, 0.67, 0.8))
+	hint.theme_type_variation = &"DimLabel"
 	root.add_child(hint)
-
-	var close := Button.new()
-	close.text = "Close"
-	close.custom_minimum_size = Vector2(0, 38)
-	close.pressed.connect(close_dialog)
-	root.add_child(close)
 
 
 func open() -> void:
 	refresh()
-	visible = true
-	Audio.play(&"open")
-
-
-func close_dialog() -> void:
-	visible = false
 
 
 ## Re-reads the real window state (also after F11 or a manual resize).
@@ -114,12 +79,8 @@ func refresh() -> void:
 	else:
 		_note.text = "Windowed: pick a size, or drag the window edges."
 
-	var scale := DisplayManager.ui_scale()
-	var best := 1
-	for i in DisplayManager.UI_SCALES.size():
-		if is_equal_approx(DisplayManager.UI_SCALES[i], scale):
-			best = i
-	_ui.select(best)
+	_ui.select(DisplayManager.UI_SIZES.find(DisplayManager.ui_size()))
+	_note.text += "  Drawn at %sx now." % ("%d" % int(win.content_scale_factor) if is_equal_approx(win.content_scale_factor, roundf(win.content_scale_factor)) else "%.2f" % win.content_scale_factor)
 	_busy = false
 
 
@@ -143,13 +104,8 @@ func _on_res(i: int) -> void:
 func _on_ui(i: int) -> void:
 	if _busy:
 		return
-	DisplayManager.set_ui_scale(get_window(), DisplayManager.UI_SCALES[i])
-
-
-func _unhandled_key_input(event: InputEvent) -> void:
-	if visible and event.is_action_pressed("ui_cancel"):
-		close_dialog()
-		get_viewport().set_input_as_handled()
+	DisplayManager.set_ui_size(get_window(), DisplayManager.UI_SIZES[i])
+	refresh()
 
 
 func _row(grid: GridContainer, caption: String) -> OptionButton:
@@ -158,6 +114,6 @@ func _row(grid: GridContainer, caption: String) -> OptionButton:
 	grid.add_child(l)
 	var o := OptionButton.new()
 	o.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	o.custom_minimum_size = Vector2(0, 34)
+	o.custom_minimum_size = Vector2(0, 46)
 	grid.add_child(o)
 	return o

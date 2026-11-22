@@ -1,6 +1,11 @@
 extends Control
-## Builds the screen: the void on the left, the dictionary tabs on the right,
-## and the splice popup on top. Wires them together.
+## Builds the screen: the void on the left, the Seeds panel on the right, the top bar, every
+## window, the sign-in screen (first launch) and the tutorial (a fresh save). Wires them together.
+##
+## TOP BAR, in three groups:   [Shop]  |  [Seeds] [Splices] [Recipe Tree] [Dictionary]  |  [gear] [?]
+##   Shop        open booster packs: unlock seeds so they make Mycoras
+##   the middle  browse your collection (a lit button = that window is open)
+##   gear / ?    Settings (Account, Game, Statistics, Developer) and the tutorial
 
 var field: VoidField
 var panel: SidePanel
@@ -8,18 +13,26 @@ var splices: SplicesWindow
 var recipe_tree: RecipeTree
 var popup: SplicePopup
 var settings_dialog: SettingsDialog
-var import_picker: ImportDialog
 var sound_dialog: SoundDialog
 var settings_hub: SettingsHub
-var chest: ChestWindow
+var shop: ShopWindow
 var live: LiveSync
 var dictionary: DictionaryWindow
-var _pending_import := {}  # the file being imported while you pick its seeds
+var hud: MycoraHud
+var weather_layer: WeatherLayer
+var toolbar: HBoxContainer
+var login: LoginScreen
+var tutorial: Tutorial
+var account: AccountDialog
+var shop_btn: Button
+var tree_btn: Button
+var dict_btn: Button
+var settings_btn: Button
+var help_btn: Button
 var _splices_btn: Button
 var _seeds_btn: Button
 var _confirm_reset: ConfirmationDialog
 var _export_dialog: FileDialog
-var _import_dialog: FileDialog
 var _sheet_export_dialog: FileDialog
 var sprites: SpriteFolder
 var _sheet_import_dialog: FileDialog
@@ -29,7 +42,7 @@ var _pending: Array = []  # [token_a, token_b] while the popup is open
 func _ready() -> void:
 	# every button in the game (also ones made later, inside windows) gets the click sound
 	get_tree().node_added.connect(_on_node_added)
-	theme = _make_theme()
+	theme = UiKit.make_theme()
 	get_tree().auto_accept_quit = false
 	if OS.get_cmdline_user_args().is_empty():  # (dev screenshot runs keep their own window)
 		DisplayManager.load_and_apply(get_window())
@@ -39,10 +52,22 @@ func _ready() -> void:
 	bg.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	add_child(bg)
 
+	# the top bar (full width): Mycoras + weather on the left, the buttons on the right
+	var screen := VBoxContainer.new()
+	screen.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	screen.add_theme_constant_override("separation", 0)
+	add_child(screen)
+	var top := PanelContainer.new()
+	top.theme_type_variation = &"TopBar"
+	screen.add_child(top)
+	var top_row := HBoxContainer.new()
+	top_row.add_theme_constant_override("separation", 8)
+	top.add_child(top_row)
+
 	var row := HBoxContainer.new()
-	row.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	row.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	row.add_theme_constant_override("separation", 0)
-	add_child(row)
+	screen.add_child(row)
 
 	field = VoidField.new()
 	field.size_flags_horizontal = Control.SIZE_EXPAND_FILL
@@ -61,50 +86,35 @@ func _ready() -> void:
 	grip.released.connect(panel.save_width)
 	panel.shown_changed.connect(func(on): grip.visible = on)
 
-	# top-right buttons over the void
-	field.add_child(WeatherLayer.new())  # rain / shooting stars over the void
+	weather_layer = WeatherLayer.new()  # rain, thunderstorms and shooting stars over the void
+	field.add_child(weather_layer)
 
-	var bar := HBoxContainer.new()
-	bar.add_theme_constant_override("separation", 6)
-	field.add_child(bar)
-	var hud := MycoraHud.new()
-	hud.position = Vector2(205, 14)  # right of the title
-	field.add_child(hud)
-	field.add_child(hud.weather_label)
-	hud.weather_label.set_anchors_and_offsets_preset(Control.PRESET_TOP_RIGHT, Control.PRESET_MODE_MINSIZE, 14)
-	hud.weather_label.offset_top = 58
-	hud.weather_label.grow_horizontal = Control.GROW_DIRECTION_BEGIN
-	var chest_btn := Button.new()
-	chest_btn.text = "Chest"
-	chest_btn.tooltip_text = "The Seed Chest: unlock seeds so they make Mycoras"
-	bar.add_child(chest_btn)
-	_seeds_btn = Button.new()
-	_seeds_btn.text = "Seeds"
+	hud = MycoraHud.new()
+	top_row.add_child(hud)
+	weather_layer.lightning.connect(hud.flash)
+	top_row.add_child(hud.weather_chip)
+	var spacer := Control.new()
+	spacer.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	spacer.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	top_row.add_child(spacer)
+	toolbar = HBoxContainer.new()
+	toolbar.add_theme_constant_override("separation", 6)
+	top_row.add_child(toolbar)
+
+	shop_btn = _tool_button("Shop", "icon_shop", "The Shop: open booster packs to unlock seeds, so they make Mycoras", &"ShopButton")
+	_divider()
+	_seeds_btn = _tool_button("Seeds", "icon_seeds", "Show or hide the Seeds panel (Ctrl+B)")
 	_seeds_btn.toggle_mode = true
-	_seeds_btn.tooltip_text = "Show or hide the Seeds panel (Ctrl+B)"
 	_seeds_btn.set_pressed_no_signal(panel.visible)
 	_seeds_btn.toggled.connect(panel.show_panel)
 	panel.shown_changed.connect(_seeds_btn.set_pressed_no_signal)
-	bar.add_child(_seeds_btn)
-	_splices_btn = Button.new()
-	_splices_btn.text = "Splices"
+	_splices_btn = _tool_button("Splices", "icon_splices", "Show or hide the splices window")
 	_splices_btn.toggle_mode = true
-	_splices_btn.tooltip_text = "Show or hide the splices window"
-	bar.add_child(_splices_btn)
-	var tree_btn := Button.new()
-	tree_btn.text = "Recipe Tree"
-	tree_btn.tooltip_text = "See how any seed is made, as a tree"
-	bar.add_child(tree_btn)
-	var dict_btn := Button.new()
-	dict_btn.text = "Dictionary"
-	dict_btn.tooltip_text = "Every seed's block texture, growth stages and tags, sorted into blocks, decorations and backgrounds"
-	bar.add_child(dict_btn)
-	var settings_btn := Button.new()
-	settings_btn.text = "Settings"
-	settings_btn.tooltip_text = "Import / export lists and sprite sheets, the sprites folder, display, sound and reset"
-	bar.add_child(settings_btn)
-	bar.set_anchors_and_offsets_preset(Control.PRESET_TOP_RIGHT, Control.PRESET_MODE_MINSIZE, 12)
-	bar.grow_horizontal = Control.GROW_DIRECTION_BEGIN
+	tree_btn = _tool_button("Recipe Tree", "icon_tree", "See how any seed is made, as a tree")
+	dict_btn = _tool_button("Dictionary", "icon_book", "Every seed's block texture, growth stages and tags")
+	_divider()
+	settings_btn = _tool_button("", "icon_gear", "Settings: account, display, sound, statistics")
+	help_btn = _tool_button("", "icon_help", "How to play: the tutorial")
 
 	splices = SplicesWindow.new()
 	add_child(splices)
@@ -120,12 +130,6 @@ func _ready() -> void:
 	popup = SplicePopup.new()
 	add_child(popup)
 
-	settings_dialog = SettingsDialog.new()
-	add_child(settings_dialog)
-
-	sound_dialog = SoundDialog.new()
-	add_child(sound_dialog)
-
 	dictionary = DictionaryWindow.new()
 	add_child(dictionary)
 	dict_btn.pressed.connect(dictionary.open)
@@ -138,22 +142,27 @@ func _ready() -> void:
 	live.toast = func(text: String, color: Color): field.show_toast(text, color, 8.0)
 	add_child(live)
 
-	chest = ChestWindow.new()
-	add_child(chest)
-	chest_btn.pressed.connect(chest.open)
+	shop = ShopWindow.new()
+	add_child(shop)
+	shop_btn.pressed.connect(shop.open)
 
 	settings_hub = SettingsHub.new()
 	add_child(settings_hub)
-	settings_btn.pressed.connect(settings_hub.open)
+	settings_dialog = settings_hub.display_page
+	sound_dialog = settings_hub.sound_page
+	settings_btn.pressed.connect(func(): settings_hub.open())
 
 	# version + over-the-air update check (exported game only, never in the editor)
 	var version_label := Label.new()
 	version_label.text = "v%s" % GameVersion.VERSION
-	version_label.add_theme_font_size_override("font_size", 12)
+	version_label.add_theme_font_size_override("font_size", UiKit.SMALL)
 	version_label.add_theme_color_override("font_color", Color(0.6, 0.57, 0.7))
 	version_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	version_label.position = Vector2(22, 52)  # under the title, clear of every button
-	add_child(version_label)
+	version_label.theme_type_variation = &"DimLabel"
+	version_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	version_label.set_anchors_and_offsets_preset(Control.PRESET_TOP_RIGHT, Control.PRESET_MODE_MINSIZE, 12)
+	version_label.grow_horizontal = Control.GROW_DIRECTION_BEGIN
+	field.add_child(version_label)  # in the void, so every window covers it
 	print("Seed Splicer v%s - %s version" % [GameVersion.VERSION, "DEVELOPER" if DevMode.on() else "player"])
 	if DevMode.on():
 		version_label.text += "  ·  Developer"
@@ -163,32 +172,24 @@ func _ready() -> void:
 		updater.status_changed.connect(func(text: String):
 			version_label.text = "v%s" % GameVersion.VERSION + ("   %s" % text if text != "" else ""))
 
-	import_picker = ImportDialog.new()
-	add_child(import_picker)
-	import_picker.confirmed.connect(_on_import_chosen)
-	import_picker.cancelled.connect(func():
-		_pending_import = {}
-		field.show_toast("Import cancelled: nothing was added.", Color("#c4c0d4")))
-
 	_confirm_reset = ConfirmationDialog.new()
 	_confirm_reset.title = "Reset Progress"
-	_confirm_reset.dialog_text = "Forget every spliced seed, recipe and your own Tier 1 seeds,\nand start again with the 4 base seeds?\nThis can't be undone (export your list first if you want to keep it).\nYour block art goes too (export the sprite sheet first to keep it)."
+	_confirm_reset.dialog_text = "Forget every spliced seed, recipe and your own Tier 1 seeds,\nand start again with the 4 base seeds?\nThis can't be undone. Your Mycoras and unlocked seeds go too."
 	_confirm_reset.ok_button_text = "Reset"
 	_confirm_reset.confirmed.connect(_do_reset)
 	add_child(_confirm_reset)
 
-	_export_dialog = _file_dialog(FileDialog.FILE_MODE_SAVE_FILE, "Export Splicing List")
-	_export_dialog.current_file = "seed_splicer_list.json"
-	_export_dialog.file_selected.connect(_on_export_path)
-	_import_dialog = _file_dialog(FileDialog.FILE_MODE_OPEN_FILE, "Import a Splicing List")
-	_import_dialog.file_selected.connect(_on_import_path)
-	_sheet_export_dialog = _file_dialog(FileDialog.FILE_MODE_SAVE_FILE, "Export Sprite Sheet")
-	_sheet_export_dialog.filters = PackedStringArray(["*.png ; Sprite sheet"])
-	_sheet_export_dialog.current_file = "seed_splicer_sprites.png"
-	_sheet_export_dialog.file_selected.connect(_on_sheet_export_path)
-	_sheet_import_dialog = _file_dialog(FileDialog.FILE_MODE_OPEN_FILE, "Import Sprite Sheet (block art)")
-	_sheet_import_dialog.filters = PackedStringArray(["*.png ; Sprite sheet"])
-	_sheet_import_dialog.file_selected.connect(_on_sheet_import_path)
+	if DevMode.on():  # the developer's file tools (Settings > Developer)
+		_export_dialog = _file_dialog(FileDialog.FILE_MODE_SAVE_FILE, "Export Splicing List")
+		_export_dialog.current_file = "seed_splicer_list.json"
+		_export_dialog.file_selected.connect(_on_export_path)
+		_sheet_export_dialog = _file_dialog(FileDialog.FILE_MODE_SAVE_FILE, "Export Sprite Sheet")
+		_sheet_export_dialog.filters = PackedStringArray(["*.png ; Sprite sheet"])
+		_sheet_export_dialog.current_file = "seed_splicer_sprites.png"
+		_sheet_export_dialog.file_selected.connect(_on_sheet_export_path)
+		_sheet_import_dialog = _file_dialog(FileDialog.FILE_MODE_OPEN_FILE, "Import Sprite Sheet (block art)")
+		_sheet_import_dialog.filters = PackedStringArray(["*.png ; Sprite sheet"])
+		_sheet_import_dialog.file_selected.connect(_on_sheet_import_path)
 
 	field.splice_new.connect(_on_splice_new)
 	field.void_changed.connect(Game.save_game)
@@ -197,33 +198,30 @@ func _ready() -> void:
 	field.edit_seed.connect(func(id): popup.open_edit(id))
 	panel.clear_void_requested.connect(field.clear)
 	panel.add_seed_requested.connect(popup.open_add)
-	settings_hub.export_list_requested.connect(_request_export)
-	var account := AccountDialog.new()
+	account = AccountDialog.new()
 	add_child(account)
 	var upload := UploadWindow.new()
 	add_child(upload)
-	settings_hub.account_requested.connect(account.open)
 	settings_hub.upload_requested.connect(func():
 		if Online.logged_in():
 			upload.open()
 		else:
 			account.open())
+	settings_hub.logout_requested.connect(_log_out)
+	settings_hub.reset_requested.connect(_confirm_reset.popup_centered)
+	settings_hub.tutorial_requested.connect(_start_tutorial)
+	help_btn.pressed.connect(_start_tutorial)
 	if DevMode.on():
 		var submissions := SubmissionsWindow.new()
 		submissions.live = live
 		add_child(submissions)
 		settings_hub.submissions_requested.connect(submissions.open)
-	settings_hub.import_list_requested.connect(func():
-		if DevMode.on():
-			_import_dialog.popup_centered_ratio())
-	settings_hub.export_sheet_requested.connect(_sheet_export_dialog.popup_centered_ratio)
-	settings_hub.import_sheet_requested.connect(_sheet_import_dialog.popup_centered_ratio)
-	settings_hub.display_requested.connect(settings_dialog.open)
-	settings_hub.sound_requested.connect(sound_dialog.open)
-	settings_hub.reset_requested.connect(_confirm_reset.popup_centered)
-	sprites = SpriteFolder.new()  # keeps a copy of the sprite sheet in a folder you can open
-	add_child(sprites)
-	settings_hub.sprites_folder_requested.connect(_open_sprites_folder)
+		settings_hub.export_list_requested.connect(_request_export)
+		settings_hub.export_sheet_requested.connect(_sheet_export_dialog.popup_centered_ratio)
+		settings_hub.import_sheet_requested.connect(_sheet_import_dialog.popup_centered_ratio)
+		sprites = SpriteFolder.new()  # keeps a copy of the sprite sheet in a folder (developer only)
+		add_child(sprites)
+	Online.session_changed.connect(_on_session_changed)
 	popup.added_custom.connect(_on_added_custom)
 	popup.created.connect(_on_created)
 	popup.linked.connect(_on_linked)
@@ -246,6 +244,10 @@ func _ready() -> void:
 		# the updater's check of a freshly installed pack: the whole screen got built, report success
 		get_tree().quit.call_deferred(Updater.SELFTEST_CODE)
 		return
+	if needs_sign_in():
+		show_login()
+	else:
+		_maybe_start_tutorial()
 	if not Game.reroll_report.is_empty():  # the one-time reroll of existing seeds just happened
 		var c: Dictionary = Game.reroll_report.counts
 		field.show_toast("Rerolled %d seeds:   %d Bountiful  ·  %d Farmable  ·  %d Not Farmable" % [
@@ -261,8 +263,10 @@ func _ready() -> void:
 	if not Game.crop_report.is_empty():  # seeds from before crop types just got a random one each
 		field.show_toast("Gave %d seeds a random crop type. Double-click a seed to pick another." % Game.crop_report.total, Color("#a6ff6e"), 8.0)
 		Game.crop_report = {}
-	if not Bank.away_report.is_empty():  # Mycoras made while the game was closed
-		field.show_toast("While you were away (%s): +%s Mycoras" % [Game.duration_text(Bank.away_report.seconds), Bank.fmt(Bank.away_report.earned)], Mycora.COLOR, 8.0)
+	if not Bank.away_report.is_empty():  # Mycoras made while the game was closed (up to 1 hour)
+		var away: int = Bank.away_report.seconds
+		field.show_toast("While you were away (%s): +%s Mycoras%s" % [Game.duration_text(away), Bank.fmt(Bank.away_report.earned),
+			"  (only your last hour away counts)" if away > Bank.MAX_AWAY else ""], Mycora.COLOR, 8.0)
 		Bank.away_report = {}
 	if int(Game.official_report.get("seeds_added", 0)) > 0:  # this update brought new official seeds
 		field.show_toast("Update v%s: %d new official seeds and %d splices were added to your game!" % [
@@ -299,7 +303,7 @@ func _unhandled_key_input(event: InputEvent) -> void:
 		return
 	if k and k.pressed and not k.echo and k.keycode == KEY_F11:
 		DisplayManager.toggle_fullscreen(get_window())
-		if settings_dialog.visible:
+		if settings_dialog.is_visible_in_tree():
 			await get_tree().create_timer(0.25).timeout
 			settings_dialog.refresh()
 		get_viewport().set_input_as_handled()
@@ -317,12 +321,11 @@ func _file_dialog(file_mode: FileDialog.FileMode, dialog_title: String) -> FileD
 	return d
 
 
-## Export List needs a username (Settings > You): it's written on the list and your seeds.
+## Export List (developer) needs a name on it: your account name.
 func _request_export() -> void:
 	if Game.player_name() == "":
 		Audio.play(&"error")
-		field.show_toast("Pick a username first (Settings > You): it goes on your export and every seed you made.", Color("#ffc94a"), 6.0)
-		settings_hub.open()
+		field.show_toast("Sign in first: your account name goes on the export and every seed you made.", Color("#ffc94a"), 6.0)
 		return
 	_export_dialog.popup_centered_ratio()
 
@@ -354,17 +357,6 @@ func _on_sheet_export_path(path: String) -> void:
 		field.show_toast("Couldn't save the sprite sheet (%s)" % error_string(err), Color("#ff8a8a"))
 
 
-## Open Sprites Folder: writes the latest copy of the sprite sheet, then opens its folder.
-func _open_sprites_folder() -> void:
-	var err := sprites.write_now()
-	if err != OK:
-		Audio.play(&"error")
-		field.show_toast("Couldn't write the sprites folder (%s)" % error_string(err), Color("#ff8a8a"))
-		return
-	OS.shell_open(SpriteFolder.folder())
-	field.show_toast("Sprite sheet copy: %s" % SpriteFolder.folder().path_join(SpriteFolder.SHEET_FILE), Color("#a6ff6e"), 5.0)
-
-
 ## Import Sprite Sheet: takes the block art you drew in the 4 left boxes of each row.
 func _on_sheet_import_path(path: String) -> void:
 	var r := Game.import_sprite_sheet(path)
@@ -381,41 +373,6 @@ func _on_sheet_import_path(path: String) -> void:
 	if r.unmatched > 0:
 		msg += "\n%d rows skipped: no seed of yours matches them" % r.unmatched
 	field.show_toast(msg, Color("#a6ff6e") if r.unmatched == 0 else Color("#ffc94a"), 8.0)
-
-
-## Import List, step 1: read the file and let you say yes or no to each new seed.
-func _on_import_path(path: String) -> void:
-	if not DevMode.on():
-		return
-	var preview := Game.read_import(path)
-	if not preview.ok:
-		Audio.play(&"error")
-		field.show_toast(preview.error, Color("#ff8a8a"))
-		return
-	if preview.new_seeds.is_empty():
-		if Game.import_recipe_count(preview, []) == 0:
-			field.show_toast("Nothing new in %s: you already have all %d of its seeds and splices." % [path.get_file(), preview.known.size()], Color("#c4c0d4"))
-			return
-		_finish_import(preview, [])  # no new seeds, only new splices between seeds you have
-		return
-	_pending_import = preview
-	import_picker.open(preview, path.get_file())
-
-
-## Step 2: add the seeds you said yes to.
-func _on_import_chosen(chosen: Array) -> void:
-	_finish_import(_pending_import, chosen)
-	_pending_import = {}
-
-
-func _finish_import(preview: Dictionary, chosen: Array) -> void:
-	var r := Game.apply_import(preview, chosen)
-	field.refresh_all()
-	Audio.play(&"success")
-	field.show_toast("Imported %d seed%s and %d splice%s  (%d left out, %d you already had%s)" % [
-		r.seeds_added, "" if r.seeds_added == 1 else "s", r.recipes_added, "" if r.recipes_added == 1 else "s",
-		r.seeds_declined, r.seeds_known, ", your recipe kept %d time%s" % [r.recipes_kept_yours, "" if r.recipes_kept_yours == 1 else "s"] if r.recipes_kept_yours > 0 else ""],
-		Color("#a6ff6e"), 4.0)
 
 
 func _on_added_custom(look: Dictionary) -> void:
@@ -464,66 +421,74 @@ func _do_reset() -> void:
 	field.spawn_starters()
 
 
-# --- look & feel: dark violet panels, square corners, sprout-green accents ----------
+# --- top bar -----------------------------------------------------------------------------------
 
-func _make_theme() -> Theme:
-	var t := Theme.new()
-	t.default_font_size = 15
-	var ink := Color("#0b0912")
-	var panel_bg := Color("#15111e")
-	var raised := Color("#211a2e")
-	var hover := Color("#2c2340")
-	var border := Color("#3b3150")
-	var accent := Color("#a6ff6e")
-	var text := Color("#ece8f7")
-
-	t.set_stylebox("panel", "PanelContainer", _box(panel_bg, border, 2, 14))
-	t.set_stylebox("panel", "Panel", _box(panel_bg, border, 2, 14))
-	for cls in ["Button", "OptionButton", "ColorPickerButton"]:
-		t.set_stylebox("normal", cls, _box(raised, border, 2, 8))
-		t.set_stylebox("hover", cls, _box(hover, accent.darkened(0.35), 2, 8))
-		t.set_stylebox("pressed", cls, _box(ink, accent, 2, 8))
-		t.set_stylebox("hover_pressed", cls, _box(hover, accent, 2, 8))
-		t.set_stylebox("disabled", cls, _box(panel_bg, Color("#2a2338"), 2, 8))
-		t.set_stylebox("focus", cls, _box(Color(0, 0, 0, 0), accent.darkened(0.2), 2, 8))
-		t.set_color("font_color", cls, text)
-		t.set_color("font_hover_color", cls, Color.WHITE)
-		t.set_color("font_pressed_color", cls, accent)
-		t.set_color("font_disabled_color", cls, Color("#6c6680"))
-	t.set_stylebox("normal", "LineEdit", _box(ink, border, 2, 8))
-	t.set_stylebox("focus", "LineEdit", _box(Color(0, 0, 0, 0), accent.darkened(0.2), 2, 8))
-	t.set_color("font_color", "LineEdit", text)
-	t.set_color("caret_color", "LineEdit", accent)
-	t.set_color("selection_color", "LineEdit", Color(accent, 0.3))
-	t.set_stylebox("panel", "ItemList", _box(ink, border, 2, 6))
-	t.set_stylebox("focus", "ItemList", StyleBoxEmpty.new())
-	t.set_stylebox("hovered", "ItemList", _box(raised, Color(0, 0, 0, 0), 0, 4))
-	t.set_stylebox("selected", "ItemList", _box(hover, accent.darkened(0.3), 2, 4))
-	t.set_stylebox("selected_focus", "ItemList", _box(hover, accent.darkened(0.3), 2, 4))
-	t.set_stylebox("cursor", "ItemList", StyleBoxEmpty.new())
-	t.set_stylebox("cursor_unfocused", "ItemList", StyleBoxEmpty.new())
-	t.set_color("font_color", "ItemList", text)
-	t.set_stylebox("panel", "TabContainer", _box(panel_bg, border, 2, 8))
-	t.set_stylebox("tab_selected", "TabContainer", _box(panel_bg, accent, 2, 10))
-	t.set_stylebox("tab_unselected", "TabContainer", _box(ink, border, 2, 10))
-	t.set_stylebox("tab_hovered", "TabContainer", _box(raised, border, 2, 10))
-	t.set_color("font_selected_color", "TabContainer", accent)
-	t.set_color("font_unselected_color", "TabContainer", Color("#9a94b0"))
-	t.set_color("font_hovered_color", "TabContainer", text)
-	t.set_color("font_color", "Label", text)
-	t.set_stylebox("panel", "TooltipPanel", _box(Color("#1d1828"), border, 2, 6))
-	t.set_color("font_color", "TooltipLabel", text)
-	t.set_stylebox("panel", "PopupPanel", _box(panel_bg, border, 2, 8))
-	t.set_stylebox("panel", "AcceptDialog", _box(panel_bg, border, 2, 12))
-	t.set_stylebox("embedded_border", "Window", _box(panel_bg, border, 2, 0))
-	return t
+func _tool_button(text: String, icon_name: String, tip: String, variation := &"ToolbarButton") -> Button:
+	var b := Button.new()
+	b.text = text
+	b.icon = UiKit.tex(icon_name)
+	b.tooltip_text = tip
+	b.theme_type_variation = variation
+	b.focus_mode = Control.FOCUS_NONE
+	toolbar.add_child(b)
+	return b
 
 
-func _box(bg: Color, border: Color, bw: int, margin: int) -> StyleBoxFlat:
-	var sb := StyleBoxFlat.new()
-	sb.bg_color = bg
-	sb.border_color = border
-	sb.set_border_width_all(bw)
-	sb.set_content_margin_all(margin)
-	sb.anti_aliasing = false
-	return sb
+func _divider() -> void:
+	var d := UiKit.icon("divider")
+	d.custom_minimum_size = Vector2(8, 0)
+	toolbar.add_child(d)
+
+
+# --- signing in -------------------------------------------------------------------------------------
+
+## The sign-in screen shows until you've signed in once on this PC (the session is remembered,
+## so after that the game opens even offline). Never during tests or the updater's self-test.
+func needs_sign_in() -> bool:
+	if not Online.configured() or Online.logged_in() or Online.has_saved_session():
+		return false
+	var args := OS.get_cmdline_user_args()
+	if "--selftest" in args or "--no-login" in args:
+		return false
+	return args.is_empty() or not ResourceLoader.exists("res://scripts/dev_shot.gd")
+
+
+func show_login() -> void:
+	if is_instance_valid(login):
+		return
+	for w in [settings_hub, shop, account]:
+		if w and w.visible:
+			w.close_dialog()
+	login = LoginScreen.new()
+	add_child(login)
+	login.signed_in.connect(func():
+		login.queue_free()
+		login = null
+		field.show_toast("Signed in as %s" % Online.username, Color("#a6ff6e"), 4.0)
+		_maybe_start_tutorial())
+
+
+func _log_out() -> void:
+	await Online.log_out()
+	show_login()
+
+
+func _on_session_changed() -> void:
+	# the server ended the session (password changed, account removed...): sign in again
+	if not Online.logged_in() and not Online.has_saved_session() and needs_sign_in():
+		show_login()
+
+
+# --- tutorial -------------------------------------------------------------------------------------
+
+func _maybe_start_tutorial() -> void:
+	if Tutorial.should_start() and OS.get_cmdline_user_args().is_empty():
+		_start_tutorial()
+
+
+func _start_tutorial() -> void:
+	if is_instance_valid(tutorial):
+		tutorial.queue_free()
+	tutorial = Tutorial.new()
+	tutorial.main = self
+	add_child(tutorial)

@@ -39,6 +39,9 @@ static func folder() -> String:
 
 static func _preferred() -> String:
 	if OS.has_feature("editor"):
+		if not OS.get_cmdline_user_args().is_empty():
+			# dev_shot test runs reset the game: mirror into the (scratch) user folder, never the project's sprites/
+			return ProjectSettings.globalize_path("user://sprites_test")
 		return ProjectSettings.globalize_path("res://sprites")
 	return OS.get_executable_path().get_base_dir().path_join("sprites")
 

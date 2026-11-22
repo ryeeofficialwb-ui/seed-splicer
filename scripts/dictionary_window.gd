@@ -30,7 +30,7 @@ var _grave_btn: Button
 var _remove_btn: Button
 var _rsr: OptionButton
 var _art_ok: CheckBox
-var _dev_row: HBoxContainer
+var _dev_row: HFlowContainer
 var _grave: Array = []  # Approvals.graveyard() while the Graveyard tab is open
 var _selected := ""
 var _collapsed := {}  # group key -> true
@@ -49,12 +49,14 @@ func _ready() -> void:
 	dim.color = Color(0.02, 0.01, 0.05, 0.72)
 	dim.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	add_child(dim)
-	var center := CenterContainer.new()
-	center.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	add_child(center)
-	var panel := PanelContainer.new()
-	panel.custom_minimum_size = Vector2(1180, 640)
-	center.add_child(panel)
+	var panel := PanelContainer.new()  # fills the window (a little margin), whatever its size
+	panel.theme_type_variation = &"WindowPanel"
+	panel.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	for side in [SIDE_LEFT, SIDE_TOP]:
+		panel.set_offset(side, 16)
+	for side in [SIDE_RIGHT, SIDE_BOTTOM]:
+		panel.set_offset(side, -16)
+	add_child(panel)
 	var root := VBoxContainer.new()
 	root.add_theme_constant_override("separation", 8)
 	panel.add_child(root)
@@ -63,12 +65,13 @@ func _ready() -> void:
 	root.add_child(head)
 	var title := Label.new()
 	title.text = "Dictionary"
-	title.add_theme_font_size_override("font_size", 24)
+	title.add_theme_font_size_override("font_size", UiKit.BIG)
 	title.add_theme_color_override("font_color", Color("#a6ff6e"))
 	title.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	head.add_child(title)
 	var close := Button.new()
-	close.text = "Close"
+	close.icon = UiKit.tex("icon_close")
+	close.tooltip_text = "Close (Esc)"
 	close.pressed.connect(close_dialog)
 	head.add_child(close)
 
@@ -113,8 +116,8 @@ func _ready() -> void:
 	for c in COLS:
 		_tree.set_column_title(c, ["Seed", "R", "Material", "Hardness", "Seed tag", "Drop", "Mycoras", "Approved"][c])
 	_tree.set_column_expand(0, true)
-	_tree.set_column_custom_minimum_width(0, 200)
-	for c in [[1, 34], [2, 100], [3, 90], [4, 104], [5, 120], [6, 76], [7, 118]]:
+	_tree.set_column_custom_minimum_width(0, 280)
+	for c in [[1, 56], [2, 160], [3, 140], [4, 160], [5, 190], [6, 120], [7, 150]]:
 		_tree.set_column_expand(c[0], false)
 		_tree.set_column_custom_minimum_width(c[0], c[1])
 	_tree.item_selected.connect(_on_selected)
@@ -129,11 +132,11 @@ func _ready() -> void:
 
 	# right: the picked seed in detail
 	var detail := VBoxContainer.new()
-	detail.custom_minimum_size = Vector2(340, 0)
+	detail.custom_minimum_size = Vector2(460, 0)
 	detail.add_theme_constant_override("separation", 6)
 	body.add_child(detail)
 	_detail_name = Label.new()
-	_detail_name.add_theme_font_size_override("font_size", 20)
+	_detail_name.add_theme_font_size_override("font_size", UiKit.BIG)
 	_detail_name.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	detail.add_child(_detail_name)
 	detail.add_child(_caption("Block  (4 boxes; 1 is the block, the others are spare for animation)"))
@@ -178,15 +181,17 @@ func _ready() -> void:
 			Game.remove_from_graveyard(String(_grave[i].seed.name))
 			_selected = ""
 			refresh())
-	var btns := HBoxContainer.new()
-	btns.add_theme_constant_override("separation", 6)
+	var btns := HFlowContainer.new()  # wraps when the column is narrow
+	btns.add_theme_constant_override("h_separation", 6)
+	btns.add_theme_constant_override("v_separation", 6)
 	for b in [_edit_btn, _grave_btn, _remove_btn]:
 		b.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		btns.add_child(b)
 	detail.add_child(btns)
 	# the developer's verdict: RSR (6-10) and whether the block art is approved
-	_dev_row = HBoxContainer.new()
-	_dev_row.add_theme_constant_override("separation", 6)
+	_dev_row = HFlowContainer.new()
+	_dev_row.add_theme_constant_override("h_separation", 6)
+	_dev_row.add_theme_constant_override("v_separation", 6)
 	_dev_row.visible = DevMode.on()
 	detail.add_child(_dev_row)
 	_rsr = OptionButton.new()
@@ -210,7 +215,8 @@ func _ready() -> void:
 	_dev_row.add_child(_art_ok)
 
 	_summary = Label.new()
-	_summary.add_theme_font_size_override("font_size", 12)
+	_summary.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART  # never pushes the window wider than the screen
+	_summary.add_theme_font_size_override("font_size", UiKit.SMALL)
 	_summary.add_theme_color_override("font_color", Color(0.75, 0.72, 0.85))
 	root.add_child(_summary)
 
@@ -243,19 +249,15 @@ func _unhandled_key_input(event: InputEvent) -> void:
 func _caption(text: String) -> Label:
 	var l := Label.new()
 	l.text = text
-	l.add_theme_font_size_override("font_size", 12)
+	l.add_theme_font_size_override("font_size", UiKit.SMALL)
 	l.add_theme_color_override("font_color", Color(0.7, 0.67, 0.8))
+	l.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	return l
 
 
 func _picture(parent: Control, px := 64) -> PixelPicture:
 	var frame := PanelContainer.new()
-	var sb := StyleBoxFlat.new()
-	sb.bg_color = Color("#0e0b16")
-	sb.border_color = Color("#3b3150")
-	sb.set_border_width_all(1)
-	sb.set_content_margin_all(2)
-	frame.add_theme_stylebox_override("panel", sb)
+	frame.add_theme_stylebox_override("panel", UiKit.box("inset", 3, [4, 4, 4, 4]))
 	parent.add_child(frame)
 	var p := PixelPicture.new()
 	p.custom_minimum_size = Vector2(px, px)
@@ -532,7 +534,7 @@ func _show_detail(key: String) -> void:
 		var rsr := int(inf.get("rsr", 0))
 		lines.append("[color=#ffc94a]Makes[/color]  [color=#7dffc0]%s Mycoras every 3 s[/color]  %s%s" % [Bank.fmt(Bank.seed_rate(s)) if Bank.seed_rate(s) >= 10 else "%.1f" % Bank.seed_rate(s),
 			"(x%s: %s%s)" % [str(Bank.boost(s)), "approved with its art" if inf.get("art", false) else "approved", ", RSR %d" % rsr if rsr > 0 else ""] if not inf.is_empty() else "",
-			"" if Bank.produces(id) else "  [color=#a19bb8]· locked: unlock it in the Seed Chest[/color]"])
+			"" if Bank.produces(id) else "  [color=#a19bb8]· locked: pull it from a pack in the Shop[/color]"])
 	lines.append("[color=#ffc94a]Mycoras when broken[/color]  [color=#7dffc0]%s[/color]" % Mycora.break_text(s))
 	lines.append("[color=#ffc94a]Mycoras when harvested[/color]  [color=#7dffc0]%s[/color]" % Mycora.harvest_text(s))
 	lines.append("[color=#ffc94a]Seed tag[/color]  [color=#%s]%s[/color]" % [Game.tag_color(s.get("tag", "")).to_html(false), Game.tag_name(s.get("tag", ""))])

@@ -48,6 +48,23 @@ func logged_in() -> bool:
 	return _access != ""
 
 
+## Signed in on this PC before (the session is remembered): the game opens even offline.
+func has_saved_session() -> bool:
+	return _saved().has("refresh_token")
+
+
+## The account name of the remembered session ("" if none).
+func saved_username() -> String:
+	return username if username != "" else String(_saved().get("username", ""))
+
+
+func _saved() -> Dictionary:
+	if not FileAccess.file_exists(SESSION_FILE):
+		return {}
+	var d: Variant = JSON.parse_string(FileAccess.get_file_as_string(SESSION_FILE))
+	return d if d is Dictionary and String(d.get("refresh_token", "")) != "" else {}
+
+
 ## Usernames: 3-20 letters, digits or _ (the database checks the same).
 static func username_problem(u: String) -> String:
 	if not RegEx.create_from_string("^[A-Za-z0-9_]{3,20}$").search(u):
@@ -138,7 +155,7 @@ func _take_session(d: Dictionary) -> void:
 	username = String(user.get("user_metadata", {}).get("username", ""))
 	var f := FileAccess.open(SESSION_FILE, FileAccess.WRITE)
 	if f:
-		f.store_string(JSON.stringify({ "refresh_token": _refresh }))
+		f.store_string(JSON.stringify({ "refresh_token": _refresh, "username": username }))
 		f.close()
 	var adm := await _call("POST", "/rest/v1/rpc/is_admin", {}, true)
 	is_admin = adm.ok and adm.data == true

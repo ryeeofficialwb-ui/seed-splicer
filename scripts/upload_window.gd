@@ -17,7 +17,7 @@ var _art_for := ""
 
 
 func _ready() -> void:
-	_init_modal("Upload my seeds", Vector2(560, 0))
+	_init_modal("Upload my seeds", Vector2(860, 0))
 	body.add_child(note("Tick the seeds you want the developer to review. Approved seeds reach every player in the next update, signed with your username."))
 	var scroll := ScrollContainer.new()
 	scroll.custom_minimum_size = Vector2(0, 260)
@@ -27,7 +27,7 @@ func _ready() -> void:
 	_list.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	scroll.add_child(_list)
 	_send = Button.new()
-	_send.custom_minimum_size = Vector2(0, 36)
+	_send.custom_minimum_size = Vector2(0, 48)
 	_send.pressed.connect(_on_send)
 	body.add_child(_send)
 	_status = note()

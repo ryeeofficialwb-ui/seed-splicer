@@ -1,29 +1,37 @@
 class_name SettingsHub
 extends Control
-## The Settings window (the Settings button in the top right corner): everything you don't need
-## while playing. Two tabs:
-##   Settings    your name (the contributor on seeds you make), sharing your seeds, the sprite
-##               sheet, display and sound settings, and Reset. Each button closes this window and
-##               starts its job (the signals are wired up in main.gd).
-##   Statistics  time played and what you've found so far.
+## The Settings window (the gear in the top right corner). Tabs, so nothing is one long list:
+##   Account     who you're signed in as (your account name signs every seed you make),
+##               Upload my seeds, Log out
+##   Game        Display and Sound, Replay tutorial, Reset Progress
+##   Statistics  time played and what you've found so far
+##   Developer   (developer build only) Submissions, Export List, the sprite sheet
+## Buttons that start a job close this window first (the signals are wired up in main.gd).
 
-signal import_list_requested
 signal export_list_requested
 signal import_sheet_requested
 signal export_sheet_requested
-signal sprites_folder_requested
-signal display_requested
-signal sound_requested
 signal reset_requested
-signal account_requested
 signal upload_requested
 signal submissions_requested
+signal logout_requested
+signal tutorial_requested
 
+const TAB_ACCOUNT := 0
+const TAB_GAME := 1
+const TAB_STATS := 2
+const TAB_DEV := 3
+
+var display_page: SettingsDialog
+var sound_page: SoundDialog
 var _tabs: TabBar
-var _settings_page: VBoxContainer
+var _pages: Array[Control] = []
+var _who: Label
+var _who_note: Label
+var _out_btn: Button
 var _stats_page: VBoxContainer
-var _name_edit: LineEdit
-var _name_note: Label
+var _scroll: ScrollContainer
+var _pages_box: VBoxContainer
 var _time_label: Label
 var _stats_text: RichTextLabel
 
@@ -41,125 +49,117 @@ func _ready() -> void:
 	center.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	add_child(center)
 	var panel := PanelContainer.new()
-	panel.custom_minimum_size = Vector2(520, 0)
+	panel.theme_type_variation = &"WindowPanel"
+	panel.custom_minimum_size = Vector2(920, 0)
 	center.add_child(panel)
 	var root := VBoxContainer.new()
 	root.add_theme_constant_override("separation", 8)
 	panel.add_child(root)
 
+	var head := HBoxContainer.new()
+	root.add_child(head)
+	head.add_child(UiKit.icon("icon_gear"))
 	var title := Label.new()
 	title.text = "Settings"
-	title.add_theme_font_size_override("font_size", 24)
-	title.add_theme_color_override("font_color", Color("#a6ff6e"))
-	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	root.add_child(title)
+	title.theme_type_variation = &"TitleLabel"
+	title.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	head.add_child(title)
+	var close := Button.new()
+	close.icon = UiKit.tex("icon_close")
+	close.tooltip_text = "Close (Esc)"
+	close.pressed.connect(close_dialog)
+	head.add_child(close)
 
 	_tabs = TabBar.new()
-	_tabs.add_tab("Settings")
+	_tabs.add_tab("Account")
+	_tabs.add_tab("Game")
 	_tabs.add_tab("Statistics")
+	if DevMode.on():
+		_tabs.add_tab("Developer")
 	_tabs.tab_changed.connect(_show_tab)
 	root.add_child(_tabs)
+	# the pages scroll when the window is too short to show a whole tab
+	_scroll = ScrollContainer.new()
+	_scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	root.add_child(_scroll)
+	_pages_box = VBoxContainer.new()
+	_pages_box.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	_scroll.add_child(_pages_box)
 
-	# --- Settings page
-	_settings_page = VBoxContainer.new()
-	_settings_page.add_theme_constant_override("separation", 8)
-	root.add_child(_settings_page)
+	# --- Account
+	var account := _page(_pages_box)
+	var who_row := HBoxContainer.new()
+	who_row.add_theme_constant_override("separation", 8)
+	account.add_child(who_row)
+	who_row.add_child(UiKit.icon("icon_user"))
+	_who = Label.new()
+	_who.theme_type_variation = &"HeadingLabel"
+	who_row.add_child(_who)
+	_who_note = _note(account, "")
+	_note(account, "Your account name is on every seed you make. Upload seeds you're proud of: approved ones reach every player in the next update, with your name and the approval stamp.")
+	var acc_row := _row(account)
+	_button(acc_row, "Upload my seeds", "Send seeds of yours to the developer for review", upload_requested, "icon_upload")
+	_out_btn = _button(acc_row, "Log out", "Sign out of this PC (you'll need to sign in again to play)", logout_requested)
+	_out_btn.size_flags_horizontal = Control.SIZE_SHRINK_END
 
-	_heading(_settings_page, "You")
-	var you := _row(_settings_page)
-	var nl := Label.new()
-	nl.text = "Username"
-	you.add_child(nl)
-	_name_edit = LineEdit.new()
-	_name_edit.placeholder_text = "Needed to export: it's on every seed you make"
-	_name_edit.max_length = 32
-	_name_edit.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	_name_edit.tooltip_text = "Every seed you make is signed with this name (the contributor), and so is your export.\nIf your seed makes it into the game, it shows next to the approval stamp."
-	_name_edit.text_changed.connect(_on_name_changed)
-	you.add_child(_name_edit)
-	_name_note = Label.new()
-	_name_note.add_theme_font_size_override("font_size", 12)
-	_settings_page.add_child(_name_note)
+	# --- Game
+	var game := _page(_pages_box)
+	_heading(game, "Display")
+	display_page = SettingsDialog.new()
+	game.add_child(display_page)
+	game.add_child(HSeparator.new())
+	_heading(game, "Sound")
+	sound_page = SoundDialog.new()
+	game.add_child(sound_page)
+	game.add_child(HSeparator.new())
+	var game_row := _row(game)
+	_button(game_row, "Replay tutorial", "Walk through the basics again", tutorial_requested, "icon_help")
+	var reset := _button(game_row, "Reset Progress", "Forget everything and start over", reset_requested)
+	reset.theme_type_variation = &"DangerButton"
 
-	_heading(_settings_page, "Online")
-	var online := _row(_settings_page)
-	_button(online, "Account", "Log in or create an account (username + password)", account_requested)
-	_button(online, "Upload my seeds", "Send seeds of yours to the developer for review.\nApproved ones reach every player in the next update, with your username.", upload_requested)
-	if DevMode.on():
-		_button(online, "Submissions", "Review the seeds players uploaded (developer only)", submissions_requested)
-
-	_heading(_settings_page, "Seed lists")
-	var lists := _row(_settings_page)
-	if DevMode.on():  # only the developer brings in players' creations; players get them in updates
-		_button(lists, "Import List", "Merge a player's splicing list into yours (developer only)", import_list_requested)
-	if DevMode.on():
-		_button(lists, "Export List", "Save your splicing list (and its sprite sheet) to a file (backups, Mush Mantle).", export_list_requested)
-	else:
-		_button(lists, "Export to the developer", "Send your seeds to the developer for review, right now (log in first).\nApproved ones reach every player with your username and the stamp.", upload_requested)
-		_button(lists, "Save list to a file", "Save your splicing list (and its sprite sheet) to a file.", export_list_requested)
-
-	_heading(_settings_page, "Sprites")
-	var sheets := _row(_settings_page)
-	_button(sheets, "Import Sprite Sheet", "Bring in the block art you drew on an exported sprite sheet\n(the 4 boxes at the left of each seed's row)", import_sheet_requested)
-	_button(sheets, "Export Sprite Sheet", "Save only the sprite sheet (PNG): 4 block-art boxes, then seed, sprout, sapling, crop and planted for every seed", export_sheet_requested)
-	var folder := _row(_settings_page)
-	_button(folder, "Open Sprites Folder", "Open the folder that always has the latest copy of your sprite sheet\n(sprites/ next to the game; it updates by itself whenever your seeds change)", sprites_folder_requested)
-
-	_heading(_settings_page, "Game")
-	var game := _row(_settings_page)
-	_button(game, "Display", "Window mode, resolution and UI size (F11: fullscreen)", display_requested)
-	_button(game, "Sound", "Music, sound effects and volumes", sound_requested)
-	var reset := _row(_settings_page)
-	_button(reset, "Reset Progress", "Forget everything and start over", reset_requested)
-
-	# --- Statistics page
-	_stats_page = VBoxContainer.new()
-	_stats_page.add_theme_constant_override("separation", 8)
-	_stats_page.visible = false
-	root.add_child(_stats_page)
+	# --- Statistics
+	_stats_page = _page(_pages_box)
 	_heading(_stats_page, "Time played")
 	_time_label = Label.new()
-	_time_label.add_theme_font_size_override("font_size", 30)
-	_time_label.add_theme_color_override("font_color", Color("#a6ff6e"))
+	_time_label.theme_type_variation = &"TitleLabel"
 	_stats_page.add_child(_time_label)
 	_stats_text = RichTextLabel.new()
 	_stats_text.bbcode_enabled = true
 	_stats_text.fit_content = true
 	_stats_text.scroll_active = false
-	_stats_text.custom_minimum_size = Vector2(480, 0)
+	_stats_text.custom_minimum_size = Vector2(880, 0)
 	_stats_page.add_child(_stats_text)
 
-	var close := Button.new()
-	close.text = "Close"
-	close.custom_minimum_size = Vector2(0, 38)
-	close.pressed.connect(close_dialog)
-	root.add_child(close)
+	# --- Developer
+	if DevMode.on():
+		var dev := _page(_pages_box)
+		_note(dev, "Only in your own game (the editor or the Developer build).")
+		_heading(dev, "Players' seeds")
+		_button(_row(dev), "Submissions", "Review the seeds players uploaded", submissions_requested)
+		_heading(dev, "Files")
+		var files := _row(dev)
+		_button(files, "Export List", "Save your splicing list (and its sprite sheet) to a file (backups, Mush Mantle)", export_list_requested)
+		_button(files, "Export Sprite Sheet", "Save only the sprite sheet (PNG): 4 block-art boxes, then seed, sprout, sapling, crop and planted for every seed", export_sheet_requested)
+		_button(_row(dev), "Import Sprite Sheet", "Bring in the block art you drew on an exported sprite sheet (the 4 boxes at the left of each seed's row)", import_sheet_requested)
+
+	Online.session_changed.connect(_refresh_account)
+	_show_tab(TAB_ACCOUNT)
 
 
-func open() -> void:
-	_name_edit.text = String(UserSettings.get_value("profile", "name", "")).strip_edges()
-	_on_name_changed(_name_edit.text)
+func open(tab := -1) -> void:
+	_refresh_account()
 	_refresh_stats()
+	display_page.refresh()
+	sound_page.open()
+	if tab >= 0 and tab < _tabs.tab_count:
+		_tabs.current_tab = tab
 	visible = true
+	_fit_scroll.call_deferred()
 	Audio.play(&"open")
 
 
 func open_stats() -> void:
-	open()
-	_tabs.current_tab = 1
-
-
-## A name is only kept when it's allowed (RyeeRue, KeepUpp and look-alikes are the developer's).
-func _on_name_changed(t: String) -> void:
-	var problem := DevMode.name_problem(t)
-	if problem == "":
-		Game.set_player_name(t)
-		_name_note.text = "Signed as %s%s" % [t.strip_edges(), "  (developer)" if DevMode.on() else ""]
-		_name_note.add_theme_color_override("font_color", Color("#a6ff6e"))
-	else:
-		Game.set_player_name("")
-		_name_note.text = problem
-		_name_note.add_theme_color_override("font_color", Color("#ff8a8a") if t.strip_edges() != "" else Color("#c4c0d4"))
+	open(TAB_STATS)
 
 
 func close_dialog() -> void:
@@ -167,9 +167,39 @@ func close_dialog() -> void:
 
 
 func _show_tab(i: int) -> void:
-	_settings_page.visible = i == 0
-	_stats_page.visible = i == 1
-	_refresh_stats()
+	for k in _pages.size():
+		_pages[k].visible = k == i
+	if i == TAB_STATS:
+		_refresh_stats()
+	_fit_scroll.call_deferred()
+
+
+## As tall as the page, but never taller than the window has room for (then it scrolls).
+func _fit_scroll() -> void:
+	if not is_inside_tree():
+		return
+	_scroll.scroll_vertical = 0
+	var want := _pages_box.get_combined_minimum_size().y
+	var room := get_viewport_rect().size.y - 190.0  # the window's title, tabs and margins
+	_scroll.custom_minimum_size.y = clampf(want, 120.0, maxf(120.0, room))
+
+
+func _refresh_account() -> void:
+	if not is_instance_valid(_who):
+		return
+	if Online.logged_in():
+		_who.text = "Signed in as %s%s" % [Online.username, "  (developer)" if Online.is_admin else ""]
+		_who_note.text = ""
+	elif Online.has_saved_session():
+		_who.text = "Signed in as %s" % Online.saved_username()
+		_who_note.text = "Offline right now: uploading waits until you're back online."
+	else:
+		_who.text = "Not signed in"
+		_who_note.text = "Online features aren't set up in this version." if not Online.configured() else ""
+	var signed := Online.logged_in() or Online.has_saved_session()
+	_out_btn.text = "Log out" if signed else "Sign in"
+	_out_btn.theme_type_variation = &"DangerButton" if signed else &"ShopButton"
+	_out_btn.disabled = not Online.configured()
 
 
 func _process(_delta: float) -> void:
@@ -221,18 +251,36 @@ func _refresh_stats() -> void:
 	row.call("Graveyard", "%d seeds" % Approvals.graveyard().size())
 	row.call("Mycoras", "%s  (+%s every 3 s)" % [Bank.fmt(Bank.mycoras), Bank.fmt(Bank.rate_per_tick())])
 	row.call("Mycoras made in total", Bank.fmt(Bank.earned_total))
-	row.call("Seed Chests opened", "%d  ·  %d seeds unlocked" % [Bank.chests, Bank.unlocked.size()])
+	row.call("Packs opened", "%d  ·  %d seeds unlocked" % [Bank.packs, Bank.unlocked.size()])
 	var w := Weather.current()
 	row.call("Weather now", Weather.name_of(w) if Weather.name_of(w) != "" else "clear")
 	row.call("Game version", "v%s" % GameVersion.VERSION)
 	_stats_text.text = "\n".join(lines)
 
 
+func _page(root: Control) -> VBoxContainer:
+	var p := VBoxContainer.new()
+	p.add_theme_constant_override("separation", 8)
+	root.add_child(p)
+	_pages.append(p)
+	return p
+
+
 func _heading(parent: Control, text: String) -> void:
 	var l := Label.new()
 	l.text = text
-	l.add_theme_color_override("font_color", Color("#ffc94a"))
+	l.theme_type_variation = &"HeadingLabel"
 	parent.add_child(l)
+
+
+func _note(parent: Control, text: String) -> Label:
+	var l := Label.new()
+	l.text = text
+	l.theme_type_variation = &"NoteLabel"
+	l.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	l.custom_minimum_size = Vector2(880, 0)
+	parent.add_child(l)
+	return l
 
 
 func _row(parent: Control) -> HBoxContainer:
@@ -242,16 +290,19 @@ func _row(parent: Control) -> HBoxContainer:
 	return r
 
 
-func _button(parent: Control, text: String, tip: String, sig: Signal) -> void:
+func _button(parent: Control, text: String, tip: String, sig: Signal, icon_name := "") -> Button:
 	var b := Button.new()
 	b.text = text
 	b.tooltip_text = tip
+	if icon_name != "":
+		b.icon = UiKit.tex(icon_name)
 	b.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	b.custom_minimum_size = Vector2(0, 34)
+	b.custom_minimum_size = Vector2(0, 46)
 	b.pressed.connect(func():
 		close_dialog()
 		sig.emit())
 	parent.add_child(b)
+	return b
 
 
 func _unhandled_key_input(event: InputEvent) -> void:

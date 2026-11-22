@@ -10,9 +10,9 @@ signal clear_void_requested
 signal add_seed_requested
 signal shown_changed(shown: bool)
 
-const MIN_WIDTH := 320.0  ## narrower than this and the footer buttons don't fit
-const MAX_WIDTH := 640.0
-const DEFAULT_WIDTH := 380.0
+const MIN_WIDTH := 440.0  ## narrower than this and the footer buttons don't fit
+const MAX_WIDTH := 820.0
+const DEFAULT_WIDTH := 500.0
 
 var _list: SeedList
 var _search: LineEdit
@@ -182,8 +182,9 @@ func _ready() -> void:
 
 	var tip := Label.new()
 	tip.text = "Click or drag into the void  ·  Double-click to edit"
-	tip.add_theme_font_size_override("font_size", 12)
+	tip.add_theme_font_size_override("font_size", UiKit.SMALL)
 	tip.add_theme_color_override("font_color", Color(0.7, 0.67, 0.8))
+	tip.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	seeds_tab.add_child(tip)
 
 	categories = CategoriesTab.new()
@@ -192,6 +193,7 @@ func _ready() -> void:
 
 	_count = Label.new()
 	_count.add_theme_color_override("font_color", Color(0.8, 0.78, 0.9))
+	_count.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	root.add_child(_count)
 	var add := Button.new()
 	add.text = "+ Add Seed"

@@ -10,3 +10,6 @@ assets/audio/music/
 assets/audio/sfx/
 *.ogg
 *.ogg.import
+
+# slim engine template built by tools/engine/build_template.ps1
+tools/engine/bin/

@@ -1,33 +1,39 @@
 extends Node
-## Autoload "Bank": your Mycoras, which seeds make them, the Seed Chest, and offline earnings.
+## Autoload "Bank": your Mycoras, which seeds make them, the Shop's booster packs, offline earnings.
 ##
 ## MAKING MYCORAS: every 3 seconds each producing seed makes its Mycora drop (Mush Mantle's math,
 ## the average of 1 .. 1 + rarity / 4, see mycora.gd), times its boosts, times the weather:
 ##   approved by the developer (the stamp)      x10
 ##   approved WITH its art                       x25 (instead of x10)
 ##   RSR, the developer's 6-10 rating            x1, x1.75, x2.5, x3.25, x4
-##   weather (weather.gd)                        Rain x2, Shooting Star x100
+##   weather (weather.gd)                        Rain x2, Thunderstorm x100, Shooting Star x100
 ## The 4 base seeds always produce. Every other seed (graveyarded or not) produces only once you
-## unlock it from the Seed Chest. The chest costs CHEST_PRICE; any seed in your game except the
-## base seeds can come out, a rarer seed less often (chance ~ 1 / rarity). A seed you already
-## unlocked pays 5 minutes of its Mycoras instead.
-## While the game is closed you keep earning (the weather you missed counts too).
+## unlock it from a booster pack in the Shop.
+## BOOSTER PACKS: PACK_PRICE each, opened 1, 3 or 5 at a time. A pack holds CARDS_PER_PACK seed
+## cards: any seed in your game except the base seeds, a rarer seed less often (chance ~ 1 /
+## rarity); the LAST card is always Rare or better (when your game has such a seed). A card you
+## already unlocked pays 5 minutes of its Mycoras instead.
+## While the game is closed your seeds keep producing for 1 HOUR (MAX_AWAY), then stop until you
+## come back (the weather of that hour counts too).
 ## Saved in its own small file every 30 s and when the game closes.
 
 signal changed
 
 const TICK := 3.0
 const SAVE_PATH := "user://seed_splicer_mycoras.json"
-const CHEST_PRICE := 5000
+const PACK_PRICE := 10000
+const CARDS_PER_PACK := 5
+const PACK_COUNTS: Array[int] = [1, 3, 5]
+const RARE_AT := 4  ## the guaranteed card is at least this rarity (Rare, see SeedArt.rarity_tier)
 const DUPLICATE_SECONDS := 300.0
 const APPROVED_MULT := 10.0
 const ART_MULT := 25.0
 const RSR_MULT := { 6: 1.0, 7: 1.75, 8: 2.5, 9: 3.25, 10: 4.0 }
-const MAX_AWAY := 365 * 24 * 3600
+const MAX_AWAY := 3600  ## offline earnings stop after 1 hour away
 
 var mycoras := 0.0
 var unlocked := {}   # seed id -> true
-var chests := 0
+var packs := 0
 var earned_total := 0.0
 var last_time := 0
 var away_report := {}  # { seconds, earned } after an offline catch-up
@@ -37,11 +43,12 @@ var _save_t := 0.0
 
 func _ready() -> void:
 	_load()
-	# offline earnings: everything since the last save, weather included
+	# offline earnings: the first hour after you closed the game (weather included), then nothing
 	var now := Weather.now()
 	if last_time > 0 and now > last_time:
-		var away := mini(now - last_time, MAX_AWAY)
-		var got := rate_per_second() * Weather.boosted_seconds(now - away, now)
+		var away := now - last_time
+		var counted := mini(away, MAX_AWAY)
+		var got := rate_per_second() * Weather.boosted_seconds(last_time, last_time + counted)
 		if got > 0.0 and away >= 60:
 			_earn(got)
 			away_report = { "seconds": away, "earned": got }
@@ -109,30 +116,41 @@ func rate_per_second() -> float:
 	return rate_per_tick() / TICK
 
 
-# --- the Seed Chest ------------------------------------------------------------------------------
+# --- booster packs ------------------------------------------------------------------------------
 
-## Every seed that can come out of the chest, with its weight (1 / rarity).
-func chest_pool() -> Array:
+## Every seed a card can show, with its weight (1 / rarity). rare_only: only Rare or better.
+func pack_pool(rare_only := false) -> Array:
 	var out: Array = []
 	for id in Game.order:
-		if not is_base(id):
+		if not is_base(id) and (not rare_only or int(Game.seeds[id].rarity) >= RARE_AT):
 			out.append({ "id": id, "weight": 1.0 / maxf(1.0, float(Game.seeds[id].rarity)) })
 	return out
 
 
-## Chance of one seed coming out (0..1).
+## The pool of the guaranteed last card: Rare or better, or everything if you have none of those.
+func rare_pool() -> Array:
+	var rare := pack_pool(true)
+	return rare if not rare.is_empty() else pack_pool()
+
+
+## Chance of one seed on a normal card (0..1).
 func chance_of(id: String) -> float:
+	return chance_in(pack_pool(), id)
+
+
+static func chance_in(pool: Array, id: String) -> float:
 	var total := 0.0
 	var mine := 0.0
-	for p in chest_pool():
+	for p in pool:
 		total += p.weight
 		if p.id == id:
 			mine = p.weight
 	return mine / total if total > 0.0 else 0.0
 
 
-func pick(rng: RandomNumberGenerator) -> String:
-	var pool := chest_pool()
+func pick(rng: RandomNumberGenerator, pool: Array = []) -> String:
+	if pool.is_empty():
+		pool = pack_pool()
 	var total := 0.0
 	for p in pool:
 		total += p.weight
@@ -144,23 +162,49 @@ func pick(rng: RandomNumberGenerator) -> String:
 	return pool[-1].id if not pool.is_empty() else ""
 
 
-## Opens one chest. { ok, error, id, new, payout }
-func open_chest(rng: RandomNumberGenerator = null) -> Dictionary:
-	if mycoras < CHEST_PRICE:
-		return { "ok": false, "error": "You need %s Mycoras." % fmt(CHEST_PRICE) }
-	if chest_pool().is_empty():
-		return { "ok": false, "error": "Splice a seed first: the chest only holds seeds in your game." }
+## The price of opening n packs at once.
+static func packs_price(n: int) -> float:
+	return float(PACK_PRICE * n)
+
+
+## Opens n packs at once (1, 3 or 5).
+## { ok, error, packs: [[card x CARDS_PER_PACK] per pack], new_count, payout }
+## A card is { id, new, payout, rare_slot }. Cards resolve in order, so a seed that shows up twice
+## in one opening is new the first time and a duplicate (paying Mycoras) after that.
+func open_packs(n: int, rng: RandomNumberGenerator = null) -> Dictionary:
+	var out := { "ok": false, "error": "", "packs": [], "new_count": 0, "payout": 0.0 }
+	if not PACK_COUNTS.has(n):
+		out.error = "Packs come in 1, 3 or 5."
+		return out
+	if mycoras < packs_price(n):
+		out.error = "You need %s Mycoras for %s." % [fmt(packs_price(n)), "a pack" if n == 1 else "%d packs" % n]
+		return out
+	if pack_pool().is_empty():
+		out.error = "Splice a seed first: packs only hold seeds in your game."
+		return out
 	if rng == null:
 		rng = RandomNumberGenerator.new()
 		rng.randomize()
-	var id := pick(rng)
-	mycoras -= CHEST_PRICE
-	chests += 1
-	var out := { "ok": true, "error": "", "id": id, "new": not unlocked.has(id), "payout": 0.0 }
-	if out.new:
-		unlocked[id] = true
-	else:
-		out.payout = seed_rate(Game.seeds[id]) * DUPLICATE_SECONDS / TICK
+	mycoras -= packs_price(n)
+	packs += n
+	var normal := pack_pool()
+	var rare := rare_pool()
+	for k in n:
+		var cards: Array = []
+		for c in CARDS_PER_PACK:
+			var last := c == CARDS_PER_PACK - 1
+			var id := pick(rng, rare if last else normal)
+			var card := { "id": id, "new": not unlocked.has(id), "payout": 0.0, "rare_slot": last }
+			if card.new:
+				unlocked[id] = true
+				out.new_count += 1
+			else:
+				card.payout = seed_rate(Game.seeds[id]) * DUPLICATE_SECONDS / TICK
+				out.payout += card.payout
+			cards.append(card)
+		out.packs.append(cards)
+	out.ok = true
+	if out.payout > 0.0:
 		_earn(out.payout)
 	save()
 	changed.emit()
@@ -173,7 +217,7 @@ func save() -> void:
 	_save_t = 0.0
 	var f := FileAccess.open(SAVE_PATH, FileAccess.WRITE)
 	if f:
-		f.store_string(JSON.stringify({ "mycoras": mycoras, "unlocked": unlocked.keys(), "chests": chests,
+		f.store_string(JSON.stringify({ "mycoras": mycoras, "unlocked": unlocked.keys(), "packs": packs,
 			"earned_total": earned_total, "last_time": last_time }, "\t"))
 
 
@@ -184,7 +228,7 @@ func _load() -> void:
 	if not d is Dictionary:
 		return
 	mycoras = maxf(0.0, float(d.get("mycoras", 0.0)))
-	chests = int(d.get("chests", 0))
+	packs = int(d.get("packs", d.get("chests", 0)))  # (old saves counted chests)
 	earned_total = float(d.get("earned_total", 0.0))
 	last_time = int(d.get("last_time", 0))
 	unlocked.clear()
@@ -196,7 +240,7 @@ func _load() -> void:
 func reset() -> void:
 	mycoras = 0.0
 	unlocked.clear()
-	chests = 0
+	packs = 0
 	earned_total = 0.0
 	last_time = Weather.now()
 	save()

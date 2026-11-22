@@ -39,7 +39,7 @@ class SpliceRow extends PanelContainer:
 
 
 func _init() -> void:
-	super("Splices", "splices", Vector2(350, 380), Vector2(18, 64))
+	super("Splices", "splices", Vector2(500, 440), Vector2(18, 110))
 
 
 func _build(parent: Control) -> void:
@@ -94,7 +94,7 @@ func _splice_row(a: String, b: String, result: String) -> Control:
 	h.add_child(_icon(result))
 	var l := Label.new()
 	l.text = "%s\nR%d" % [s.name, int(s.rarity)]
-	l.add_theme_font_size_override("font_size", 13)
+	l.add_theme_font_size_override("font_size", UiKit.SMALL)
 	l.add_theme_color_override("font_color", (SeedArt.rarity_tier(int(s.rarity))[1] as Color).lerp(Color.WHITE, 0.3))
 	l.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	l.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
@@ -121,10 +121,5 @@ func _sym(text: String) -> Label:
 	return l
 
 
-func _row_box() -> StyleBoxFlat:
-	var sb := StyleBoxFlat.new()
-	sb.bg_color = Color("#1d1828")
-	sb.border_color = Color("#2e2640")
-	sb.set_border_width_all(2)
-	sb.set_content_margin_all(4)
-	return sb
+func _row_box() -> StyleBox:
+	return UiKit.box("inset", 3, [6, 4, 6, 4])

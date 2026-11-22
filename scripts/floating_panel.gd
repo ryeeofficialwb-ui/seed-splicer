@@ -9,7 +9,7 @@ extends PanelContainer
 signal shown_changed(shown: bool)
 signal state_changed
 
-const TITLE_H := 32
+const TITLE_H := 44
 
 var settings_key := ""
 var collapsed := false
@@ -34,14 +34,7 @@ func _init(p_title: String, p_key: String, body_size: Vector2, start_pos: Vector
 func _ready() -> void:
 	mouse_filter = Control.MOUSE_FILTER_STOP
 	custom_minimum_size = Vector2(_body_size.x, 0)
-	var frame := StyleBoxFlat.new()
-	frame.bg_color = Color("#15111e")
-	frame.border_color = Color("#4a3d66")
-	frame.set_border_width_all(2)
-	frame.set_content_margin_all(0)
-	frame.shadow_color = Color(0, 0, 0, 0.45)
-	frame.shadow_size = 8
-	add_theme_stylebox_override("panel", frame)
+	add_theme_stylebox_override("panel", UiKit.box("window", 5, [4, 4, 4, 4]))
 
 	var root := VBoxContainer.new()
 	root.add_theme_constant_override("separation", 0)
@@ -50,12 +43,7 @@ func _ready() -> void:
 	var bar := PanelContainer.new()
 	bar.custom_minimum_size = Vector2(0, TITLE_H)
 	bar.mouse_default_cursor_shape = Control.CURSOR_MOVE
-	var bar_box := StyleBoxFlat.new()
-	bar_box.bg_color = Color("#241c35")
-	bar_box.set_content_margin_all(0)
-	bar_box.content_margin_left = 10
-	bar_box.content_margin_right = 4
-	bar.add_theme_stylebox_override("panel", bar_box)
+	bar.theme_type_variation = &"TitleBar"
 	bar.gui_input.connect(_on_bar_input)
 	root.add_child(bar)
 
@@ -69,9 +57,9 @@ func _ready() -> void:
 	_title.add_theme_color_override("font_color", Color("#a6ff6e"))
 	_title.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	hb.add_child(_title)
-	_collapse_btn = _bar_button("–", "Collapse", toggle_collapsed)
+	_collapse_btn = _bar_button("icon_collapse", "Collapse", toggle_collapsed)
 	hb.add_child(_collapse_btn)
-	hb.add_child(_bar_button("×", "Hide", func(): show_panel(false)))
+	hb.add_child(_bar_button("icon_close", "Hide", func(): show_panel(false)))
 
 	body = MarginContainer.new()
 	body.custom_minimum_size = _body_size
@@ -122,7 +110,7 @@ func toggle_collapsed() -> void:
 
 func _apply_collapsed() -> void:
 	body.visible = not collapsed
-	_collapse_btn.text = "+" if collapsed else "–"
+	_collapse_btn.icon = UiKit.tex("icon_expand" if collapsed else "icon_collapse")
 	_collapse_btn.tooltip_text = "Expand" if collapsed else "Collapse"
 	reset_size()  # shrink/grow to the new minimum size
 
@@ -158,12 +146,13 @@ func _on_bar_input(event: InputEvent) -> void:
 		_clamp()
 
 
-func _bar_button(text: String, tip: String, action: Callable) -> Button:
+func _bar_button(icon_name: String, tip: String, action: Callable) -> Button:
 	var b := Button.new()
-	b.text = text
+	b.icon = UiKit.tex(icon_name)
+	b.icon_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	b.theme_type_variation = &"FlatButton"
 	b.tooltip_text = tip
-	b.flat = true
 	b.focus_mode = Control.FOCUS_NONE
-	b.custom_minimum_size = Vector2(28, 24)
+	b.custom_minimum_size = Vector2(36, 32)
 	b.pressed.connect(action)
 	return b

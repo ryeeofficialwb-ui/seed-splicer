@@ -58,7 +58,7 @@ func set_pending(n: int) -> void:
 	var new_ones := n - maxi(_seen_pending, 0)
 	pending = n
 	if settings_btn:
-		settings_btn.text = "Settings  (%d)" % n if n > 0 else "Settings"
+		settings_btn.text = "%d" % n if n > 0 else ""
 	if _seen_pending >= 0 and new_ones > 0 or _seen_pending < 0 and n > 0:
 		if toast.is_valid():
 			toast.call("%d new seed%s need%s to be approved  (Settings > Submissions)" % [n, "" if n == 1 else "s", "s" if n == 1 else ""], Color("#ffc94a"))

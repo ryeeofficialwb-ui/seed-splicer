@@ -18,6 +18,7 @@ func _init_modal(title: String, min_size: Vector2) -> void:
 	center.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	add_child(center)
 	var panel := PanelContainer.new()
+	panel.theme_type_variation = &"WindowPanel"
 	panel.custom_minimum_size = min_size
 	center.add_child(panel)
 	body = VBoxContainer.new()
@@ -27,12 +28,12 @@ func _init_modal(title: String, min_size: Vector2) -> void:
 	body.add_child(head)
 	_title = Label.new()
 	_title.text = title
-	_title.add_theme_font_size_override("font_size", 22)
-	_title.add_theme_color_override("font_color", Color("#a6ff6e"))
+	_title.theme_type_variation = &"TitleLabel"
 	_title.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	head.add_child(_title)
 	var close := Button.new()
-	close.text = "Close"
+	close.icon = UiKit.tex("icon_close")
+	close.tooltip_text = "Close (Esc)"
 	close.pressed.connect(close_dialog)
 	head.add_child(close)
 
@@ -54,7 +55,7 @@ func note(text := "", color := Color(0.75, 0.72, 0.85)) -> Label:
 	var l := Label.new()
 	l.text = text
 	l.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	l.add_theme_font_size_override("font_size", 13)
+	l.add_theme_font_size_override("font_size", UiKit.SMALL)
 	l.add_theme_color_override("font_color", color)
 	return l
 
