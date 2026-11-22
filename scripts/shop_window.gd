@@ -450,9 +450,9 @@ static func card_face(card: Dictionary, card_size: Vector2) -> Control:
 	root.add_child(frame)
 	var pic := PixelPicture.new()
 	pic.texture = SeedArt.texture_for(s) if not s.is_empty() else null
-	var pic_size := 64.0 if small else 128.0
+	var pic_size := 64.0 if small else 96.0
 	pic.size = Vector2(pic_size, pic_size)
-	pic.position = Vector2(roundf((card_size.x - pic_size) / 2.0), 12.0 if small else 16.0)
+	pic.position = Vector2(roundf((card_size.x - pic_size) / 2.0), 12.0 if small else 18.0)
 	pic.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	root.add_child(pic)
 	if small:
@@ -478,15 +478,16 @@ static func card_face(card: Dictionary, card_size: Vector2) -> Control:
 	name_l.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	name_l.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
 	name_l.max_lines_visible = 2
-	name_l.size = Vector2(card_size.x - 20, 64)
-	name_l.position = Vector2(10, 148)
+	name_l.size = Vector2(card_size.x - 20, 70)  # two lines of 26 px text, room for the stroke
+	name_l.position = Vector2(10, 122)
+	name_l.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	root.add_child(name_l)
 	var tier_l := Label.new()
 	tier_l.text = "%s  R%d" % [tier[0], rarity]
 	tier_l.add_theme_color_override("font_color", tier[1])
 	tier_l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	tier_l.size = Vector2(card_size.x, 32)
-	tier_l.position = Vector2(0, 214)
+	tier_l.position = Vector2(0, 206)
 	root.add_child(tier_l)
 	var badge2 := Label.new()
 	badge2.text = "NEW!" if card.new else "+%s" % Bank.fmt(card.payout)

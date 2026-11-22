@@ -373,6 +373,18 @@ save("badge_unlocked", map({
   ".odddddo.",
   "..ooooo..",
 }, { o = C.O, G = C.green, d = C.green_d, W = C.white }))
+-- "locked" marker: a small padlock (seeds you haven't pulled from a pack yet)
+save("badge_locked", map({
+  "..ooooo..",
+  ".oLLLLLo.",
+  ".oLo.oLo.",
+  ".oLo.oLo.",
+  "ooooooooo",
+  "oyyyyyyyo",
+  "oyyyoyyyo",
+  "oGGGoGGGo",
+  "ooooooooo",
+}, { o = C.O, L = C.silver, y = C.gold, G = C.gold_d }))
 save("bubble_tail", map({
   "oyyyyyyyyo",
   ".oRRRRRRo.",

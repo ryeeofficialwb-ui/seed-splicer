@@ -463,61 +463,10 @@ func _jitter(c: Color, rng: RandomNumberGenerator) -> Color:
 		clampf(c.v + rng.randf_range(-0.06, 0.06), 0.05, 1.0))
 
 
-const THEMES := {
-	"dirt+dirt": ["Mud", "Loam", "Clod"],
-	"dirt+stone": ["Gravel", "Pebble", "Clay"],
-	"dirt+magma": ["Ash", "Cinder Soil", "Scorched Earth"],
-	"dirt+mushroom": ["Mycelium", "Truffle", "Mossy Soil"],
-	"mushroom+mushroom": ["Spore Cluster", "Lantern Cap", "Glimmercap"],
-	"mushroom+stone": ["Crystal", "Geode", "Glowstone"],
-	"magma+mushroom": ["Ember Cap", "Firefly", "Flarecap"],
-	"stone+stone": ["Boulder", "Cobble", "Bedrock"],
-	"magma+stone": ["Obsidian", "Basalt", "Pumice"],
-	"magma+magma": ["Inferno", "Lava Pearl", "Molten Core"],
-}
-const KEYWORDS := {
-	"dirt": "dirt", "soil": "dirt", "mud": "dirt", "loam": "dirt",
-	"stone": "stone", "rock": "stone", "pebble": "stone", "boulder": "stone", "gravel": "stone",
-	"magma": "magma", "lava": "magma", "ember": "magma", "ash": "magma", "inferno": "magma",
-	"mushroom": "mushroom", "glowing": "mushroom", "spore": "mushroom", "cap": "mushroom",
-}
-const RARE_PREFIX := ["", "", "Wild", "Wild", "Ancient", "Ancient", "Mythic", "Celestial"]
-
-
-## Name ideas for a + b, best first, none already in the dictionary.
+## Name ideas for a + b, best first, none already in the dictionary (see seed_names.gd: built from
+## the new seed's materials, colors and rarity, never by gluing the parents' names together).
 func suggest_names(a: String, b: String) -> Array[String]:
-	var wa := _words(seeds[a].name)
-	var wb := _words(seeds[b].name)
-	var out: Array[String] = []
-	var ka := _keyword(wa)
-	var kb := _keyword(wb)
-	if ka != "" and kb != "":
-		var pair := [ka, kb]
-		pair.sort()
-		for n in THEMES.get(pair[0] + "+" + pair[1], []):
-			out.append(n)
-	out.append(wa[0] + " " + wb[wb.size() - 1])
-	out.append(wb[0] + " " + wa[wa.size() - 1])
-	var la: String = wa[wa.size() - 1]
-	var lb: String = wb[wb.size() - 1]
-	if la.length() <= 7 and lb.length() <= 7 and la != lb:
-		out.append(la + lb.to_lower())
-		out.append(lb + la.to_lower())
-	var r := splice_rarity(a, b)
-	var prefix: String = RARE_PREFIX[mini(int(log(r) / log(2.0)), RARE_PREFIX.size() - 1)]
-	if prefix != "":
-		out.append(prefix + " " + wb[wb.size() - 1])
-	var result: Array[String] = []
-	for n in out:
-		var full := n + " Seed"
-		if find_by_name(full) == "" and not result.has(full):
-			result.append(full)
-	if result.is_empty():
-		var i := 2
-		while find_by_name("%s %s %d Seed" % [wa[0], lb, i]) != "":
-			i += 1
-		result.append("%s %s %d Seed" % [wa[0], lb, i])
-	return result
+	return SeedNames.ideas(seeds[a], seeds[b], splice_rarity(a, b))
 
 
 func _words(seed_name: String) -> PackedStringArray:
@@ -528,14 +477,6 @@ func _words(seed_name: String) -> PackedStringArray:
 	if parts.is_empty():
 		parts = PackedStringArray([n])
 	return parts
-
-
-func _keyword(words: PackedStringArray) -> String:
-	for w in words:
-		var k: String = KEYWORDS.get(w.to_lower(), "")
-		if k != "":
-			return k
-	return ""
 
 
 # --- save / load -------------------------------------------------------------
@@ -792,6 +733,8 @@ func build_official_payload(version_label: String) -> Dictionary:
 			d.parent_names = s.get("parents", []).map(func(p): return String(get_seed(p).get("name", "?")))
 			denied.append(d)
 			continue
+		if s.get("unstamped", false):
+			continue  # stamp revoked: not approved, not handed out (players keep their copy)
 		keep[id] = true
 		var rsr := int(s.get("rsr", 0))
 		approved.append({ "name": s.name, "made_by": by, "art": art_approved(id), "rsr": rsr if rsr >= 6 and rsr <= 10 else null })
@@ -846,6 +789,20 @@ func art_approved(id: String) -> bool:
 	if not seeds.has(id) or not BlockArt.has_art(id):
 		return false
 	return bool(seeds[id].get("art_ok", true))
+
+
+## THE NUKE (developer): take the approval stamp off a seed. It stays in your game, but it isn't on
+## the official list any more: the next push / update takes its stamp away from every player (who
+## keep their copy) and new players don't get it. on = false gives the stamp back.
+func set_unstamped(id: String, on: bool) -> void:
+	if not seeds.has(id):
+		return
+	if on:
+		seeds[id].unstamped = true
+	else:
+		seeds[id].erase("unstamped")
+	save_game()
+	seeds_changed.emit()
 
 
 func set_art_ok(id: String, ok: bool) -> void:
@@ -924,6 +881,65 @@ func import_submission(payload: Dictionary, with_art := true) -> Dictionary:
 			img.convert(Image.FORMAT_RGBA8)
 			BlockArt.set_art(mine, img)
 	return r
+
+
+## REVIEWING A SUBMISSION ONE SEED AT A TIME (developer, Settings > Submissions): a submission is a
+## player's seed plus its whole recipe chain. Only seeds that aren't in your game yet need review,
+## and they're reviewed from the bottom of the chain up: the next step is the first such seed whose
+## ingredients are all in your game already. Returns { ok, error, their_id, name, parents (names),
+## step (1-based), steps, seed (theirs) }; their_id = "" when the whole chain is in your game.
+func submission_next_step(payload: Dictionary) -> Dictionary:
+	var preview := preview_from(payload)
+	var out := { "ok": preview.ok, "error": preview.get("error", ""), "their_id": "", "name": "", "parents": [], "step": 0, "steps": 0, "seed": {} }
+	if not preview.ok:
+		return out
+	var names := {}
+	for x in payload.get("seeds", []):
+		if x is Dictionary:
+			names[String(x.get("id", x.get("name", "")))] = String(x.get("name", "?"))
+	var steps: Array = preview.new_seeds
+	out.steps = steps.size()
+	for i in steps.size():
+		var n: Dictionary = steps[i]
+		if n.parents.all(func(p): return preview.known.has(p)):
+			out.their_id = n.their_id
+			out.name = n.seed.name
+			out.parents = n.parents.map(func(p): return names.get(p, "?"))
+			out.step = 1
+			out.seed = n.seed
+			for x in payload.get("seeds", []):
+				if x is Dictionary and String(x.get("id", x.get("name", ""))) == n.their_id:
+					out.seed = x
+			return out
+	return out
+
+
+## Brings ONE seed of a submission into your game (see submission_next_step), credited to the
+## player, with their block art if with_art. denied: it goes straight to your graveyard (it can still
+## be spliced). Returns { ok, error, id }.
+func import_submission_step(payload: Dictionary, their_id: String, with_art := true, denied := false) -> Dictionary:
+	var preview := preview_from(payload)
+	if not preview.ok:
+		return { "ok": false, "error": preview.error, "id": "" }
+	apply_import(preview, [their_id])
+	var src: Dictionary = {}
+	for x in payload.get("seeds", []):
+		if x is Dictionary and String(x.get("id", x.get("name", ""))) == their_id:
+			src = x
+	var id := find_by_name(String(src.get("name", "")))
+	if id == "":
+		return { "ok": false, "error": "That seed didn't come in.", "id": "" }
+	var b64 := String(src.get("block_art", ""))
+	if with_art and b64 != "" and not BlockArt.has_art(id):
+		var img := Image.new()
+		if img.load_png_from_buffer(Marshalls.base64_to_raw(b64)) == OK and img.get_size() == Vector2i(BlockArt.FRAMES * BlockArt.SIZE, BlockArt.SIZE):
+			img.convert(Image.FORMAT_RGBA8)
+			BlockArt.set_art(id, img)
+	if denied:
+		set_denied(id, true)
+	save_game()
+	seeds_changed.emit()
+	return { "ok": true, "error": "", "id": id }
 
 
 ## The sprite sheet sits next to the list: seed_splicer_list.json -> seed_splicer_list_seeds.png

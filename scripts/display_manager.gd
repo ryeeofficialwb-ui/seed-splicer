@@ -10,7 +10,8 @@ extends RefCounted
 ## PIXEL-PERFECT SCALE: the UI is pixel art, so the game is only ever drawn at WHOLE zooms
 ## (1x, 2x, 3x): every art pixel is the same number of screen pixels. The window shows the game at
 ## that zoom and the extra room is just more room (no stretching).
-##   UI size Auto    the biggest zoom that still leaves at least 1280x720 of room
+##   UI size Auto    1x, until the window is big enough for 1920x1080 of room at 2x (4K and up):
+##                   a bigger monitor just shows more, it doesn't blow the game up
 ##   UI size 1x-3x   that zoom, as long as it leaves at least 960x540 of room (else smaller)
 ## A window smaller than that is drawn at 1x if it still has 1024x600 of room, else at 0.5x: still
 ## sharp, because the 26 px text becomes the font's crisp 13 px and an art pixel one screen pixel
@@ -27,11 +28,12 @@ const RESOLUTIONS: Array[Vector2i] = [
 ]
 const UI_SIZES: Array[int] = [0, 1, 2, 3]  ## 0 = Auto
 const UI_SIZE_NAMES: Array[String] = ["Auto", "1x", "2x", "3x"]
-const BASE := Vector2(1280, 720)  ## the room the layout wants
+const BASE := Vector2(1280, 720)  ## the least room the layout wants
+const AUTO_ROOM := Vector2(1920, 1080)  ## Auto only zooms in once there's this much room at the bigger zoom
 const MIN_ROOM := Vector2(1280, 720)  ## the least room a chosen UI size may leave
 const SMALL_ROOM := Vector2(1024, 600)  ## a smaller window still at 1x down to this (then 0.5x)
 const MIN_WINDOW := Vector2i(1024, 600)
-const DEFAULT_RES := Vector2i(1280, 720)
+const DEFAULT_RES := Vector2i(1920, 1080)  ## the first window (shrunk to fit the screen)
 
 
 ## Call once at startup.
@@ -62,7 +64,7 @@ static func zoom_for(window_size: Vector2, chosen: int) -> float:
 	var fit := minf(window_size.x / BASE.x, window_size.y / BASE.y)
 	if fit < 1.0:
 		return 1.0 if window_size.x >= SMALL_ROOM.x and window_size.y >= SMALL_ROOM.y else 0.5
-	var auto := floorf(fit)
+	var auto := maxf(1.0, floorf(minf(window_size.x / AUTO_ROOM.x, window_size.y / AUTO_ROOM.y)))
 	if chosen <= 0:
 		return auto
 	var k := float(chosen)

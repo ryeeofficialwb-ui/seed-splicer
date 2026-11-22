@@ -27,6 +27,7 @@ const CARDS_PER_PACK := 5
 const PACK_COUNTS: Array[int] = [1, 3, 5]
 const RARE_AT := 4  ## the guaranteed card is at least this rarity (Rare, see SeedArt.rarity_tier)
 const DUPLICATE_SECONDS := 300.0
+const GRAVE_RATE := 1.0  ## a graveyard seed makes 1 Mycora every 3 s (no boosts)
 const APPROVED_MULT := 10.0
 const ART_MULT := 25.0
 const RSR_MULT := { 6: 1.0, 7: 1.75, 8: 2.5, 9: 3.25, 10: 4.0 }
@@ -113,6 +114,8 @@ static func boost(seed: Dictionary) -> float:
 static func seed_rate(seed: Dictionary) -> float:
 	if seed.is_empty() or not Mycora.drops_any(seed):
 		return 0.0
+	if Approvals.is_graveyard(seed):
+		return GRAVE_RATE
 	return (1.0 + Mycora.max_for(int(seed.get("rarity", 1)))) / 2.0 * boost(seed)
 
 

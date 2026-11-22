@@ -6,7 +6,7 @@ extends RefCounted
 ## 0.0.1 - 0.0.4 (they were published as 1.0.1 - 1.0.4 and are hidden on GitHub now).
 
 const STAGE := "Indev"  ## shown before the number: "Indev 0.1"
-const VERSION := "0.1"
+const VERSION := "0.1.1"
 ## The GitHub repository whose Releases hold the update packs (SeedSplicer-<version>.pck plus its
 ## .sha256). It must be PUBLIC: players' games download from it without logging in.
 const RELEASES_REPO := "ryeeofficialwb-ui/seed-splicer"

@@ -29,7 +29,7 @@ class SeedList extends ItemList:
 	signal edit(id: String, discard_spawn: bool)
 	var _pressed := -1
 	var stamped := {}  ## item index -> [name, "  ·  R36"]: drawn with the approval stamp after the rarity
-	var unlocked := {}  ## item index -> true: an unlocked seed (green check badge on its picture)
+	var unlocked := {}  ## item index -> true: unlocked (green check on its picture), false: locked (padlock)
 	const STAMP := 22.0
 	const BADGE := 18.0
 
@@ -64,9 +64,9 @@ class SeedList extends ItemList:
 		var fs := get_theme_font_size("font_size")
 		var scroll := get_v_scroll_bar().value if get_v_scroll_bar().visible else 0.0
 		# unlocked seeds: the green check badge at the bottom-right of the seed picture
-		var badge := UiKit.tex("badge_unlocked")
 		var pad := get_theme_stylebox("panel").get_margin(SIDE_LEFT) if has_theme_stylebox("panel") else 0.0
 		for idx in unlocked:
+			var badge := UiKit.tex("badge_unlocked" if unlocked[idx] else "badge_locked")
 			if idx >= item_count:
 				continue
 			var r := get_item_rect(idx)
@@ -253,8 +253,7 @@ func refresh_seeds() -> void:
 		_list.set_item_custom_fg_color(i, tier[1].lerp(Color.WHITE, 0.35))
 		if by != "":
 			_list.stamped[i] = [String(s.name), "  ·  R%d" % r]
-		if Bank.produces(id):
-			_list.unlocked[i] = true
+		_list.unlocked[i] = Bank.produces(id)
 		_list.set_item_tooltip(i, ("Approved seed  ·  made by %s
 " % by if by != "" else "") + Bank.unlock_text(id) + "\n" + _origin_text(s))
 	_list.fit_stamped.call_deferred()

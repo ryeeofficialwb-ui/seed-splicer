@@ -38,9 +38,11 @@ func _ready() -> void:
 	var test24 := false
 	var test25 := false
 	var test26 := false
+	var test28 := false  # --test28 : stamps, revoke, graveyard, step-by-step submissions, names, digits
 	var test27 := false  # --test27 : the UI update: sign-in gate, tutorial, toolbar, pixel theme
 	var weather_shot := ""  # --weather=rain|star|thunder : move the clock into that weather for the screenshot
 	var hub_tab := -1  # --hub=N : Settings open on tab N (0 Account, 1 Game, 2 Statistics, 3 Developer)
+	var subs_shot := false  # --subs : the Submissions window with a sample submission
 	var login_shot := false  # --login : the sign-in screen
 	var tutorial_step := -1  # --tutorial=N : the tutorial at step N (0-based)
 	var shop_shot := ""  # --shop=idle|flip|summary : the Shop (buying, a pack mid-reveal, a 5-pack summary)
@@ -185,6 +187,8 @@ func _ready() -> void:
 			test26 = true
 		elif a == "--test27":
 			test27 = true
+		elif a == "--test28":
+			test28 = true
 		elif a.begins_with("--weather="):
 			weather_shot = a.substr(10)
 		elif a.begins_with("--shop"):
@@ -206,6 +210,8 @@ func _ready() -> void:
 			hub_tab = int(a.substr(6))
 		elif a == "--login":
 			login_shot = true
+		elif a == "--subs":
+			subs_shot = true
 		elif a.begins_with("--tutorial="):
 			tutorial_step = int(a.substr(11))
 		elif a.begins_with("--tree="):
@@ -234,6 +240,19 @@ func _ready() -> void:
 		await get_tree().create_timer(0.6).timeout
 	if hub:
 		main.settings_hub.open(hub_tab)
+		await get_tree().create_timer(0.4).timeout
+	if subs_shot:
+		var sw: SubmissionsWindow = main.find_children("*", "SubmissionsWindow", true, false)[0]
+		sw.open()
+		await get_tree().create_timer(0.3).timeout
+		for c in sw._list.get_children():
+			c.queue_free()
+		var sample := { "format": Game.EXPORT_FORMAT, "version": 1, "username": "Novala", "top": "b",
+			"seeds": [{ "id": "dirt", "name": "Dirt Seed" }, { "id": "stone", "name": "Stone Seed" },
+				{ "id": "a", "name": "Zz Silt Bloom Seed", "rarity": 2, "parents": ["dirt", "stone"], "colors": ["#c08040", "#40a040"], "tag": "farmable" },
+				{ "id": "b", "name": "Zz Thornwick Seed", "rarity": 3, "parents": ["a", "stone"], "colors": ["#8040c0", "#40a040"] }],
+			"recipes": [] }
+		sw._list.add_child(sw._row({ "id": 1, "seed_name": "Zz Thornwick Seed", "profiles": { "username": "Novala" }, "payload": sample }))
 		await get_tree().create_timer(0.4).timeout
 	if login_shot:
 		main.show_login()
@@ -327,6 +346,8 @@ func _ready() -> void:
 		await _run_test26(path.get_base_dir())
 	if test27:
 		await _run_test27(path.get_base_dir())
+	if test28:
+		await _run_test28(path.get_base_dir())
 	if weather_shot != "":
 		var slot := Weather.slot_of(Weather.now())
 		var want := func(w: Dictionary) -> bool:
@@ -1587,12 +1608,12 @@ func _run_test27(base: String) -> void:
 	for g in dict._tree.get_root().get_children():
 		for it in g.get_children():
 			in_tab.append(it.get_metadata(0))
-			badged = badged and it.get_button_count(0) == 1
+			badged = badged and it.get_button_count(0) == 1 and it.get_button(0, 0) == UiKit.tex("badge_unlocked")
 	_check("the Unlocked tab lists the 4 base seeds + the unlocked one, each with the badge (%d)" % in_tab.size(),
 		in_tab.size() == 5 and in_tab.has(extra) and in_tab.has("dirt") and badged)
 	await _snap(base + "/t27_unlocked_tab.png")
 	panel.refresh_seeds()
-	var badges := panel._list.unlocked.size()
+	var badges := panel._list.unlocked.values().count(true)
 	_check("the Seeds panel badges exactly the unlocked seeds (%d)" % badges, badges == 5)
 	Bank.unlocked = keep_unlocked
 	dict._tabs.current_tab = 0
@@ -1612,6 +1633,74 @@ func _run_test27(base: String) -> void:
 	await _snap(base + "/t27_login.png")
 	ls.queue_free()
 	main.login = null
+
+
+## Stamps, revoking, the graveyard, reviewing submissions a seed at a time, names, digits.
+## Runs against the scratch copy of the save.
+func _run_test28(base: String) -> void:
+	Game.reset()
+	Approvals._test_data = false  # the developer's game: stamps come from the save itself
+	var look := { "name": "Zz Mud Brick Seed", "pattern": 0, "colors": ["#aa5533", "#553311"], "sprout": "#00ff00", "pattern_seed": 1 }
+	var mine := Game.add_spliced_seed("dirt", "stone", look)
+	_check("your new seed has the stamp right away, signed by you", Approvals.is_approved(Game.seeds[mine]) and Approvals.approved_by(Game.seeds[mine]) == (Game.player_name() if Game.player_name() != "" else "you"))
+	Game.seeds[mine].made_by = "Novala"
+	_check("a player's seed shows the player's name", Approvals.approved_by(Game.seeds[mine]) == "Novala")
+
+	# the nuke
+	Game.set_unstamped(mine, true)
+	var p := Game.build_official_payload("t")
+	var listed: bool = p.official.seeds.any(func(s): return s.name == "Zz Mud Brick Seed")
+	var stamped: bool = p.approvals.approved.any(func(a): return a.name == "Zz Mud Brick Seed")
+	_check("Revoke stamp: no stamp, not handed out, not approved", not Approvals.is_approved(Game.seeds[mine]) and not listed and not stamped and Game.seeds.has(mine))
+	Game.set_unstamped(mine, false)
+	_check("Give the stamp back", Approvals.is_approved(Game.seeds[mine]))
+
+	# the graveyard: still splices, makes 1 Mycora every 3 s
+	Game.set_denied(mine, true)
+	_check("a graveyard seed makes 1 Mycora every 3 s", is_equal_approx(Bank.seed_rate(Game.seeds[mine]), Bank.GRAVE_RATE) and not Approvals.is_approved(Game.seeds[mine]))
+	_check("...and can still be spliced", Game.can_splice(mine, "dirt"))
+	Game.set_denied(mine, false)
+
+	# a submission: X = dirt + stone, Y = X + magma (top). Reviewed X first, then Y.
+	var sub := {
+		"format": Game.EXPORT_FORMAT, "version": 1, "username": "Tester", "top": "y",
+		"seeds": [
+			{ "id": "dirt", "name": "Dirt Seed", "rarity": 1 }, { "id": "stone", "name": "Stone Seed", "rarity": 1 },
+			{ "id": "magma_rock", "name": "Magma Rock Seed", "rarity": 1 },
+			{ "id": "x", "name": "Zz Step One Seed", "rarity": 2, "parents": ["dirt", "stone"], "made_by": "Tester", "colors": ["#ff0000", "#00ff00"] },
+			{ "id": "y", "name": "Zz Step Two Seed", "rarity": 3, "parents": ["x", "magma_rock"], "made_by": "Tester", "colors": ["#0000ff", "#00ff00"] },
+		],
+		"recipes": [{ "pair": "dirt|stone", "result": "x" }, { "pair": "magma_rock|x", "result": "y" }],
+	}
+	# (dirt + stone already makes your Mud Brick: use another pair for X)
+	sub.seeds[3].parents = ["dirt", "magma_rock"]
+	sub.recipes[0].pair = "dirt|magma_rock"
+	var st := Game.submission_next_step(sub)
+	_check("review starts at the first unique seed of the chain (%s, 1 of %d)" % [st.name, st.steps], st.their_id == "x" and st.steps == 2)
+	var r := Game.import_submission_step(sub, "x", false)
+	var x_id: String = r.id
+	_check("approving it brings in ONLY that seed, stamped and credited", r.ok and Game.find_by_name("Zz Step Two Seed") == ""
+		and Approvals.approved_by(Game.seeds[x_id]) == "Tester")
+	st = Game.submission_next_step(sub)
+	_check("then the next seed is up (%s)" % st.name, st.their_id == "y")
+	r = Game.import_submission_step(sub, "y", false, true)
+	_check("denying sends it to the graveyard, still in your game", r.ok and Game.seeds[r.id].get("denied", false) and Approvals.graveyard().any(func(g): return g.seed.name == "Zz Step Two Seed"))
+	_check("nothing left to review", String(Game.submission_next_step(sub).their_id) == "")
+
+	# names: built from the seed, not glued from the parents
+	var names := SeedNames.ideas(Game.seeds["dirt"], Game.seeds["magma_rock"], 2, 8)
+	var clean := names.all(func(n): return n.ends_with(" Seed") and not n.to_lower().contains("dirt") and not n.to_lower().contains("magma"))
+	_check("8 fresh name ideas, none reusing the parents' words: %s" % str(names), names.size() == 8 and clean)
+	var mythic := SeedNames.ideas(Game.seeds["dirt"], Game.seeds["stone"], 40, 30)
+	_check("a Mythic splice gets rare words or invented names: %s" % str(mythic.slice(0, 6)), mythic.any(func(n): return n.split(" ")[0] in ["Eldritch", "Astral", "Primeval", "Phantom"] or n.split(" ").size() == 2))
+
+	# digits: the font has the new pixel-grid digits (merged into one outline each)
+	var f := UiKit.font()
+	_check("the game font is Seed Splicer Pixel (clear digits)", UiKit.FONT_PATH.ends_with("SeedSplicerPixel.ttf") and f.get_font_name() == "Seed Splicer Pixel")
+	_check("there's a padlock for locked seeds", UiKit.tex("badge_locked") != null)
+	Approvals._test_data = true
+	Game.reset()
+	await get_tree().process_frame
 
 
 func _run_test26(_base: String) -> void:
@@ -2639,7 +2728,8 @@ func _run_test3(base: String) -> void:
 	_check("4:3 resolution applied (window is %s)" % win.size, win.size == Vector2i(1024, 768))
 	await _snap(base + "/t3_res_43.png")
 	_check("UI size Auto: 1x at 1440x900", DisplayManager.zoom_for(Vector2(1440, 900), 0) == 1.0)
-	_check("UI size Auto: 2x at 2560x1440, 3x at 3840x2160", DisplayManager.zoom_for(Vector2(2560, 1440), 0) == 2.0 and DisplayManager.zoom_for(Vector2(3840, 2160), 0) == 3.0)
+	_check("UI size Auto: 1x at 1920x1080 and 2560x1440 (more room, not bigger), 2x at 3840x2160", DisplayManager.zoom_for(Vector2(1920, 1080), 0) == 1.0
+		and DisplayManager.zoom_for(Vector2(2560, 1440), 0) == 1.0 and DisplayManager.zoom_for(Vector2(3840, 2160), 0) == 2.0)
 	_check("UI size 2x falls back to 1x when it would leave too little room", DisplayManager.zoom_for(Vector2(1920, 1080), 2) == 1.0 and DisplayManager.zoom_for(Vector2(2560, 1440), 2) == 2.0)
 	_check("a smaller window stays sharp: 1x down to 1024x600, then 0.5x (never a fraction)", DisplayManager.zoom_for(Vector2(1100, 650), 0) == 1.0 and DisplayManager.zoom_for(Vector2(900, 500), 0) == 0.5)
 

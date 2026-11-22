@@ -1,9 +1,9 @@
 {
 	"format": "seed-splicer-list",
 	"official": true,
-	"version": "0.1",
+	"version": "0.1.1",
 	"username": "KeepUpp",
-	"published": 1795330529,
+	"published": 1795354050,
 	"seeds": [
 		{
 			"art_ok": true,
@@ -5137,6 +5137,637 @@
 			"sprout": "#898788",
 			"tag": "bountiful",
 			"block_art": "iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYAAADaInAlAAAAAXNSR0IArs4c6QAAARpJREFUeJztm0sOgjAURYtxDzBgYSTu04SNyAYYyASWoBNLVNJYsH2Q3HNmingml8vj08K9qOv64Qzp+754/4x/H//JUgrHo/DJa5qLiXCaJuecc217/fge/z5+GkCcc2iDT0pquu4W9Tv8Nn4aQJxFA3wnbxjum/64LKtN++G39dMA4gRngK3JC+2/9ojAb+OnAcQhAOIQAHGCM0Bq/j2n4c/jpwHEIQDiEABxzGYAfx06jqOVEn+EnwYQJxiAsqw2389OAX4bPw0gzs8ZwKfQ+qkYfhs/DSBO9FXA2iSmPn/hz+OnAcSZGyD2HbRckyn+ffw0gDjZ7wTGvgWLfx8/DSDOogGOnlj8aaEBxJlXqKqujlX30wDiPAFDnND50jfQ4AAAAABJRU5ErkJggg=="
+		},
+		{
+			"art_ok": false,
+			"category": {
+				"hardness": 2,
+				"material": "soil",
+				"status": "auto"
+			},
+			"colors": [
+				"#653a00",
+				"#0a7d70"
+			],
+			"crop": "twisted_tree",
+			"custom": true,
+			"drop": {
+				"auto": false,
+				"bg_tags": [],
+				"collision": true,
+				"damage": false,
+				"kind": "block",
+				"light": false
+			},
+			"found": 1795336898.0,
+			"fruit_count": 0.0,
+			"id": "moist_soil",
+			"made_by": "Novala",
+			"name": "Moist Soil",
+			"parents": [],
+			"pattern": 5,
+			"pattern_seed": 51262,
+			"rarity": 1,
+			"rsr": 10.0,
+			"sprout": "#30aa66",
+			"tag": "not_farmable"
+		},
+		{
+			"category": {
+				"hardness": 3,
+				"material": "other",
+				"status": "auto"
+			},
+			"colors": [
+				"#b02000",
+				"#43680b"
+			],
+			"crop": "mushroom",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": true,
+				"damage": false,
+				"kind": "block",
+				"light": false
+			},
+			"found": 1795336898.0,
+			"fruit_count": 0.0,
+			"id": "foxglove",
+			"made_by": "Novala",
+			"name": "Foxglove Seed",
+			"parents": [
+				"rose",
+				"moist_soil"
+			],
+			"pattern": 5,
+			"pattern_seed": 48139,
+			"rarity": 4,
+			"sprout": "#137434",
+			"tag": "farmable"
+		},
+		{
+			"category": {
+				"hardness": 2,
+				"material": "soil",
+				"status": "auto"
+			},
+			"colors": [
+				"#593500",
+				"#82512c"
+			],
+			"crop": "flower",
+			"custom": false,
+			"drop": {
+				"auto": false,
+				"bg_tags": [],
+				"collision": true,
+				"damage": false,
+				"kind": "decoration",
+				"light": false
+			},
+			"found": 1795336898.0,
+			"fruit_count": 0.0,
+			"id": "mud",
+			"made_by": "Novala",
+			"name": "Mud Seed",
+			"parents": [
+				"moist_soil",
+				"dirt"
+			],
+			"pattern": 2,
+			"pattern_seed": 26664,
+			"rarity": 2,
+			"sprout": "#5db75f",
+			"tag": "not_farmable"
+		},
+		{
+			"category": {
+				"hardness": 1,
+				"material": "plant",
+				"status": "auto"
+			},
+			"colors": [
+				"#9f1600",
+				"#592c01"
+			],
+			"crop": "mushroom",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": false,
+				"damage": false,
+				"kind": "decoration",
+				"light": false
+			},
+			"found": 1795336898.0,
+			"fruit_count": 0.0,
+			"id": "rose_mud",
+			"made_by": "Novala",
+			"name": "Rose Mud Seed",
+			"parents": [
+				"rose",
+				"mud"
+			],
+			"pattern": 5,
+			"pattern_seed": 90564,
+			"rarity": 5,
+			"sprout": "#2b7643",
+			"tag": "not_farmable"
+		},
+		{
+			"category": {
+				"hardness": 3,
+				"material": "other",
+				"status": "auto"
+			},
+			"colors": [
+				"#a356bd",
+				"#a59eb0"
+			],
+			"crop": "flower",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": true,
+				"damage": false,
+				"kind": "block",
+				"light": false
+			},
+			"found": 1795336898.0,
+			"fruit_count": 0.0,
+			"id": "lilac",
+			"made_by": "Novala",
+			"name": "Lilac Seed",
+			"parents": [
+				"foxglove",
+				"rose_mud"
+			],
+			"pattern": 5,
+			"pattern_seed": 3237,
+			"rarity": 9,
+			"sprout": "#909090",
+			"tag": "farmable"
+		},
+		{
+			"category": {
+				"hardness": 3,
+				"material": "other",
+				"status": "auto"
+			},
+			"colors": [
+				"#5e2700",
+				"#ab0700"
+			],
+			"crop": "mushroom",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": true,
+				"damage": false,
+				"kind": "block",
+				"light": false
+			},
+			"found": 1795336898.0,
+			"fruit_count": 0.0,
+			"id": "moist_foxglove",
+			"made_by": "Novala",
+			"name": "Moist Foxglove Seed",
+			"parents": [
+				"moist_soil",
+				"foxglove"
+			],
+			"pattern": 2,
+			"pattern_seed": 64607,
+			"rarity": 5,
+			"sprout": "#1c8842",
+			"tag": "not_farmable"
+		},
+		{
+			"category": {
+				"hardness": 2,
+				"material": "soil",
+				"status": "auto"
+			},
+			"colors": [
+				"#970702",
+				"#6d2e00"
+			],
+			"crop": "flower",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": true,
+				"damage": false,
+				"kind": "block",
+				"light": false
+			},
+			"found": 1795336898.0,
+			"fruit_count": 0.0,
+			"id": "loam",
+			"made_by": "Novala",
+			"name": "Loam Seed",
+			"parents": [
+				"rose_mud",
+				"moist_soil"
+			],
+			"pattern": 0,
+			"pattern_seed": 17887,
+			"rarity": 6,
+			"sprout": "#2c8845",
+			"tag": "not_farmable"
+		},
+		{
+			"category": {
+				"hardness": 2,
+				"material": "soil",
+				"status": "auto"
+			},
+			"colors": [
+				"#b253c1",
+				"#8e070f"
+			],
+			"crop": "pine",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": true,
+				"damage": false,
+				"kind": "block",
+				"light": false
+			},
+			"found": 1795336898.0,
+			"fruit_count": 0.0,
+			"id": "lilac_loam",
+			"made_by": "Novala",
+			"name": "Lilac Loam Seed",
+			"parents": [
+				"lilac",
+				"loam"
+			],
+			"pattern": 0,
+			"pattern_seed": 89308,
+			"rarity": 15,
+			"sprout": "#567e66",
+			"tag": "farmable"
+		},
+		{
+			"category": {
+				"hardness": 2,
+				"material": "soil",
+				"status": "auto"
+			},
+			"colors": [
+				"#7e442c",
+				"#632d00"
+			],
+			"crop": "flower",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": true,
+				"damage": false,
+				"kind": "block",
+				"light": false
+			},
+			"found": 1795336898.0,
+			"fruit_count": 0.0,
+			"id": "dirt_foxglove",
+			"made_by": "Novala",
+			"name": "Dirt Foxglove Seed",
+			"parents": [
+				"dirt",
+				"moist_foxglove"
+			],
+			"pattern": 0,
+			"pattern_seed": 8355,
+			"rarity": 6,
+			"sprout": "#43b651",
+			"tag": "not_farmable"
+		},
+		{
+			"category": {
+				"hardness": 2,
+				"material": "soil",
+				"status": "auto"
+			},
+			"colors": [
+				"#8b5a37",
+				"#a05fc9"
+			],
+			"crop": "pine",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": true,
+				"damage": false,
+				"kind": "block",
+				"light": false
+			},
+			"found": 1795336898.0,
+			"fruit_count": 0.0,
+			"id": "dirt_lilac",
+			"made_by": "Novala",
+			"name": "Dirt Lilac Seed",
+			"parents": [
+				"dirt_foxglove",
+				"lilac"
+			],
+			"pattern": 1,
+			"pattern_seed": 91682,
+			"rarity": 15,
+			"sprout": "#6da76c",
+			"tag": "farmable"
+		},
+		{
+			"category": {
+				"hardness": 2,
+				"material": "stone",
+				"status": "auto"
+			},
+			"colors": [
+				"#5d3800",
+				"#77402a"
+			],
+			"crop": "round_tree",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": true,
+				"damage": false,
+				"kind": "block",
+				"light": false
+			},
+			"found": 1795336898.0,
+			"fruit_count": 0.0,
+			"id": "pebble",
+			"made_by": "Novala",
+			"name": "Pebble Seed",
+			"parents": [
+				"moist_soil",
+				"gravel"
+			],
+			"pattern": 0,
+			"pattern_seed": 13838,
+			"rarity": 3,
+			"sprout": "#5bb767",
+			"tag": "farmable"
+		},
+		{
+			"category": {
+				"hardness": 2,
+				"material": "stone",
+				"status": "auto"
+			},
+			"colors": [
+				"#a52600",
+				"#5c3600"
+			],
+			"crop": "twisted_tree",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": true,
+				"damage": false,
+				"kind": "block",
+				"light": false
+			},
+			"found": 1795336898.0,
+			"fruit_count": 0.0,
+			"id": "foxglove_pebble",
+			"made_by": "Novala",
+			"name": "Foxglove Pebble Seed",
+			"parents": [
+				"foxglove",
+				"pebble"
+			],
+			"pattern": 2,
+			"pattern_seed": 82749,
+			"rarity": 7,
+			"sprout": "#429c47",
+			"tag": "not_farmable"
+		},
+		{
+			"category": {
+				"hardness": 2,
+				"material": "soil",
+				"status": "auto"
+			},
+			"colors": [
+				"#9c54b7",
+				"#a10c08"
+			],
+			"crop": "flower",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": true,
+				"damage": false,
+				"kind": "block",
+				"light": false
+			},
+			"found": 1795336898.0,
+			"fruit_count": 0.0,
+			"id": "lilac_clay",
+			"made_by": "Novala",
+			"name": "Lilac Clay Seed",
+			"parents": [
+				"lilac",
+				"clay"
+			],
+			"pattern": 0,
+			"pattern_seed": 7711,
+			"rarity": 17,
+			"sprout": "#5f8b6a",
+			"tag": "not_farmable"
+		},
+		{
+			"category": {
+				"hardness": 1,
+				"material": "plant",
+				"status": "auto"
+			},
+			"colors": [
+				"#9a0a03",
+				"#603301"
+			],
+			"crop": "pine",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": false,
+				"damage": false,
+				"kind": "decoration",
+				"light": false
+			},
+			"found": 1795336898.0,
+			"fruit_count": 0.0,
+			"id": "rose_pebble",
+			"made_by": "Novala",
+			"name": "Rose Pebble Seed",
+			"parents": [
+				"rose",
+				"pebble"
+			],
+			"pattern": 2,
+			"pattern_seed": 94464,
+			"rarity": 6,
+			"sprout": "#39893f",
+			"tag": "not_farmable"
+		},
+		{
+			"category": {
+				"hardness": 4,
+				"material": "stone",
+				"status": "auto"
+			},
+			"colors": [
+				"#9950b8",
+				"#918fa8"
+			],
+			"crop": "twisted_tree",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": true,
+				"damage": false,
+				"kind": "block",
+				"light": false
+			},
+			"found": 1795336898.0,
+			"fruit_count": 0.0,
+			"id": "lilac_boulder",
+			"made_by": "Novala",
+			"name": "Lilac Boulder Seed",
+			"parents": [
+				"lilac",
+				"boulder"
+			],
+			"pattern": 4,
+			"pattern_seed": 64694,
+			"rarity": 11,
+			"sprout": "#7e9a77",
+			"tag": "not_farmable"
+		},
+		{
+			"category": {
+				"hardness": 3,
+				"material": "other",
+				"status": "auto"
+			},
+			"colors": [
+				"#9555c5",
+				"#914d32"
+			],
+			"crop": "round_tree",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": true,
+				"damage": false,
+				"kind": "block",
+				"light": false
+			},
+			"found": 1795336898.0,
+			"fruit_count": 0.0,
+			"id": "dirtball_lilac",
+			"made_by": "Novala",
+			"name": "Dirtball Lilac Seed",
+			"parents": [
+				"lilac_boulder",
+				"dirt_lilac"
+			],
+			"pattern": 1,
+			"pattern_seed": 7241,
+			"rarity": 26,
+			"sprout": "#76a370",
+			"tag": "not_farmable"
+		},
+		{
+			"category": {
+				"hardness": 3,
+				"material": "other",
+				"status": "auto"
+			},
+			"colors": [
+				"#a3bf5c",
+				"#e1dd02"
+			],
+			"crop": "twisted_tree",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": true,
+				"damage": false,
+				"kind": "block",
+				"light": false
+			},
+			"found": 1795336898.0,
+			"fruit_count": 0.0,
+			"id": "soft_lilac",
+			"made_by": "Novala",
+			"name": "Soft Lilac Seed",
+			"parents": [
+				"lilac_clay",
+				"lilac_loam"
+			],
+			"pattern": 3,
+			"pattern_seed": 66688,
+			"rarity": 32,
+			"sprout": "#64937b",
+			"tag": "farmable"
+		},
+		{
+			"art_ok": false,
+			"category": {
+				"hardness": 1,
+				"material": "plant",
+				"status": "auto"
+			},
+			"colors": [
+				"#c5a401",
+				"#985015"
+			],
+			"crop": "flower",
+			"custom": false,
+			"drop": {
+				"auto": true,
+				"bg_tags": [],
+				"collision": false,
+				"damage": false,
+				"kind": "decoration",
+				"light": false
+			},
+			"found": 1795336898.0,
+			"fruit_count": 0.0,
+			"id": "sunflower",
+			"made_by": "Novala",
+			"name": "Sunflower Seed",
+			"parents": [
+				"soft_lilac",
+				"dirtball_lilac"
+			],
+			"pattern": 2,
+			"pattern_seed": 79487,
+			"rarity": 58,
+			"rsr": 8.0,
+			"sprout": "#13b739",
+			"tag": "farmable"
 		}
 	],
 	"recipes": [
@@ -5707,6 +6338,82 @@
 		{
 			"pair": "black_background|white_background",
 			"result": "gray_background"
+		},
+		{
+			"pair": "moist_soil|rose",
+			"result": "foxglove"
+		},
+		{
+			"pair": "dirt|moist_soil",
+			"result": "mud"
+		},
+		{
+			"pair": "mud|rose",
+			"result": "rose_mud"
+		},
+		{
+			"pair": "foxglove|rose_mud",
+			"result": "lilac"
+		},
+		{
+			"pair": "foxglove|moist_soil",
+			"result": "moist_foxglove"
+		},
+		{
+			"pair": "moist_soil|rose_mud",
+			"result": "loam"
+		},
+		{
+			"pair": "lilac|loam",
+			"result": "lilac_loam"
+		},
+		{
+			"pair": "dirt|moist_foxglove",
+			"result": "dirt_foxglove"
+		},
+		{
+			"pair": "dirt_foxglove|lilac",
+			"result": "dirt_lilac"
+		},
+		{
+			"pair": "gravel|moist_soil",
+			"result": "pebble"
+		},
+		{
+			"pair": "foxglove|pebble",
+			"result": "foxglove_pebble"
+		},
+		{
+			"pair": "foxglove_pebble|loam",
+			"result": "clay"
+		},
+		{
+			"pair": "clay|lilac",
+			"result": "lilac_clay"
+		},
+		{
+			"pair": "pebble|rose",
+			"result": "rose_pebble"
+		},
+		{
+			"pair": "rose_pebble|stone",
+			"result": "boulder"
+		},
+		{
+			"pair": "boulder|lilac",
+			"result": "lilac_boulder"
+		},
+		{
+			"pair": "dirt_lilac|lilac_boulder",
+			"result": "dirtball_lilac"
+		},
+		{
+			"pair": "lilac_clay|lilac_loam",
+			"result": "soft_lilac"
+		},
+		{
+			"pair": "dirtball_lilac|soft_lilac",
+			"result": "sunflower"
 		}
 	]
 }

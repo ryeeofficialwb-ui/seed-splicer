@@ -1,8 +1,13 @@
 class_name SubmissionsWindow
 extends Modal
 ## Developer only (Settings > Submissions): every seed players uploaded that is waiting for review.
-## Approve: the seed (and the seeds it's made from, with the player's block art) comes into your
-## game, credited to the player; publish an update to give it to everyone. Deny: it stays out.
+## A submission is reviewed ONE SEED AT A TIME, from the first seed of its recipe chain that isn't
+## in your game yet (Game.submission_next_step): nothing gets in without being looked at.
+##   Approve  that seed comes into your game with the stamp, credited to the player (+ their block
+##            art if you tick it); the next unique seed of the chain shows up, until the top one.
+##   Deny     that seed goes to your graveyard (it can still be spliced, it makes 1 Mycora) and the
+##            submission is closed.
+## Push to players (or publish an update) gives your stamps and graveyard to everyone.
 
 var _list: VBoxContainer
 var _status: Label
@@ -15,7 +20,7 @@ var _push_armed := false
 
 func _ready() -> void:
 	_init_modal("Submissions", Vector2(1060, 0))
-	body.add_child(note("Seeds players uploaded for review. Approve brings one into your game (credited to the player); your next published update gives it to everyone. Deny keeps it out."))
+	body.add_child(note("Seeds players uploaded. Each one is reviewed a seed at a time, starting with the first seed of its recipe that isn't in your game yet. Approve = in your game with the stamp. Deny = into the graveyard."))
 	var top := HBoxContainer.new()
 	top.add_theme_constant_override("separation", 6)
 	body.add_child(top)
@@ -80,74 +85,109 @@ func _load() -> void:
 
 func _row(r: Dictionary) -> Control:
 	var payload: Dictionary = r.get("payload", {}) if r.get("payload") is Dictionary else {}
-	var top: Dictionary = {}
-	for s in payload.get("seeds", []):
-		if String(s.get("id", "")) == String(payload.get("top", "")):
-			top = s
 	var who := String(r.get("profiles", {}).get("username", "?")) if r.get("profiles") is Dictionary else "?"
+	var step := Game.submission_next_step(payload)
 	var panel := PanelContainer.new()
-	panel.theme_type_variation = &"WindowPanel"
-	var h := HBoxContainer.new()
-	h.add_theme_constant_override("separation", 10)
-	panel.add_child(h)
-	var icon := TextureRect.new()
-	icon.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
-	icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-	icon.custom_minimum_size = Vector2(48, 48)
-	if not top.is_empty():
-		icon.texture = SeedArt.texture_for(_drawable(top))
-	h.add_child(icon)
-	var art := TextureRect.new()
-	art.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
-	art.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-	art.custom_minimum_size = Vector2(48, 48)
-	var b64 := String(top.get("block_art", ""))
-	if b64 != "":
-		var img := Image.new()
-		if img.load_png_from_buffer(Marshalls.base64_to_raw(b64)) == OK:
-			art.texture = ImageTexture.create_from_image(img.get_region(Rect2i(0, 0, 32, 32)))
-	art.tooltip_text = "Their block art" if art.texture else "No block art"
-	h.add_child(art)
-	var info := VBoxContainer.new()
-	info.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	h.add_child(info)
-	var name_l := Label.new()
-	name_l.text = "%s  ·  by %s" % [r.get("seed_name", "?"), who]
-	name_l.add_theme_font_size_override("font_size", UiKit.SMALL)
-	info.add_child(name_l)
-	var known := Game.find_by_name(String(r.get("seed_name", ""))) != ""
-	info.add_child(note("R%d  ·  %s  ·  %d seed%s in the recipe chain%s" % [int(top.get("rarity", 1)), Game.tag_name(String(top.get("tag", ""))),
-		payload.get("seeds", []).size(), "" if payload.get("seeds", []).size() == 1 else "s", "  ·  you already have a seed with this name" if known else ""],
-		Color("#ffc94a") if known else Color(0.85, 0.82, 0.93)))
-	var deny_note := LineEdit.new()
-	deny_note.placeholder_text = "Note to the player (optional)"
-	deny_note.max_length = 300
-	info.add_child(deny_note)
-	var verdict := HBoxContainer.new()
-	verdict.add_theme_constant_override("separation", 6)
-	info.add_child(verdict)
+	panel.theme_type_variation = &"CardBase"
+	var col := VBoxContainer.new()
+	col.add_theme_constant_override("separation", 10)
+	panel.add_child(col)
+
+	# header: what they submitted, by whom, and which step this is
+	var head := HBoxContainer.new()
+	head.add_theme_constant_override("separation", 12)
+	col.add_child(head)
+	var title := Label.new()
+	title.text = "%s  ·  by %s" % [r.get("seed_name", "?"), who]
+	title.theme_type_variation = &"HeadingLabel"
+	title.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	title.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	head.add_child(title)
+	var step_l := Label.new()
+	step_l.theme_type_variation = &"NoteLabel"
+	head.add_child(step_l)
+	if not step.ok:
+		col.add_child(note("Couldn't read this submission: %s" % step.error, UiKit.RED))
+	if String(step.their_id) == "":
+		step_l.text = "already in your game"
+		col.add_child(note("Every seed of this submission is in your game already: approving just closes it."))
+	else:
+		step_l.text = "%d seed%s left to review" % [_unique_left(payload), "" if _unique_left(payload) == 1 else "s"]
+
+	var seed: Dictionary = step.seed
+	var art_tex: Texture2D = null
+	if not seed.is_empty():
+		var h := HBoxContainer.new()
+		h.add_theme_constant_override("separation", 16)
+		col.add_child(h)
+		h.add_child(_picture(SeedArt.texture_for(_drawable(seed)), "Their seed"))
+		var b64 := String(seed.get("block_art", ""))
+		if b64 != "":
+			var img := Image.new()
+			if img.load_png_from_buffer(Marshalls.base64_to_raw(b64)) == OK:
+				art_tex = ImageTexture.create_from_image(img.get_region(Rect2i(0, 0, 32, 32)))
+		h.add_child(_picture(art_tex, "Their block art" if art_tex else "No block art"))
+		var info := VBoxContainer.new()
+		info.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		info.add_theme_constant_override("separation", 6)
+		h.add_child(info)
+		var nm := Label.new()
+		nm.text = "Now reviewing:  %s" % String(step.name)
+		info.add_child(nm)
+		var parents: Array = step.parents
+		info.add_child(note("Made from:  %s" % (" + ".join(parents) if not parents.is_empty() else "nothing (their own Tier 1 seed)")))
+		info.add_child(note("R%d  ·  %s  ·  %s" % [int(seed.get("rarity", 1)), Game.tag_name(String(seed.get("tag", ""))),
+			"has block art" if art_tex else "no block art"]))
+
+	# the verdict
+	var controls := HFlowContainer.new()
+	controls.add_theme_constant_override("h_separation", 10)
+	controls.add_theme_constant_override("v_separation", 8)
+	col.add_child(controls)
 	var art_cb := CheckBox.new()
-	art_cb.text = "Approve their art (x25)"
-	art_cb.button_pressed = b64 != ""
-	art_cb.disabled = b64 == ""
-	art_cb.tooltip_text = "Ticked: their block art comes in and the seed makes x25 Mycoras.\nUnticked: the seed comes in without it (x10)."
-	verdict.add_child(art_cb)
+	art_cb.text = "Approve their block art (x25)"
+	art_cb.button_pressed = art_tex != null
+	art_cb.disabled = art_tex == null
+	art_cb.tooltip_text = "Only BLOCK art counts (the seed's own picture doesn't).\nTicked: their block art comes in and the seed makes x25 Mycoras. Unticked: x10."
+	controls.add_child(art_cb)
 	var rsr := OptionButton.new()
 	rsr.add_item("RSR: not rated", 0)
 	for rr in range(6, 11):
 		rsr.add_item("RSR %d  (x%s)" % [rr, str(Bank.RSR_MULT[rr])], rr)
-	verdict.add_child(rsr)
-	var btns := VBoxContainer.new()
-	h.add_child(btns)
+	controls.add_child(rsr)
+	var deny_note := LineEdit.new()
+	deny_note.placeholder_text = "Note to the player (optional)"
+	deny_note.max_length = 300
+	deny_note.custom_minimum_size = Vector2(380, 0)
+	controls.add_child(deny_note)
 	var ok := Button.new()
-	ok.text = "Approve"
-	ok.pressed.connect(func(): _decide(r, payload, "approved", deny_note.text, panel, art_cb.button_pressed and not art_cb.disabled, rsr.get_selected_id()))
-	btns.add_child(ok)
+	ok.text = "Approve this seed" if String(step.their_id) != "" else "Close it (approved)"
+	ok.theme_type_variation = &"ShopButton"
+	ok.pressed.connect(func(): _decide(r, payload, step, "approved", deny_note.text, panel, art_cb.button_pressed and not art_cb.disabled, rsr.get_selected_id()))
+	controls.add_child(ok)
 	var no := Button.new()
-	no.text = "Deny"
-	no.pressed.connect(func(): _decide(r, payload, "denied", deny_note.text, panel))
-	btns.add_child(no)
+	no.text = "Deny (graveyard)"
+	no.theme_type_variation = &"DangerButton"
+	no.pressed.connect(func(): _decide(r, payload, step, "denied", deny_note.text, panel))
+	controls.add_child(no)
 	return panel
+
+
+## How many seeds of the submission still aren't in your game.
+func _unique_left(payload: Dictionary) -> int:
+	var preview := Game.preview_from(payload)
+	return preview.new_seeds.size() if preview.ok else 0
+
+
+func _picture(tex: Texture2D, tip: String) -> Control:
+	var frame := PanelContainer.new()
+	frame.add_theme_stylebox_override("panel", UiKit.box("inset", 3, [4, 4, 4, 4]))
+	frame.tooltip_text = tip
+	var p := PixelPicture.new()
+	p.texture = tex
+	p.custom_minimum_size = Vector2(96, 96)
+	frame.add_child(p)
+	return frame
 
 
 ## A fingerprint of what players would get, to tell whether there's anything new to push.
@@ -212,35 +252,44 @@ func _drawable(s: Dictionary) -> Dictionary:
 	return d
 
 
-func _decide(r: Dictionary, payload: Dictionary, status: String, text: String, panel: Control, with_art := false, rating := 0) -> void:
+func _decide(r: Dictionary, payload: Dictionary, step: Dictionary, status: String, text: String, panel: Control, with_art := false, rating := 0) -> void:
 	if _busy:
 		return
-	_busy = true
+	var their_id := String(step.get("their_id", ""))
+	var seed_name := String(step.get("name", r.get("seed_name", "?")))
 	var msg := ""
-	if status == "approved":
-		var res: Dictionary = Game.import_submission(payload, with_art)
-		if not res.get("ok", false):
-			_busy = false
-			_status.text = "Couldn't read that submission: %s" % res.get("error", "?")
+	if their_id != "":
+		var res: Dictionary = Game.import_submission_step(payload, their_id, with_art, status == "denied")
+		if not res.ok:
+			_status.text = "Couldn't bring that seed in: %s" % res.error
 			return
-		var top_id := Game.find_by_name(String(r.get("seed_name", "")))
-		if top_id != "":
-			Game.set_art_ok(top_id, with_art and BlockArt.has_art(top_id))
-			Game.set_rating(top_id, rating)
-		if rating >= 6 and text.strip_edges() == "":
-			text = "RSR %d/10" % rating
-		msg = "Approved %s%s%s: %d new seed%s in your game." % [r.get("seed_name", "?"), " with its art" if with_art else "", "  ·  RSR %d" % rating if rating >= 6 else "",
-			res.seeds_added, "" if res.seeds_added == 1 else "s"]
-	else:
-		var who := String(r.get("profiles", {}).get("username", "")) if r.get("profiles") is Dictionary else ""
-		Game.bury_submission(payload, who, int(r.id), true)
-		msg = "Denied %s: it's in your Graveyard (and ships in it with your next update)." % r.get("seed_name", "?")
+		if status == "approved":
+			Game.set_art_ok(res.id, with_art and BlockArt.has_art(res.id))
+			Game.set_rating(res.id, rating)
+			msg = "Approved %s%s%s: it's in your game with the stamp." % [seed_name, " with its block art" if with_art else "",
+				"  ·  RSR %d" % rating if rating >= 6 else ""]
+		else:
+			msg = "Denied %s: it's in your Graveyard (still splices, makes 1 Mycora)." % seed_name
+	if status == "approved" and their_id != "" and String(Game.submission_next_step(payload).their_id) != "":
+		# more seeds of this chain to review: show the next one, the submission stays open
+		_status.text = msg + "  The next seed of this submission is up."
+		Audio.play(&"success")
+		var i := panel.get_index()
+		panel.queue_free()
+		var next := _row(r)
+		_list.add_child(next)
+		_list.move_child(next, i)
+		_update_push_note()
+		return
+	if rating >= 6 and text.strip_edges() == "":
+		text = "RSR %d/10" % rating
+	_busy = true
 	var saved: bool = await Online.review(int(r.id), status, text)
 	_busy = false
 	if not saved:
 		_status.text = msg + "  (couldn't save the decision online: try Refresh)"
 		return
-	_status.text = msg
+	_status.text = msg + ("  Submission done." if status == "approved" else "")
 	Audio.play(&"success")
 	panel.queue_free()
 	if live:

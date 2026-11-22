@@ -7,6 +7,11 @@ extends RefCounted
 ##   denied    seeds the developer sent to the graveyard: the Dictionary's Graveyard tab shows them.
 ## A seed you send to the graveyard yourself (Dictionary > "Send to graveyard") is marked
 ## `denied` in your save: it loses its stamp and moves to the Graveyard tab too.
+## THE DEVELOPER'S OWN GAME doesn't wait for a publish: every seed in it that isn't in the graveyard
+## and whose stamp wasn't revoked (Dictionary > Revoke stamp, `unstamped`) has the stamp right away,
+## signed with whoever made it (the player who submitted it, else you). That's exactly what the next
+## Push to players / update gives everyone.
+## Graveyard seeds can still be spliced, but make only GRAVE_RATE Mycoras every 3 s (bank.gd).
 
 const PATH := "res://data/approvals.json"
 const FORMAT := "seed-splicer-approvals"
@@ -15,6 +20,7 @@ const STAMP_BIG := preload("res://assets/stamp/approval_stamp_64.png")
 const STAMP_COLOR := Color("#ffb347")
 
 static var _loaded := false
+static var _test_data := false  ## use_data() was called: tests use their own list, even in the editor
 static var _approved := {}   # lowercase name -> contributor
 static var _info := {}       # lowercase name -> { art: bool (approved with its art), rsr: 0 or 6..10 }
 static var _denied: Array = []  # seed dictionaries (enough to draw them)
@@ -47,6 +53,7 @@ static func _ensure() -> void:
 ## Loads `data` instead of the shipped file (tests).
 static func use_data(data: Dictionary) -> void:
 	_loaded = true
+	_test_data = true
 	_approved.clear()
 	_info.clear()
 	_denied.clear()
@@ -66,11 +73,33 @@ static func _add(a: Dictionary) -> void:
 	_info[key] = { "art": bool(a.get("art", false)), "rsr": rsr if rsr >= 6 and rsr <= 10 else 0 }
 
 
+## The developer's game reads stamps straight from its own save (see the top of this file).
+static func _live() -> bool:
+	return DevMode.on() and not _test_data
+
+
 ## An approved seed's boosts: { art, rsr } ({} if it isn't approved). See bank.gd.
+## art = approved with its BLOCK art (the seed's own picture doesn't count).
 static func info(seed: Dictionary) -> Dictionary:
 	if approved_by(seed) == "":
 		return {}
+	if _live():
+		var id := String(seed.get("id", ""))
+		var rsr := int(seed.get("rsr", 0))
+		return { "art": Game.art_approved(id), "rsr": rsr if rsr >= 6 and rsr <= 10 else 0 }
 	return _info.get(String(seed.get("name", "")).strip_edges().to_lower(), { "art": false, "rsr": 0 })
+
+
+## In the graveyard: sent there by you, or on the official denied list. It can still be spliced
+## but makes only Bank.GRAVE_RATE Mycoras.
+static func is_graveyard(seed: Dictionary) -> bool:
+	if seed.is_empty():
+		return false
+	if seed.get("denied", false):
+		return true
+	_ensure()
+	var key := String(seed.get("name", "")).strip_edges().to_lower()
+	return not _approved.has(key) and _denied.any(func(d): return String(d.get("name", "")).strip_edges().to_lower() == key)
 
 
 ## The graveyard as published (the official denied list, without your own marks).
@@ -89,6 +118,11 @@ static func approved_by(seed: Dictionary) -> String:
 	_ensure()
 	if seed.is_empty() or seed.get("denied", false):
 		return ""
+	if _live():
+		if seed.get("unstamped", false) or not Game.seeds.has(String(seed.get("id", ""))):
+			return ""
+		var made := String(seed.get("made_by", "")).strip_edges()
+		return made if made != "" else (Game.player_name() if Game.player_name() != "" else "you")
 	var key := String(seed.get("name", "")).strip_edges().to_lower()
 	if not _approved.has(key):
 		return ""
@@ -102,6 +136,8 @@ static func is_approved(seed: Dictionary) -> bool:
 
 static func official_count() -> int:
 	_ensure()
+	if _live():
+		return Game.order.filter(func(id): return approved_by(Game.seeds[id]) != "").size()
 	return _approved.size()
 
 

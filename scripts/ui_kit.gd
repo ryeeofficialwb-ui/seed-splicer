@@ -18,7 +18,7 @@ extends RefCounted
 ##   NoteLabel       small grey explanation text          DimLabel       even quieter text
 
 const DIR := "res://assets/ui/"
-const FONT_PATH := "res://assets/fonts/PixelifySans.ttf"
+const FONT_PATH := "res://assets/fonts/SeedSplicerPixel.ttf"  
 const PX := 2  ## texture pixels per art pixel
 const GRID := 13  ## Pixelify Sans: one font pixel per 13 px of size
 const SMALL := 26  ## all text

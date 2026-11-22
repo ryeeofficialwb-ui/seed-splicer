@@ -91,6 +91,8 @@ def bake_approvals(version):
             d.update({k: s[k] for k in DRAW_FIELDS if k in s})
             d["parent_names"] = [names.get(p, "?") for p in s.get("parents", [])]
             denied.append(d)
+        elif s.get("unstamped"):
+            pass  # stamp revoked (Dictionary > Revoke stamp): not approved
         else:
             art_file = os.path.join(USER_DIR, "block_art", s["id"] + ".png")
             art = os.path.exists(art_file) and s.get("art_ok", True) is not False
@@ -122,7 +124,7 @@ def bake_approvals(version):
 def bake_official(version, save, me):
     """data/official_list.json: every approved seed with its recipes and block art. Players' games
     add the ones they don't have when they start on this version (see scripts/official.gd)."""
-    keep = {s["id"] for s in save["seeds"] if not s.get("denied")}
+    keep = {s["id"] for s in save["seeds"] if not s.get("denied") and not s.get("unstamped")}
     seeds = []
     art_dir = os.path.join(USER_DIR, "block_art")
     with_art = 0

@@ -37,15 +37,13 @@ static func seed_count() -> int:
 ## The official block art for a seed of this name, or null.
 static func art_for(seed_name: String) -> Image:
 	var key := seed_name.strip_edges().to_lower()
-	if _art.has(key):
-		return _art[key]
-	if _art.is_empty():  # build the name -> art table once
+	if _art.is_empty():  # build the name -> art table once (base64 text until first used)
 		for s in data().get("seeds", []):
 			if typeof(s) == TYPE_DICTIONARY and String(s.get("block_art", "")) != "":
 				_art[String(s.get("name", "")).strip_edges().to_lower()] = s.block_art
 		_art[""] = null
 	var v: Variant = _art.get(key)
-	if typeof(v) == TYPE_STRING:
+	if typeof(v) == TYPE_STRING:  # decode on first use (this used to hand back the text itself)
 		var img := Image.new()
 		if img.load_png_from_buffer(Marshalls.base64_to_raw(v)) == OK:
 			img.convert(Image.FORMAT_RGBA8)
@@ -53,9 +51,7 @@ static func art_for(seed_name: String) -> Image:
 		else:
 			v = null
 		_art[key] = v
-	elif not _art.has(key):
-		_art[key] = null
-	return _art[key]
+	return v as Image
 
 
 ## Adds every official seed (and its recipes) the player doesn't have yet. Once per version.

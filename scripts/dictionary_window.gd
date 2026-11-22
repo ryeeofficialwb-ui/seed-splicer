@@ -30,6 +30,7 @@ var _detail_name: Label
 var _detail_text: RichTextLabel
 var _edit_btn: Button
 var _grave_btn: Button
+var _revoke_btn: Button
 var _remove_btn: Button
 var _rsr: OptionButton
 var _art_ok: CheckBox
@@ -210,13 +211,22 @@ func _ready() -> void:
 	_rsr.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	_dev_row.add_child(_rsr)
 	_art_ok = CheckBox.new()
-	_art_ok.text = "Art approved"
-	_art_ok.tooltip_text = "Approved with its art: x25 Mycoras instead of x10 (ships with your next update)"
+	_art_ok.text = "Block art approved"
+	_art_ok.tooltip_text = "Approved with its BLOCK art: x25 Mycoras instead of x10 (the seed's picture doesn't count)"
 	_art_ok.toggled.connect(func(on):
 		var id := _local_id(_selected)
 		if id != "" and on != Game.art_approved(id):
 			Game.set_art_ok(id, on))
 	_dev_row.add_child(_art_ok)
+	# the nuke: take the stamp off the official seed (players keep their copy)
+	_revoke_btn = Button.new()
+	_revoke_btn.theme_type_variation = &"DangerButton"
+	_revoke_btn.tooltip_text = "Revoke stamp: the seed stays in your game, but it's taken off the official list.\nYour next Push / update removes its stamp for every player (they keep their copy) and new players don't get it."
+	_revoke_btn.pressed.connect(func():
+		var id := _local_id(_selected)
+		if id != "":
+			Game.set_unstamped(id, not Game.seeds[id].get("unstamped", false)))
+	_dev_row.add_child(_revoke_btn)
 
 	_summary = Label.new()
 	_summary.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART  # never pushes the window wider than the screen
@@ -390,8 +400,8 @@ func _row(parent: TreeItem, id: String) -> TreeItem:
 	it.set_icon(0, _thumb(id))
 	it.set_icon_max_width(0, THUMB)
 	it.set_tooltip_text(0, Bank.unlock_text(id))
-	if Bank.produces(id):  # the green check badge, at the end of the name
-		it.add_button(0, UiKit.tex("badge_unlocked"), 0, false, Bank.unlock_text(id))
+	# a green check on unlocked seeds, a padlock on locked ones (at the end of the name)
+	it.add_button(0, UiKit.tex("badge_unlocked" if Bank.produces(id) else "badge_locked"), 0, false, Bank.unlock_text(id))
 	it.set_custom_color(0, (tier[1] as Color).lerp(Color.WHITE, 0.35))
 	it.set_text(1, str(int(s.rarity)))
 	it.set_custom_color(1, tier[1])
@@ -519,6 +529,10 @@ func _show_detail(key: String) -> void:
 		_rsr.select(_rsr.get_item_index(int(Game.seeds[id].get("rsr", 0))))
 		_art_ok.set_pressed_no_signal(Game.art_approved(id))
 		_art_ok.disabled = not BlockArt.has_art(id)
+		var revoked: bool = Game.seeds[id].get("unstamped", false)
+		_revoke_btn.text = "Give the stamp back" if revoked else "Revoke stamp"
+		_revoke_btn.theme_type_variation = &"ShopButton" if revoked else &"DangerButton"
+		_revoke_btn.disabled = Game.seeds[id].get("denied", false)
 	for p in _blocks + _stages:
 		p.texture = null
 	if s.is_empty():

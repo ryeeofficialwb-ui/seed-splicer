@@ -1,8 +1,8 @@
 {
 	"format": "seed-splicer-approvals",
-	"version": "0.1",
+	"version": "0.1.1",
 	"publisher": "KeepUpp",
-	"published": 1795330529,
+	"published": 1795354050,
 	"approved": [
 		{
 			"name": "Dirt Seed",
@@ -884,6 +884,114 @@
 			"name": "Gray Background Seed",
 			"made_by": "KeepUpp",
 			"art": true,
+			"rsr": null
+		},
+		{
+			"name": "Moist Soil",
+			"made_by": "Novala",
+			"art": false,
+			"rsr": null
+		},
+		{
+			"name": "Foxglove Seed",
+			"made_by": "Novala",
+			"art": false,
+			"rsr": null
+		},
+		{
+			"name": "Mud Seed",
+			"made_by": "Novala",
+			"art": false,
+			"rsr": null
+		},
+		{
+			"name": "Rose Mud Seed",
+			"made_by": "Novala",
+			"art": false,
+			"rsr": null
+		},
+		{
+			"name": "Lilac Seed",
+			"made_by": "Novala",
+			"art": false,
+			"rsr": null
+		},
+		{
+			"name": "Moist Foxglove Seed",
+			"made_by": "Novala",
+			"art": false,
+			"rsr": null
+		},
+		{
+			"name": "Loam Seed",
+			"made_by": "Novala",
+			"art": false,
+			"rsr": null
+		},
+		{
+			"name": "Lilac Loam Seed",
+			"made_by": "Novala",
+			"art": false,
+			"rsr": null
+		},
+		{
+			"name": "Dirt Foxglove Seed",
+			"made_by": "Novala",
+			"art": false,
+			"rsr": null
+		},
+		{
+			"name": "Dirt Lilac Seed",
+			"made_by": "Novala",
+			"art": false,
+			"rsr": null
+		},
+		{
+			"name": "Pebble Seed",
+			"made_by": "Novala",
+			"art": false,
+			"rsr": null
+		},
+		{
+			"name": "Foxglove Pebble Seed",
+			"made_by": "Novala",
+			"art": false,
+			"rsr": null
+		},
+		{
+			"name": "Lilac Clay Seed",
+			"made_by": "Novala",
+			"art": false,
+			"rsr": null
+		},
+		{
+			"name": "Rose Pebble Seed",
+			"made_by": "Novala",
+			"art": false,
+			"rsr": null
+		},
+		{
+			"name": "Lilac Boulder Seed",
+			"made_by": "Novala",
+			"art": false,
+			"rsr": null
+		},
+		{
+			"name": "Dirtball Lilac Seed",
+			"made_by": "Novala",
+			"art": false,
+			"rsr": null
+		},
+		{
+			"name": "Soft Lilac Seed",
+			"made_by": "Novala",
+			"art": false,
+			"rsr": null
+		},
+		{
+			"name": "Sunflower Seed",
+			"made_by": "Novala",
+			"art": false,
 			"rsr": null
 		}
 	],
