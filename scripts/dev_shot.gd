@@ -1687,6 +1687,10 @@ func _run_test28(base: String) -> void:
 	_check("denying sends it to the graveyard, still in your game", r.ok and Game.seeds[r.id].get("denied", false) and Approvals.graveyard().any(func(g): return g.seed.name == "Zz Step Two Seed"))
 	_check("nothing left to review", String(Game.submission_next_step(sub).their_id) == "")
 
+	# Delete seed (developer): gone with its recipes; base seeds can't be deleted
+	var gone := Game.delete_seed(x_id)
+	_check("Delete seed removes it and its recipes", gone and not Game.seeds.has(x_id) and Game.recipes.values().all(func(v): return v != x_id)
+		and not Game.delete_seed("dirt"))
 	# names: built from the seed, not glued from the parents
 	var names := SeedNames.ideas(Game.seeds["dirt"], Game.seeds["magma_rock"], 2, 8)
 	var clean := names.all(func(n): return n.ends_with(" Seed") and not n.to_lower().contains("dirt") and not n.to_lower().contains("magma"))

@@ -791,6 +791,32 @@ func art_approved(id: String) -> bool:
 	return bool(seeds[id].get("art_ok", true))
 
 
+## Deletes a seed from your list for good (developer, Seeds panel > Delete seed): its recipes,
+## block art and unlock go too. Seeds made from it stay, without that recipe. Base seeds can't go.
+## Your next push / update leaves it out (players who have it keep their copy).
+func delete_seed(id: String) -> bool:
+	if not seeds.has(id) or BASE_SEEDS.any(func(b): return b.id == id):
+		return false
+	for k in recipe_order.duplicate():
+		var pair := String(k).split("|")
+		if recipes.get(k, "") == id or pair.has(id):
+			recipes.erase(k)
+			recipe_order.erase(k)
+	for other in order:
+		if seeds[other].get("parents", []).has(id):
+			seeds[other].parents = []
+	seeds.erase(id)
+	order.erase(id)
+	void_tokens = void_tokens.filter(func(t): return String(t.get("id", "")) != id)
+	BlockArt.remove(id)
+	Bank.unlocked.erase(id)
+	Bank.save()
+	save_game()
+	seeds_changed.emit()
+	recipes_changed.emit()
+	return true
+
+
 ## THE NUKE (developer): take the approval stamp off a seed. It stays in your game, but it isn't on
 ## the official list any more: the next push / update takes its stamp away from every player (who
 ## keep their copy) and new players don't get it. on = false gives the stamp back.

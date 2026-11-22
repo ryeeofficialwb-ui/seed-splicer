@@ -217,6 +217,28 @@ func _ready() -> void:
 	var buttons := HBoxContainer.new()
 	root.add_child(buttons)
 	_footer_button(buttons, "Clear Void", "Remove every seed floating in the void", clear_void_requested)
+	if DevMode.on():  # developer only: take a seed off your list for good
+		var del := Button.new()
+		del.text = "Delete seed"
+		del.theme_type_variation = &"DangerButton"
+		del.tooltip_text = "Delete the selected seed from your list for good (its recipes and block art too).\nYour next push / update leaves it out; players keep their copy."
+		del.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		buttons.add_child(del)
+		var confirm := ConfirmationDialog.new()
+		confirm.ok_button_text = "Delete"
+		add_child(confirm)
+		del.pressed.connect(func():
+			var sel := _list.get_selected_items()
+			if sel.is_empty():
+				Audio.play(&"error")
+				return
+			var id: String = _list.get_item_metadata(sel[0])
+			confirm.dialog_text = "Delete %s from your list for good?\nIts recipes and block art go too. This can't be undone." % Game.seeds[id].name
+			confirm.set_meta(&"id", id)
+			confirm.popup_centered())
+		confirm.confirmed.connect(func():
+			if not Game.delete_seed(String(confirm.get_meta(&"id", ""))):
+				Audio.play(&"error"))
 
 	Game.seeds_changed.connect(refresh_seeds)
 	Bank.unlocks_changed.connect(refresh_seeds)  # the unlocked badges
