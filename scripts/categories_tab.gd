@@ -85,7 +85,7 @@ func _ready() -> void:
 
 	_summary = Label.new()
 	_summary.add_theme_font_size_override("font_size", UiKit.SMALL)
-	_summary.add_theme_color_override("font_color", Color(0.75, 0.72, 0.85))
+	_summary.add_theme_color_override("font_color", Color(0.85, 0.82, 0.93))
 	_summary.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	add_child(_summary)
 	var tip := Label.new()

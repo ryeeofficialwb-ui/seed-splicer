@@ -118,7 +118,7 @@ func _row(r: Dictionary) -> Control:
 	var known := Game.find_by_name(String(r.get("seed_name", ""))) != ""
 	info.add_child(note("R%d  ·  %s  ·  %d seed%s in the recipe chain%s" % [int(top.get("rarity", 1)), Game.tag_name(String(top.get("tag", ""))),
 		payload.get("seeds", []).size(), "" if payload.get("seeds", []).size() == 1 else "s", "  ·  you already have a seed with this name" if known else ""],
-		Color("#ffc94a") if known else Color(0.75, 0.72, 0.85)))
+		Color("#ffc94a") if known else Color(0.85, 0.82, 0.93)))
 	var deny_note := LineEdit.new()
 	deny_note.placeholder_text = "Note to the player (optional)"
 	deny_note.max_length = 300
@@ -170,7 +170,7 @@ func _update_push_note() -> void:
 	var fp := _fingerprint(Game.build_official_payload(""))
 	var same := fp == String(UserSettings.get_value("live", "pushed", ""))
 	_push_note.text = "Players have everything (live v%d)." % Official.live_version if same else "You have changes players don't have yet: push when you're done approving."
-	_push_note.add_theme_color_override("font_color", Color(0.7, 0.67, 0.8) if same else Color("#ffc94a"))
+	_push_note.add_theme_color_override("font_color", Color(0.82, 0.79, 0.91) if same else Color("#ffc94a"))
 
 
 func _on_push() -> void:

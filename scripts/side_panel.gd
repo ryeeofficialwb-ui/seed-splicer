@@ -29,7 +29,9 @@ class SeedList extends ItemList:
 	signal edit(id: String, discard_spawn: bool)
 	var _pressed := -1
 	var stamped := {}  ## item index -> [name, "  ·  R36"]: drawn with the approval stamp after the rarity
+	var unlocked := {}  ## item index -> true: an unlocked seed (green check badge on its picture)
 	const STAMP := 22.0
+	const BADGE := 18.0
 
 	func _ready() -> void:
 		resized.connect(fit_stamped)
@@ -58,11 +60,21 @@ class SeedList extends ItemList:
 	## The approval stamp right after "Name  ·  R36" (ItemList has one icon per row, so it is
 	## drawn on top of the list).
 	func _draw() -> void:
-		if stamped.is_empty():
-			return
 		var font := get_theme_font("font")
 		var fs := get_theme_font_size("font_size")
 		var scroll := get_v_scroll_bar().value if get_v_scroll_bar().visible else 0.0
+		# unlocked seeds: the green check badge at the bottom-right of the seed picture
+		var badge := UiKit.tex("badge_unlocked")
+		var pad := get_theme_stylebox("panel").get_margin(SIDE_LEFT) if has_theme_stylebox("panel") else 0.0
+		for idx in unlocked:
+			if idx >= item_count:
+				continue
+			var r := get_item_rect(idx)
+			r.position.y -= scroll
+			if r.end.y < 0.0 or r.position.y > size.y:
+				continue
+			var icon_end := Vector2(r.position.x + pad + fixed_icon_size.x, r.get_center().y + fixed_icon_size.y / 2.0)
+			draw_texture_rect(badge, Rect2((icon_end - Vector2(BADGE - 2.0, BADGE - 2.0)).round(), Vector2(BADGE, BADGE)), false)
 		for idx in stamped:
 			if idx >= item_count:
 				continue
@@ -183,7 +195,7 @@ func _ready() -> void:
 	var tip := Label.new()
 	tip.text = "Click or drag into the void  ·  Double-click to edit"
 	tip.add_theme_font_size_override("font_size", UiKit.SMALL)
-	tip.add_theme_color_override("font_color", Color(0.7, 0.67, 0.8))
+	tip.add_theme_color_override("font_color", Color(0.82, 0.79, 0.91))
 	tip.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	seeds_tab.add_child(tip)
 
@@ -207,6 +219,7 @@ func _ready() -> void:
 	_footer_button(buttons, "Clear Void", "Remove every seed floating in the void", clear_void_requested)
 
 	Game.seeds_changed.connect(refresh_seeds)
+	Bank.unlocks_changed.connect(refresh_seeds)  # the unlocked badges
 	Game.recipes_changed.connect(_update_count)
 	refresh_seeds()
 
@@ -228,6 +241,7 @@ func refresh_seeds() -> void:
 	ids = SeedSort.sort_ids(SeedSort.filter_drops(SeedSort.filter_ids(ids, _filter.selected), _drop_filter.selected), _sort.selected)
 	_list.clear()
 	_list.stamped.clear()
+	_list.unlocked.clear()
 	for id in ids:
 		var s: Dictionary = Game.seeds[id]
 		var r := int(s.rarity)
@@ -239,8 +253,10 @@ func refresh_seeds() -> void:
 		_list.set_item_custom_fg_color(i, tier[1].lerp(Color.WHITE, 0.35))
 		if by != "":
 			_list.stamped[i] = [String(s.name), "  ·  R%d" % r]
+		if Bank.produces(id):
+			_list.unlocked[i] = true
 		_list.set_item_tooltip(i, ("Approved seed  ·  made by %s
-" % by if by != "" else "") + _origin_text(s))
+" % by if by != "" else "") + Bank.unlock_text(id) + "\n" + _origin_text(s))
 	_list.fit_stamped.call_deferred()
 	_update_count()
 

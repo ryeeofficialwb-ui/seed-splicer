@@ -887,14 +887,16 @@ func _run_test18(base: String) -> void:
 	for k in kinds:
 		counts.append(Game.order.filter(func(id): return k == "" or Game.seeds[id].drop.kind == k).size())
 	var tab_ok := true
-	for t in 4:
-		dict._tabs.current_tab = t
+	var kind_tabs := [0, 2, 3, 4]  # All, Blocks, Decorations, Backgrounds
+	for k in 4:
+		dict._tabs.current_tab = kind_tabs[k]
 		dict.refresh()
 		var rows := 0
 		for g in dict._tree.get_root().get_children():
 			rows += g.get_child_count()
-		tab_ok = tab_ok and rows == counts[t]
+		tab_ok = tab_ok and rows == counts[k]
 	_check("every Dictionary tab lists exactly its seeds (%s)" % str(counts), tab_ok)
+	dict._tabs.current_tab = 0
 	dict._tabs.current_tab = 0
 	dict._light_only.button_pressed = true
 	dict.refresh()
@@ -1544,11 +1546,13 @@ func _run_test27(base: String) -> void:
 	# the pixel theme
 	var t: Theme = main.theme
 	_check("buttons are pixel-art 9-slices", t.get_stylebox("normal", "Button") is StyleBoxTexture)
-	_check("the font is Pixelify Sans at a crisp 26 px", t.default_font is FontFile and t.default_font_size == 26
-		and (t.default_font as FontFile).antialiasing == TextServer.FONT_ANTIALIASING_NONE)
+	_check("the font is regular Pixelify Sans at a crisp 26 px", t.default_font == UiKit.text_font() and t.default_font_size == 26
+		and ((t.default_font as FontVariation).base_font as FontFile).antialiasing == TextServer.FONT_ANTIALIASING_NONE)
 	_check("every kit piece loads", ["button_normal", "window", "pack", "card_back", "w_thunder", "icon_shop"].all(func(n): return UiKit.tex(n) != null))
 	_check("all text is the crisp 26 px, titles 39", UiKit.SMALL == 26 and UiKit.BIG == 39 and UiKit.size(15) == 26 and UiKit.size(40) == 39)
-	_check("no blurry drop shadow under labels", not t.has_color("font_shadow_color", "Label"))
+	_check("text has a black outline and a hard black drop shadow", t.get_color("font_outline_color", "Label") == Color.BLACK
+		and t.get_constant("outline_size", "Label") == UiKit.OUTLINE and t.get_constant("outline_size", "Button") == UiKit.OUTLINE
+		and t.get_color("font_shadow_color", "Label") == Color.BLACK and t.get_constant("shadow_offset_y", "Label") == UiKit.SHADOW_OFFSET)
 	# the tutorial: a splice moves it on, Cancel goes back, finishing marks it done
 	UserSettings.set_value("tutorial", Tutorial.DONE_KEY, false)
 	main._start_tutorial()
@@ -1569,6 +1573,30 @@ func _run_test27(base: String) -> void:
 	tut.finish()
 	await get_tree().process_frame
 	_check("finishing marks it done", bool(UserSettings.get_value("tutorial", Tutorial.DONE_KEY, false)) and not Tutorial.should_start())
+	# the Unlocked tab: the base seeds + whatever came out of packs, each with the green badge
+	var dict: DictionaryWindow = main.dictionary
+	var panel: SidePanel = main.panel
+	var keep_unlocked: Dictionary = Bank.unlocked.duplicate()
+	Bank.unlocked.clear()
+	var extra: String = Game.order.filter(func(id): return not Bank.is_base(id) and not Game.seeds[id].get("denied", false))[0]
+	Bank.unlocked[extra] = true
+	dict._tabs.current_tab = DictionaryWindow.UNLOCKED_TAB
+	dict.refresh()
+	var in_tab: Array = []
+	var badged := true
+	for g in dict._tree.get_root().get_children():
+		for it in g.get_children():
+			in_tab.append(it.get_metadata(0))
+			badged = badged and it.get_button_count(0) == 1
+	_check("the Unlocked tab lists the 4 base seeds + the unlocked one, each with the badge (%d)" % in_tab.size(),
+		in_tab.size() == 5 and in_tab.has(extra) and in_tab.has("dirt") and badged)
+	await _snap(base + "/t27_unlocked_tab.png")
+	panel.refresh_seeds()
+	var badges := panel._list.unlocked.size()
+	_check("the Seeds panel badges exactly the unlocked seeds (%d)" % badges, badges == 5)
+	Bank.unlocked = keep_unlocked
+	dict._tabs.current_tab = 0
+	panel.refresh_seeds()
 	# the sign-in screen
 	main.show_login()
 	await get_tree().create_timer(0.3).timeout
@@ -2425,7 +2453,7 @@ func _run_test5(base: String) -> void:
 	await get_tree().create_timer(0.2).timeout
 	var g_node: Dictionary = c.nodes.filter(func(n): return n.id == gravel)[0]
 	_check("gravel now shows a 1/2 badge", g_node.recipes == 2 and g_node.idx == 0)
-	c.click_at(Vector2(g_node.x + 40.0, float(g_node.y) + 10.0))  # the badge
+	c.click_at(c.badge_rect(g_node).get_center())  # the badge (wherever the layout puts it)
 	g_node = c.nodes.filter(func(n): return n.id == gravel)[0]
 	_check("clicking the badge switches to recipe 2/2 (dirt + glowing mushroom)", g_node.idx == 1 and g_node.kids[1].id == "glowing_mushroom")
 	await _snap(base + "/t5_alt.png")

@@ -146,14 +146,14 @@ func _draw() -> void:
 	var fs := UiKit.SMALL
 	var w := font.get_string_size(label, HORIZONTAL_ALIGNMENT_LEFT, -1, fs).x
 	var pos := Vector2(roundf((ART - w) / 2.0), ART + 22.0)
-	draw_string_outline(font, pos, label, HORIZONTAL_ALIGNMENT_LEFT, -1, fs, 4, Color(0.05, 0.04, 0.08, 0.9))
+	draw_string_outline(font, pos, label, HORIZONTAL_ALIGNMENT_LEFT, -1, fs, UiKit.OUTLINE, Color(0, 0, 0))
 	draw_string(font, pos, label, HORIZONTAL_ALIGNMENT_LEFT, -1, fs, Color(0.95, 0.93, 1.0))
 	# second line: only the rarity, in its tier color (every other tag lives in the Dictionary)
 	var tier: Array = SeedArt.rarity_tier(int(s.get("rarity", 1)))
 	var rl := "R%d" % int(s.get("rarity", 1))
 	var rw := font.get_string_size(rl, HORIZONTAL_ALIGNMENT_LEFT, -1, fs).x
 	var rpos := Vector2(roundf((ART - rw) / 2.0), ART + 48.0)
-	draw_string_outline(font, rpos, rl, HORIZONTAL_ALIGNMENT_LEFT, -1, fs, 4, Color(0.05, 0.04, 0.08, 0.9))
+	draw_string_outline(font, rpos, rl, HORIZONTAL_ALIGNMENT_LEFT, -1, fs, UiKit.OUTLINE, Color(0, 0, 0))
 	draw_string(font, rpos, rl, HORIZONTAL_ALIGNMENT_LEFT, -1, fs, tier[1])
 	# third line: the approval stamp and who made it (only seeds on the official list)
 	var by := Approvals.approved_by(s)
@@ -164,5 +164,5 @@ func _draw() -> void:
 		var top := ART + 56.0
 		draw_texture_rect(Approvals.STAMP_SMALL, Rect2(x0, top, st, st), false)
 		var bpos := Vector2(x0 + st + 3.0, top + 20.0)
-		draw_string_outline(font, bpos, by, HORIZONTAL_ALIGNMENT_LEFT, -1, fs, 4, Color(0.05, 0.04, 0.08, 0.9))
+		draw_string_outline(font, bpos, by, HORIZONTAL_ALIGNMENT_LEFT, -1, fs, UiKit.OUTLINE, Color(0, 0, 0))
 		draw_string(font, bpos, by, HORIZONTAL_ALIGNMENT_LEFT, -1, fs, Approvals.STAMP_COLOR)

@@ -24,17 +24,21 @@ const GRID := 13  ## Pixelify Sans: one font pixel per 13 px of size
 const SMALL := 26  ## all text
 const BIG := 39    ## titles
 
-const INK := Color("#0b0912")
-const PANEL := Color("#15111e")
+const INK := Color("#1c1630")
+const PANEL := Color("#2b2340")
 const TEXT := Color("#ece8f7")
 const MUTED := Color("#9a94b0")
 const ACCENT := Color("#a6ff6e")
 const GOLD := Color("#ffc94a")
 const RED := Color("#ff8a8a")
+const SHADOW := Color("#000000")  ## text outline + hard shadow: black around light text
+const OUTLINE := 4  ## a black stroke around every letter
+const SHADOW_OFFSET := 3  ## ...and a hard black drop shadow
 
 static var _tex := {}
 static var _font: FontFile
 static var _bold: FontVariation
+static var _text: FontVariation
 
 
 static func tex(name: String) -> Texture2D:
@@ -65,11 +69,22 @@ static func font() -> FontFile:
 	return _font
 
 
+## The everyday text font: regular weight (not bold), with wider gaps between words so the black
+## stroke doesn't close them up.
+static func text_font() -> FontVariation:
+	if _text == null:
+		_text = FontVariation.new()
+		_text.base_font = font()
+		_text.spacing_space = 6
+	return _text
+
+
 static func bold_font() -> FontVariation:
 	if _bold == null:
 		_bold = FontVariation.new()
 		_bold.base_font = font()
 		_bold.variation_opentype = { TextServerManager.get_primary_interface().name_to_tag("wght"): 700 }
+		_bold.spacing_space = 6  # wider gaps between words: the black outline would close them up
 	return _bold
 
 
@@ -84,7 +99,7 @@ static func _empty() -> StyleBoxEmpty:
 
 static func make_theme() -> Theme:
 	var t := Theme.new()
-	t.default_font = font()
+	t.default_font = text_font()
 	t.default_font_size = SMALL
 
 	# --- buttons
@@ -210,7 +225,7 @@ static func make_theme() -> Theme:
 	t.set_stylebox("embedded_border", "Window", box("window", 5, [6, 30, 6, 6]))
 	t.set_stylebox("embedded_unfocused_border", "Window", box("window", 5, [6, 30, 6, 6]))
 	t.set_color("title_color", "Window", ACCENT)
-	t.set_font("title_font", "Window", font())
+	t.set_font("title_font", "Window", text_font())
 	t.set_font_size("title_font_size", "Window", SMALL)
 	t.set_constant("title_height", "Window", 40)
 	t.set_icon("close", "Window", tex("icon_close"))
@@ -254,15 +269,30 @@ static func make_theme() -> Theme:
 	t.set_stylebox("panel", "TooltipPanel", box("tooltip", 3, [10, 6, 10, 6]))
 	t.set_color("font_color", "TooltipLabel", TEXT)
 	t.set_color("font_color", "Label", TEXT)
+	# a hard drop shadow one font pixel down and right (crisp, no blur): text stays readable over
+	# the starry void, the weather and light panels
+	for cls in ["Label", "RichTextLabel"]:
+		t.set_color("font_shadow_color", cls, SHADOW)
+		t.set_constant("shadow_offset_x", cls, SHADOW_OFFSET)
+		t.set_constant("shadow_offset_y", cls, SHADOW_OFFSET)
+		t.set_constant("shadow_outline_size", cls, OUTLINE)
+	# a black outline around light text everywhere (the gold Shop button's dark text has none)
+	for cls in ["Label", "RichTextLabel", "Button", "OptionButton", "ColorPickerButton", "MenuButton", "CheckBox",
+			"CheckButton", "LineEdit", "TextEdit", "ItemList", "Tree", "TabBar", "TabContainer", "PopupMenu",
+			"TooltipLabel", "Window", "DangerButton", "ToolbarButton", "FlatButton"]:
+		t.set_color("font_outline_color", cls, SHADOW)
+		t.set_constant("outline_size", cls, OUTLINE)
+	t.set_constant("title_outline_size", "Window", OUTLINE)
+	t.set_constant("outline_size", "ShopButton", 0)
 	t.set_color("default_color", "RichTextLabel", TEXT)
-	t.set_font("normal_font", "RichTextLabel", font())
+	t.set_font("normal_font", "RichTextLabel", text_font())
 	t.set_font("bold_font", "RichTextLabel", bold_font())
 	t.set_font_size("normal_font_size", "RichTextLabel", SMALL)
 	t.set_font_size("bold_font_size", "RichTextLabel", SMALL)
 	_label_variation(t, "TitleLabel", BIG, ACCENT)
 	_label_variation(t, "HeadingLabel", SMALL, GOLD)
-	_label_variation(t, "NoteLabel", SMALL, Color("#bfb9d4"))
-	_label_variation(t, "DimLabel", SMALL, Color("#8a84a0"))
+	_label_variation(t, "NoteLabel", SMALL, Color("#d8d3ea"))
+	_label_variation(t, "DimLabel", SMALL, Color("#aea8c6"))
 	return t
 
 

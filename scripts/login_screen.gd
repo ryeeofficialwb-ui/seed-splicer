@@ -96,7 +96,7 @@ func _ready() -> void:
 	form.add_child(fine)
 
 	var ver := Label.new()
-	ver.text = "v%s" % GameVersion.VERSION
+	ver.text = GameVersion.label()
 	ver.theme_type_variation = &"DimLabel"
 	ver.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	col.add_child(ver)

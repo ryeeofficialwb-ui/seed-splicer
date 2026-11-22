@@ -18,6 +18,7 @@ extends Node
 ## Saved in its own small file every 30 s and when the game closes.
 
 signal changed
+signal unlocks_changed  ## a seed got unlocked (or Reset Progress): the seed lists redraw their markers
 
 const TICK := 3.0
 const SAVE_PATH := "user://seed_splicer_mycoras.json"
@@ -86,6 +87,17 @@ static func is_base(id: String) -> bool:
 
 func produces(id: String) -> bool:
 	return Game.seeds.has(id) and (is_base(id) or unlocked.has(id))
+
+
+## A line for tooltips: unlocked (and what it makes) or how to unlock it.
+func unlock_text(id: String) -> String:
+	if not Game.seeds.has(id):
+		return ""
+	if is_base(id):
+		return "Unlocked (a base seed): makes %s Mycoras every 3 s" % fmt(seed_rate(Game.seeds[id]))
+	if unlocked.has(id):
+		return "Unlocked: makes %s Mycoras every 3 s" % fmt(seed_rate(Game.seeds[id]))
+	return "Locked: pull it from a pack in the Shop to make it produce Mycoras"
 
 
 ## A seed's boost (without the weather): the stamp / art / RSR.
@@ -206,6 +218,8 @@ func open_packs(n: int, rng: RandomNumberGenerator = null) -> Dictionary:
 	out.ok = true
 	if out.payout > 0.0:
 		_earn(out.payout)
+	if out.new_count > 0:
+		unlocks_changed.emit()
 	save()
 	changed.emit()
 	return out
@@ -245,6 +259,7 @@ func reset() -> void:
 	last_time = Weather.now()
 	save()
 	changed.emit()
+	unlocks_changed.emit()
 
 
 ## 1234567 -> "1,234,567"; big numbers shortened: 12.3M, 4.56B

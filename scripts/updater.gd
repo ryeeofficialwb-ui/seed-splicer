@@ -60,7 +60,7 @@ func _ready() -> void:
 		_done("")
 
 
-## 1.0.1 / 1.0.2 kept downloaded packs in user://updates and started them with --main-pack (which
+## 0.0.1 / 0.0.2 (published as 1.0.1 / 1.0.2) kept downloaded packs in user://updates and started them with --main-pack (which
 ## the release engine refuses). Those packs are useless: remove them.
 static func _clean_old_scheme() -> void:
 	if not DirAccess.dir_exists_absolute(UPDATES_DIR):
@@ -81,11 +81,11 @@ func _on_release(result: int, code: int, _headers: PackedStringArray, body: Pack
 	var version := str(release.get("tag_name", "")).trim_prefix("v")
 	if not GameVersion.is_newer(version, GameVersion.VERSION):
 		await _fetch_music(release)
-		_done("Up to date (v%s)" % GameVersion.VERSION)
+		_done("Up to date")
 		return
 	if _failed_before(version):
 		await _fetch_music(release)
-		_done("Update v%s didn't start on this PC - still on v%s" % [version, GameVersion.VERSION])
+		_done("Update %s didn't start on this PC - still on %s" % [GameVersion.label(version), GameVersion.label()])
 		return
 	var pack_url := ""
 	var hash_url := ""
@@ -100,17 +100,17 @@ func _on_release(result: int, code: int, _headers: PackedStringArray, body: Pack
 		return
 	var target := pack_path() + ".new"
 	if not _can_write(target):
-		_done("v%s is out: download it from GitHub (this folder is read-only)" % version)
+		_done("%s is out: download it from GitHub (this folder is read-only)" % GameVersion.label(version))
 		return
-	status_changed.emit("Downloading update v%s..." % version)
+	status_changed.emit("Downloading update %s..." % GameVersion.label(version))
 	var hash_text := await _download_text(hash_url)
 	if hash_text == "" or not await _download_file(pack_url, target):
 		DirAccess.remove_absolute(target)
-		_done("Update download failed - playing v%s" % GameVersion.VERSION)
+		_done("Update download failed - playing %s" % GameVersion.label())
 		return
 	if not _hash_ok(target, hash_text):
 		DirAccess.remove_absolute(target)
-		_done("Update failed its safety check - playing v%s" % GameVersion.VERSION)
+		_done("Update failed its safety check - playing %s" % GameVersion.label())
 		return
 	_apply_and_restart(version)
 
@@ -163,7 +163,7 @@ func _apply_and_restart(version: String) -> void:
 		return
 	f.store_string(swap_script(OS.get_executable_path(), pack_path(), version))
 	f.close()
-	status_changed.emit("Installing v%s..." % version)
+	status_changed.emit("Installing %s..." % GameVersion.label(version))
 	OS.create_process("cmd.exe", ["/c", bat.replace("/", "\\")])
 	get_tree().quit()
 

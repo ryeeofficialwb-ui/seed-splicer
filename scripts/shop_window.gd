@@ -63,7 +63,7 @@ func _ready() -> void:
 		offers.add_child(_offer(n))
 	_rate = note()
 	_shop_view.add_child(_rate)
-	_odds = note("", Color(0.65, 0.62, 0.75))
+	_odds = note("", Color(0.8, 0.77, 0.9))
 	_shop_view.add_child(_odds)
 
 	# --- opening

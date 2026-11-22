@@ -51,7 +51,7 @@ func close_dialog() -> void:
 	visible = false
 
 
-func note(text := "", color := Color(0.75, 0.72, 0.85)) -> Label:
+func note(text := "", color := Color(0.85, 0.82, 0.93)) -> Label:
 	var l := Label.new()
 	l.text = text
 	l.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART

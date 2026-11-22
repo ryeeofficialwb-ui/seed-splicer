@@ -1,9 +1,9 @@
 {
 	"format": "seed-splicer-list",
 	"official": true,
-	"version": "1.0.4",
+	"version": "0.1",
 	"username": "KeepUpp",
-	"published": 1795328259,
+	"published": 1795330529,
 	"seeds": [
 		{
 			"art_ok": true,

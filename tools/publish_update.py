@@ -1,8 +1,11 @@
 """Publishes an over-the-air update: players' games download it the next time they start.
 
-    python tools/publish_update.py 1.0.1 "What changed"
-    python tools/publish_update.py 1.0.1 "What changed" --full     (also a full Windows download)
-    python tools/publish_update.py 1.0.1 --approvals-only           (only write data/approvals.json)
+    python tools/publish_update.py 0.2 "What changed"
+    python tools/publish_update.py 0.2 "What changed" --full     (also a full Windows download)
+    python tools/publish_update.py 0.2 --approvals-only           (only write data/approvals.json)
+
+Versions: Indev 0.1 is the first official release (the earlier test releases are 0.0.1 - 0.0.4).
+Releases are titled "Seed Splicer Indev <version>" (GameVersion.STAGE).
 
 0. Writes data/official_list.json: every seed below, with its recipes and block art. Every
    player's game adds the ones they don't have when it starts on the new version.
@@ -48,6 +51,12 @@ OFFICIAL = os.path.join(ROOT, "data", "official_list.json")
 USER_DIR = os.environ.get("SEED_SPLICER_USER_DIR",
     os.path.join(os.environ.get("APPDATA", ""), "Godot", "app_userdata", "Seed Splicer"))
 DRAW_FIELDS = ["rarity", "pattern", "colors", "sprout", "pattern_seed", "crop", "tag", "category", "drop", "fruit_count"]
+
+
+def stage():
+    """GameVersion.STAGE ("Indev"): shown before the version number."""
+    m = re.search(r'const STAGE := "([^"]+)"', open(VERSION_FILE, encoding="utf-8").read())
+    return m.group(1) if m else ""
 
 
 def publisher_name():
@@ -140,7 +149,7 @@ def bake_official(version, save, me):
     print("Shipped to every player: %d seeds (%d with block art), %d splices" % (len(seeds), with_art, len(recipes)))
 
 
-# Players who installed before 1.0.4 run the official engine; new downloads ship the slim one
+# Players who installed before 0.0.4 run the official engine; new downloads ship the slim one
 # (tools/engine/build_template.ps1). Updates are only the pack, so they must work on BOTH.
 TEMPLATE = os.path.join(os.path.dirname(GODOT), "editor_data", "export_templates", "4.7.2.stable", "windows_release_x86_64.exe")
 SLIM_TEMPLATE = os.path.join(ROOT, "tools", "engine", "bin", "seedsplicer_template_release.x86_64.exe")
@@ -227,7 +236,7 @@ def build_and_test(version, full):
 
     os.makedirs(BUILD, exist_ok=True)
     music = build_music_pack()  # attached to every release: games without music fetch it once
-    pack = os.path.join(BUILD, "SeedSplicer-update-%s.pck" % version)  # (1.0.1/1.0.2 looked for SeedSplicer-<v>.pck)
+    pack = os.path.join(BUILD, "SeedSplicer-update-%s.pck" % version)  # (0.0.1/0.0.2 looked for SeedSplicer-<v>.pck)
     run(GODOT, "--headless", "--path", ROOT, "--export-pack", PRESET, pack)
     digest = hashlib.sha256(open(pack, "rb").read()).hexdigest()
     sha_file = pack + ".sha256"
@@ -241,7 +250,7 @@ def build_and_test(version, full):
         os.makedirs(os.path.dirname(exe), exist_ok=True)
         run(GODOT, "--headless", "--path", ROOT, "--export-release", PRESET, exe)
         shutil.copy(MUSIC_PACK, os.path.join(os.path.dirname(exe), "SeedSplicer-music.pck"))
-        bundle = os.path.join(BUILD, "SeedSplicer-%s-windows.zip" % version)
+        bundle = os.path.join(BUILD, "SeedSplicer-%s-%s-windows.zip" % (stage(), version))
         with zipfile.ZipFile(bundle, "w", zipfile.ZIP_DEFLATED) as z:
             for name in ("SeedSplicer.exe", "SeedSplicer.pck", "SeedSplicer-music.pck"):
                 z.write(os.path.join(os.path.dirname(exe), name), "SeedSplicer/" + name)
@@ -256,13 +265,13 @@ def build_and_test(version, full):
 
 def publish(version, notes, repo, assets):
     run("git", "add", "-A")
-    run("git", "commit", "-m", "Release v%s" % version + ("\n\n" + notes if notes else "")
+    run("git", "commit", "-m", "Release %s %s (v%s)" % (stage(), version, version) + ("\n\n" + notes if notes else "")
         + "\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>")
     run("git", "tag", "v%s" % version)
     run("git", "push", "origin", "HEAD", "--tags")
     run(GH, "release", "create", "v%s" % version, *assets, "--repo", repo,
-        "--title", "SeedSplicer v%s" % version, "--notes", notes or "Update v%s" % version)
-    print("\nPublished v%s to %s. Games older than it update the next time they start." % (version, repo))
+        "--title", "Seed Splicer %s %s" % (stage(), version), "--notes", notes or "Update %s %s" % (stage(), version))
+    print("\nPublished %s %s to %s. Games older than it update the next time they start." % (stage(), version, repo))
 
 
 if __name__ == "__main__":

@@ -72,7 +72,7 @@ func _ready() -> void:
 	var hint := Label.new()
 	hint.text = "Drag one seed onto another to splice  ·  Double-click: edit  ·  Right-click: remove  ·  Ctrl+click: copy"
 	hint.add_theme_font_size_override("font_size", UiKit.SMALL)
-	hint.add_theme_color_override("font_color", Color(0.75, 0.72, 0.85, 0.7))
+	hint.add_theme_color_override("font_color", Color(0.85, 0.82, 0.93, 0.7))
 	hint.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART  # two lines when the void is narrow
 	hint.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_WIDE)
 	hint.offset_left = 18

@@ -65,7 +65,7 @@ func refresh() -> void:
 		var empty := Label.new()
 		empty.text = "No splices yet.\nDrag one seed onto another in the void."
 		empty.autowrap_mode = TextServer.AUTOWRAP_WORD
-		empty.add_theme_color_override("font_color", Color(0.7, 0.67, 0.8))
+		empty.add_theme_color_override("font_color", Color(0.82, 0.79, 0.91))
 		_box.add_child(empty)
 		return
 	var keys := Game.recipe_order.duplicate()
@@ -116,7 +116,7 @@ func _icon(id: String) -> TextureRect:
 func _sym(text: String) -> Label:
 	var l := Label.new()
 	l.text = text
-	l.add_theme_color_override("font_color", Color(0.6, 0.57, 0.7))
+	l.add_theme_color_override("font_color", Color(0.78, 0.75, 0.88))
 	l.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	return l
 

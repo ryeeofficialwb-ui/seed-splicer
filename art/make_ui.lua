@@ -24,19 +24,19 @@ local CLEAR = app.pixelColor.rgba(0, 0, 0, 0)
 
 local C = {
   O        = hex("#07050c"),  -- outline
-  ink      = hex("#0b0912"),
-  deep     = hex("#120e1a"),
-  panel    = hex("#15111e"),
-  raised   = hex("#211a2e"),
-  title    = hex("#241c35"),
-  hover    = hex("#2c2340"),
-  border   = hex("#3b3150"),
-  frame    = hex("#4a3d66"),
-  frame_l  = hex("#5d4f80"),
-  frame_ll = hex("#7a6aa4"),
-  hl       = hex("#3a2f50"),
-  hl2      = hex("#45386a"),
-  shadow   = hex("#050308"),
+  ink      = hex("#1c1630"),
+  deep     = hex("#221b36"),
+  panel    = hex("#2b2340"),
+  raised   = hex("#3a2f55"),
+  title    = hex("#33294d"),
+  hover    = hex("#4a3d6b"),
+  border   = hex("#5a4b80"),
+  frame    = hex("#6a5a96"),
+  frame_l  = hex("#8070b0"),
+  frame_ll = hex("#9e8fd0"),
+  hl       = hex("#4e4170"),
+  hl2      = hex("#5d4f85"),
+  shadow   = hex("#120e20"),
   accent   = hex("#a6ff6e"),
   accent_d = hex("#5e9a3a"),
   accent_dd= hex("#2f5a1c"),
@@ -361,6 +361,18 @@ save("pointer", map({
   "....oygo....",
   ".....oo.....",
 }, ink))
+-- "unlocked" marker: a green badge with a white check (seeds you pulled from a pack)
+save("badge_unlocked", map({
+  "..ooooo..",
+  ".oGGGGGo.",
+  "oGGGGGGWo",
+  "oGGGGGWWo",
+  "oGWGGWWGo",
+  "oGWWWWGGo",
+  "oGGWWGGGo",
+  ".odddddo.",
+  "..ooooo..",
+}, { o = C.O, G = C.green, d = C.green_d, W = C.white }))
 save("bubble_tail", map({
   "oyyyyyyyyo",
   ".oRRRRRRo.",

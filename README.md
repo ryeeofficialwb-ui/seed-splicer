@@ -258,7 +258,7 @@ The export presets are set up (`export_presets.cfg`) and the Steam version of Go
 - Drops: new kind **Background** (never collides or damages) with a checklist (emits light, cave / underground, sky / outdoors, animated), and a new **Emits light** tag on any drop (`drop.light`, `drop.bg_tags` in the export).
 - Dev: `--test18`, `--dict=<id> [--dict-tab=N]`, `--hub`. Run tests against a copy of your data (point APPDATA elsewhere): older tests rewrote files in your real block_art.
 
-## Update 1.0.0: approval stamps, graveyard, statistics, recipe tree tools (2026-11-20)
+## Update 0.0.0: approval stamps, graveyard, statistics, recipe tree tools (2026-11-20)
 
 - **Approval stamp.** Every update ships an official seed list (`data/approvals.json`). A seed whose
   name is on it shows the stamp (your lily logo, `assets/stamp/`) and the name of the contributor who
@@ -323,7 +323,7 @@ page. Dev: `--test21`.
 - Code: `scripts/online.gd` (autoload `Online`), `account_dialog.gd`, `upload_window.gd`,
   `submissions_window.gd`, `modal.gd`. Dev: `--test22` (offline part).
 
-## 1.0.3, the Rating Update: Mycoras, the Seed Chest, RSR and weather (2026-11-22)
+## 0.0.3, the Rating Update: Mycoras, the Seed Chest, RSR and weather (2026-11-22)
 
 - **Mycoras** (`scripts/bank.gd`, autoload `Bank`): every 3 seconds each producing seed makes its
   Mycora drop (Mush Mantle's math: the average of 1 .. 1 + rarity / 4). Boosts: approved x10,
@@ -354,3 +354,15 @@ page. Dev: `--test21`.
   waiting submissions; new ones = a message, "Settings (N)" and the taskbar button flashes.
 - **Players' Export** = "Export to the developer" (sends to you); "Save list to a file" still saves.
 - Code: `scripts/live_sync.gd`, `Game.build_official_payload`, `Official.apply_live`. Dev: `--test25`.
+
+## Indev 0.1: the first official release (2026-11-22)
+Version numbers restart here. The test releases before it were renamed 0.0.1 - 0.0.4 (they went out
+as 1.0.1 - 1.0.4) and are hidden on GitHub; anyone who installed one downloads Indev 0.1 once (their
+save carries over). The game shows its version as "Indev 0.1" (`GameVersion.STAGE` + `VERSION`).
+- **Pixel-art UI** made in Aseprite (`art/make_ui.lua` -> `assets/ui/`, theme in `scripts/ui_kit.gd`),
+  bold Pixelify Sans at a crisp 26 px with a black outline and drop shadow, drawn at whole zooms only.
+- **Top bar:** Shop | Seeds, Splices, Recipe Tree, Dictionary | Settings, Help. Settings is tabbed.
+- **Shop:** booster packs of 5 seed cards (the 5th is Rare or better), 1 / 3 / 5 at a time, 10,000 each.
+- **Unlocked seeds:** a green check badge in the Seeds panel and the Dictionary, and an Unlocked tab.
+- **Sign-in** on the first launch (remembered after that), a **tutorial** for new players, the
+  **Thunderstorm** weather (1 in 50, x100), offline Mycoras for **1 hour**, and Recipe Tree layouts.

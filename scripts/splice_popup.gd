@@ -145,7 +145,7 @@ func _ready() -> void:
 	_rarity_sum = Label.new()
 	_rarity_sum.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_rarity_sum.add_theme_font_size_override("font_size", UiKit.SMALL)
-	_rarity_sum.add_theme_color_override("font_color", Color(0.7, 0.67, 0.8))
+	_rarity_sum.add_theme_color_override("font_color", Color(0.82, 0.79, 0.91))
 	left.add_child(_rarity_sum)
 
 	# the 4 growth stages of this seed's crop, in its colors
@@ -216,7 +216,7 @@ func _ready() -> void:
 	_drop_note.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	_drop_note.custom_minimum_size = Vector2(300, 0)
 	_drop_note.add_theme_font_size_override("font_size", UiKit.SMALL)
-	_drop_note.add_theme_color_override("font_color", Color(0.7, 0.67, 0.8))
+	_drop_note.add_theme_color_override("font_color", Color(0.82, 0.79, 0.91))
 	left.add_child(_drop_note)
 
 	# right: name, pattern, colors
@@ -326,7 +326,7 @@ func _ready() -> void:
 	_tag_odds = Label.new()
 	_tag_odds.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	_tag_odds.add_theme_font_size_override("font_size", UiKit.SMALL)
-	_tag_odds.add_theme_color_override("font_color", Color(0.7, 0.67, 0.8))
+	_tag_odds.add_theme_color_override("font_color", Color(0.82, 0.79, 0.91))
 	right.add_child(_tag_odds)
 	var tags := HBoxContainer.new()
 	_tag_row = tags

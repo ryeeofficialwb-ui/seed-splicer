@@ -12,7 +12,10 @@ signal edit_requested(id: String)
 const THUMB := 64  ## block textures in the list are drawn at 2x (32 -> 64)
 const GROUP_KIND := 0
 const GROUP_MATERIAL := 1
-const GRAVE_TAB := 4
+const UNLOCKED_TAB := 1  ## only the seeds you've unlocked (they make Mycoras)
+const GRAVE_TAB := 5
+const TAB_NAMES: Array[String] = ["All", "Unlocked", "Blocks", "Decorations", "Backgrounds", "Graveyard"]
+const TAB_KINDS: Array[String] = ["", "", "block", "decoration", "background"]  ## a tab's drop kind ("" = any)
 const COLS := 8
 
 var _search: LineEdit
@@ -76,8 +79,9 @@ func _ready() -> void:
 	head.add_child(close)
 
 	_tabs = TabBar.new()
-	for t in ["All", "Blocks", "Decorations", "Backgrounds", "Graveyard"]:
+	for t in TAB_NAMES:
 		_tabs.add_tab(t)
+	_tabs.set_tab_tooltip(UNLOCKED_TAB, "Every seed you've unlocked from packs (and the 4 base seeds): these make Mycoras")
 	_tabs.tab_changed.connect(func(_i): refresh())
 	root.add_child(_tabs)
 
@@ -217,10 +221,13 @@ func _ready() -> void:
 	_summary = Label.new()
 	_summary.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART  # never pushes the window wider than the screen
 	_summary.add_theme_font_size_override("font_size", UiKit.SMALL)
-	_summary.add_theme_color_override("font_color", Color(0.75, 0.72, 0.85))
+	_summary.add_theme_color_override("font_color", Color(0.85, 0.82, 0.93))
 	root.add_child(_summary)
 
 	Game.seeds_changed.connect(func():
+		if visible:
+			refresh())
+	Bank.unlocks_changed.connect(func():
 		if visible:
 			refresh())
 
@@ -250,7 +257,7 @@ func _caption(text: String) -> Label:
 	var l := Label.new()
 	l.text = text
 	l.add_theme_font_size_override("font_size", UiKit.SMALL)
-	l.add_theme_color_override("font_color", Color(0.7, 0.67, 0.8))
+	l.add_theme_color_override("font_color", Color(0.82, 0.79, 0.91))
 	l.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	return l
 
@@ -304,7 +311,8 @@ func refresh() -> void:
 	if _tabs.current_tab == GRAVE_TAB:
 		_refresh_graveyard(root, q)
 		return
-	var kind_tab: String = ["", "block", "decoration", "background"][_tabs.current_tab]
+	var kind_tab: String = TAB_KINDS[_tabs.current_tab]
+	var only_unlocked := _tabs.current_tab == UNLOCKED_TAB
 	var ids: Array = Game.order.filter(func(id):
 		var s: Dictionary = Game.seeds[id]
 		var d: Dictionary = s.get("drop", {})
@@ -313,6 +321,8 @@ func refresh() -> void:
 		if s.get("denied", false):
 			return false  # it's in the Graveyard tab
 		if kind_tab != "" and d.get("kind", "block") != kind_tab:
+			return false
+		if only_unlocked and not Bank.produces(id):
 			return false
 		if _light_only.button_pressed and not d.get("light", false):
 			return false
@@ -340,7 +350,7 @@ func refresh() -> void:
 		if members.is_empty():
 			continue
 		var head := _tree.create_item(root)
-		var key := "group:%s:%s" % [kind_tab, g]
+		var key := "group:%d:%s" % [_tabs.current_tab, g]
 		head.set_metadata(0, key)
 		head.set_text(0, "%s   (%d)" % [DropLogic.KIND_PLURALS[g] if by_kind else CategoryLogic.material_name(g), members.size()])
 		head.set_custom_color(0, Color("#ffc94a") if by_kind else CategoryLogic.MATERIAL_COLORS.get(g, Color("#ffc94a")))
@@ -353,9 +363,12 @@ func refresh() -> void:
 			if id == _selected:
 				selected_item = it
 	var lights := ids.filter(func(id): return Game.seeds[id].get("drop", {}).get("light", false)).size()
-	_summary.text = "%d of %d seeds shown  ·  %d emit light  ·  %d with block art  ·  %d approved  ·  double-click a seed to edit it" % [
-		ids.size(), Game.seeds.size(), lights, ids.filter(func(id): return BlockArt.has_art(id)).size(),
+	var unlocked_all := Game.order.filter(func(id): return Bank.produces(id) and not Game.seeds[id].get("denied", false)).size()
+	_summary.text = "%d of %d seeds shown  ·  %d unlocked  ·  %d emit light  ·  %d with block art  ·  %d approved  ·  double-click a seed to edit it" % [
+		ids.size(), Game.seeds.size(), unlocked_all, lights, ids.filter(func(id): return BlockArt.has_art(id)).size(),
 		ids.filter(func(id): return Approvals.is_approved(Game.seeds[id])).size()]
+	if only_unlocked:
+		_summary.text = "%d of %d seeds unlocked  ·  pull more from packs in the Shop  ·  double-click a seed to edit it" % [unlocked_all, Game.seeds.size()]
 	_rebuilding = false
 	if selected_item == null:
 		_selected = ids[0] if not ids.is_empty() and not ids.has(_selected) else _selected
@@ -376,6 +389,9 @@ func _row(parent: TreeItem, id: String) -> TreeItem:
 	it.set_text(0, s.name)
 	it.set_icon(0, _thumb(id))
 	it.set_icon_max_width(0, THUMB)
+	it.set_tooltip_text(0, Bank.unlock_text(id))
+	if Bank.produces(id):  # the green check badge, at the end of the name
+		it.add_button(0, UiKit.tex("badge_unlocked"), 0, false, Bank.unlock_text(id))
 	it.set_custom_color(0, (tier[1] as Color).lerp(Color.WHITE, 0.35))
 	it.set_text(1, str(int(s.rarity)))
 	it.set_custom_color(1, tier[1])

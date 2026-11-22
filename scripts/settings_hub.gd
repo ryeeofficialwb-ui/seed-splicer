@@ -254,7 +254,7 @@ func _refresh_stats() -> void:
 	row.call("Packs opened", "%d  ·  %d seeds unlocked" % [Bank.packs, Bank.unlocked.size()])
 	var w := Weather.current()
 	row.call("Weather now", Weather.name_of(w) if Weather.name_of(w) != "" else "clear")
-	row.call("Game version", "v%s" % GameVersion.VERSION)
+	row.call("Game version", GameVersion.label())
 	_stats_text.text = "\n".join(lines)
 
 

@@ -154,23 +154,23 @@ func _ready() -> void:
 
 	# version + over-the-air update check (exported game only, never in the editor)
 	var version_label := Label.new()
-	version_label.text = "v%s" % GameVersion.VERSION
+	version_label.text = GameVersion.label()
 	version_label.add_theme_font_size_override("font_size", UiKit.SMALL)
-	version_label.add_theme_color_override("font_color", Color(0.6, 0.57, 0.7))
+	version_label.add_theme_color_override("font_color", Color(0.78, 0.75, 0.88))
 	version_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	version_label.theme_type_variation = &"DimLabel"
 	version_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	version_label.set_anchors_and_offsets_preset(Control.PRESET_TOP_RIGHT, Control.PRESET_MODE_MINSIZE, 12)
 	version_label.grow_horizontal = Control.GROW_DIRECTION_BEGIN
 	field.add_child(version_label)  # in the void, so every window covers it
-	print("Seed Splicer v%s - %s version" % [GameVersion.VERSION, "DEVELOPER" if DevMode.on() else "player"])
+	print("Seed Splicer %s - %s version" % [GameVersion.label(), "DEVELOPER" if DevMode.on() else "player"])
 	if DevMode.on():
 		version_label.text += "  ·  Developer"
 	if Updater.enabled() and not "--selftest" in OS.get_cmdline_user_args():
 		var updater := Updater.new()
 		add_child(updater)
 		updater.status_changed.connect(func(text: String):
-			version_label.text = "v%s" % GameVersion.VERSION + ("   %s" % text if text != "" else ""))
+			version_label.text = GameVersion.label() + ("   %s" % text if text != "" else ""))
 
 	_confirm_reset = ConfirmationDialog.new()
 	_confirm_reset.title = "Reset Progress"

@@ -56,12 +56,12 @@ class Lens extends Control:
 		texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 
 	func _draw() -> void:
-		draw_rect(Rect2(Vector2.ZERO, size), Color("#0b0912"))
+		draw_rect(Rect2(Vector2.ZERO, size), Color("#1c1630"))
 		var f := get_theme_default_font()
 		draw_string(f, Vector2(10, 28), "MAGNIFIER", HORIZONTAL_ALIGNMENT_LEFT, -1, UiKit.SMALL, Color("#a6ff6e"))
 		if not has_target or canvas == null or canvas.tree.is_empty():
 			draw_multiline_string(f, Vector2(10, size.y / 2.0 - 10.0), "Point at the tree to see it up close", HORIZONTAL_ALIGNMENT_CENTER,
-				size.x - 20.0, UiKit.SMALL, 3, Color(0.7, 0.67, 0.8))
+				size.x - 20.0, UiKit.SMALL, 3, Color(0.82, 0.79, 0.91))
 			return
 		var lens_pan := size / 2.0 - world_center * lens_zoom
 		canvas.draw_tree_into(self, lens_pan, lens_zoom, Rect2(world_center - size / 2.0 / lens_zoom, size / lens_zoom))
@@ -74,7 +74,7 @@ class Lens extends Control:
 		draw_rect(Rect2(c + Vector2(0, 3), Vector2(1, 5)), Color(1, 1, 1, 0.5))
 		draw_string(f, Vector2(10, 28), "MAGNIFIER", HORIZONTAL_ALIGNMENT_LEFT, -1, UiKit.SMALL, Color("#a6ff6e"))
 		draw_string(f, Vector2(10, size.y - 10), "x%.1f  (Shift + wheel)" % (lens_zoom / maxf(canvas.zoom, 0.0001)),
-			HORIZONTAL_ALIGNMENT_LEFT, -1, UiKit.SMALL, Color(0.7, 0.67, 0.8, 0.8))
+			HORIZONTAL_ALIGNMENT_LEFT, -1, UiKit.SMALL, Color(0.82, 0.79, 0.91, 0.8))
 
 
 class TreeCanvas extends Control:
@@ -548,10 +548,10 @@ class TreeCanvas extends Control:
 	# --- drawing ---------------------------------------------------------------
 
 	func _draw() -> void:
-		draw_rect(Rect2(Vector2.ZERO, size), Color("#0e0b16"))
+		draw_rect(Rect2(Vector2.ZERO, size), Color("#1c1630"))
 		if tree.is_empty():
 			var f := get_theme_default_font()
-			draw_string(f, Vector2(24, 40), "Pick a seed on the left.", HORIZONTAL_ALIGNMENT_LEFT, -1, UiKit.SMALL, Color(0.7, 0.67, 0.8))
+			draw_string(f, Vector2(24, 40), "Pick a seed on the left.", HORIZONTAL_ALIGNMENT_LEFT, -1, UiKit.SMALL, Color(0.82, 0.79, 0.91))
 			return
 		draw_tree_into(self, pan, zoom, Rect2(_to_world(Vector2.ZERO), size / zoom))
 
@@ -604,7 +604,7 @@ class TreeCanvas extends Control:
 	func _draw_links(ci: CanvasItem, n: Dictionary, view: Rect2) -> void:
 		if n.kids.is_empty() or n.hidden:
 			return
-		var col := Color("#5b4d7a")
+		var col := Color("#8070b0")
 		var far: float = float(n.y) + _card_main  # where the card ends on the main axis
 		var km: float = far + (_level - _card_main) / 2.0  # the knob, halfway to the ingredients
 		var k0 := knob(n)
@@ -631,7 +631,7 @@ class TreeCanvas extends Control:
 				for k in n.kids:
 					_line(ci, _w(k.x, km), _w(k.x, kid_start), col, 3.0)
 			if KNOB_R * zoom >= 3.0:
-				_knob(ci, k0, Color("#241c35"), col)
+				_knob(ci, k0, Color("#3a2f55"), col)
 				_plus_marks.append(k0)
 		for k in n.kids:
 			_draw_links(ci, k, view)
@@ -665,9 +665,9 @@ class TreeCanvas extends Control:
 		var tier1: bool = s.get("parents", []).is_empty()
 		var alpha := 0.55 if n.loop else 1.0
 
-		var bg := Color("#1d1828") if not tier1 else Color("#15222a")
+		var bg := Color("#2b2340") if not tier1 else Color("#213444")
 		if n.farm:
-			bg = Color("#17271a")
+			bg = Color("#1f3a24")
 		bg.a = alpha
 		ci.draw_rect(Rect2(r.position + Vector2(4, 4), r.size), Color(0, 0, 0, 0.35 * alpha))  # drop shadow
 		ci.draw_rect(r, bg)
@@ -727,6 +727,8 @@ class TreeCanvas extends Control:
 		var box_bottom := _sp(Vector2(r.position.x, r.position.y + 106.0)).y
 		var cx := _sp(Vector2(r.position.x + CARD_W / 2.0, 0.0)).x
 		var wrap := (CARD_W + GAP_X - 6.0) * zoom  # may use a little of the gap between cards
+		ci.draw_multiline_string_outline(f, Vector2(roundf(cx - wrap / 2.0), box_bottom + fs), nm,
+			HORIZONTAL_ALIGNMENT_CENTER, wrap, fs, 2, UiKit.OUTLINE, Color(0, 0, 0, alpha))
 		ci.draw_multiline_string(f, Vector2(roundf(cx - wrap / 2.0), box_bottom + fs), nm,
 			HORIZONTAL_ALIGNMENT_CENTER, wrap, fs, 2, Color(0.95, 0.93, 1.0, alpha))
 		var bottom_text := "R%d" % int(s.rarity)
@@ -739,10 +741,14 @@ class TreeCanvas extends Control:
 			bottom_col = Color("#7be36f")
 		elif tier1:
 			bottom_text += " · Tier 1"
+		ci.draw_string_outline(f, Vector2(roundf(cx - wrap / 2.0), _sp(Vector2(0.0, r.end.y - 8.0)).y), bottom_text,
+			HORIZONTAL_ALIGNMENT_CENTER, wrap, fs, UiKit.OUTLINE, Color(0, 0, 0, alpha))
 		ci.draw_string(f, Vector2(roundf(cx - wrap / 2.0), _sp(Vector2(0.0, r.end.y - 8.0)).y), bottom_text,
 			HORIZONTAL_ALIGNMENT_CENTER, wrap, fs, bottom_col)
 		if n.recipes > 1:
 			var br := badge_rect(n)
+			ci.draw_string_outline(f, _sp(Vector2(br.position.x, br.end.y - 6.0)), "%d/%d" % [int(n.idx) + 1, int(n.recipes)],
+				HORIZONTAL_ALIGNMENT_CENTER, br.size.x * zoom, fs, UiKit.OUTLINE, Color(0, 0, 0))
 			ci.draw_string(f, _sp(Vector2(br.position.x, br.end.y - 6.0)), "%d/%d" % [int(n.idx) + 1, int(n.recipes)],
 				HORIZONTAL_ALIGNMENT_CENTER, br.size.x * zoom, fs, Color("#a6ff6e"))
 
@@ -805,7 +811,7 @@ func _ready() -> void:
 	left.add_child(_list)
 	_count = Label.new()
 	_count.add_theme_font_size_override("font_size", UiKit.SMALL)
-	_count.add_theme_color_override("font_color", Color(0.7, 0.67, 0.8))
+	_count.add_theme_color_override("font_color", Color(0.82, 0.79, 0.91))
 	left.add_child(_count)
 
 	# --- right: the tree
@@ -954,7 +960,7 @@ func _ready() -> void:
 	_hint = hint
 	hint.text = "Drag to pan  ·  Wheel: zoom  ·  Shift + wheel: magnifier strength  ·  Click a seed to center on it  ·  Click a + (or right-click a seed): fold its branch  ·  1/2 badge: other recipe"
 	hint.add_theme_font_size_override("font_size", UiKit.SMALL)
-	hint.add_theme_color_override("font_color", Color(0.7, 0.67, 0.8))
+	hint.add_theme_color_override("font_color", Color(0.82, 0.79, 0.91))
 	hint.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	right.add_child(hint)
 	_apply_tree_only()
